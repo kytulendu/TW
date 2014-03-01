@@ -1,0 +1,21 @@
+@ECHO OFF
+ECHO.
+ECHO Cleaning project ...
+CD COMMON
+DEL *.OBJ
+DEL *.ERR
+CD ..
+CD SCUW
+DEL *.OBJ
+CD ..
+CD SCUP
+DEL *.OBJ
+CD ..
+CD SCUF
+DEL *.OBJ
+CD ..
+CD ..
+DEL *.EXE
+CD SRC
+ECHO Finish!
+ECHO.
