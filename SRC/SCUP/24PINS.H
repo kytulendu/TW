@@ -102,17 +102,17 @@ struct	cp_textbuf {
 #define	CP_LQROW	3
 #define	CP_LQSCRROW	2
 
-typedef	struct	{
+typedef	struct {
 	unsigned char	font[CP_LQCOL][CP_LQROW];
 } FONT;
-typedef struct	{
+typedef struct {
 	unsigned char	font[CP_LQCOL][CP_LQSCRROW];
 } FONTSCR;
 struct	cp_grlqbuf {
 	FONT	*upper;
 	FONT	*middle;
 	FONT	*lower;
-        FONT    *extbar;
+	FONT    *extbar;
 };
 /* ---- define buffer used in 24pins.c module ----- */
 extern  struct	cp_textbuf	cp_buf;
@@ -132,47 +132,47 @@ extern	FONTSCR	*cp_lqscr_italic_comb;
 extern	unsigned char cp_control;
 
 /* ----- define prototype of function in 24pins.c module ----- */
-void	execerror ( char *s, char *t);
-void	cp_clearbuf (void);
-void	cp_split4level (unsigned char *linemsg);
-void	cp_init_textbuf ( void);
-void	cp_init_grpbuf  ( void);
+void	execerror( char *s, char *t );
+void	cp_clearbuf( void );
+void	cp_split4level( unsigned char *linemsg );
+void	cp_init_textbuf( void );
+void	cp_init_grpbuf( void );
 
 /* ----- NORMAL and ITALIC CODE ----- */
-void	cp_combine_fontlq ( FONT *combcode, FONT *sara, FONT *wannayok);
-FONT	*cp_create_lqcombine ( FONT *fntable);
-FONT	*cp_lq_font ( FONT *fntable, unsigned char ch);
-FONT	*cp_lq_combinecode ( FONT *fntable, FONT *combtable,
-	   unsigned char sara, unsigned char wannayok);
+void	cp_combine_fontlq( FONT *combcode, FONT *sara, FONT *wannayok );
+FONT	*cp_create_lqcombine( FONT *fntable );
+FONT	*cp_lq_font( FONT *fntable, unsigned char ch );
+FONT	*cp_lq_combinecode( FONT *fntable, FONT *combtable,
+	unsigned char sara, unsigned char wannayok );
 
 /* --- SUBCRIPT and SUPERSCRIPT --- */
-void	cp_combine_fontlqscr(FONTSCR *combcode,FONTSCR *sara,FONTSCR *wannayok);
-FONTSCR	*cp_create_lqscrcombine ( FONTSCR *fntable);
-FONTSCR	*cp_lqscr_font ( FONTSCR *fntable, unsigned char ch);
-FONTSCR	*cp_lqscr_combinecode ( FONTSCR *fntable, FONTSCR *combtable,
-	   unsigned char sara, unsigned char wannayok);
+void	cp_combine_fontlqscr( FONTSCR *combcode, FONTSCR *sara, FONTSCR *wannayok );
+FONTSCR	*cp_create_lqscrcombine( FONTSCR *fntable );
+FONTSCR	*cp_lqscr_font( FONTSCR *fntable, unsigned char ch );
+FONTSCR	*cp_lqscr_combinecode( FONTSCR *fntable, FONTSCR *combtable,
+	unsigned char sara, unsigned char wannayok );
 
 /* -- print data to buffer and manage all attribute -- */
-FONT	*cp_lqscr_blank( FONT *buf);
+FONT	*cp_lqscr_blank( FONT *buf );
 
-FONT	*cp_sub_middle_lower ( FONT *buf, FONTSCR *middle, FONTSCR * lower);
-FONT	*cp_sub_upper_middle( FONT *buf, FONTSCR *upper, FONTSCR *middle);
+FONT	*cp_sub_middle_lower( FONT *buf, FONTSCR *middle, FONTSCR * lower );
+FONT	*cp_sub_upper_middle( FONT *buf, FONTSCR *upper, FONTSCR *middle );
 
-FONT	*cp_super_upper_middle ( FONT *buf , FONTSCR *upper, FONTSCR *middle);
-FONT	*cp_super_middle_lower ( FONT * buf, FONTSCR *middle, FONTSCR *lower);
+FONT	*cp_super_upper_middle( FONT *buf, FONTSCR *upper, FONTSCR *middle );
+FONT	*cp_super_middle_lower( FONT * buf, FONTSCR *middle, FONTSCR *lower );
 
-FONT	*cp_underline ( FONT *newchar, FONT *oldchar);
-FONT	*cp_doubleline ( FONT *newchar, FONT *oldchar);
+FONT	*cp_underline( FONT *newchar, FONT *oldchar );
+FONT	*cp_doubleline( FONT *newchar, FONT *oldchar );
 
-int	cp_enlarge( struct cp_grlqbuf buf, int index);
+int	cp_enlarge( struct cp_grlqbuf buf, int index );
 
-void	cp_bold ( struct cp_grlqbuf buf, int index);
+void	cp_bold( struct cp_grlqbuf buf, int index );
 
-int	cp_pr_lqbuf ( struct cp_grlqbuf lqbuf, struct cp_grlqbuf grpchar,
-		       int gindex);
-int cp_printlq(void);
-void	cp_printing (int cpi, int nchar);
+int	cp_pr_lqbuf( struct cp_grlqbuf lqbuf, struct cp_grlqbuf grpchar,
+	int gindex );
+int cp_printlq( void );
+void	cp_printing( int cpi, int nchar );
 
 /* --- set control flag --- */
-int	cp_set_reset ( unsigned char ch, unsigned char *cntptr);
+int	cp_set_reset( unsigned char ch, unsigned char *cntptr );
 

@@ -14,25 +14,24 @@
 /* Modify : Suttipong  Kanakakakorn                                          */
 /*          Mon  07-31-1989  08:32:36   use only pointer no index            */
 /*****************************************************************************/
-unsigned thaistrlen(register unsigned char *thaist)
-{
-    register int count = 0;
-    font_attr curfont = 0;
+unsigned thaistrlen( register unsigned char *thaist ) {
+	register int count = 0;
+	font_attr curfont = 0;
 
-    while (*thaist) {
-      if (whatlevel(*thaist) == MIDDLE) {
-        if (*thaist < 32) {
-           togglefont(&curfont,*thaist);
-        } else {
-          count++;
-          if ((curfont & ENLARGEATTR) == ENLARGEATTR) {
-            count++;
-          }
-        }
-      }
-      thaist++;
-    }
-    return(count);
+	while ( *thaist ) {
+		if ( whatlevel( *thaist ) == MIDDLE ) {
+			if ( *thaist < 32 ) {
+				togglefont( &curfont, *thaist );
+			} else {
+				count++;
+				if ( ( curfont & ENLARGEATTR ) == ENLARGEATTR ) {
+					count++;
+				}
+			}
+		}
+		thaist++;
+	}
+	return( count );
 }
 
 /****************************************************************************/
@@ -40,25 +39,24 @@ unsigned thaistrlen(register unsigned char *thaist)
 /*  character & attribute code of font. Column is origin 0. Find current    */
 /*  attribute of font of string via *font too.                              */
 /****************************************************************************/
-unsigned linearcolumn(char *textstream, unsigned thaicol, font_attr *font)
-{
-    register unsigned logiccol = 0;  /* origin 0 */
-    *font = 0;
-    while ((thaicol > 0) && (*textstream != '\0')) {
-      if (whatlevel(*textstream) == MIDDLE) {
-        if (*textstream < 32) {
-          togglefont(font,*textstream);
-        } else {
-          if ((*font & ENLARGEATTR) == ENLARGEATTR) thaicol--;
-          if (thaicol > 0) thaicol--;
-        }
-      }
-      textstream++;
-      logiccol++;
-    }
-    if (*textstream != MIDDLE) {
-      while (whatlevel(*(textstream++)) != MIDDLE)
-        logiccol++;
-    }
-    return(logiccol);
+unsigned linearcolumn( char *textstream, unsigned thaicol, font_attr *font ) {
+	register unsigned logiccol = 0;  /* origin 0 */
+	*font = 0;
+	while ( ( thaicol > 0 ) && ( *textstream != '\0' ) ) {
+		if ( whatlevel( *textstream ) == MIDDLE ) {
+			if ( *textstream < 32 ) {
+				togglefont( font, *textstream );
+			} else {
+				if ( ( *font & ENLARGEATTR ) == ENLARGEATTR ) thaicol--;
+				if ( thaicol > 0 ) thaicol--;
+			}
+		}
+		textstream++;
+		logiccol++;
+	}
+	if ( *textstream != MIDDLE ) {
+		while ( whatlevel( *( textstream++ ) ) != MIDDLE )
+			logiccol++;
+	}
+	return( logiccol );
 }

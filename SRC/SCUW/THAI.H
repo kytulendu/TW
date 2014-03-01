@@ -1,9 +1,9 @@
 /*
-	thai.h -- thai characters
+thai.h -- thai characters
 
-	Copyright Subun & Tanat
-	Used with permission, Sahaviriya System
-	All rights reserved.
+Copyright Subun & Tanat
+Used with permission, Sahaviriya System
+All rights reserved.
 */
 
 #ifndef __THAI__

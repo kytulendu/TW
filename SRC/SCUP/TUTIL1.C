@@ -8,14 +8,13 @@
 /* Updated: Use fast pointer instead of clumsy array                         */
 /* By Suttipong Kanakakorn Mon  08-07-1989  00:40:51                         */
 /*****************************************************************************/
-int thaistrlen(char *thaist)
-{
-    register int count = 0;
+int thaistrlen( char *thaist ) {
+	register int count = 0;
 
-    while (*thaist) {
-        if (whatlevel(*thaist) == MIDDLE)
-            count++;
-        thaist++;
-    }
-    return(count);
+	while ( *thaist ) {
+		if ( whatlevel( *thaist ) == MIDDLE )
+			count++;
+		thaist++;
+	}
+	return( count );
 }

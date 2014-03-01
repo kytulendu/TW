@@ -15,11 +15,10 @@
 
 #include <stdio.h>
 
-short int findchar(unsigned char ch, unsigned char *strbuf)
-{
-	while (*strbuf != NULL && ch >= *strbuf)
-		if (ch == *(strbuf++))
-			return(1);
-	return(NULL);
+short int findchar( unsigned char ch, unsigned char *strbuf ) {
+	while ( *strbuf != NULL && ch >= *strbuf )
+		if ( ch == *( strbuf++ ) )
+			return( 1 );
+	return( NULL );
 }
 
