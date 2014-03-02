@@ -1,12 +1,6 @@
-/*                  AT&T  graphics module  for CW 1.20                    */
-/*                                                                        */
-/*                      Kraisorn  Liansee                                 */
-/*              Date:      04/21/1988                                     */
-/*              Updated:   04/21/1988                                     */
+/* AT&T  graphics module  for CW 1.20 */
 
 #include <dos.h>
-
-/*      This is a AT&T dependent function         */
 
 extern unsigned int graph_seg;
 extern int is_ega, is_vga;
@@ -29,10 +23,7 @@ void asettext( void ) {
 	union REGS inregs, outregs;
 
 	inregs.x.ax = 3;
-	int86( 0x10, &inregs, &outregs );      /* text mode */
-	inregs.x.ax = 3;
-	int86( 0x10, &inregs, &outregs );      /* text mode */
-
+	int86( 0x10, &inregs, &outregs );	/* text mode */
 }
 
 unsigned int acompute_off( register unsigned x, register unsigned y ) {
