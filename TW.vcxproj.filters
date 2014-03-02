@@ -245,6 +245,12 @@
     <ClInclude Include="SRC\COMMON\EKBD.H">
       <Filter>Source Code\Header Files\COMMON</Filter>
     </ClInclude>
+    <ClInclude Include="SRC\COMMON\GRPHC.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\DIR.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRC\COMMON\CSCRN.C">

@@ -7,7 +7,6 @@
 
 char dfont[5121];
 char ditalicfont[5121];
-int protect1;
 
 void loadfont( void ) {
 	int handle;

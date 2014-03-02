@@ -99,9 +99,11 @@
     <ClInclude Include="SRC\COMMON\CUSONG.H" />
     <ClInclude Include="SRC\COMMON\CWGRPHC.H" />
     <ClInclude Include="SRC\COMMON\CWTYPE.H" />
+    <ClInclude Include="SRC\COMMON\DIR.H" />
     <ClInclude Include="SRC\COMMON\EKBD.H" />
     <ClInclude Include="SRC\COMMON\FILEUTIL.H" />
     <ClInclude Include="SRC\COMMON\GRDETECT.H" />
+    <ClInclude Include="SRC\COMMON\GRPHC.H" />
     <ClInclude Include="SRC\COMMON\KBDCODE.H" />
     <ClInclude Include="SRC\COMMON\PROTO.H" />
     <ClInclude Include="SRC\COMMON\SOUND.H" />

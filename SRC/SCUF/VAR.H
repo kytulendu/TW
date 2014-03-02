@@ -34,15 +34,11 @@ EXTERN char cuf_dir[MAXDRIVE+MAXDIR];  /* which directory is cw.exe in */
 
 /* Just declare these variables only */
 
-EXTERN char protect1;
-EXTERN char protect2;
 EXTERN boolean thaimode;    /*  current mode is thai or eng */
 
 #else
 /* EXTERN will be declared as null already */
 
-EXTERN char protect1 = 0x00;
-EXTERN char protect2 = 0x00;
 EXTERN boolean thaimode = YES;    /*  current mode is thai or eng */
 
 #endif

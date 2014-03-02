@@ -21,7 +21,6 @@ Fri  08-11-1989  01:56:46
 
 char dfont[ALL_FONT_SIZE];
 char ditalicfont[ALL_FONT_SIZE];
-int  protect1;
 
 extern int herc_align; /* from hdisp.asm */
 

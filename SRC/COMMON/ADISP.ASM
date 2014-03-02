@@ -24,7 +24,7 @@ INCLUDE   cwfntam.asm
 DGROUP           GROUP     _DATA,_BSS
 _DATA            SEGMENT   WORD PUBLIC 'DATA'
 
-extrn _dfont:byte,_ditalicfont:byte,_protect1:byte
+extrn _dfont:byte,_ditalicfont:byte
 extrn    curfont:byte, enlargefont:byte, offsetfont:word
 extrn     chulalogo1:word, chulalogo2:word, _chardot:byte
 extrn _graph_seg:word
@@ -968,9 +968,6 @@ _aprakeaw proc  far
          mov   ax,ds:[si+26]
          mov   es:[di],ax
          shift_down di
-         mov   al,1
-         mov   ds:_protect1[0],al
-
 ;
          mov   ax,ds:[si+28]
          mov   es:[di],ax

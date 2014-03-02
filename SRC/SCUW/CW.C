@@ -45,31 +45,17 @@ void setupnode( void ) {
 	loadtoline( curline->text );
 }
 
-char chulaencript[] = { 'ง', 'ึ', 'ษ', 'ฮ', 'ภ', 'ก', 0x9a, 'ป', 'ช', 'โ', '\0' };
-char chuladecript[22];
-
-char *chulaname( void ) {
-	register int i;
-	strcpy( chuladecript, chulaencript );
-	for ( i = 0; chuladecript[i] != '\0'; i++ ) {
-		chuladecript[i] = chuladecript[i] + i + 1;
-	}
-	strcat( chuladecript, "มหาวิทยาลัย" );
-	protect2 = 1;
-	return( chuladecript );
-}
-
 void initscrn( void ) {
 	int countcol;
 	setgraph( );              /* set to graphic mode */
 	clsall( );
 	_rectangle( 0, 0, 639, ( scrmode == VGA ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
 	prakeaw( );
-	dispstrhgc( chulaname( ), 6, 0, BOLDATTR );
-	/*    dispstrhgc("–  ESC <-> MENU  ",72,1,BOLDATTR);   */
-	dispstrhgc( "– ESC<->MENU", 66, 1, BOLDATTR );      /***** MODIFIED *****/
-	for ( countcol = 1; countcol <= 10; countcol++ )
+	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
+	dispstrhgc( "– ESC<->MENU", 66, 1, BOLDATTR );
+	for ( countcol = 1; countcol <= 10; countcol++ ) {
 		headmenu( countcol, 0x00 );
+	}
 }
 
 unsigned menu_to_key( register unsigned curmenu ) {
@@ -77,12 +63,6 @@ unsigned menu_to_key( register unsigned curmenu ) {
 	for ( i = 0; ( command_tab[i] != curmenu ) && ( command_tab[i] != 0 ); i += 2 )
 		;
 	return( command_tab[i + 1] );
-}
-
-void norighttoused( void ) {
-	settext( );
-	puts( "BUFFALO !" );
-	exit( 1 );
 }
 
 void main( int argc, char *argv[] ) {
@@ -96,8 +76,7 @@ void main( int argc, char *argv[] ) {
 	writestatus( 0 );
 	writetab( );
 
-	if ( protect1 != 1 ) norighttoused( );
-
+#ifndef EDA_VERSION
 	framebox( 21 - CENTER_FACTOR, 5, ( 21 - CENTER_FACTOR ) + 45, 14, REVERSEATTR );
 	dispstrhgc( "THAI  WRITER", ( 24 - CENTER_FACTOR ) + 9, 6, REVERSEATTR );
 	dispstrhgc( "<to do : insert hash here>", ( 24 - CENTER_FACTOR ) + 7, 7, REVERSEATTR );
@@ -106,8 +85,6 @@ void main( int argc, char *argv[] ) {
 	dispstrhgc( "Khral Steelforge", ( 24 - CENTER_FACTOR ) + 12, 10, REVERSEATTR );
 	dispstrhgc( "The Forge Warband, Iron Legion", ( 24 - CENTER_FACTOR ) + 5, 11, REVERSEATTR );
 	dispstrhgc( "พัฒนาจาก เวิร์ดจุฬา โดย มหาวิทยาลัยจุฬาลงกรณ์", ( 24 - CENTER_FACTOR ) + 1, 13, REVERSEATTR );
-
-#ifndef EDA_VERSION
 	/*
 	dispstrhgc( " •••••••••••••••••••••••••••••••••••••••••• ", 21 - CENTER_FACTOR, 5, REVERSEATTR );
 	dispstrhgc( " –            CU  WRITER            – ", 21 - CENTER_FACTOR, 6, REVERSEATTR );
@@ -137,10 +114,6 @@ void main( int argc, char *argv[] ) {
 		cusong( );
 	ebioskey( 0 );
 	cls( );
-	if ( protect2 != 1 ) {
-		settext( );
-		exit( 2 );
-	}
 	do {
 		dispstrhgc( "   ", wind.col, 2, 0 );
 		i = pulled_down_menu( &curmenu, &x, &y );
