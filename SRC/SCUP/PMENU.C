@@ -423,7 +423,7 @@ void docommand( int row, int col ) {
 void writeallmenu( void ) {
 	int i;
 	clsall( );
-	box( 0, 0, 639, 347 );
+	_rectangle( 0, 0, 639, 347 );
 	prakeaw( );
 	/*
 	dispstrhgc("จุฬาลงกรณ์มหาวิทยาลัย",6,0,BOLDATTR);
@@ -441,15 +441,15 @@ void writeallmenu( void ) {
 	smcol[0] = mcol[0] + mlenght - 1;
 	smcol[1] = mcol[1] + mlenght - 1;
 	smcol[2] = mcol[2] + mlenght - 1;
-	box( mcol[0] * 8 - 2, 62, ( mcol[0] + mlenght ) * 8 + 2, 225 );
+	_rectangle( mcol[0] * 8 - 2, 62, ( mcol[0] + mlenght ) * 8 + 2, 225 );
 	i = 0;
 	while ( i <= rowmax[0] )
 		writemenu( i++, 0, 0 );
-	box( mcol[1] * 8 - 2, 62, ( mcol[1] + mlenght ) * 8 + 2, 225 );
+	_rectangle( mcol[1] * 8 - 2, 62, ( mcol[1] + mlenght ) * 8 + 2, 225 );
 	i = 0;
 	while ( i <= rowmax[1] )
 		writemenu( i++, 1, 0 );
-	box( mcol[2] * 8 - 2, 62, ( mcol[2] + mlenght ) * 8 + 2, 225 );
+	_rectangle( mcol[2] * 8 - 2, 62, ( mcol[2] + mlenght ) * 8 + 2, 225 );
 	i = 0;
 	while ( i <= rowmax[2] )
 		writemenu( i++, 2, 0 );

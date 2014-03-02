@@ -50,8 +50,8 @@ int x1, y1, x2, y2;
 	putimage( x1, y1, buff, XOR_PUT );
 	free( buff );
 	x1 -= align; x2 -= align;
-	box( x1, y1, x2, y2 );
-	box( x1 + 2, y1 + 2, x2 - 2, y2 - 2 );
+	_rectangle( x1, y1, x2, y2 );
+	_rectangle( x1 + 2, y1 + 2, x2 - 2, y2 - 2 );
 }
 
 fontnamebox( char*pname, int creat )

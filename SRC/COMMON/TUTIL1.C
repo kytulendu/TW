@@ -1,18 +1,16 @@
-/*****************************************************************************/
-/* find length of thai string                                                */
-/* input                                                                     */
-/*      thaist : thai string                                                 */
-/* return : length of thai string                                            */
-/* Updated: Suttipong Kanakakorn, use pointer instead of array
-Sun  08-06-1989  16:32:15                                        */
-/*****************************************************************************/
-int thaistrlen( char *thaist ) {
+#include "cwtype.h"
+
+/** find length of thai string
+*  \param[in]  p_thaistring		thai string.
+*  \return int					length of thai string. */
+int thaistrlen( char *p_thaistring ) {
 	register int count = 0;
 
-	while ( *thaist ) {
-		if ( whatlevel( *thaist ) == MIDDLE )
+	while ( *p_thaistring ) {
+		if ( whatlevel( *p_thaistring ) == MIDDLE ) {
 			count++;
-		thaist++;
+		}
+		p_thaistring++;
 	}
 	return( count );
 }

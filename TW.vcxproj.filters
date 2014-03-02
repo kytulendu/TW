@@ -1,0 +1,545 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fonts">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Code">
+      <UniqueIdentifier>{c90e6caf-6f58-423b-914a-baffc7778cd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Code\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Source Code\Source Files\COMMON">
+      <UniqueIdentifier>{d2a179d6-31f2-47af-a86e-5c19587a0981}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Code\Source Files\SCUF">
+      <UniqueIdentifier>{7b1bddd2-59ad-4886-a7e8-c825a960bf65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Code\Source Files\SCUW">
+      <UniqueIdentifier>{923ffebd-870d-4e45-91a6-c67d155b6e21}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Code\Source Files\SCUP">
+      <UniqueIdentifier>{bb68eae4-6567-4879-956a-dcbab1b84880}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Code\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Code\Header Files\COMMON">
+      <UniqueIdentifier>{41d8880b-0f38-4eaf-be3f-c0a356387d39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Code\Header Files\SCUP">
+      <UniqueIdentifier>{d01f9713-77f1-46d1-8bcc-42a48b4d9131}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Code\Header Files\SCUW">
+      <UniqueIdentifier>{a8b4f8c8-83c7-41bf-80d6-067654624175}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Code\Header Files\SCUF">
+      <UniqueIdentifier>{03969fcb-a7aa-4d57-b9bb-d38709fff6db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Documents">
+      <UniqueIdentifier>{df3c1deb-ea8f-46d5-9928-c45dc853fcde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Settings">
+      <UniqueIdentifier>{6e9a220d-a05b-411a-a9fb-c490ff3e556f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ITALIC.FON">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMAL.FON">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="ITALIC.P9">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="ITALICS.P9">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMAL.P9">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMALS.P9">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="ITALIC.P24">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="ITALICS.P24">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMAL.P24">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMALS.P24">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="ITALIC.PRN">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="ITALICS.PRN">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMAL.PRN">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMALS.PRN">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="README.md">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="TAX.DOC">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="TEST.DOC">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="TW.CFG">
+      <Filter>Settings</Filter>
+    </None>
+    <None Include="TWPRINT.CFG">
+      <Filter>Settings</Filter>
+    </None>
+    <None Include="LICENSE">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="SRC\COMMON\ADISP.ASM">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </None>
+    <None Include="SRC\COMMON\CWFNTAM.ASM">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </None>
+    <None Include="SRC\COMMON\CWFNTHM.ASM">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </None>
+    <None Include="SRC\COMMON\CWFNTM.ASM">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </None>
+    <None Include="SRC\COMMON\EDISP.ASM">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </None>
+    <None Include="SRC\COMMON\HDISP.ASM">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SRC\COMMON\CONST.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\CWGRPHC.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\CWTYPE.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\FILEUTIL.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\GRDETECT.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\KBDCODE.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\PROTO.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\24PINS.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\CONST.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\CPTHAI.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\CUPTYPE.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\FUNCMAC.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\INC.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PROTO.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\TABLE.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\CONST.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\FED.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\FONTMSG.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\GETCH.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\INC.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\KEY.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\POPUP.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\PROTO.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\VAR.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\WRITE.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\CONST.H">
+      <Filter>Source Code\Header Files\SCUW</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\CONVERT.H">
+      <Filter>Source Code\Header Files\SCUW</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\GLOBAL.H">
+      <Filter>Source Code\Header Files\SCUW</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\INC.H">
+      <Filter>Source Code\Header Files\SCUW</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\NEWROUTI.H">
+      <Filter>Source Code\Header Files\SCUW</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\PROTO.H">
+      <Filter>Source Code\Header Files\SCUW</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\ROUTINE.H">
+      <Filter>Source Code\Header Files\SCUW</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\TCTYPE.H">
+      <Filter>Source Code\Header Files\SCUW</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\THAI.H">
+      <Filter>Source Code\Header Files\SCUW</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\VAR.H">
+      <Filter>Source Code\Header Files\SCUW</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\CSCRN.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\SOUND.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\CUSONG.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\EKBD.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SRC\COMMON\CSCRN.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\CUSONG.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\CWAGRPH.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\CWEGRPH.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\CWGRPHC.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\DIR.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\EKBD.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\FILEUTIL.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\GRDETECT.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\SOUND.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\STAMPDAT.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\TCONV.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\TUTIL1.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\24PINS.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\ATTR.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\CPI.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\CPTHAI.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\CUPSETUP.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\DOT.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\ERROR.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\GETSTR.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\GLOBAL.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\KBD.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\LDFONT.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\PCONFIG.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\PIC.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\PMENU.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\PREPROC.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\PRINTING.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\PRNCNTRL.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\PRT.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\PRTBUF24.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\PRTG.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\PRTT.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\PRTUTIL.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\SMENU.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUP\TUTIL1.C">
+      <Filter>Source Code\Source Files\SCUP</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\CONST.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\CONVERT.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\CUFSETUP.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\DIR.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\FED.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\FILE.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\FONTMSG.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\GETCH.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\GETSTR.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\INT.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\KBD.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\POPUP.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\TUTIL1.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUF\WRITE.C">
+      <Filter>Source Code\Source Files\SCUF</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\BLOCK.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\CUFONT.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\CW.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\CWSETUP.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\DEL.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\EDIT.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\FILE.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\FINDCHAR.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\GETSTR.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\GLOBAL.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\GRPH.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\HOREHEEB.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\HUNAKAD.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\INS.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\JULCUT.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\KARAN.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\KBD.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\LEADCON.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\MAIMALAI.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\MAIMUAN.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\MAINSYLS.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\MENU.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\MOVE.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\MOVEMENT.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\NOPCUT.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\NSTRCMP.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\ONSCRN.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\ROREREO.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\RORERU.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SARAA.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SARAAH.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SARAAIR.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SARAIE.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SARAO.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SARAR.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SARAU.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SARAUE.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SARAUEE.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SARAUM.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SCRN.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SEARCH.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\STATUS.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\THAIENG.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\TMODE.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\TUTIL1.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\WOREWAAN.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\WRAP.C">
+      <Filter>Source Code\Source Files\SCUW</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

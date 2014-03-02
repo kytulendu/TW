@@ -99,23 +99,27 @@ void setgraph( ) {
 #ifdef EDA_VERSION
 	scrmode = DETECT;
 #endif
-
+	/* Test graphic card RAM if less than 32KB */
 	if ( ( screen_buffptr = malloc( ( unsigned int ) 32768L ) ) == NULL ) {
 		fputs( "Not enough memory\n", stderr );
 		exit( 1 );
 	}
-	if ( scrmode == DETECT )
+
+	if ( scrmode == DETECT ) {
 		graph_detecthardware( ( graphics_hardware * ) &scrmode );
+	}
 
 #ifdef EDA_VERSION
-	if ( scrmode == EGAMONO )
+	if ( scrmode == EGAMONO ) {
 		scrmode = HERCMONO;
+	}
 #endif
 
-	if ( scrmode == CGA )
+	if ( scrmode == CGA ) {
 		scrmode = ATT400;
-	else if ( scrmode == MCGA )
+	} else if ( scrmode == MCGA ) {
 		scrmode = VGA;
+	}
 
 	if ( ( scrmode == EGAMONO ) || ( scrmode == EGA64 ) ||
 		( scrmode == VGA ) || ( scrmode == EGA ) ) {
@@ -170,7 +174,7 @@ void setgraph( ) {
 		putwind_ptr = aputwind;
 		getwind_ptr = agetwind;
 	} else {
-		fputs( "CU-Writer V1.4 runs on Hercules/EGA/VGA/MCGA/AT&T only",
+		fputs( "This software run on Hercules/EGA/VGA/MCGA/AT&T display card only",
 			stderr );
 		exit( 1 );
 	}

@@ -1,27 +1,7 @@
-#include "cwtype.h"
-#include "proto.h"
+#include "ekbd.h"
+#include "sound.h"
 
-#define CC 262*2
-#define DD 294*2
-#define EE 330*2
-#define FF 349*2
-#define GG 392*2
-#define AA 440*2
-#define BB 494*2
-#define C 262
-#define D 294
-#define E 330
-#define F 349
-#define G 392
-#define A 440
-#define B 494
-#define Cc 262/2
-#define Dd 294/2
-#define Ee 330/2
-#define Ff 349/2
-#define Gg 392/2
-#define Aa 440/2
-#define Bb 494/2
+#include "cusong.h"
 
 static int cusong_data[] = {
 	CC, 300, A, 300, CC, 300, E, 300, A, 300, G, 300, G, 1800,
@@ -56,7 +36,6 @@ static int cusong_data[] = {
 };
 
 void cusong( void ) {
-
 	register int i;
 	for ( i = 0; !keypressed( ) && i < sizeof( cusong_data ) / sizeof( int ); i += 2 ) {
 		soundnoise( cusong_data[i], cusong_data[i + 1] );

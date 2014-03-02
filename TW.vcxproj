@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{3AE91272-D5A5-4B6C-9120-DDF79A7FEF55}</ProjectGuid>
+    <RootNamespace>TW</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>MultiByte</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>Z:\DOS\C\TC\INCLUDE;$(IncludePath)</IncludePath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="ITALIC.FON" />
+    <None Include="ITALIC.P24" />
+    <None Include="ITALIC.P9" />
+    <None Include="ITALIC.PRN" />
+    <None Include="ITALICS.P24" />
+    <None Include="ITALICS.P9" />
+    <None Include="ITALICS.PRN" />
+    <None Include="LICENSE" />
+    <None Include="NORMAL.FON" />
+    <None Include="NORMAL.P24" />
+    <None Include="NORMAL.P9" />
+    <None Include="NORMAL.PRN" />
+    <None Include="NORMALS.P24" />
+    <None Include="NORMALS.P9" />
+    <None Include="NORMALS.PRN" />
+    <None Include="README.md" />
+    <None Include="SRC\COMMON\ADISP.ASM" />
+    <None Include="SRC\COMMON\CWFNTAM.ASM" />
+    <None Include="SRC\COMMON\CWFNTHM.ASM" />
+    <None Include="SRC\COMMON\CWFNTM.ASM" />
+    <None Include="SRC\COMMON\EDISP.ASM" />
+    <None Include="SRC\COMMON\HDISP.ASM" />
+    <None Include="TAX.DOC" />
+    <None Include="TEST.DOC" />
+    <None Include="TW.CFG" />
+    <None Include="TWPRINT.CFG" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SRC\COMMON\CONST.H" />
+    <ClInclude Include="SRC\COMMON\CSCRN.H" />
+    <ClInclude Include="SRC\COMMON\CUSONG.H" />
+    <ClInclude Include="SRC\COMMON\CWGRPHC.H" />
+    <ClInclude Include="SRC\COMMON\CWTYPE.H" />
+    <ClInclude Include="SRC\COMMON\EKBD.H" />
+    <ClInclude Include="SRC\COMMON\FILEUTIL.H" />
+    <ClInclude Include="SRC\COMMON\GRDETECT.H" />
+    <ClInclude Include="SRC\COMMON\KBDCODE.H" />
+    <ClInclude Include="SRC\COMMON\PROTO.H" />
+    <ClInclude Include="SRC\COMMON\SOUND.H" />
+    <ClInclude Include="SRC\SCUF\CONST.H" />
+    <ClInclude Include="SRC\SCUF\FED.H" />
+    <ClInclude Include="SRC\SCUF\FONTMSG.H" />
+    <ClInclude Include="SRC\SCUF\GETCH.H" />
+    <ClInclude Include="SRC\SCUF\INC.H" />
+    <ClInclude Include="SRC\SCUF\KEY.H" />
+    <ClInclude Include="SRC\SCUF\POPUP.H" />
+    <ClInclude Include="SRC\SCUF\PROTO.H" />
+    <ClInclude Include="SRC\SCUF\VAR.H" />
+    <ClInclude Include="SRC\SCUF\WRITE.H" />
+    <ClInclude Include="SRC\SCUP\24PINS.H" />
+    <ClInclude Include="SRC\SCUP\CONST.H" />
+    <ClInclude Include="SRC\SCUP\CPTHAI.H" />
+    <ClInclude Include="SRC\SCUP\CUPTYPE.H" />
+    <ClInclude Include="SRC\SCUP\FUNCMAC.H" />
+    <ClInclude Include="SRC\SCUP\INC.H" />
+    <ClInclude Include="SRC\SCUP\PROTO.H" />
+    <ClInclude Include="SRC\SCUP\TABLE.H" />
+    <ClInclude Include="SRC\SCUW\CONST.H" />
+    <ClInclude Include="SRC\SCUW\CONVERT.H" />
+    <ClInclude Include="SRC\SCUW\GLOBAL.H" />
+    <ClInclude Include="SRC\SCUW\INC.H" />
+    <ClInclude Include="SRC\SCUW\NEWROUTI.H" />
+    <ClInclude Include="SRC\SCUW\PROTO.H" />
+    <ClInclude Include="SRC\SCUW\ROUTINE.H" />
+    <ClInclude Include="SRC\SCUW\TCTYPE.H" />
+    <ClInclude Include="SRC\SCUW\THAI.H" />
+    <ClInclude Include="SRC\SCUW\VAR.H" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SRC\COMMON\CSCRN.C" />
+    <ClCompile Include="SRC\COMMON\CUSONG.C" />
+    <ClCompile Include="SRC\COMMON\CWAGRPH.C" />
+    <ClCompile Include="SRC\COMMON\CWEGRPH.C" />
+    <ClCompile Include="SRC\COMMON\CWGRPHC.C" />
+    <ClCompile Include="SRC\COMMON\DIR.C" />
+    <ClCompile Include="SRC\COMMON\EKBD.C" />
+    <ClCompile Include="SRC\COMMON\FILEUTIL.C" />
+    <ClCompile Include="SRC\COMMON\GRDETECT.C" />
+    <ClCompile Include="SRC\COMMON\SOUND.C" />
+    <ClCompile Include="SRC\COMMON\STAMPDAT.C" />
+    <ClCompile Include="SRC\COMMON\TCONV.C" />
+    <ClCompile Include="SRC\COMMON\TUTIL1.C" />
+    <ClCompile Include="SRC\SCUF\CONST.C" />
+    <ClCompile Include="SRC\SCUF\CONVERT.C" />
+    <ClCompile Include="SRC\SCUF\CUFSETUP.C" />
+    <ClCompile Include="SRC\SCUF\DIR.C" />
+    <ClCompile Include="SRC\SCUF\FED.C" />
+    <ClCompile Include="SRC\SCUF\FILE.C" />
+    <ClCompile Include="SRC\SCUF\FONTMSG.C" />
+    <ClCompile Include="SRC\SCUF\GETCH.C" />
+    <ClCompile Include="SRC\SCUF\GETSTR.C" />
+    <ClCompile Include="SRC\SCUF\INT.C" />
+    <ClCompile Include="SRC\SCUF\KBD.C" />
+    <ClCompile Include="SRC\SCUF\POPUP.C" />
+    <ClCompile Include="SRC\SCUF\TUTIL1.C" />
+    <ClCompile Include="SRC\SCUF\WRITE.C" />
+    <ClCompile Include="SRC\SCUP\24PINS.C" />
+    <ClCompile Include="SRC\SCUP\ATTR.C" />
+    <ClCompile Include="SRC\SCUP\CPI.C" />
+    <ClCompile Include="SRC\SCUP\CPTHAI.C" />
+    <ClCompile Include="SRC\SCUP\CUPSETUP.C" />
+    <ClCompile Include="SRC\SCUP\DOT.C" />
+    <ClCompile Include="SRC\SCUP\ERROR.C" />
+    <ClCompile Include="SRC\SCUP\GETSTR.C" />
+    <ClCompile Include="SRC\SCUP\GLOBAL.C" />
+    <ClCompile Include="SRC\SCUP\KBD.C" />
+    <ClCompile Include="SRC\SCUP\LDFONT.C" />
+    <ClCompile Include="SRC\SCUP\PCONFIG.C" />
+    <ClCompile Include="SRC\SCUP\PIC.C" />
+    <ClCompile Include="SRC\SCUP\PMENU.C" />
+    <ClCompile Include="SRC\SCUP\PREPROC.C" />
+    <ClCompile Include="SRC\SCUP\PRINTING.C" />
+    <ClCompile Include="SRC\SCUP\PRNCNTRL.C" />
+    <ClCompile Include="SRC\SCUP\PRT.C" />
+    <ClCompile Include="SRC\SCUP\PRTBUF24.C" />
+    <ClCompile Include="SRC\SCUP\PRTG.C" />
+    <ClCompile Include="SRC\SCUP\PRTT.C" />
+    <ClCompile Include="SRC\SCUP\PRTUTIL.C" />
+    <ClCompile Include="SRC\SCUP\SMENU.C" />
+    <ClCompile Include="SRC\SCUP\TUTIL1.C" />
+    <ClCompile Include="SRC\SCUW\BLOCK.C" />
+    <ClCompile Include="SRC\SCUW\CUFONT.C" />
+    <ClCompile Include="SRC\SCUW\CW.C" />
+    <ClCompile Include="SRC\SCUW\CWSETUP.C" />
+    <ClCompile Include="SRC\SCUW\DEL.C" />
+    <ClCompile Include="SRC\SCUW\EDIT.C" />
+    <ClCompile Include="SRC\SCUW\FILE.C" />
+    <ClCompile Include="SRC\SCUW\FINDCHAR.C" />
+    <ClCompile Include="SRC\SCUW\GETSTR.C" />
+    <ClCompile Include="SRC\SCUW\GLOBAL.C" />
+    <ClCompile Include="SRC\SCUW\GRPH.C" />
+    <ClCompile Include="SRC\SCUW\HOREHEEB.C" />
+    <ClCompile Include="SRC\SCUW\HUNAKAD.C" />
+    <ClCompile Include="SRC\SCUW\INS.C" />
+    <ClCompile Include="SRC\SCUW\JULCUT.C" />
+    <ClCompile Include="SRC\SCUW\KARAN.C" />
+    <ClCompile Include="SRC\SCUW\KBD.C" />
+    <ClCompile Include="SRC\SCUW\LEADCON.C" />
+    <ClCompile Include="SRC\SCUW\MAIMALAI.C" />
+    <ClCompile Include="SRC\SCUW\MAIMUAN.C" />
+    <ClCompile Include="SRC\SCUW\MAINSYLS.C" />
+    <ClCompile Include="SRC\SCUW\MENU.C" />
+    <ClCompile Include="SRC\SCUW\MOVE.C" />
+    <ClCompile Include="SRC\SCUW\MOVEMENT.C" />
+    <ClCompile Include="SRC\SCUW\NOPCUT.C" />
+    <ClCompile Include="SRC\SCUW\NSTRCMP.C" />
+    <ClCompile Include="SRC\SCUW\ONSCRN.C" />
+    <ClCompile Include="SRC\SCUW\ROREREO.C" />
+    <ClCompile Include="SRC\SCUW\RORERU.C" />
+    <ClCompile Include="SRC\SCUW\SARAA.C" />
+    <ClCompile Include="SRC\SCUW\SARAAH.C" />
+    <ClCompile Include="SRC\SCUW\SARAAIR.C" />
+    <ClCompile Include="SRC\SCUW\SARAIE.C" />
+    <ClCompile Include="SRC\SCUW\SARAO.C" />
+    <ClCompile Include="SRC\SCUW\SARAR.C" />
+    <ClCompile Include="SRC\SCUW\SARAU.C" />
+    <ClCompile Include="SRC\SCUW\SARAUE.C" />
+    <ClCompile Include="SRC\SCUW\SARAUEE.C" />
+    <ClCompile Include="SRC\SCUW\SARAUM.C" />
+    <ClCompile Include="SRC\SCUW\SCRN.C" />
+    <ClCompile Include="SRC\SCUW\SEARCH.C" />
+    <ClCompile Include="SRC\SCUW\STATUS.C" />
+    <ClCompile Include="SRC\SCUW\THAIENG.C" />
+    <ClCompile Include="SRC\SCUW\TMODE.C" />
+    <ClCompile Include="SRC\SCUW\TUTIL1.C" />
+    <ClCompile Include="SRC\SCUW\WOREWAAN.C" />
+    <ClCompile Include="SRC\SCUW\WRAP.C" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

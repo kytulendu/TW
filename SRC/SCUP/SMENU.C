@@ -32,7 +32,7 @@ int smenu( register int x, register int y, int number,
 	}
 	i = *curmenu - 1;
 	dispprintf( x, y + i, REVERSEATTR, fmt, message[i] );
-	box( x * 8 - 2, y * 20 + 2, ( x + length - 1 ) * 8 + 9, ( y + number ) * 20 + 5 );
+	_rectangle( x * 8 - 2, y * 20 + 2, ( x + length - 1 ) * 8 + 9, ( y + number ) * 20 + 5 );
 	while ( 1 ) {
 		c = ebioskey( 0 );
 		switch ( c ) {

@@ -1,192 +1,142 @@
-/* Common screen utility for both cuprint.exe and cw.exe */
-/* Extract from ..\scuw\scrn.c by Suttipong Kanakakorn   */
-/*              Sun  08-06-1989  09:35:17                */
+/* Common screen utility for both cuprint.exe and cw.exe
+*  Extract from ..\scuw\scrn.c by Suttipong Kanakakorn */
 
 #include <stdlib.h>
 #include <stdarg.h>
 #include <stdio.h>
 #include <errno.h>
-#include "cwtype.h"
-#include "proto.h"
+
 #include "cwgrphc.h"
+#include "ekbd.h"
+#include "sound.h"
 
-int sign( int x ) {
-	if ( abs( x ) != x ) {
-		return( -1 );
-	} else {
-		if ( x == 0 )
-			return( 0 );
-		else
-			return( 1 );
-	}
-}
+#include "cscrn.h"
 
-void _line( int x1, int y1, int x2, int y2 ) {
-	int x, y;
-	register int delx, dely;
-	int s1, s2, change, weight, temp, i;
+void _line( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, int p_color*/ ) {
+	int dx = abs( p_xEnd - p_xStart ), sx = p_xStart < p_xEnd ? 1 : -1;
+	int dy = -abs( p_yEnd - p_yStart ), sy = p_yStart < p_yEnd ? 1 : -1;
+	int err = dx + dy, e2; /* error value e_xy */
 
-	x = x1; y = y1;
-	delx = abs( x2 - x1 );
-	dely = abs( y2 - y1 );
-	s1 = sign( x2 - x1 );
-	s2 = sign( y2 - y1 );
-	if ( dely > delx ) {
-		temp = delx;
-		delx = dely;
-		dely = temp;
-		change = 1;
-	} else
-		change = 0;
-	weight = dely + dely - delx;
-	for ( i = 1; i <= delx; i++ ) {
-		plot( x, y );
-		while ( weight >= 0 ) {
-			if ( change == 1 )
-				x += s1;
-			else
-				y += s2;
-			weight -= delx + delx;
+	for ( ;; ) {  /* loop */
+		plot( p_xStart, p_yStart/*, p_color*/ );
+		if ( p_xStart == p_xEnd && p_yStart == p_yEnd ) {
+			break;
 		}
-		if ( change == 1 )
-			y += s2;
-		else
-			x += s1;
-		weight += dely + dely;
+
+		e2 = 2 * err;
+		if ( e2 >= dy ) { /* e_xy + e_x > 0 */
+			err += dy; p_xStart += sx;
+		}
+
+		if ( e2 <= dx ) { /* e_xy + e_y < 0 */
+			err += dx; p_yStart += sy;
+		}
 	}
 }
 
-void box( int x1, int y1, int x2, int y2 ) {
-	_line( x1, y1, x1, y2 );
-	_line( x1, y1, x2, y1 );
-	_line( x2, y1, x2, y2 );
-	_line( x1, y2, x2, y2 );
+void _rectangle( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, p_color*/ ) {
+	_line( p_xStart, p_yStart, p_xEnd, p_yStart/*, p_color*/ );
+	_line( p_xStart, p_yStart, p_xStart, p_yEnd/*, p_color*/ );
+	_line( p_xStart, p_yEnd, p_xEnd, p_yEnd/*, p_color*/ );
+	_line( p_xEnd, p_yStart, p_xEnd, p_yEnd/*, p_color*/ );
 }
 
-/*****************************************************************************/
-/* display string on hercules graphic card                                   */
-/* input                                                                     */
-/*      st   : string to be displayed                                        */
-/*      x    : vertical position ( 0 - 89 )                                  */
-/*      y    : horisontal position ( 0 - 16 )                                */
-/*      attr : attribute of string                                           */
-/*****************************************************************************/
-void dispstrhgc( char *st, unsigned x, unsigned y, font_attr attr ) {
-	while ( ( *st != '\0' ) && ( x < 90 ) ) {
-		if ( *st < 32 ) {
-			togglefont( &attr, *st );
+void dispstrhgc( char *p_string, unsigned p_x, unsigned p_y, font_attr p_attr ) {
+	while ( ( *p_string != '\0' ) && ( p_x < 90 ) ) {
+		if ( *p_string < 32 ) {
+			togglefont( &p_attr, *p_string );
 		} else {
-			if ( whatlevel( *st ) == MIDDLE ) {
-				prchar( *st, attr, x, y );
-				if ( ( attr & ENLARGEATTR ) == ENLARGEATTR ) {
-					x++;
+			if ( whatlevel( *p_string ) == MIDDLE ) {
+				prchar( *p_string, p_attr, p_x, p_y );
+				if ( ( p_attr & ENLARGEATTR ) == ENLARGEATTR ) {
+					p_x++;
 				}
-				x++;
+				p_x++;
 			} else {
-				if ( ( attr & ENLARGEATTR ) == ENLARGEATTR ) {
-					if ( x >= 2 ) {
-						prchar( *st, attr, x - 2, y );
+				if ( ( p_attr & ENLARGEATTR ) == ENLARGEATTR ) {
+					if ( p_x >= 2 ) {
+						prchar( *p_string, p_attr, p_x - 2, p_y );
 					}
 				} else {
-					if ( x >= 1 ) {
-						prchar( *st, attr, x - 1, y );
+					if ( p_x >= 1 ) {
+						prchar( *p_string, p_attr, p_x - 1, p_y );
 					}
 				}
 			}
 		}
-		st++;
+		p_string++;
 	}
 }
 
-/****************************************************************************/
-/* display string with printf capability                                    */
-/* Written: Suttipong Kanakakorn                                            */
-/*          Wed  08-02-1989  00:33:25                                       */
-/* input                                                                    */
-/*      x    : vertical position ( 0 - 89 )                                 */
-/*      y    : horisontal position ( 0 - 16 )                               */
-/*      attr : attribute of string                                          */
-/*      st   : string to be displayed                                       */
-/****************************************************************************/
-void dispprintf( unsigned x, unsigned y, font_attr attr, char *format, ... ) {
+void dispprintf( unsigned p_x, unsigned p_y, font_attr p_attr, char *p_format, ... ) {
 	va_list argptr;
 	char tstring[240];
 
-	va_start( argptr, format );
-	vsprintf( tstring, format, argptr );
+	va_start( argptr, p_format );
+	vsprintf( tstring, p_format, argptr );
 	va_end( argptr );
-	dispstrhgc( tstring, x, y, attr );
+	dispstrhgc( tstring, p_x, p_y, p_attr );
 }
 
-/*****************************************************************************/
-/* display blank                                                             */
-/* input                                                                     */
-/*      x     : vertical position ( 0 - 89 )                                 */
-/*      y     : horisontal position ( 0 - 16 )                               */
-/*      count : number of blank to be displayed                              */
-/*      attr  : attribute of blank                                           */
-/*****************************************************************************/
-void dispblank( unsigned x, unsigned y, unsigned count, font_attr attr ) {
-	count++;
-	while ( count-- ) {
-		prchar( ' ', attr, x++, y );
+void dispblank( unsigned p_x, unsigned p_y, unsigned p_count, font_attr p_attr ) {
+	p_count++;
+	while ( p_count-- ) {
+		prchar( ' ', p_attr, p_x++, p_y );
 	}
 }
 
-/****************************************************************************/
-/*  Set bit in attribute byte on/off from ascii control code given.         */
-/****************************************************************************/
-void togglefont( font_attr *curfont, font_code code ) {
-	if ( code == ONELINECODE )
-		*curfont = *curfont ^ ONELINEATTR;
-	if ( code == SUPERCODE )
-		*curfont = *curfont ^ SUPERATTR;
-	if ( code == SUBCODE )
-		*curfont = *curfont ^ SUBATTR;
-	if ( code == ITALICCODE )
-		*curfont = *curfont ^ ITALICATTR;
-	if ( code == BOLDCODE )
-		*curfont = *curfont ^ BOLDATTR;
-	if ( code == TWOLINECODE )
-		*curfont = *curfont ^ TWOLINEATTR;
-	if ( code == ENLARGECODE )
-		*curfont = *curfont ^ ENLARGEATTR;
+void togglefont( font_attr *p_curfont, font_code p_code ) {
+	if ( p_code == ONELINECODE ) {
+		*p_curfont = *p_curfont ^ ONELINEATTR;
+	}
+	if ( p_code == SUPERCODE ) {
+		*p_curfont = *p_curfont ^ SUPERATTR;
+	}
+	if ( p_code == SUBCODE ) {
+		*p_curfont = *p_curfont ^ SUBATTR;
+	}
+	if ( p_code == ITALICCODE ) {
+		*p_curfont = *p_curfont ^ ITALICATTR;
+	}
+	if ( p_code == BOLDCODE ) {
+		*p_curfont = *p_curfont ^ BOLDATTR;
+	}
+	if ( p_code == TWOLINECODE ) {
+		*p_curfont = *p_curfont ^ TWOLINEATTR;
+	}
+	if ( p_code == ENLARGECODE ) {
+		*p_curfont = *p_curfont ^ ENLARGEATTR;
+	}
 }
 
-/*
-Draw frame box on screen
-Written : Suttipong Kanakakorn Fri  08-04-1989  23:39:16
-*/
-void framebox( unsigned x1, unsigned y1,
-	unsigned x2, unsigned y2,
-	unsigned attr ) {
+void framebox( unsigned p_xStart, unsigned p_yStart, unsigned p_xEnd, unsigned  p_yEnd, unsigned p_attr ) {
 	register unsigned i, j;
 
-	i = x1;
-	prchar( ' ', attr, i++, y1 );
-	prchar( '˜', attr, i, y1 );
-	for ( i++, j = x2 - 1; i < j; i++ )
-		prchar( '•', attr, i, y1 );
-	prchar( '™', attr, i++, y1 );
-	prchar( ' ', attr, i, y1 );
+	i = p_xStart;
+	prchar( ' ', p_attr, i++, p_yStart );
+	prchar( '˜', p_attr, i, p_yStart );
+	for ( i++, j = p_xEnd - 1; i < j; i++ )
+		prchar( '•', p_attr, i, p_yStart );
+	prchar( '™', p_attr, i++, p_yStart );
+	prchar( ' ', p_attr, i, p_yStart );
 
-	for ( j = y1 + 1; j < y2; j++ ) {
-		for ( i = x1; i <= x2; i++ )
-			prchar( ' ', attr, i, j );
-		prchar( '–', attr, x2 - 1, j );
-		prchar( '–', attr, x1 + 1, j );
+	for ( j = p_yStart + 1; j < p_yEnd; j++ ) {
+		for ( i = p_xStart; i <= p_xEnd; i++ )
+			prchar( ' ', p_attr, i, j );
+		prchar( '–', p_attr, p_xEnd - 1, j );
+		prchar( '–', p_attr, p_xStart + 1, j );
 	}
-	i = x1;
-	prchar( ' ', attr, i++, y2 );
-	prchar( 'š', attr, i, y2 );
-	for ( i++, j = x2 - 1; i < j; i++ )
-		prchar( '•', attr, i, y2 );
-	prchar( '›', attr, i++, y2 );
-	prchar( ' ', attr, i, y2 );
+	i = p_xStart;
+	prchar( ' ', p_attr, i++, p_yEnd );
+	prchar( 'š', p_attr, i, p_yEnd );
+	for ( i++, j = p_xEnd - 1; i < j; i++ )
+		prchar( '•', p_attr, i, p_yEnd );
+	prchar( '›', p_attr, i++, p_yEnd );
+	prchar( ' ', p_attr, i, p_yEnd );
 }
 
-void blockmsg( int y ) {
-	framebox( 13, y - 1, 13 + 53, y + 1, REVERSEATTR );
+void blockmsg( int p_y ) {
+	framebox( 13, p_y - 1, 13 + 53, p_y + 1, REVERSEATTR );
 }
 
 void showerrno( void ) {
@@ -200,19 +150,16 @@ void showerrno( void ) {
 		, 23, 10, REVERSEATTR );
 		break;
 	default:  framebox( 13, 9, 66, 12, REVERSEATTR );
-		dispstrhgc( "à¡Ô´¤ÇÒÁ¼Ô´¾ÅÒ´ÀÒÂã¹ÃÐºº ¡ÃØ³Òá¨é§ä»·Õè ¨ØÌÒÏ"
+		dispstrhgc( "à¡Ô´¤ÇÒÁ¼Ô´¾ÅÒ´ÀÒÂã¹ÃÐºº !"
 			, 23, 10, REVERSEATTR );
 		dispstrhgc( sys_errlist[errno], 23, 11, REVERSEATTR );
 	}
 	ebioskey( 0 );
 }
 
-/****************************************************************************/
-/*  Save content of screen. Return pointer to content of screen.            */
-/****************************************************************************/
-char *savescrn( int x1, int y1, int x2, int y2 ) {
+char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int  p_yEnd ) {
 	char *scrnindex;
-	scrnindex = ( char * ) malloc( ( x2 - x1 + 1 ) * ( y2 - y1 + 1 ) * 20 );
+	scrnindex = ( char * ) malloc( ( p_xEnd - p_xStart + 1 ) * ( p_yEnd - p_yStart + 1 ) * 20 );
 	if ( scrnindex == NULL ) {
 		savepic( );
 		errorsound( );
@@ -222,18 +169,15 @@ char *savescrn( int x1, int y1, int x2, int y2 ) {
 		return( NULL );
 	}
 
-	( *getwind_ptr )( x1, y1, ( y2 - y1 + 1 ) * 20, ( x2 - x1 + 1 ), scrnindex );
+	( *getwind_ptr )( p_xStart, p_yStart, ( p_yEnd - p_yStart + 1 ) * 20, ( p_xEnd - p_xStart + 1 ), scrnindex );
 	return( scrnindex );
 }
 
-/****************************************************************************/
-/*  Restore content of screen.                                              */
-/****************************************************************************/
-void resscrn( char *scrnindex, int x1, int y1, int x2, int y2 ) {
-	if ( scrnindex == NULL ) {
+void resscrn( char *p_scrnindex, int p_xStart, int p_yStart, int p_xEnd, int p_yEnd ) {
+	if ( p_scrnindex == NULL ) {
 		retpic( );
 		return;
 	}
-	( *putwind_ptr )( x1, y1, ( y2 - y1 + 1 ) * 20, ( x2 - x1 + 1 ), scrnindex );
-	free( scrnindex );
-}
+	( *putwind_ptr )( p_xStart, p_yStart, ( p_yEnd - p_yStart + 1 ) * 20, ( p_xEnd - p_xStart + 1 ), p_scrnindex );
+	free( p_scrnindex );
+}

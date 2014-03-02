@@ -1,13 +1,12 @@
-/x/n/d/c \tc\lib\c0l +
-..\common\edisp ..\common\hdisp ..\common\adisp ..\common\grdetect +
-..\common\cwgrphc ..\common\cwegrph ..\common\cwagrph ..\common\ekbd +
-..\common\cscrn ..\common\fileutil ..\common\dir + ..\common\sound +
-..\common\cusong +
-scrn getstr tutil1 edit ins del +
-menu status kbd move movement wrap onscrn file search block cw +
-cwsetup stampdat +
-mainsyls thaieng worewaan FINDCHAR HOREHEEB HUNAKAD JULCUT KARAN LEADCON +
+/x/n/d/c \TC\LIB\C0L +
+..\COMMON\EDISP ..\COMMON\HDISP ..\COMMON\ADISP ..\COMMON\GRDETECT +
+..\COMMON\CWGRPHC ..\COMMON\CWEGRPH ..\COMMON\CWAGRPH ..\COMMON\EKBD +
+..\COMMON\CSCRN ..\COMMON\FILEUTIL ..\COMMON\DIR + ..\COMMON\SOUND +
+..\COMMON\CUSONG +
+SCRN GETSTR TUTIL1 EDIT INS DEL +
+MENU STATUS KBD MOVE MOVEMENT WRAP ONSCRN FILE SEARCH BLOCK CW +
+CWSETUP STAMPDAT +
+MAINSYLS THAIENG WOREWAAN FINDCHAR HOREHEEB HUNAKAD JULCUT KARAN LEADCON +
 MAIMALAI MAIMUAN NOPCUT NSTRCMP ROREREO RORERU SARAA SARAAH SARAAIR SARAIE +
 SARAO SARAR SARAU SARAUE SARAUEE SARAUM GLOBAL +
-,\tw\tw,\tw\tw,\tc\lib\cl.lib
-
+,\TW\TW,\TW\TW,\TC\LIB\CL.LIB

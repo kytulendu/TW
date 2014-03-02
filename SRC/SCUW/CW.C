@@ -63,7 +63,7 @@ void initscrn( void ) {
 	int countcol;
 	setgraph( );              /* set to graphic mode */
 	clsall( );
-	box( 0, 0, 639, ( scrmode == VGA ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
+	_rectangle( 0, 0, 639, ( scrmode == VGA ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
 	prakeaw( );
 	dispstrhgc( chulaname( ), 6, 0, BOLDATTR );
 	/*    dispstrhgc("–  ESC <-> MENU  ",72,1,BOLDATTR);   */
@@ -97,7 +97,18 @@ void main( int argc, char *argv[] ) {
 	writetab( );
 
 	if ( protect1 != 1 ) norighttoused( );
+
+	framebox( 21 - CENTER_FACTOR, 5, ( 21 - CENTER_FACTOR ) + 45, 14, REVERSEATTR );
+	dispstrhgc( "THAI  WRITER", ( 24 - CENTER_FACTOR ) + 9, 6, REVERSEATTR );
+	dispstrhgc( "<to do : insert hash here>", ( 24 - CENTER_FACTOR ) + 7, 7, REVERSEATTR );
+	dispprintf( ( 24 - CENTER_FACTOR ) + 9, 8, REVERSEATTR, "%11s   %8s", prog_date, prog_time );
+	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 24 - CENTER_FACTOR ) + 7, 9, REVERSEATTR );
+	dispstrhgc( "Khral Steelforge", ( 24 - CENTER_FACTOR ) + 12, 10, REVERSEATTR );
+	dispstrhgc( "The Forge Warband, Iron Legion", ( 24 - CENTER_FACTOR ) + 5, 11, REVERSEATTR );
+	dispstrhgc( "พัฒนาจาก เวิร์ดจุฬา โดย มหาวิทยาลัยจุฬาลงกรณ์", ( 24 - CENTER_FACTOR ) + 1, 13, REVERSEATTR );
+
 #ifndef EDA_VERSION
+	/*
 	dispstrhgc( " •••••••••••••••••••••••••••••••••••••••••• ", 21 - CENTER_FACTOR, 5, REVERSEATTR );
 	dispstrhgc( " –            CU  WRITER            – ", 21 - CENTER_FACTOR, 6, REVERSEATTR );
 	dispstrhgc( " –               Version 1.41               – ", 21 - CENTER_FACTOR, 7, REVERSEATTR );
@@ -106,12 +117,13 @@ void main( int argc, char *argv[] ) {
 	dispstrhgc( " –        Hercules/EGA/VGA/MCGA/AT&T        – ", 21 - CENTER_FACTOR, 9, REVERSEATTR );
 	dispstrhgc( " –    พัฒนาโดย สถาบันบริการคอมพิวเตอร์ ร่วมกับ     – ", 21 - CENTER_FACTOR, 10, REVERSEATTR );
 	dispstrhgc( " –  ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์  – ", 21 - CENTER_FACTOR, 11, REVERSEATTR );
-	/*    dispstrhgc(" –          และ ชมรมคอมพิวเตอร์ อบจ.          – ",21-CENTER_FACTOR,12,REVERSEATTR);
+	*//*    dispstrhgc(" –          และ ชมรมคอมพิวเตอร์ อบจ.          – ",21-CENTER_FACTOR,12,REVERSEATTR);
 	dispstrhgc(" –            จุฬาลงกรณ์มหาวิทยาลัย             – ",21-CENTER_FACTOR,13,REVERSEATTR);
 	dispstrhgc(" •••••••••••••••••••••••••••••••••••••••••• ",21-CENTER_FACTOR,14,REVERSEATTR);
-	*/
+	*//*
 	dispstrhgc( " –            จุฬาลงกรณ์มหาวิทยาลัย             – ", 21 - CENTER_FACTOR, 12, REVERSEATTR );
 	dispstrhgc( " •••••••••••••••••••••••••••••••••••••••••• ", 21 - CENTER_FACTOR, 13, REVERSEATTR );
+	*/
 #else
 	dispstrhgc( " •••••••••••••••••••••••••••••••••••••••••• ", 21 - CENTER_FACTOR, 5, REVERSEATTR );
 	dispstrhgc( " –            CU  WRITER            – ", 21 - CENTER_FACTOR, 6, REVERSEATTR );

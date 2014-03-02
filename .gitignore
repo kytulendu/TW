@@ -1,3 +1,7 @@
+*.opensdf
+*.sdf
+*.suo
+*.user
 *.EXE
 *.ERR
 SRC/COMMON/*.OBJ

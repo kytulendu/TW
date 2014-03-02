@@ -6,10 +6,7 @@
 
 #include <dos.h>
 
-
-/*   AT&T    dependent function                   */
 /*      This is a AT&T dependent function         */
-
 
 extern unsigned int graph_seg;
 extern int is_ega, is_vga;
@@ -28,9 +25,6 @@ void asetgraph( void ) {
 	*/
 }
 
-
-
-
 void asettext( void ) {
 	union REGS inregs, outregs;
 
@@ -40,7 +34,6 @@ void asettext( void ) {
 	int86( 0x10, &inregs, &outregs );      /* text mode */
 
 }
-
 
 unsigned int acompute_off( register unsigned x, register unsigned y ) {
 	return ( 0x2000 * ( y % 4 ) + 80 * ( y / 4 ) + x / 8 );
