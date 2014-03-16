@@ -1,15 +1,5 @@
 /*-----------------------------------------------------------------------*/
 /*                  Graphics module for CW 1.20                          */
-/*                                                                       */
-/*                      Kraisorn  Liansee                                */
-/*        Date    :        04/21/89                                      */
-/*        Updated :        04/21/89                                      */
-/*                      Suttipong Kanakakorn                             */
-/*        Updated : Sun  07-30-1989  17:46:05                            */
-/*                : Tue  08-15-1989  02:09:46                            */
-/*                  Use macro instead of function call                   */
-/*                : Tue  08-22-1989  02:01:28                            */
-/*                  Add egamono mode                                     */
 /*-----------------------------------------------------------------------*/
 
 #include <stdio.h>
@@ -20,72 +10,57 @@
 #define DEFINE_VAR
 #include "cwgrphc.h"
 
-/*
-void prchar(unsigned c, unsigned attr, unsigned x, unsigned y)
-{
-(*prchar_ptr)(c,attr,x,y);
+void prchar( unsigned c, unsigned attr, unsigned x, unsigned y ) {
+	( *prchar_ptr )( c, attr, x, y );
 }
 
-void prblank(unsigned x, unsigned y)
-{
-(*prblank_ptr)(x,y);
+void prblank( unsigned x, unsigned y ) {
+	( *prblank_ptr )( x, y );
 }
 
-void setcurpos(unsigned x, unsigned y, int thaimode)
-{
-(*setcurpos_ptr)(x,y,thaimode);
+void setcurpos( unsigned x, unsigned y, int thaimode ) {
+	( *setcurpos_ptr )( x, y, thaimode );
 }
 
-void plot(unsigned x, unsigned y)
-{
-(*plot_ptr)(x,y);
+void plot( unsigned x, unsigned y ) {
+	( *plot_ptr )( x, y );
 }
 
-void settext()
-{
-(*settext_ptr)();
+void settext( ) {
+	( *settext_ptr )( );
 }
 
-void savepic()
-{
-(*savepic_ptr)();
+void savepic( ) {
+	( *savepic_ptr )( );
 }
 
-void retpic()
-{
-(*retpic_ptr)();
+void retpic( ) {
+	( *retpic_ptr )( );
 }
 
-void clsall()
-{
-(*clsall_ptr)();
+void clsall( ) {
+	( *clsall_ptr )( );
 }
 
-void clsgraph(unsigned x1,unsigned y1,unsigned x2,unsigned y2)
-{
-(*clsgraph_ptr)(x1,y1,x2,y2);
+void clsgraph( unsigned x1, unsigned y1, unsigned x2, unsigned y2 ) {
+	( *clsgraph_ptr )( x1, y1, x2, y2 );
 }
 
-void clrline(unsigned x1,unsigned y1,unsigned x2)
-{
-(*clrline_ptr)(x1,y1,x2);
+void clrline( unsigned x1, unsigned y1, unsigned x2 ) {
+	( *clrline_ptr )( x1, y1, x2 );
 }
 
-void prakeaw()
-{
-(*prakeaw_ptr)();
+void prakeaw( ) {
+	( *prakeaw_ptr )( );
 }
 
-void rdchardot (unsigned int x, unsigned int y)
-{
-(*rdchardot_ptr)(x,y);
+void rdchardot( unsigned int x, unsigned int y ) {
+	( *rdchardot_ptr )( x, y );
 }
 
-void wrchardot (unsigned int x, unsigned int y)
-{
-(*wrchardot_ptr)(x,y);
+void wrchardot( unsigned int x, unsigned int y ) {
+	( *wrchardot_ptr )( x, y );
 }
-*/
 
 void setgraph( ) {
 	static int first = 1;

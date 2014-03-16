@@ -114,6 +114,22 @@ EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 
 /* ===================================================================== */
 
+void prchar( unsigned c, unsigned attr, unsigned x, unsigned y );
+void prblank( unsigned x, unsigned y );
+void setcurpos( unsigned x, unsigned y, int thaimode );
+void plot( unsigned x, unsigned y );
+void settext( );
+void savepic( );
+void retpic( );
+void clsall( );
+void clsgraph( unsigned x1, unsigned y1, unsigned x2, unsigned y2 );
+void clrline( unsigned x1, unsigned y1, unsigned x2 );
+void prakeaw( );
+void rdchardot( unsigned int x, unsigned int y );
+void wrchardot( unsigned int x, unsigned int y );
+
+
+/*
 #define prchar( c, attr, x, y )		( *prchar_ptr )( c, attr, x, y )
 
 #define prblank( x, y )				( *prblank_ptr )( x, y )
@@ -139,5 +155,5 @@ EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 #define rdchardot( x, y )			( *rdchardot_ptr )( x, y )
 
 #define wrchardot( x, y )			( *wrchardot_ptr )( x, y )
-
+*/
 #endif /* CWGRPHC_H_INCLUDED */
