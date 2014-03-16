@@ -26,6 +26,6 @@ void asettext( void ) {
 	int86( 0x10, &inregs, &outregs );	/* text mode */
 }
 
-unsigned int acompute_off( register unsigned x, register unsigned y ) {
+unsigned int acompute_off( register unsigned int x, register unsigned int y ) {
 	return ( 0x2000 * ( y % 4 ) + 80 * ( y / 4 ) + x / 8 );
 }

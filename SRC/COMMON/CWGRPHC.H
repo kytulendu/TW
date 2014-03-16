@@ -26,20 +26,15 @@ EXTERN unsigned char *screen_buffptr;
 
 /* ===================================================================== */
 
-typedef void( Prchar_func )( unsigned c, unsigned attr, unsigned x, unsigned y );
+typedef void( Prchar_func )( unsigned int c, unsigned int attr, unsigned int x, unsigned int y );
 typedef Prchar_func *Prchar_ptr;
 
 EXTERN Prchar_ptr  prchar_ptr;
 EXTERN Prchar_func hprchar, eprchar, aprchar;
-/* same as
-void( hprchar )( unsigned c, unsigned attr, unsigned x, unsigned y );
-void( hprchar )( unsigned c, unsigned attr, unsigned x, unsigned y );
-but more easier to manage and can get rid of compiler warning
-*/
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Prblank_func )( unsigned x, unsigned y );
+typedef void ( Prblank_func )( unsigned int x, unsigned int y );
 typedef Prblank_func *Prblank_ptr;
 
 EXTERN Prblank_func hprblank, eprblank, aprblank;
@@ -47,7 +42,7 @@ EXTERN Prblank_ptr  prblank_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Setcurpos_func )( unsigned x, unsigned y, int thaimode );
+typedef void ( Setcurpos_func )( unsigned int x, unsigned int y, int thaimode );
 typedef Setcurpos_func *Setcurpos_ptr;
 
 EXTERN Setcurpos_func hsetcurpos, esetcurpos, asetcurpos;
@@ -55,7 +50,7 @@ EXTERN Setcurpos_ptr  setcurpos_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Plot_func )( unsigned x, unsigned y );
+typedef void ( Plot_func )( unsigned int x, unsigned int y );
 typedef Plot_func *Plot_ptr;
 
 EXTERN Plot_func hplot, eplot, aplot;
@@ -78,8 +73,8 @@ EXTERN Voidvoid_ptr  clsall_ptr, prakeaw_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Clsgraph_func )( unsigned x1, unsigned x2,
-	unsigned y1, unsigned y2 );
+typedef void ( Clsgraph_func )( unsigned int x1, unsigned int x2,
+	unsigned int y1, unsigned int y2 );
 typedef Clsgraph_func *Clsgraph_ptr;
 
 EXTERN Clsgraph_func hclsgraph, eclsgraph, aclsgraph;
@@ -87,7 +82,7 @@ EXTERN Clsgraph_ptr  clsgraph_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Clrline_func )( unsigned x1, unsigned y1, unsigned x2 );
+typedef void ( Clrline_func )( unsigned int x1, unsigned int y1, unsigned int x2 );
 typedef Clrline_func *Clrline_ptr;
 
 EXTERN Clrline_func hclrline, eclrline, aclrline;
@@ -104,7 +99,7 @@ EXTERN RWchardot_ptr  rdchardot_ptr, wrchardot_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( PGwind_func )( unsigned x1, unsigned x2,
+typedef void ( PGwind_func )( unsigned int x1, unsigned int x2,
 	unsigned linecount, unsigned bytecount,
 	char *buffer );
 typedef PGwind_func *PGwind_ptr;
@@ -114,20 +109,19 @@ EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 
 /* ===================================================================== */
 
-void prchar( unsigned c, unsigned attr, unsigned x, unsigned y );
-void prblank( unsigned x, unsigned y );
-void setcurpos( unsigned x, unsigned y, int thaimode );
-void plot( unsigned x, unsigned y );
+void prchar( unsigned int c, unsigned int attr, unsigned int x, unsigned int y );
+void prblank( unsigned int x, unsigned int y );
+void setcurpos( unsigned int x, unsigned int y, int thaimode );
+void plot( unsigned int x, unsigned int y );
 void settext( );
 void savepic( );
 void retpic( );
 void clsall( );
-void clsgraph( unsigned x1, unsigned y1, unsigned x2, unsigned y2 );
-void clrline( unsigned x1, unsigned y1, unsigned x2 );
+void clsgraph( unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2 );
+void clrline( unsigned int x1, unsigned int y1, unsigned int x2 );
 void prakeaw( );
 void rdchardot( unsigned int x, unsigned int y );
 void wrchardot( unsigned int x, unsigned int y );
-
 
 /*
 #define prchar( c, attr, x, y )		( *prchar_ptr )( c, attr, x, y )

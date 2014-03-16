@@ -1,5 +1,4 @@
-/* Common screen utility for both cuprint.exe and cw.exe
-*  Extract from ..\scuw\scrn.c by Suttipong Kanakakorn */
+/* Common screen utility */
 
 #include <stdlib.h>
 #include <stdarg.h>
@@ -8,6 +7,7 @@
 
 #include "cwgrphc.h"
 #include "ekbd.h"
+#include "grphc.h"
 #include "sound.h"
 
 #include "cscrn.h"
@@ -41,7 +41,7 @@ void _rectangle( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, p_color*/
 	_line( p_xEnd, p_yStart, p_xEnd, p_yEnd/*, p_color*/ );
 }
 
-void dispstrhgc( char *p_string, unsigned p_x, unsigned p_y, font_attr p_attr ) {
+void dispstrhgc( char *p_string, unsigned int p_x, unsigned int p_y, font_attr p_attr ) {
 	while ( ( *p_string != '\0' ) && ( p_x < 90 ) ) {
 		if ( *p_string < 32 ) {
 			togglefont( &p_attr, *p_string );
@@ -68,7 +68,7 @@ void dispstrhgc( char *p_string, unsigned p_x, unsigned p_y, font_attr p_attr ) 
 	}
 }
 
-void dispprintf( unsigned p_x, unsigned p_y, font_attr p_attr, char *p_format, ... ) {
+void dispprintf( unsigned int p_x, unsigned int p_y, font_attr p_attr, char *p_format, ... ) {
 	va_list argptr;
 	char tstring[240];
 
@@ -78,7 +78,7 @@ void dispprintf( unsigned p_x, unsigned p_y, font_attr p_attr, char *p_format, .
 	dispstrhgc( tstring, p_x, p_y, p_attr );
 }
 
-void dispblank( unsigned p_x, unsigned p_y, unsigned p_count, font_attr p_attr ) {
+void dispblank( unsigned int p_x, unsigned int p_y, unsigned int p_count, font_attr p_attr ) {
 	p_count++;
 	while ( p_count-- ) {
 		prchar( ' ', p_attr, p_x++, p_y );
@@ -109,28 +109,31 @@ void togglefont( font_attr *p_curfont, font_code p_code ) {
 	}
 }
 
-void framebox( unsigned p_xStart, unsigned p_yStart, unsigned p_xEnd, unsigned  p_yEnd, unsigned p_attr ) {
-	register unsigned i, j;
+void framebox( unsigned int p_xStart, unsigned int p_yStart, unsigned int p_xEnd, unsigned int p_yEnd, unsigned int p_attr ) {
+	register unsigned int i, j;
 
 	i = p_xStart;
 	prchar( ' ', p_attr, i++, p_yStart );
 	prchar( '˜', p_attr, i, p_yStart );
-	for ( i++, j = p_xEnd - 1; i < j; i++ )
+	for ( i++, j = p_xEnd - 1; i < j; i++ ) {
 		prchar( '•', p_attr, i, p_yStart );
+	}
 	prchar( '™', p_attr, i++, p_yStart );
 	prchar( ' ', p_attr, i, p_yStart );
 
 	for ( j = p_yStart + 1; j < p_yEnd; j++ ) {
-		for ( i = p_xStart; i <= p_xEnd; i++ )
+		for ( i = p_xStart; i <= p_xEnd; i++ ) {
 			prchar( ' ', p_attr, i, j );
+		}
 		prchar( '–', p_attr, p_xEnd - 1, j );
 		prchar( '–', p_attr, p_xStart + 1, j );
 	}
 	i = p_xStart;
 	prchar( ' ', p_attr, i++, p_yEnd );
 	prchar( 'š', p_attr, i, p_yEnd );
-	for ( i++, j = p_xEnd - 1; i < j; i++ )
+	for ( i++, j = p_xEnd - 1; i < j; i++ ) {
 		prchar( '•', p_attr, i, p_yEnd );
+	}
 	prchar( '›', p_attr, i++, p_yEnd );
 	prchar( ' ', p_attr, i, p_yEnd );
 }

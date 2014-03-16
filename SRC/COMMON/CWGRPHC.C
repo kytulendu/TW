@@ -8,21 +8,22 @@
 #include "grdetect.h"
 
 #define DEFINE_VAR
+
 #include "cwgrphc.h"
 
-void prchar( unsigned c, unsigned attr, unsigned x, unsigned y ) {
+void prchar( unsigned int c, unsigned int attr, unsigned int x, unsigned int y ) {
 	( *prchar_ptr )( c, attr, x, y );
 }
 
-void prblank( unsigned x, unsigned y ) {
+void prblank( unsigned int x, unsigned int y ) {
 	( *prblank_ptr )( x, y );
 }
 
-void setcurpos( unsigned x, unsigned y, int thaimode ) {
+void setcurpos( unsigned int x, unsigned int y, int thaimode ) {
 	( *setcurpos_ptr )( x, y, thaimode );
 }
 
-void plot( unsigned x, unsigned y ) {
+void plot( unsigned int x, unsigned int y ) {
 	( *plot_ptr )( x, y );
 }
 
@@ -42,11 +43,11 @@ void clsall( ) {
 	( *clsall_ptr )( );
 }
 
-void clsgraph( unsigned x1, unsigned y1, unsigned x2, unsigned y2 ) {
+void clsgraph( unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2 ) {
 	( *clsgraph_ptr )( x1, y1, x2, y2 );
 }
 
-void clrline( unsigned x1, unsigned y1, unsigned x2 ) {
+void clrline( unsigned int x1, unsigned int y1, unsigned int x2 ) {
 	( *clrline_ptr )( x1, y1, x2 );
 }
 
@@ -149,8 +150,7 @@ void setgraph( ) {
 		putwind_ptr = aputwind;
 		getwind_ptr = agetwind;
 	} else {
-		fputs( "This software run on Hercules/EGA/VGA/MCGA/AT&T display card only",
-			stderr );
+		fputs( "This software run on Hercules/EGA/VGA/MCGA/AT&T display card only", stderr );
 		exit( 1 );
 	}
 	( *setgraph_ptr )( );
