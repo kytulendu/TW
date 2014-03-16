@@ -1,8 +1,20 @@
-/* Updated: Suttipong Kanakakorn
-Thu  08-03-1989  01:05:26
-*/
+#include <stdlib.h>
+#include <string.h>
 
-#include "inc.h"
+#include "..\common\cscrn.h"
+#include "..\common\grphc.h"
+
+#include "var.h"
+
+#include "edit.h"
+#include "ins.h"
+#include "move.h"
+#include "movement.h"
+#include "tutil1.h"
+
+#include "thaisyls\mainsyls.h"
+
+#include "wrap.h"
 
 /****************************************************************************/
 /*  Insert blank code (bit 8 = 1) to justify text to right margin. Text     */
@@ -50,13 +62,13 @@ void justify_right( void ) {
 void reform( void ) {
 	struct line_node *templine, *firstline, *freeline;
 	unsigned char *temp1, *temp2, *temp3, *cuthere;
-	unsigned i, j;
+	unsigned int i, j;
 	font_attr font = 0;
 	char fontcode[9];
 
 	storeline( curline );
 	firstline = curline;
-	templine = firstline;  /* start to concatenate all lines to one line only */
+	templine = firstline;	/* start to concatenate all lines to one line only */
 	temp1 = ( char * ) malloc( 1 );
 	*temp1 = '\0';
 	while ( 1 ) {
@@ -96,8 +108,9 @@ void reform( void ) {
 		freeline = firstline;
 		firstline = firstline->next;
 		free( freeline->text );
-		if ( freeline->graph != NULL )
+		if ( freeline->graph != NULL ) {
 			free( freeline->graph );
+		}
 		free( freeline );
 	}
 	while ( thaistrlen( curline->text ) > ( rightmar - leftmar + 1 ) ) {
@@ -108,13 +121,16 @@ void reform( void ) {
 			i--;
 		}
 		temp3 = temp1;
-		for ( i = 10; ( i != 0 ) && ( *temp3 != '\0' ); i-- )
+		for ( i = 10; ( i != 0 ) && ( *temp3 != '\0' ); i-- ) {
 			temp3++;
+		}
 		cuthere = FINDCUT( curline->text, temp3, temp1 );
 		cuthere++;
 		font = 0;
 		for ( temp1 = curline->text; temp1 != cuthere; temp1++ ) {
-			if ( *temp1 < 32 ) togglefont( &font, *temp1 );
+			if ( *temp1 < 32 ) {
+				togglefont( &font, *temp1 );
+			}
 		}
 		findstrcode( fontcode, font );
 		templine = ( struct line_node * ) malloc( sizeof( struct line_node ) );
@@ -155,8 +171,9 @@ void reform( void ) {
 	strcat( temp3, curline->text );
 	free( curline->text );
 	curline->text = temp3;
-	if ( curline->next != sentinel )
+	if ( curline->next != sentinel ) {
 		curline = curline->next;
+	}
 	lineno = findlineno( curline );
 	loadtoline( curline->text );
 	while ( findrow( ) > ( wind.width - 1 ) ) {
@@ -170,7 +187,7 @@ void reform( void ) {
 	blkend.column = 0;
 }
 
-void manualwrap( unsigned *x, unsigned *y ) {
+void manualwrap( unsigned int *x, unsigned int *y ) {
 	int i;
 	insert_ret( x );
 	curline->wrap = YES;
@@ -178,12 +195,13 @@ void manualwrap( unsigned *x, unsigned *y ) {
 	justify_right( );
 	*y = findrow( );
 	cursor_down( *y );
-	for ( i = 1; i != leftmar; i++ )
+	for ( i = 1; i != leftmar; i++ ) {
 		workline.middle[i] = WRAPBLANK;
+	}
 }
 
-void autowrap( unsigned *x, unsigned *y ) {
-	unsigned i, j, already = NO, diff;
+void autowrap( unsigned int *x, unsigned int *y ) {
+	unsigned int i, j, already = NO, diff;
 	char *temp1, *temp3, *cuthere, fontcode[9];
 	font_attr font = 0;
 	struct line_node *templine;
@@ -209,22 +227,27 @@ void autowrap( unsigned *x, unsigned *y ) {
 	temp1 = curline->text;
 	for ( i = rightmar - 2; ( i > 0 ) && ( *temp1 != '\0' ); i-- ) {
 		temp1++;
-		while ( whatlevel( *temp1 ) != MIDDLE )
+		while ( whatlevel( *temp1 ) != MIDDLE ) {
 			temp1++;
+		}
 	}
 	temp3 = temp1;
-	for ( i = 10; ( i != 0 ) && ( *temp3 != '\0' ); i-- )
+	for ( i = 10; ( i != 0 ) && ( *temp3 != '\0' ); i-- ) {
 		temp3++;
+	}
 	cuthere = FINDCUT( curline->text, temp3, temp1 );
 	cuthere++;
 	for ( temp1 = curline->text; temp1 != cuthere; temp1++ ) {
-		if ( *temp1 < 32 ) togglefont( &font, *temp1 );
+		if ( *temp1 < 32 ) {
+			togglefont( &font, *temp1 );
+		}
 	}
 	findstrcode( fontcode, font );
 	templine = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 	templine->text = ( char * ) malloc( leftmar + strlen( fontcode ) + strlen( cuthere ) );
-	for ( i = 0; i != ( leftmar - 1 ); i++ )
+	for ( i = 0; i != ( leftmar - 1 ); i++ ) {
 		templine->text[i] = WRAPBLANK;
+	}
 	templine->text[i] = '\0';
 	strcat( templine->text, fontcode );
 	strcat( templine->text, cuthere );
@@ -250,25 +273,23 @@ void autowrap( unsigned *x, unsigned *y ) {
 	pagecomplete = NO;
 }
 
-/* Thu  08-03-1989  01:05:37 */
 /* leave the leading blank alone, just compress the rest
-and trim the trailing blank
-*/
+and trim the trailing blank */
 void compress_blank( register unsigned char *s ) {
 	register unsigned char *r;
 
-	for ( ; *s == ' '; s++ )
-		;
+	for ( ; *s == ' '; s++ );
 	r = s;
 	while ( *s++ = *r ) {
 		if ( *r == ' ' ) {
-			for ( ; *r == ' '; r++ )
-				;
-		} else
+			for ( ; *r == ' '; r++ );
+		} else {
 			r++;
+		}
 	}
 	s -= 2;
-	if ( *s == ' ' )
+	if ( *s == ' ' ) {
 		*s = '\0';
+	}
 }
 

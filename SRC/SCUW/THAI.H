@@ -66,13 +66,13 @@ All rights reserved.
 #define	SaraUee		(unsigned char) 0xD7	/*	สระอือ	*/
 #define	SaraU		(unsigned char) 0xD8	/*	สระอุ	*/
 #define	SaraUU		(unsigned char) 0xD9	/*	สระอู	*/
-#define 	ThaiDot		(unsigned char) 0xDA	/*		*/
+#define ThaiDot		(unsigned char) 0xDA	/*		*/
 #define	SaraA		(unsigned char) 0xE0	/*	สระเอ	*/
-#define 	SaraAir		(unsigned char) 0xE1	/*	สระแอ	*/
-#define 	SaraO			(unsigned char) 0xE2	/*	สระโอ	*/
+#define SaraAir		(unsigned char) 0xE1	/*	สระแอ	*/
+#define SaraO		(unsigned char) 0xE2	/*	สระโอ	*/
 #define	MaiMuan		(unsigned char) 0xE3	/*	ไม้ม้วน	*/
-#define	MaiMalai		(unsigned char) 0xE4	/*	ไม้มลาย	*/
-#define 	MaiYamok		(unsigned char) 0xE6  /* ไม้ยมก */
+#define	MaiMalai	(unsigned char) 0xE4	/*	ไม้มลาย	*/
+#define MaiYamok	(unsigned char) 0xE6	/* ไม้ยมก */
 #define	MaiTaiKuu	(unsigned char) 0xE7	/*	ไม้ไต่คู้	*/
 #define	MaiEk		(unsigned char) 0xE8	/*	ไม้เอก	*/
 #define	MaiToe		(unsigned char) 0xE9	/*	ไม้โท	*/
@@ -82,7 +82,7 @@ All rights reserved.
 
 #define	_Exclamation	(unsigned char) 0x21	/* ! */
 #define	_Dollar		(unsigned char) 0x24	/* $ */
-#define	_Percent		(unsigned char) 0x25	/* % */
+#define	_Percent	(unsigned char) 0x25	/* % */
 #define	_OpenParen	(unsigned char) 0x28	/* วงเล็บเปิด*/
 #define	_CloseParen	(unsigned char) 0x29	/* วงเล็บปิด */
 #define	_Hyphen		(unsignec char) 0x2D	/* - */
@@ -91,8 +91,8 @@ All rights reserved.
 #define	_Colon		(unsigned char) 0x3A
 #define	_SemiColon	(unsigned char) 0x3B
 #define	_Question	(unsigned char) 0x3F	/* ? */
-#define 	_LeftBracket	(unsigned char) 0x5B	/* [ */
-#define	_RightBracket (unsigned char) 0x5D	/* ] */
+#define _LeftBracket	(unsigned char) 0x5B	/* [ */
+#define	_RightBracket	(unsigned char) 0x5D	/* ] */
 #define	_LeftBrace	(unsigned char) 0x7B	/* { */
 #define	_RightBrace	(unsigned char) 0x7D	/* } */
 #define	_Baht		(unsigned char) 0xDF	/* ฿	*/

@@ -1,6 +1,10 @@
-#include "inc.h"
+#include <stdlib.h>
+
+#include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
+
 #include "convert.h"
+#include "var.h"
 
 void relmarstatus( void ) {
 	if ( relmargin == YES ) {
@@ -52,7 +56,7 @@ void writepageline( void ) {
 	}
 }
 
-void writecolno( unsigned x ) {
+void writecolno( unsigned int x ) {
 	char st2[5];
 	dispstrhgc( "คอลัมน์", 21, 2, 00 );
 	itoa( x + 1, st2, 10 );
@@ -79,14 +83,15 @@ void writelanguage( void ) {
 
 void writeattr( void ) {
 	dispstrhgc( "            ", 50 - 1, 2, 0 );
-	if ( fontused == 0 )
+	if ( fontused == 0 ) {
 		dispstrhgc( " ตัวอักษรปกติ", 50 - 1, 2, fontused );
-	else if ( ( fontused & 0x08 ) == 0x08 )
-		dispstrhgc( "ตัวยกขึ้น", 50 - 1, 2, fontused & 0xf7 );
-	else if ( ( fontused & 0x10 ) == 0x10 )
+	} else if ( ( fontused & 0x08 ) == 0x08 ) {
+	dispstrhgc( "ตัวยกขึ้น", 50 - 1, 2, fontused & 0xf7 );
+	} else if ( ( fontused & 0x10 ) == 0x10 ) {
 		dispstrhgc( "ตัวห้อย", 50 - 1, 2, fontused & 0xef );
-	else
+	} else {
 		dispstrhgc( "ตัวอักษร", 50 - 1, 2, fontused );
+	}
 }
 
 void writefilename( void ) {
@@ -100,7 +105,7 @@ void writedriveno( void ) {
 	dispstrhgc( "ไดรฟ์  :", 50 - SHRINK_FACTOR, 0, 0 );
 	prchar( 'A' + getdisk( ), BOLDATTR, 55 - SHRINK_FACTOR, 0 );
 }
-void writestatus( unsigned x ) {
+void writestatus( unsigned int x ) {
 	writepageline( );
 	writecolno( x );
 	writeinsmode( );

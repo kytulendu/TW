@@ -1,9 +1,24 @@
-/****************************************************************************/
-/*  SEARCH.C 15 JAN 89                                                      */
-/****************************************************************************/
-#include "inc.h"
+#include <stdlib.h>
+#include <string.h>
+
+#include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
+#include "..\common\ekbd.h"
+#include "..\common\grphc.h"
+#include "..\common\kbdcode.h"
+#include "..\common\sound.h"
+
 #include "convert.h"
+#include "var.h"
+
+#include "del.h"
+#include "edit.h"
+#include "getstr.h"
+#include "ins.h"
+#include "move.h"
+#include "tutil1.h"
+
+#include "search.h"
 
 /****************************************************************************/
 /*  Searching string                                                        */
@@ -19,29 +34,33 @@
 /****************************************************************************/
 int searchonlyinfo( void ) {
 	int i;
-	dispstrhgc( " •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• ", 8 - CENTER_FACTOR, 4, 2 );
-	dispstrhgc( " – ใส่คำที่ต้องการค้นหา :                                                    – ", 8 - CENTER_FACTOR, 5, 2 );
-	dispstrhgc( " – ค้นหาแบบไหน (ใส่ตัวอักษรของตัวเลือกที่ต้องการ) :                              – ", 8 - CENTER_FACTOR, 6, 2 );
-	dispstrhgc( " – ตัวเลือก : G = เริ่มค้นหาตั้งแต่ต้นแฟ้มข้อมูล                                    – ", 8 - CENTER_FACTOR, 7, 2 );
-	dispstrhgc( " –          U = ไม่สนใจตัวเล็กหรือตัวใหญ่ (เช่น a กับ A)                        – ", 8 - CENTER_FACTOR, 8, 2 );
-	dispstrhgc( " –          W = ค้นหาเป็นคำ (หรือเป็นประโยคในภาษาไทย)                       – ", 8 - CENTER_FACTOR, 9, 2 );
-	dispstrhgc( " •<ESC> ยกเลิก•••••••••••••••••••••••••••••••••••••••••••••••••••••••••• ", 8 - CENTER_FACTOR, 10, 2 );
+	framebox( 8 - CENTER_FACTOR, 4, ( 21 - CENTER_FACTOR ) + 60, 10, REVERSEATTR );
+	dispstrhgc( "ใส่คำที่ต้องการค้นหา :", 11 - CENTER_FACTOR, 5, 2 );
+	dispstrhgc( "ค้นหาแบบไหน (ใส่ตัวอักษรของตัวเลือกที่ต้องการ) :", 11 - CENTER_FACTOR, 6, 2 );
+	dispstrhgc( "ตัวเลือก : G = เริ่มค้นหาตั้งแต่ต้นแฟ้มข้อมูล", 11 - CENTER_FACTOR, 7, 2 );
+	dispstrhgc( "U = ไม่สนใจตัวเล็กหรือตัวใหญ่ (เช่น a กับ A)", 20 - CENTER_FACTOR, 8, 2 );
+	dispstrhgc( "W = ค้นหาเป็นคำ (หรือเป็นประโยคในภาษาไทย)", 20 - CENTER_FACTOR, 9, 2 );
+	dispstrhgc( "<ESC> ยกเลิก", 11 - CENTER_FACTOR, 10, 2 );
 	dispstrhgc( source, 29 - CENTER_FACTOR, 5, REVERSEATTR );
 	dispstrhgc( option, 51 - CENTER_FACTOR, 6, REVERSEATTR );
 	pagecomplete = NO;
 	while ( 1 ) {
 		i = getstring( source, 29 - CENTER_FACTOR, 5, 50, 2, THAIENG );
 		switch ( i ) {
-		case ESCKEY: return( ESCKEY );
+		case ESCKEY:
+			return( ESCKEY );
 		case DNKEY:
-		case YES: do {
-			i = getstring( option, 51 - CENTER_FACTOR, 6, 3, 2, ENGLISH );
-			switch ( i ) {
-			case ESCKEY: return( ESCKEY );
-			case YES: strupr( option );    /* to upper case   */
-				return( YES );
-			}
-		} while ( i != UPKEY );
+		case YES:
+			do {
+				i = getstring( option, 51 - CENTER_FACTOR, 6, 3, 2, ENGLISH );
+				switch ( i ) {
+				case ESCKEY:
+					return( ESCKEY );
+				case YES:
+					strupr( option );    /* to upper case   */
+					return( YES );
+				}
+			} while ( i != UPKEY );
 			break;
 		}
 	}
@@ -50,15 +69,15 @@ int searchonlyinfo( void ) {
 
 int searchreplaceinfo( void ) {
 	int i, j;
-	dispstrhgc( " •••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••••• ", 8 - CENTER_FACTOR, 4, 2 );
-	dispstrhgc( " – ใส่คำที่ต้องการค้นหา :                                                    – ", 8 - CENTER_FACTOR, 5, 2 );
-	dispstrhgc( " – ใส่คำที่ต้องการแทนที่ :                                                    – ", 8 - CENTER_FACTOR, 6, 2 );
-	dispstrhgc( " – ค้นหาแบบไหน (ใส่ตัวอักษรของตัวเลือกที่ต้องการ) :                              – ", 8 - CENTER_FACTOR, 7, 2 );
-	dispstrhgc( " – ตัวเลือก : G = ค้นหา/แทนที่ทั้งหมดตั้งแต่ต้นจนจบ                                – ", 8 - CENTER_FACTOR, 8, 2 );
-	dispstrhgc( " –          U = ไม่สนใจตัวเล็กหรือตัวใหญ่ (เช่น a กับ A)                        – ", 8 - CENTER_FACTOR, 9, 2 );
-	dispstrhgc( " –          W = ค้นหาเป็นคำ (หรือเป็นประโยคในภาษาไทย)                       – ", 8 - CENTER_FACTOR, 10, 2 );
-	dispstrhgc( " –          N = ไม่ต้องหยุดถามว่าจะแทนที่หรือไม่                                – ", 8 - CENTER_FACTOR, 11, 2 );
-	dispstrhgc( " •<ESC> ยกเลิก•••••••••••••••••••••••••••••••••••••••••••••••••••••••••• ", 8 - CENTER_FACTOR, 12, 2 );
+	framebox( 8 - CENTER_FACTOR, 4, ( 21 - CENTER_FACTOR ) + 60, 12, REVERSEATTR );
+	dispstrhgc( "ใส่คำที่ต้องการค้นหา :", 11 - CENTER_FACTOR, 5, 2 );
+	dispstrhgc( "ใส่คำที่ต้องการแทนที่ :", 11 - CENTER_FACTOR, 6, 2 );
+	dispstrhgc( "ค้นหาแบบไหน (ใส่ตัวอักษรของตัวเลือกที่ต้องการ) :", 11 - CENTER_FACTOR, 7, 2 );
+	dispstrhgc( "ตัวเลือก : G = ค้นหา/แทนที่ทั้งหมดตั้งแต่ต้นจนจบ", 11 - CENTER_FACTOR, 8, 2 );
+	dispstrhgc( "U = ไม่สนใจตัวเล็กหรือตัวใหญ่ (เช่น a กับ A)", 20 - CENTER_FACTOR, 9, 2 );
+	dispstrhgc( "W = ค้นหาเป็นคำ (หรือเป็นประโยคในภาษาไทย)", 20 - CENTER_FACTOR, 10, 2 );
+	dispstrhgc( "N = ไม่ต้องหยุดถามว่าจะแทนที่หรือไม่", 20 - CENTER_FACTOR, 11, 2 );
+	dispstrhgc( "<ESC> ยกเลิก", 11 - CENTER_FACTOR, 12, 2 );
 	dispstrhgc( source, 29 - CENTER_FACTOR, 5, REVERSEATTR );
 	dispstrhgc( replace, 29 - CENTER_FACTOR, 6, REVERSEATTR );
 	dispstrhgc( option, 51 - CENTER_FACTOR, 7, REVERSEATTR );
@@ -66,24 +85,30 @@ int searchreplaceinfo( void ) {
 	while ( 1 ) {
 		i = getstring( source, 29 - CENTER_FACTOR, 5, 50, 2, THAIENG );
 		switch ( i ) {
-		case ESCKEY: return( ESCKEY );
+		case ESCKEY:
+			return( ESCKEY );
 		case DNKEY:
-		case YES: do {
-			i = getstring( replace, 29 - CENTER_FACTOR, 6, 50, 2, THAIENG );
-			switch ( i ) {
-			case ESCKEY: return( ESCKEY );
-			case DNKEY:
-			case YES: do {
-				j = getstring( option, 51 - CENTER_FACTOR, 7, 3, 2, ENGLISH );
-				switch ( j ) {
-				case ESCKEY: return( ESCKEY );
-				case YES: strupr( option );
-					return( YES );
+		case YES:
+			do {
+				i = getstring( replace, 29 - CENTER_FACTOR, 6, 50, 2, THAIENG );
+				switch ( i ) {
+				case ESCKEY:
+					return( ESCKEY );
+				case DNKEY:
+				case YES:
+					do {
+						j = getstring( option, 51 - CENTER_FACTOR, 7, 3, 2, ENGLISH );
+						switch ( j ) {
+						case ESCKEY:
+							return( ESCKEY );
+						case YES:
+							strupr( option );
+							return( YES );
+						}
+					} while ( j != UPKEY );
+					break;
 				}
-			} while ( j != UPKEY );
-				break;
-			}
-		} while ( i != UPKEY );
+			} while ( i != UPKEY );
 			break;
 		}
 	}
@@ -103,8 +128,9 @@ int optionglobal( void ) {
 int optionupper( void ) {
 	int i = 0;
 	while ( option[i] != '\0' ) {
-		if ( option[i] == 'U' )
+		if ( option[i] == 'U' ) {
 			return( YES );
+		}
 		i++;
 	}
 	return( NO );
@@ -113,8 +139,9 @@ int optionupper( void ) {
 int optionword( void ) {
 	int i = 0;
 	while ( option[i] != '\0' ) {
-		if ( option[i] == 'W' )
+		if ( option[i] == 'W' ) {
 			return( YES );
+		}
 		i++;
 	}
 	return( NO );
@@ -123,15 +150,15 @@ int optionword( void ) {
 int optionnoask( void ) {
 	int i = 0;
 	while ( option[i] != '\0' ) {
-		if ( option[i] == 'N' )
+		if ( option[i] == 'N' ) {
 			return( YES );
+		}
 		i++;
 	}
 	return( NO );
 }
 
-char *searchline( char *textline, int startpos ) /* startpos origin 0 */
-{
+char *searchline( char *textline, int startpos ) { /* startpos origin 0 */
 	int i;
 	static char buffer[MAXCOL * 5];
 	char *point, *buffaddr, *textaddr;
@@ -165,13 +192,12 @@ char *searchline( char *textline, int startpos ) /* startpos origin 0 */
 
 void wordnotfound( void ) {
 	errorsound( );
-	dispstrhgc( " •••••••••••••••••••••••••••••• ", 27 - CENTER_FACTOR, 5, 2 );
-	dispstrhgc( " – หาคำไม่พบ ! กด ESC เพื่อทำงานต่อ – ", 27 - CENTER_FACTOR, 6, 2 );
-	dispstrhgc( " •••••••••••••••••••••••••••••• ", 27 - CENTER_FACTOR, 7, 2 );
+	framebox( 27 - CENTER_FACTOR, 5, ( 27 - CENTER_FACTOR ) + 33, 7, REVERSEATTR );
+	dispstrhgc( "หาคำไม่พบ ! กด ESC เพื่อทำงานต่อ", 30 - CENTER_FACTOR, 6, 2 );
 	while ( ebioskey( 0 ) != ESCKEY );
 	pagecomplete = NO;
 }
-int searchfwd( unsigned *x, unsigned *y ) {
+int searchfwd( unsigned int *x, unsigned int *y ) {
 	struct line_node *savepage, *templine;
 	int linecount, savecol, i, enlargeflag, startpos;
 	font_attr font = 0;
@@ -189,7 +215,7 @@ int searchfwd( unsigned *x, unsigned *y ) {
 	foundpoint = NULL;
 	while ( ( foundpoint == NULL ) && ( curline != sentinel ) ) {
 		foundpoint = searchline( curline->text, startpos );
-		if ( foundpoint != NULL ) {           /* found */
+		if ( foundpoint != NULL ) {		/* found */
 			while ( ( *y = findrow( ) ) >= wind.width ) {
 				curpage = curpage->next;
 			}
@@ -270,28 +296,32 @@ void addblank( void ) {
 	source[i + 1] = '\0';
 }
 
-void searching( unsigned *x, unsigned *y ) {
+void searching( unsigned int *x, unsigned int *y ) {
 	storeline( curline );
 	if ( searchonlyinfo( ) == YES ) {
 		showpageall( );
 		replaceflag = NO;
-		if ( optionword( ) )
+		if ( optionword( ) ) {
 			addblank( );
-		if ( optionupper( ) )
+		}
+		if ( optionupper( ) ) {
 			strupr( source );
+		}
 		if ( optionglobal( ) ) {
 			topfile( x );
 			showpageall( );
 		}
-		if ( !searchfwd( x, y ) )
+		if ( !searchfwd( x, y ) ) {
 			wordnotfound( );
+		}
 	}
 }
 
-void replaceword( unsigned *x, unsigned *y ) {
+void replaceword( unsigned int *x, unsigned int *y ) {
 	int i;
-	for ( i = strlen( source ); i != 0; i-- )
+	for ( i = strlen( source ); i != 0; i-- ) {
 		backspace( x );
+	}
 	while ( replace[i] != '\0' ) {
 		insert_char( replace[i], x, y );
 		i++;
@@ -299,7 +329,7 @@ void replaceword( unsigned *x, unsigned *y ) {
 	refreshline( 0, *y );
 }
 
-int searchreplace( unsigned *x, unsigned *y ) {
+int searchreplace( unsigned int *x, unsigned int *y ) {
 	int ok = 0, i, ask = YES, global = NO, found = NO;
 	if ( optionnoask( ) ) {
 		ok = 'y';
@@ -328,21 +358,24 @@ int searchreplace( unsigned *x, unsigned *y ) {
 						for ( i = 0; i<15000; i++ );
 					} /* while !keypressed */
 					ok = ebioskey( 0 );
-					if ( ( ok != CNTRL_U ) && ( ok != ESCKEY ) )
+					if ( ( ok != CNTRL_U ) && ( ok != ESCKEY ) ) {
 						ok = ok & 0xff;
-					else
+					} else {
 						return( CNTRL_U );
+					}
 				} /* while ok */
 			} else {
 				if ( keypressed( ) ) {
 					ok = ebioskey( 0 );
-					if ( ( ok == CNTRL_U ) || ( ok == ESCKEY ) )
+					if ( ( ok == CNTRL_U ) || ( ok == ESCKEY ) ) {
 						return( CNTRL_U );
+					}
 				}
 				ok = 'y';
 			}
-			if ( ( ok == 'y' ) || ( ok == 'Y' ) )
+			if ( ( ok == 'y' ) || ( ok == 'Y' ) ) {
 				replaceword( x, y );
+			}
 			ok = 0;
 		} else {
 			global = NO;
@@ -351,16 +384,19 @@ int searchreplace( unsigned *x, unsigned *y ) {
 	return( found );
 }
 
-void replacing( unsigned *x, unsigned *y ) {
+void replacing( unsigned int *x, unsigned int *y ) {
 	storeline( curline );
 	if ( searchreplaceinfo( ) == YES ) {
 		showpageall( );
 		replaceflag = YES;
-		if ( optionword( ) )
+		if ( optionword( ) ) {
 			addblank( );
-		if ( optionupper( ) )
+		}
+		if ( optionupper( ) ) {
 			strupr( source );
-		if ( !searchreplace( x, y ) )
+		}
+		if ( !searchreplace( x, y ) ) {
 			wordnotfound( );
+		}
 	}
 }

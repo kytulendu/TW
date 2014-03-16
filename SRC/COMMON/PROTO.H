@@ -1,6 +1,0 @@
-#include "cscrn.h"
-#include "sound.h"
-#include "cusong.h"
-#include "dir.h"
-#include "ekbd.h"
-#include "grphc.h"

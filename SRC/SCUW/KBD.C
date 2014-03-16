@@ -1,25 +1,28 @@
-/*
-Update: Suttipong Kanakakorn
-Thu  08-03-1989  16:54:04
-Sun  08-06-1989  00:19:22
-*/
-#include "inc.h"
+#include <dir.h>
+
 #include "..\common\cwgrphc.h"
+#include "..\common\cwtype.h"
+#include "..\common\kbdcode.h"
+#include "..\common\ekbd.h"
+#include "..\common\cscrn.h"
+#include "..\common\grphc.h"
+#include "const.h"
+#include "var.h"
+
+#include "kbd.h"
 
 int last_menu_on = 0;
 
-void waitkbd( unsigned x, unsigned y ) {
+void waitkbd( unsigned int x, unsigned int y ) {
 	register unsigned i;
 
 	setcurpos( x, y, thaimode );
 	while ( !keypressed( ) ) {
-		for ( i = 0; !keypressed( ) && i < 1200; i++ )
-			;
+		for ( i = 0; !keypressed( ) && i < 1200; i++ );
 		setcurpos( x, y, thaimode );
-		for ( i = 0; !keypressed( ) && i < 1200; i++ )
-			;
+		for ( i = 0; !keypressed( ) && i < 1200; i++ );
 		setcurpos( x, y, thaimode );
-		if ( !last_menu_on )               /********* Modified ************/
+		if ( !last_menu_on )
 			dispstrhgc( ( ebioskey( 2 ) & 0x10 ) ? "สร้างตาราง" : "         ",
 			70, 2, BOLDATTR );
 	}

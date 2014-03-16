@@ -1,11 +1,27 @@
-/* Update: Suttipong Kanakakorn
-Tue  08-01-1989  13:57:19
-CUCC :  Garbage Collection
-*/
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
 
-#include "inc.h"
+#include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
+#include "..\common\ekbd.h" 
+#include "..\common\kbdcode.h"
+#include "..\common\sound.h"
+
 #include "convert.h"
+#include "var.h"
+
+#include "cw.h"
+#include "del.h"
+#include "edit.h"
+#include "getstr.h"
+#include "ins.h"
+#include "kbd.h"
+#include "move.h"
+#include "status.h"
+
+#include "onscrn.h"
 
 /****************************************************************************/
 /*  Write tab.                                                              */

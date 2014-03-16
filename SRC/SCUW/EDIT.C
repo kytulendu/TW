@@ -1,8 +1,20 @@
-/****************************************************************************/
-/*  EDIT.C 15 JAN 89                                                        */
-/****************************************************************************/
-#include "inc.h"
+#include <stdlib.h>
+#include <conio.h>
+#include <string.h>
+
+#include "..\common\cwtype.h"
 #include "..\common\cwgrphc.h"
+#include "..\common\grphc.h"
+#include "..\common\ekbd.h"
+#include "..\common\cscrn.h"
+
+#include "var.h"
+
+#include "block.h"
+#include "scrn.h"
+#include "onscrn.h"
+
+#include "edit.h"
 
 /****************************************************************************/
 /*  From attribute given,find string of ascii control code.                 */

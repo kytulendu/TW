@@ -1,14 +1,35 @@
-/*
-Update: Suttipong Kanakakorn
-Sun  07-30-1989  19:50:45
-*/
-
 #include <stdlib.h>
-#include <alloc.h> /* for farcoreleft */
+#include <stdio.h>
+#include <alloc.h>
+#include <bios.h>
+#include <ctype.h>
+#include <string.h>
 
-#include "inc.h"
-#include "convert.h"
+#include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
+#include "..\common\dir.h"
+#include "..\common\ekbd.h"
+#include "..\common\fileutil.h"
+#include "..\common\grphc.h"
+#include "..\common\kbdcode.h"
+#include "..\common\sound.h"
+
+#include "convert.h"
+#include "var.h"
+
+#include "cw.h"
+#include "cwsetup.h"
+#include "block.h"
+#include "edit.h"
+#include "file.h"
+#include "getstr.h"
+#include "kbd.h"
+#include "onscrn.h"
+#include "scrn.h"
+#include "status.h"
+#include "tutil1.h"
+
+#include "menu.h"
 
 extern int last_menu_on;
 

@@ -1,41 +1,41 @@
 /* -------------------------------------------------------------
-	This is the new Thai character type checking Method.
-	Copyright by Subun & Tanat Advanced Computer Inc. 1988
-	Used with permission, Sahaviriya System.
-
-	By using short int (16 bits).
-
-	- High order byte is reserved for future use.
-		1. bit 0  for back punctuation.
-		2. bit 1  for front punctuation.
-
-	- Lower order byte is devided into 6 parts.
- 		1. bit 7  for consonants.
-		   bit 6  for always leading consonants.
-		2. bit 5  for leading vowels.
-		   bit 4  for following vowels (rear).
-		3. bit 3  for tonal marks.
-		4. bit 2  for garant marks.
-		5. bit 1  for special marks.
-		6. bit 0  for thai numbers.
-
-	- The tctype's functions are istcon(c),istlcon(c),isvowel(c),istlvwl(c)
-		istrvwl(c),isttnl(c),istgrnt(c),istspmk(c),istdigit(c).
-
-	- istcon(c)		: check thai consonant.
-	- istlcon(c)	: check thai leading consonant (╘,╪,╫,н).
-	- istvowel(c)	: check thai vowel.
-	- istlvwl(c)	: check thai leading vowel (Ю,А,Д,Ц,Б).
-	- istrvwl(c)	: check thai rear vowel (п р  т   оео).
-	- isttnl(c)		: check thai tonal mark.
-	- istgrant(c)	: check thai garant mark.
-	- istspmk(c)	: check thai special mark.
-	- istdigit(c)	: check thai digit.
-	- isfpunc(c)	: check front punctuation.({,(,[,)
-	- isbpunc(c)	: check back punctuation. ( },),],!,?,:,;,%,ъ)
-	- ispunc(c)		: check punctuation.
-
-	----------------------------------------------------------- */
+*	This is the new Thai character type checking Method.
+*	Copyright by Subun & Tanat Advanced Computer Inc. 1988
+*	Used with permission, Sahaviriya System.
+*
+*	By using short int (16 bits).
+*
+*	- High order byte is reserved for future use.
+*		1. bit 0  for back punctuation.
+*		2. bit 1  for front punctuation.
+*
+*	- Lower order byte is devided into 6 parts.
+*		1. bit 7  for consonants.
+*		   bit 6  for always leading consonants.
+*		2. bit 5  for leading vowels.
+*		   bit 4  for following vowels (rear).
+*		3. bit 3  for tonal marks.
+*		4. bit 2  for garant marks.
+*		5. bit 1  for special marks.
+*		6. bit 0  for thai numbers.
+*
+*	- The tctype's functions are istcon(c),istlcon(c),isvowel(c),istlvwl(c)
+*		istrvwl(c),isttnl(c),istgrnt(c),istspmk(c),istdigit(c).
+*
+*	- istcon(c)		: check thai consonant.
+*	- istlcon(c)	: check thai leading consonant (╘,╪,╫,н).
+*	- istvowel(c)	: check thai vowel.
+*	- istlvwl(c)	: check thai leading vowel (Ю,А,Д,Ц,Б).
+*	- istrvwl(c)	: check thai rear vowel (п р  т   оео).
+*	- isttnl(c)		: check thai tonal mark.
+*	- istgrant(c)	: check thai garant mark.
+*	- istspmk(c)	: check thai special mark.
+*	- istdigit(c)	: check thai digit.
+*	- isfpunc(c)	: check front punctuation.({,(,[,)
+*	- isbpunc(c)	: check back punctuation. ( },),],!,?,:,;,%,ъ)
+*	- ispunc(c)		: check punctuation.
+*
+*  ----------------------------------------------------------- */
 
 extern short int _tctype[];
 

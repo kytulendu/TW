@@ -1,9 +1,20 @@
-/****************************************************************************/
-/*  GETSTR.C 15 JAN 89                                                      */
-/*  Updated: Suttipong Kanakakorn                                           */
-/*          Wed  08-02-1989  09:52:44                                       */
-/****************************************************************************/
-#include "inc.h"
+#include <string.h>
+
+#include "..\common\cscrn.h"
+#include "..\common\cwtype.h"
+#include "..\common\ekbd.h"
+#include "..\common\grphc.h"
+#include "..\common\kbdcode.h"
+#include "..\common\sound.h"
+
+#include "const.h"
+#include "var.h"
+
+#include "kbd.h"
+#include "status.h"
+#include "tutil1.h"
+
+#include "getstr.h"
 
 /*****************************************************************************/
 /* get string                                                                */
@@ -15,8 +26,8 @@
 /*      attr   : attribute of string for displaying                          */
 /*      mode   : THAIENG,ENGLISH,ENGUPCASE,NUMBER,ONEORTWO                   */
 /*****************************************************************************/
-int getstring( char textst[], unsigned x, unsigned y,
-	unsigned maxlen, char attr, strtype mode ) {
+int getstring( char textst[], unsigned int x, unsigned int y,
+	unsigned int maxlen, char attr, strtype mode ) {
 	int inkey, key, oldlen, temp;
 	char keepchar;
 
@@ -157,10 +168,9 @@ int getstring( char textst[], unsigned x, unsigned y,
 	} while ( 1 );
 }
 
-int getname( char textst[], unsigned x, unsigned y, unsigned maxlen, char attr ) {
+int getname( char textst[], unsigned int x, unsigned int y, unsigned int maxlen, char attr ) {
 	int i;
 
-	/*************  Modified (+1) ***************/
 	char drv[MAXDRIVE + 1], dir[MAXDIR + 1], name[MAXFILE + 1], ext[MAXEXT + 1];
 	char textst2[80];
 	do {

@@ -1,6 +1,3 @@
-/****************************************************************************/
-/*  INC.H 15 JAN 89                                                         */
-/****************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
@@ -17,7 +14,13 @@
 #include "..\common\kbdcode.h"
 #include "..\common\const.h"
 #include "..\common\cwtype.h"
-#include "..\common\proto.h"
+
+#include "..\common\cscrn.h"
+#include "..\common\sound.h"
+#include "..\common\cusong.h"
+#include "..\common\dir.h"
+#include "..\common\ekbd.h"
+#include "..\common\grphc.h"
+
 #include "const.h"
 #include "var.h"
-#include "proto.h"

@@ -1,12 +1,29 @@
-/****************************************************************************/
-/*  INS.C 15 JAN 89                                                         */
-/*  Update: Suttipong Kanakakorn                                            */
-/*            Sat  08-05-1989  03:59:22                                     */
-/*          CUCC Debug 256 right margin                                     */
-/****************************************************************************/
-#include "inc.h"
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+
+#include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
+#include "..\common\ekbd.h"
+#include "..\common\grphc.h"
+#include "..\common\kbdcode.h"
+#include "..\common\sound.h"
+
 #include "convert.h"
+#include "var.h"
+
+#include "block.h"
+#include "cw.h"
+#include "edit.h"
+#include "getstr.h"
+#include "kbd.h"
+#include "move.h"
+#include "movement.h"
+#include "status.h"
+#include "tutil1.h"
+#include "wrap.h"
+
+#include "ins.h"
 
 /****************************************************************************/
 /*  Insert blank to workline at specified column(origin 1).                 */

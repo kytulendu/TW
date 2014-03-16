@@ -1,17 +1,33 @@
-/****************************************************************************/
-/*  BLOCK.C 15 JAN 89                                                       */
-/****************************************************************************/
-/* Updated: Suttipong Kanakakorn
-Thu  08-03-1989  10:47:20
-- Create .bak,
-- use dispprintf instead of dispstr for compress program size
-Fri  08-04-1989  22:10:45
-- reduce case in function blkcmd to reduce size of program
-*/
+#include <stdlib.h>
+#include <stdio.h>
+#include <dir.h>
+#include <dos.h>
+#include <string.h>
+#include <ctype.h>
 
-#include "inc.h"
-#include "..\common\cwgrphc.h"
+#include "..\common\const.h"
+#include "..\common\cscrn.h"
+#include "..\common\dir.h"
+#include "..\common\ekbd.h"
+#include "..\common\fileutil.h"
+#include "..\common\grphc.h"
+#include "..\common\kbdcode.h"
+#include "..\common\sound.h"
+
 #include "convert.h"
+#include "const.h"
+#include "var.h"
+
+#include "cw.h"
+#include "del.h"
+#include "edit.h"
+#include "getstr.h"
+#include "ins.h"
+#include "kbd.h"
+#include "menu.h"
+#include "tutil1.h"
+
+#include "block.h"
 
 /****************************************************************************/
 /*  Hide/display block. It cause the visual marking of a block to be alter- */
@@ -24,12 +40,13 @@ void toggleblk( void ) {
 	dispblock = !dispblock;
 	pagecomplete = NO;
 }
+
 /****************************************************************************/
 /*  Mark the beginning of a block. The marker itself is not visible on the  */
 /*  screen, and the block only becomes visibly marked when the End block    */
 /*  marker is set.                                                          */
 /****************************************************************************/
-void markbegin( unsigned x ) {
+void markbegin( unsigned int x ) {
 	blkbegin.lineno = lineno;
 	blkbegin.column = firstcol + x;
 	if ( blkbegin.lineno > blkend.lineno ) {
@@ -45,12 +62,13 @@ void markbegin( unsigned x ) {
 	dispblock = YES;
 	pagecomplete = NO;
 }
+
 /****************************************************************************/
 /*  Mark the end of a block. The marker itself is not visible on the screen */
 /*  and the block only becomes visibly marked when the Begin block marker   */
 /*  is set.                                                                 */
 /****************************************************************************/
-void markend( unsigned x ) {
+void markend( unsigned int x ) {
 	blkend.lineno = lineno;
 	blkend.column = firstcol + x;
 	if ( blkbegin.lineno > blkend.lineno ) {
@@ -66,6 +84,7 @@ void markend( unsigned x ) {
 	dispblock = YES;
 	pagecomplete = NO;
 }
+
 /****************************************************************************/
 /*  Check block it is marked or not. Return YES if it is marked , else      */
 /*  return NO.                                                              */
@@ -78,12 +97,12 @@ int haveblock( void ) {
 		return( YES );
 	}
 }
+
 /****************************************************************************/
 /*  Check position of input to see it is in block or not. Return YES if it  */
 /*  is in block , else return NO.                                           */
 /****************************************************************************/
-int inblock( unsigned linenum, unsigned colnum )     /* column origin 0 */
-{
+int inblock( unsigned int linenum, unsigned int colnum ) {	/* column origin 0 */
 	if ( ( linenum >= blkbegin.lineno ) &&
 		( linenum <= blkend.lineno ) ) {
 		if ( linenum == blkbegin.lineno ) {
@@ -101,6 +120,7 @@ int inblock( unsigned linenum, unsigned colnum )     /* column origin 0 */
 		return( NO );
 	}
 }
+
 /****************************************************************************/
 /*  Copy linked list from assigned line & column (first & last) to space    */
 /*  allocated from MS-DOS. Data structer of space is circular linked list,  */
@@ -110,20 +130,20 @@ int inblock( unsigned linenum, unsigned colnum )     /* column origin 0 */
 /****************************************************************************/
 struct line_node *copytospace( fline, lline, fcol, lcol )
 struct line_node *fline, *lline; /* first line & last line to be copied */
-unsigned fcol, lcol; /* first column in 1'st line & last column in last line,
+unsigned int fcol, lcol; /* first column in 1'st line & last column in last line,
 					 column is origin 0 */
 {
 	struct line_node *firstline, *templine, *newline;
-	unsigned i, j;
+	unsigned int i, j;
 	font_attr font;
 	char fontcode[9], *temp;
 	firstline = ( struct line_node * ) malloc( sizeof( struct line_node ) );
-	firstline->next = firstline;               /* set up     */
-	firstline->previous = firstline;           /* first node */
+	firstline->next = firstline;		/* set up     */
+	firstline->previous = firstline;	/* first node */
 	firstline->wrap = fline->wrap;
-	firstline->graph = NULL;                   /* graphic image is not copied */
+	firstline->graph = NULL;			/* graphic image is not copied */
 	i = linearcolumn( fline->text, fcol, &font );
-	findstrcode( fontcode, font );                /* find string of control code */
+	findstrcode( fontcode, font );		/* find string of control code */
 	firstline->text = ( char * ) malloc( strlen( fontcode ) + strlen( fline->text ) - i + 1 );
 	strcpy( firstline->text, fontcode );
 	strcat( firstline->text, ( fline->text ) + i );
@@ -159,6 +179,7 @@ unsigned fcol, lcol; /* first column in 1'st line & last column in last line,
 	}
 	return( firstline );
 }
+
 /****************************************************************************/
 /*  Insert source linked list pointed by sourceline,that previous pointer   */
 /*  point to last line,to destination linked list pointed by destline and   */
@@ -166,19 +187,19 @@ unsigned fcol, lcol; /* first column in 1'st line & last column in last line,
 /****************************************************************************/
 void insertlinklist( sourceline, destline, destcol )
 struct line_node *sourceline, *destline;
-unsigned destcol; /* thai column */
+unsigned int destcol; /* thai column */
 {
 	int i;
 	struct line_node *lastline;
 	font_attr font;
 	char fontcode[9], *temp;
 	lastline = sourceline->previous;
-	if ( sourceline->next != sourceline ) {  /* > 1 line ? */
+	if ( sourceline->next != sourceline ) {			/* > 1 line ? */
 		insertreturn( destline, destcol );
-		( destline->next )->previous = lastline;   /* link all before */
-		lastline->next = destline->next;         /* delete first &  */
-		destline->next = sourceline;             /* last line of    */
-		sourceline->previous = destline;         /* source after    */
+		( destline->next )->previous = lastline;	/* link all before */
+		lastline->next = destline->next;			/* delete first &  */
+		destline->next = sourceline;				/* last line of    */
+		sourceline->previous = destline;			/* source after    */
 		destline->wrap = sourceline->wrap;
 		temp = ( char * ) malloc( strlen( destline->text ) + strlen( sourceline->text ) + 1 );
 		strcpy( temp, destline->text );
@@ -192,11 +213,10 @@ unsigned destcol; /* thai column */
 		( lastline->next )->text = temp;
 		deleteline( sourceline );
 		deleteline( lastline );
-	} else {  /* only one line */
+	} else {	/* only one line */
 		i = linearcolumn( destline->text, destcol, &font );
 		findstrcode( fontcode, font );
-		temp = ( char * ) malloc( strlen( sourceline->text ) + strlen( destline->text )
-			+ ( 2 * strlen( fontcode ) ) + 1 );
+		temp = ( char * ) malloc( strlen( sourceline->text ) + strlen( destline->text ) + ( 2 * strlen( fontcode ) ) + 1 );
 		strncpy( temp, destline->text, i );
 		temp[i] = '\0';
 		strcat( temp, fontcode );
@@ -207,13 +227,13 @@ unsigned destcol; /* thai column */
 		destline->text = temp;
 	}
 }
+
 /****************************************************************************/
 /*  Delete part of linked list from struct from assigned parameter.         */
 /****************************************************************************/
 void deletelinklist( fline, lline, fcol, lcol )
 struct line_node *fline, *lline; /* first line & last line to be deleted */
-unsigned fcol, lcol; /* first column in 1'st line & last column in last line,
-					 origin 0 */
+unsigned int fcol, lcol; /* first column in 1'st line & last column in last line, origin 0 */
 {
 	struct line_node *templine, *freeline;
 	insertreturn( lline, lcol );
@@ -223,24 +243,29 @@ unsigned fcol, lcol; /* first column in 1'st line & last column in last line,
 	fline->next = lline;
 	lline->previous = fline;
 	while ( templine != lline ) {
-		if ( templine == curline )
+		if ( templine == curline ) {
 			curline = fline;
-		if ( templine == curpage )
+		}
+		if ( templine == curpage ) {
 			curpage = fline;
+		}
 		freeline = templine;
 		templine = templine->next;
-		if ( freeline->text != NULL )
+		if ( freeline->text != NULL ) {
 			free( freeline->text );
-		if ( freeline->graph != NULL )
+		}
+		if ( freeline->graph != NULL ) {
 			free( freeline->graph );
+		}
 		free( freeline );
 	}
 	deletereturn( fline );
 }
+
 /****************************************************************************/
 /*  Insert block at current cursor position.                                */
 /****************************************************************************/
-void copyblk( unsigned *x ) {
+void copyblk( unsigned int *x ) {
 	struct line_node *fline, *lline, *space;
 	if ( haveblock( ) && dispblock ) {
 		storeline( curline );
@@ -260,6 +285,7 @@ void copyblk( unsigned *x ) {
 		loadtoline( curline->text );
 	}
 }
+
 /****************************************************************************/
 /*  Delete block at current cursor position.                                */
 /****************************************************************************/
@@ -278,12 +304,13 @@ void deleteblk( void ) {
 		blkend.column = 0;
 		changeflag = YES;
 		pagecomplete = NO;
-	} /* if haveblock */
+	}
 }
+
 /****************************************************************************/
 /*  Move block to insert to current cursor position.                        */
 /****************************************************************************/
-void moveblk( unsigned *x ) {
+void moveblk( unsigned int *x ) {
 	struct line_node *space, *fline, *lline;
 	if ( haveblock( ) && dispblock ) {
 		storeline( curline );
@@ -321,6 +348,7 @@ void moveblk( unsigned *x ) {
 		dispblock = YES;
 	}
 }
+
 /****************************************************************************/
 /*  Read file from disk. Parameter is filename wanted to read. Space is     */
 /*  allocated from MS-DOS. Data structer of space is circular linked list,  */
@@ -332,19 +360,26 @@ struct line_node *rdfiletospace( char file_name[] ) {
 	FILE *fip, *fopen( );
 	register int i;
 	struct line_node *space, *newline, *currentline, *freeline;
-	static char text_str[MAXCOL * 5]; /******* Modified ***********/
+	static char text_str[MAXCOL * 5];
 	if ( ( fip = fopen( file_name, "rt" ) ) != NULL ) {
 		blockmsg( 11 );
-		dispstrhgc( "กำลังอ่านข้อมูลจากแผ่นจานแม่เหล็กอยู่ กรุณารอสักครู่..."
-			, 25 - CENTER_FACTOR, 11, 2 );
+		dispstrhgc( "กำลังอ่านข้อมูลจากแผ่นจานแม่เหล็กอยู่ กรุณารอสักครู่..." , 25 - CENTER_FACTOR, 11, 2 );
 		space = ( struct line_node * ) malloc( sizeof( struct line_node ) );
-		if ( space == NULL ) goto no_mem_avail;
+
+		if ( space == NULL ) {
+			goto no_mem_avail; 
+		}
+
 		space->next = space;
 		space->previous = space;
 		space->wrap = NO;
 		space->graph = NULL;
 		space->text = ( char * ) malloc( 1 );
-		if ( space->text == NULL ) goto no_mem_avail;
+
+		if ( space->text == NULL ) {
+			goto no_mem_avail; 
+		}
+
 		*( space->text ) = '\0';
 		if ( fgets( text_str, MAXCOL * 5, fip ) != NULL ) {
 			i = strlen( text_str );
@@ -356,7 +391,7 @@ struct line_node *rdfiletospace( char file_name[] ) {
 				( text_str[1] == 'G' ) &&
 				( text_str[2] == 'R' ) ) {
 				space->graph = NULL;
-				/*           space->graph = readgraph(text_str+4);   */
+				/* space->graph = readgraph( text_str + 4 ); */
 				free( space->text );
 				space->text = NULL;
 			} else {
@@ -366,10 +401,15 @@ struct line_node *rdfiletospace( char file_name[] ) {
 				}
 				free( space->text );
 				space->text = ( char * ) malloc( strlen( text_str ) + 1 );
-				if ( space->text == NULL ) goto no_mem_avail;
+
+				if ( space->text == NULL ) { 
+					goto no_mem_avail;
+				}
+
 				if ( !stdcode ) {
-					for ( i = 0; text_str[i] != '\0'; i++ )
+					for ( i = 0; text_str[i] != '\0'; i++ ) {
 						text_str[i] = kutostd( text_str[i] );
+					}
 				}
 				strcpy( space->text, text_str );
 			}
@@ -379,7 +419,11 @@ struct line_node *rdfiletospace( char file_name[] ) {
 					newline = currentline;
 				} else {
 					newline = ( struct line_node * ) malloc( sizeof( struct line_node ) );
-					if ( newline == NULL ) goto no_mem_avail;
+
+					if ( newline == NULL ) {
+						goto no_mem_avail;
+					}
+
 					newline->text = NULL;
 					newline->graph = NULL;
 					newline->wrap = NO;
@@ -394,20 +438,24 @@ struct line_node *rdfiletospace( char file_name[] ) {
 				if ((text_str[0] == '.') &&
 				(text_str[1] == 'G') &&
 				(text_str[2] == 'R')) {
-				/*             newline->graph = readgraph(text_str+4);    */
-			} else {
-				*/
+				*//* newline->graph = readgraph( text_str + 4 ); */
+				/*} else {*/
 					if ( ( i > 0 ) && ( text_str[i - 1] == WRAPCODE ) ) {
 						text_str[i - 1] = '\0';
 						newline->wrap = YES;
 					}
-				newline->text = ( char * ) malloc( strlen( text_str ) + 1 );
-				if ( newline->text == NULL ) goto no_mem_avail;
-				if ( !stdcode ) {
-					for ( i = 0; text_str[i] != '\0'; i++ )
-						text_str[i] = kutostd( text_str[i] );
-				}
-				strcpy( newline->text, text_str );
+					newline->text = ( char * ) malloc( strlen( text_str ) + 1 );
+
+					if ( newline->text == NULL ) {
+						goto no_mem_avail; 
+					}
+
+					if ( !stdcode ) {
+						for ( i = 0; text_str[i] != '\0'; i++ ) {
+							text_str[i] = kutostd( text_str[i] );
+						}
+					}
+					strcpy( newline->text, text_str );
 				/*}*/
 				currentline = newline;
 			}
@@ -417,8 +465,7 @@ struct line_node *rdfiletospace( char file_name[] ) {
 	} else {
 		errorsound( );
 		blockmsg( 10 );
-		dispstrhgc( "ไม่พบแฟ้มข้อมูลนี้ ! กด <ESC> เพื่อทำงานต่อ"
-			, 27 - CENTER_FACTOR, 10, 2 );
+		dispstrhgc( "ไม่พบแฟ้มข้อมูลนี้ ! กด <ESC> เพื่อทำงานต่อ" , 27 - CENTER_FACTOR, 10, 2 );
 		while ( ebioskey( 0 ) != ESCKEY );
 		return( NULL );
 	}
@@ -434,29 +481,34 @@ no_mem_avail:
 		while ( currentline != space ) {
 			freeline = currentline;
 			currentline = currentline->next;
-			if ( freeline->text != NULL )
+			if ( freeline->text != NULL ) {
 				free( freeline->text );
-			if ( freeline->graph != NULL )
+			}
+			if ( freeline->graph != NULL ) {
 				free( freeline->graph );
+			}
 			free( freeline );
 		}
-		if ( space->text != NULL )
+		if ( space->text != NULL ) {
 			free( space->text );
-		if ( space->graph != NULL )
+		}
+		if ( space->graph != NULL ) {
 			free( space->graph );
+		}
 		free( space );
 	}
 	return( NULL );
 }
+
 /****************************************************************************/
 /*  Find size of space that allocated form MS-DOS. Data structer of space   */
 /*  is circular linked list, previous pointer of first line point to last   */
 /*  line & next pointer of last line point to first line. Return value is   */
 /*  number of line of space.                                                */
 /****************************************************************************/
-unsigned spacesize( struct line_node *space ) {
+unsigned int spacesize( struct line_node *space ) {
 	struct line_node *temp;
-	unsigned size = 0;
+	unsigned int size = 0;
 	temp = space;
 	while ( temp->next != space ) {
 		temp = temp->next;
@@ -464,20 +516,16 @@ unsigned spacesize( struct line_node *space ) {
 	}
 	return( size );
 }
+
 /****************************************************************************/
 /*  Read block from file to insert to current cursor position               */
 /****************************************************************************/
-readblk( unsigned *x ) {
+int readblk( unsigned int *x ) {
 	char file_name[22];
 	struct line_node *space;
 	int i;
 	storeline( curline );
 	pagecomplete = NO;
-	/*
-	dispstrhgc(" •••••••••••••••••••••••••••••••••••••••••••••••••• ",18-CENTER_FACTOR,4,2);
-	dispstrhgc(" –  ใส่ชื่อแฟ้มข้อมูลที่ต้องการอ่าน :                         – ",18-CENTER_FACTOR,5,2);
-	dispstrhgc(" •••••••••••••••••••••••••••••••••••••••••••••••••• ",18-CENTER_FACTOR,6,2);
-	*/
 	framebox( 18 - CENTER_FACTOR, 4, 18 - CENTER_FACTOR + 53, 6, 2 );
 	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการอ่าน :", 18 - CENTER_FACTOR + 4, 5, 2 );
 	strcpy( file_name, "*.*" );
@@ -519,8 +567,9 @@ unsigned long getfilesize( void ) {
 	++lineno;
 	while ( templine->next != sentinel ) {
 		fsize = fsize + strlen( templine->text ) + 2;
-		if ( templine->wrap == YES )
+		if ( templine->wrap == YES ) {
 			fsize++;
+		}
 		templine = templine->next;
 		++lineno;
 
@@ -549,30 +598,29 @@ unsigned long diskfree( int driveno ) {
 	return( avail * bsec * sclus );
 }
 
-int chkspace( fname )
-char fname[];
-{
+int chkspace( char fname[] ) {
 	unsigned long diskspace, filesize;
 	int i, flag;
 	struct ffblk fdat;
 	char drv[MAXDRIVE], dir[MAXDIR], name[MAXFILE], ext[MAXEXT];
 
-	flag = fnsplit( fname, drv, dir, name, ext );              /* Analyse Fname */
+	flag = fnsplit( fname, drv, dir, name, ext );	/* Analyse Fname */
 	filesize = getfilesize( );
 	framebox( 17 - CENTER_FACTOR, 8, 17 - CENTER_FACTOR + 55, 12, REVERSEATTR );
-	dispstrhgc( " –             ขนาดแฟ้มข้อมูล =                   ไบต์    – ", 17 - CENTER_FACTOR, 9, 2 );
-	dispstrhgc( " –   เนื้อที่ว่างบนแผ่นจานแม่เหล็ก =                   ไบต์    – ", 17 - CENTER_FACTOR, 10, 2 );
+	dispstrhgc( "ขนาดแฟ้มข้อมูล =                   ไบต์", 32 - CENTER_FACTOR, 9, 2 );
+	dispstrhgc( "เนื้อที่ว่างบนแผ่นจานแม่เหล็ก =                   ไบต์", 22 - CENTER_FACTOR, 10, 2 );
 	dispprintf( 48 - CENTER_FACTOR, 9, 2, "%#10lu", filesize );
 
-	if ( flag & DRIVE )                                    /* Has it Drive */
+	if ( flag & DRIVE ) {	/* Has it Drive */
 		i = drv[0] - 'A' + 1;
-	else
+	} else {
 		i = 0;
+	}
 	diskspace = diskfree( i );
 
-	if ( !create_bak && file_exist( fname ) ) {       /* If .BAK is not necessary */
-		findfirst( fname, &fdat, 0 );                  /* DiskSpace can be increased */
-		diskspace += ( unsigned long ) fdat.ff_fsize; /* By old file size */
+	if ( !create_bak && file_exist( fname ) ) {			/* If .BAK is not necessary */
+		findfirst( fname, &fdat, 0 );					/* DiskSpace can be increased */
+		diskspace += ( unsigned long ) fdat.ff_fsize;	/* By old file size */
 	}
 
 	dispprintf( 48 - CENTER_FACTOR, 10, 2, "%10lu", diskspace );
@@ -581,26 +629,26 @@ char fname[];
 		errorsound( );
 		while ( ebioskey( 0 ) != ESCKEY );
 		return( 0 );
-	} else
+	} else {
 		return( 1 );
+	}
 }
-
 
 void writeblk( file_name, linebegin, colbegin, lineend, colend )
 char file_name[];
 struct line_node *linebegin, *lineend;
-unsigned colbegin, colend;          /* physical column */
+unsigned int colbegin, colend;		/* physical column */
 {
 	FILE *fip;
 	struct line_node *currentline;
-	int key, i, j, firstround, count;   /*  fileerror = NO;  */
+	int key, i, j, firstround, count;	/* fileerror = NO; */
 	char *templine, fontcode[9];
 	font_attr font;
 	char drv[MAXDRIVE], dir[MAXDIR], name[MAXFILE], ext[MAXEXT];
 	char name_bak[MAXPATH];
 
 	static char bakext[] = ".BAK";
-	static char text_str[MAXCOL * 5];      /********* Modified ************/
+	static char text_str[MAXCOL * 5];
 
 	pagecomplete = NO;
 	storeline( curline );
@@ -608,44 +656,50 @@ unsigned colbegin, colend;          /* physical column */
 	framebox( 17 - CENTER_FACTOR, 4, 17 - CENTER_FACTOR + 55, 6, 2 );
 	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการจัดเก็บ :", 17 - CENTER_FACTOR + 4, 5, 2 );
 	i = getname( file_name, 47 - CENTER_FACTOR, 5, 22, 2 );
-	if ( ( i != YES ) || ( file_name[0] == '\0' ) )
+	if ( ( i != YES ) || ( file_name[0] == '\0' ) ) {
 		return;
+	}
 
 	framebox( 17 - CENTER_FACTOR, 8, 17 - CENTER_FACTOR + 55, 12, 2 );
 	fnsplit( file_name, drv, dir, name, ext );
 
 	if ( file_exist( file_name ) ) {
-		dispstrhgc( " –    แฟ้มข้อมูลเดิมมีอยู่แล้ว ต้องการเขียนทับหรือไม่ ? (Y/N)      – ", 17 - CENTER_FACTOR, 10, 2 );
+		dispstrhgc( "แฟ้มข้อมูลเดิมมีอยู่แล้ว ต้องการเขียนทับหรือไม่ ? (Y/N)", 23 - CENTER_FACTOR, 10, 2 );
 		do {
 			key = toupper( ebioskey( 0 ) & 0xff );
 		} while ( ( key != 'N' ) && ( key != 'Y' ) );
 
-		if ( key == 'Y' ) {                    /* Save edited file */
-			if ( create_bak ) {                  /* Create .BAK */
+		if ( key == 'Y' ) {						/* Save edited file */
+			if ( create_bak ) {					/* Create .BAK */
 				fnmerge( name_bak, drv, dir, name, bakext );
-				unlink( name_bak );                /* Delete Old .BAK */
-				if ( chkspace( file_name ) )         /* Enough Space ? */
+				unlink( name_bak );				/* Delete Old .BAK */
+				if ( chkspace( file_name ) ) {	/* Enough Space ? */
 					rename( file_name, name_bak );
-				else
-					return;                        /* File too large */
-			} else {                           /* Ignore .BAK */
-				if ( chkspace( file_name ) )          /* Enough Space ? */
+				} else {
+					return;						/* File too large */
+				}
+			} else {							/* Ignore .BAK */
+				if ( chkspace( file_name ) ) {	/* Enough Space ? */
 					unlink( file_name );
-				else
+				} else {
 					return;
+				}
 			}
-		} else {                             /* Don't save edited file */
+		} else {								/* Don't save edited file */
 			return;
 		}
-	} else {                                 /* Save new File */
-		if ( !chkspace( file_name ) )              /* Not enough space */
+	} else {									/* Save new File */
+		if ( !chkspace( file_name ) ) {			/* Not enough space */
 			return;
+		}
 	}
+
 	if ( ( fip = fopen( file_name, "wt" ) ) != NULL ) {
 		dispstrhgc( "กำลังจัดเก็บแฟ้มข้อมูลอยู่ กรุณารอสักครู่...", 22 - CENTER_FACTOR, 11, 2 );
 		currentline = linebegin;
-		/*      if (currentline->graph != NULL)
-		fprintf(fip,".GR %s\n",currentline->graph);     */
+		/* if ( currentline->graph != NULL ) {
+			fprintf( fip, ".GR %s\n", currentline->graph );
+		}*/
 		firstround = linearcolumn( currentline->text, colbegin, &font );
 		findstrcode( fontcode, font );
 		fputs( fontcode, fip );
@@ -674,8 +728,9 @@ unsigned colbegin, colend;          /* physical column */
 			putc( '\n', fip );
 			firstround = 0;
 			currentline = currentline->next;
-			/*          if (currentline->graph != NULL)
-			fprintf(fip,".GR %s\n",currentline->graph);    */
+			/*if ( currentline->graph != NULL ) {
+				fprintf( fip, ".GR %s\n", currentline->graph );
+			}*/
 		}
 		templine = currentline->text;
 		count = linearcolumn( templine, colend, &font );
@@ -700,16 +755,16 @@ unsigned colbegin, colend;          /* physical column */
 		}
 		putc( 0x1a, fip );
 		fclose( fip );
-	}  /*   else {
-	   fileerror = YES; }  */
+	}/*else {
+	   fileerror = YES;
+	} */
 	/*
-	if (fileerror == YES) {
-	errorsound();
-	blockmsg(10);
-	dispstrhgc("จัดเก็บแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ",24-CENTER_FACTOR,10,2);
-	while (ebioskey(0) != ESCKEY);
-	}
-	*/
+	if ( fileerror == YES ) {
+		errorsound( );
+		blockmsg( 10 );
+		dispstrhgc( "จัดเก็บแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ", 24 - CENTER_FACTOR, 10, 2 );
+		while ( ebioskey( 0 ) != ESCKEY );
+	} */
 }
 
 void writeblock( void ) {
@@ -718,22 +773,25 @@ void writeblock( void ) {
 	struct line_node *firstline, *lastline;
 	if ( haveblock( ) ) {
 		file_name[0] = '\0';
-		linenum = blkbegin.lineno;           /* get displacement */
-		firstline = sentinel->next;          /* then set pointer */
-		while ( linenum-- > 1 )                /* to first line of */
-			firstline = firstline->next;   /* block position   */
-		linenum = blkend.lineno;             /* get displacement */
-		lastline = sentinel->next;           /* of end block to  */
-		while ( linenum-- > 1 )                /* set pointer to   */
-			lastline = lastline->next;     /* last line of block */
+		linenum = blkbegin.lineno;			/* get displacement */
+		firstline = sentinel->next;			/* then set pointer */
+		while ( linenum-- > 1 ) {			/* to first line of */
+			firstline = firstline->next;	/* block position   */
+		}
+		linenum = blkend.lineno;			/* get displacement */
+		lastline = sentinel->next;			/* of end block to  */
+		while ( linenum-- > 1 ) {			/* set pointer to   */
+			lastline = lastline->next;		/* last line of block */
+		}
 		writeblk( file_name, firstline, blkbegin.column, lastline, blkend.column );
 	}
 }
 
-void blkcmd( register unsigned key, unsigned *x ) {
+void blkcmd( register unsigned int key, unsigned int *x ) {
 	key &= 0xff;
-	if ( !isalpha( key ) && !iscntrl( key ) )
+	if ( !isalpha( key ) && !iscntrl( key ) ) {
 		return;
+	}
 	switch ( key & 0x1f ) {
 	case 'b' - 'a' + 1:
 		markbegin( *x );
@@ -769,8 +827,8 @@ void blkcmd( register unsigned key, unsigned *x ) {
 	}
 }
 
-void blockcommand( unsigned *x ) {
-	unsigned key;
+void blockcommand( unsigned int *x ) {
+	unsigned int key;
 	dispkey( CNTRL_K );
 	waitkbd( 3, 2 );
 	key = ebioskey( 0 );

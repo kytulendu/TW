@@ -4,7 +4,7 @@
 
 CC = TCC
 INCLUDEPATH = C:\TC\INCLUDE
-CCFLAGS = -c -w -DCW -d -O -ml -f- -Z -K -k- -C -I$(INCLUDEPATH)
+CCFLAGS = -c -w -DCW -d -O -ml -f- -Z -K -k- -I$(INCLUDEPATH)
 ASM = WASMR
 ASMFLAGS = -zq -wx
 

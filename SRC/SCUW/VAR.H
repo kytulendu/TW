@@ -1,13 +1,11 @@
-/****************************************************************************/
-/*  VAR.C 15 JAN 89                                                         */
-/*  var.c combine with var.h By Noom Suttipong Sun  07-30-1989  15:37:35    */
-/*  Updated: Suttipong Kanakakorn                                           */
-/*         : Mon  07-31-1989  20:13:05                                      */
-/*  CUCC   : Add more comments						    */
-/****************************************************************************/
+#include <dir.h>
 
-#ifndef __VAR_H_
-#define __VAR_H_
+#include "..\common\cwtype.h"
+
+#include "const.h"
+
+#ifndef VAR_H_INCLUDED
+#define VAR_H_INCLUDED
 
 #ifdef  DEFINE_VAR
 #define EXTERN
@@ -31,10 +29,10 @@ EXTERN struct line_node *curpage;   /* pointer to current page */
 EXTERN struct line_node *curline;   /* pointer to current line */
 
 struct  windowtype {
-	unsigned row;              /* row of upper left corner */
-	unsigned col;              /* column of upper left corner */
-	unsigned length;           /* no. of maximum column */
-	unsigned width;            /* no. of line per page */
+	unsigned int row;              /* row of upper left corner */
+	unsigned int col;              /* column of upper left corner */
+	unsigned int length;           /* no. of maximum column */
+	unsigned int width;            /* no. of line per page */
 };
 EXTERN struct  windowtype wind;
 
@@ -50,8 +48,8 @@ EXTERN struct Workline workline;
 EXTERN char macro[10][36];
 
 struct blockstruct {
-	unsigned lineno;
-	unsigned column;
+	unsigned int lineno;
+	unsigned int column;
 };
 EXTERN struct blockstruct blkbegin, blkend;
 
@@ -85,11 +83,12 @@ EXTERN boolean thaimode;    /*  current mode is thai or eng */
 EXTERN boolean insertmode;  /*  toggle insert mode ON/OFF   */
 EXTERN boolean replaceflag;
 EXTERN boolean relmargin;
+
 /* กำหนดขอบเขตการแสดงผลบนจอภาพเก็บไว้ในตัวแปร window */
 
-EXTERN unsigned firstcol;      /* first column(physical) to be displayed onscreen */
-EXTERN unsigned lineno;        /* line number of current line (origin 1)          */
-EXTERN unsigned fontused;      /* current attribute of character e.g. BOLD ITALIC */
+EXTERN unsigned int firstcol;      /* first column(physical) to be displayed onscreen */
+EXTERN unsigned int lineno;        /* line number of current line (origin 1)          */
+EXTERN unsigned int fontused;      /* current attribute of character e.g. BOLD ITALIC */
 EXTERN boolean dispblock;          /* display block or not                            */
 
 EXTERN boolean quitprog;
@@ -105,7 +104,7 @@ EXTERN int leftmar;     /*  left margin */
 EXTERN int rightmar;    /*  right margin */
 EXTERN int lineperpage; /*  number of lines perpage */
 
-EXTERN unsigned command_tab[];
+EXTERN unsigned int command_tab[];
 
 #else
 /* EXTERN will be declared as null already */
@@ -117,9 +116,9 @@ EXTERN boolean relmargin = NO;
 
 /* กำหนดขอบเขตการแสดงผลบนจอภาพเก็บไว้ในตัวแปร window */
 
-EXTERN unsigned firstcol = 0;      /* first column(physical) to be displayed onscreen */
-EXTERN unsigned lineno = 1;        /* line number of current line (origin 1)          */
-EXTERN unsigned fontused = 0;      /* current attribute of character e.g. BOLD ITALIC */
+EXTERN unsigned int firstcol = 0;      /* first column(physical) to be displayed onscreen */
+EXTERN unsigned int lineno = 1;        /* line number of current line (origin 1)          */
+EXTERN unsigned int fontused = 0;      /* current attribute of character e.g. BOLD ITALIC */
 EXTERN boolean dispblock = YES;    /* display block or not                            */
 
 EXTERN boolean quitprog = NO;
@@ -136,7 +135,7 @@ EXTERN int leftmar = -1;     /*  left margin */
 EXTERN int rightmar = -1;     /*  right margin */
 EXTERN int lineperpage = -1;  /*  number of lines perpage */
 
-EXTERN unsigned command_tab[] = {
+EXTERN unsigned int command_tab[] = {
 	0x1400, 0x1401,
 	0x1800, ALTX,
 
@@ -242,5 +241,5 @@ EXTERN unsigned command_tab[] = {
 
 #undef EXTERN /* restore it */
 
-#endif /* __VAR_H */
+#endif /* VAR_H_INCLUDED  */
 

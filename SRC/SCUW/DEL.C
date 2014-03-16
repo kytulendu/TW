@@ -1,13 +1,24 @@
-/****************************************************************************/
-/*  DEL.C 15 JAN 89                                                         */
-/****************************************************************************/
-#include "inc.h"
+#include <stdlib.h>
+#include <string.h>
+
+#include "..\common\cwtype.h"
+
+#include "var.h"
+
+#include "block.h"
+#include "edit.h"
+#include "move.h"
+#include "movement.h"
+#include "tutil1.h"
+
+#include "del.h"
+
 /****************************************************************************/
 /*  Delete character of current line at column given.                       */
 /****************************************************************************/
-void delete_char( unsigned x ) {
-	register unsigned i = x + firstcol + 1;
-	unsigned j = strlen( workline.middle );
+void delete_char( unsigned int x ) {
+	register unsigned int i = x + firstcol + 1;
+	unsigned int j = strlen( workline.middle );
 	if ( i != j ) {
 		if ( ( workline.attr[i] & ENLARGEATTR ) == ENLARGEATTR ) {
 			for ( ; i < j; i++ ) {
@@ -55,6 +66,7 @@ void delete_char( unsigned x ) {
 	}
 	changeflag = YES;
 }
+
 /****************************************************************************/
 /*  Concatenate line given with next line.(Or delete return of line given.) */
 /****************************************************************************/
@@ -82,8 +94,9 @@ void deletereturn( struct line_node *line ) {
 			curpage = line;
 		}
 		free( linedeleted->text );
-		if ( linedeleted->graph != NULL )
+		if ( linedeleted->graph != NULL ) {
 			free( linedeleted->graph );
+		}
 		free( linedeleted );
 	}
 }
@@ -110,11 +123,11 @@ void del_return( void ) {
 	changeflag = YES;
 }
 
-void backspace( unsigned *x ) {
+void backspace( unsigned int *x ) {
 	register int i;
 	int enlargeflag = NO;
 	i = *x + firstcol;
-	if ( i > 0 ) {     /* begin of line ? */
+	if ( i > 0 ) {	/* begin of line ? */
 		if ( workline.below[i] == ENLARGEATTR ) {
 			enlargeflag = YES;
 			if ( ( workline.topest[i - 1] == ' ' ) &&
@@ -139,13 +152,13 @@ void backspace( unsigned *x ) {
 			}
 			i = *x + firstcol - 1;
 		}
-		if ( workline.topest[i] != ' ' )
+		if ( workline.topest[i] != ' ' ) {
 			workline.topest[i] = ' ';
-		else if ( workline.upper[i] != ' ' )
+		} else if ( workline.upper[i] != ' ' ) {
 			workline.upper[i] = ' ';
-		else if ( workline.below[i] != ' ' )
+		} else if ( workline.below[i] != ' ' ) {
 			workline.below[i] = ' ';
-		else {
+		} else {
 			while ( i < MAXCOL ) {
 				workline.middle[i] = workline.middle[i + 1];
 				workline.upper[i] = workline.upper[i + 1];
@@ -155,25 +168,29 @@ void backspace( unsigned *x ) {
 				i++;
 			}
 			if ( haveblock( ) ) {
-				if ( lineno == blkbegin.lineno )
-					if ( ( *x + firstcol ) <= blkbegin.column )
+				if ( lineno == blkbegin.lineno ) {
+					if ( ( *x + firstcol ) <= blkbegin.column ) {
 						blkbegin.column--;
-				if ( lineno == blkend.lineno )
-					if ( ( *x + firstcol ) <= blkend.column )
+					}
+				}
+				if ( lineno == blkend.lineno ) {
+					if ( ( *x + firstcol ) <= blkend.column ) {
 						blkend.column--;
+					}
+				}
 			}
 			if ( enlargeflag != YES ) {
-				if ( *x > 0 )
+				if ( *x > 0 ) {
 					( *x )--;
-				else {
+				} else {
 					firstcol--;
 					storeline( curline );
 					pagecomplete = NO;
 				}
 			} else {
-				if ( *x >= 2 )
+				if ( *x >= 2 ) {
 					*x = *x - 2;
-				else {
+				} else {
 					firstcol = firstcol - 2;
 					storeline( curline );
 					pagecomplete = NO;
@@ -190,27 +207,27 @@ void backspace( unsigned *x ) {
 	changeflag = YES;
 }
 
-void delete_word( unsigned x ) {
+void delete_word( unsigned int x ) {
 	int i;
 	i = x + firstcol + 1;
 	if ( workline.middle[i] != '\0' ) {
 		if ( ( workline.middle[i] != ' ' ) && ( workline.middle[i] != WRAPBLANK ) ) {
-			while ( ( workline.middle[i] != ' ' ) &&
-				( workline.middle[i] != WRAPBLANK ) &&
-				( workline.middle[i] != '\0' ) )
+			while ( ( workline.middle[i] != ' ' ) && ( workline.middle[i] != WRAPBLANK ) && ( workline.middle[i] != '\0' ) ) {
 				delete_char( x );
+			}
 		} else {
-			while ( ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ) )
+			while ( ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ) ) {
 				delete_char( x );
+			}
 		}
 	} else {
 		del_return( );
 	}
 }
 
-void deltoendline( unsigned x, unsigned y ) {
-	register unsigned i = MAXCOL + 1;
-	unsigned j = x + firstcol + 1;
+void deltoendline( unsigned int x, unsigned int y ) {
+	register unsigned int i = MAXCOL + 1;
+	unsigned int j = x + firstcol + 1;
 	while ( i <= j ) {
 		workline.topest[i] = ' ';
 		workline.upper[i] = ' ';
@@ -223,6 +240,7 @@ void deltoendline( unsigned x, unsigned y ) {
 	refreshline( x, y );
 	changeflag = YES;
 }
+
 void deleteline( struct line_node *line ) {
 	if ( line->next != sentinel ) {
 		if ( curline == line ) {
@@ -235,13 +253,15 @@ void deleteline( struct line_node *line ) {
 		( line->previous )->next = line->next;
 		( line->next )->previous = line->previous;
 		free( line->text );
-		if ( line->graph != NULL )
+		if ( line->graph != NULL ) {
 			free( line->graph );
+		}
 		free( line );
 	} else {
 		free( line->text );
-		if ( line->graph != NULL )
+		if ( line->graph != NULL ) {
 			free( line->graph );
+		}
 		line->text = ( char * ) malloc( 1 );
 		*( line->text ) = '\0';
 		if ( curline == line ) {
@@ -249,6 +269,7 @@ void deleteline( struct line_node *line ) {
 		}
 	}
 }
+
 void delete_line( void ) {
 	if ( haveblock( ) ) {
 		if ( lineno < blkend.lineno ) {
