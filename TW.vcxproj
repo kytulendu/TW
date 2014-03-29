@@ -140,7 +140,6 @@
     <ClInclude Include="SRC\SCUW\FILE.H" />
     <ClInclude Include="SRC\SCUW\GETSTR.H" />
     <ClInclude Include="SRC\SCUW\GRPH.H" />
-    <ClInclude Include="SRC\SCUW\INC.H" />
     <ClInclude Include="SRC\SCUW\INS.H" />
     <ClInclude Include="SRC\SCUW\KBD.H" />
     <ClInclude Include="SRC\SCUW\MENU.H" />
@@ -152,7 +151,9 @@
     <ClInclude Include="SRC\SCUW\STATUS.H" />
     <ClInclude Include="SRC\SCUW\TCTYPE.H" />
     <ClInclude Include="SRC\SCUW\THAI.H" />
+    <ClInclude Include="SRC\SCUW\THAISYLS\GLOBAL.H" />
     <ClInclude Include="SRC\SCUW\THAISYLS\MAINSYLS.H" />
+    <ClInclude Include="SRC\SCUW\THAISYLS\ROUTINE.H" />
     <ClInclude Include="SRC\SCUW\TUTIL1.H" />
     <ClInclude Include="SRC\SCUW\VAR.H" />
     <ClInclude Include="SRC\SCUW\WRAP.H" />

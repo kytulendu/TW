@@ -1,24 +1,23 @@
-#include "Thai.h"
-#include "Global.h"
-#include "TCtype.h"
+#include "..\tctype.h"
+#include "..\thai.h"
 
-unsigned char *SaraAhRtn( TempIndx )
-register unsigned char *TempIndx;
-{
+#include "global.h"
+#include "routine.h"
+
+unsigned char *SaraAhRtn( register unsigned char *TempIndx ) {
 	unsigned char *TempIndxm2 = TempIndx - 2;
 
-	if ( *( TempIndx + 1 ) == HorHeeb && *( TempIndx + 2 ) == Karan ) /* กรณีนี้เป็น ห์ เช่น เคราะห์ */
-	{
+	if ( *( TempIndx + 1 ) == HorHeeb && *( TempIndx + 2 ) == Karan ) {	/* กรณีนี้เป็น ห์ เช่น เคราะห์ */
 		return( ( TempIndx + 2 <= RightMargin ) ? ( TempIndx + 2 ) : FAIL );
 	} else {
-		if ( TempIndx <= RightMargin )
-			return( TempIndx );   /* กรณีทั่ว ๆ ไป เช่น จะ, พระ   */
-		else
-			if ( istcon( *TempIndxm2 ) )
+		if ( TempIndx <= RightMargin ) {
+			return( TempIndx );								/* กรณีทั่ว ๆ ไป เช่น จะ, พระ   */
+		} else {
+			if ( istcon( *TempIndxm2 ) ) {
 				switch ( *( TempIndx - 1 ) ) {
 				case NoreNoo:
 					if ( *TempIndxm2 != ShoreChang )
-						return( TempIndxm2 ); /* cut before NoreNue */
+						return( TempIndxm2 );				/* cut before NoreNue */
 					break;
 				case RoreReo:
 					if ( !findchar( *TempIndxm2, "กขตทปพสห" ) )
@@ -38,7 +37,9 @@ register unsigned char *TempIndx;
 					break;
 				default:
 					return( TempIndxm2 );
-			}   /* end switch */
+				}
+			}
+		}
 		return( FAIL );
 	}
-} /* end saraAh Rtn */
+}

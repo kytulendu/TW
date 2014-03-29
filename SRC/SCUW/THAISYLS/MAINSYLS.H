@@ -1,6 +1,6 @@
 #ifndef MAINSYLS_H_INCLUDED
 #define MAINSYLS_H_INCLUDED
 
-unsigned char *FINDCUT( char *lm, char *eot, char *rm );
+unsigned char *FINDCUT( unsigned char *lm, unsigned char *eot, unsigned char *rm );
 
 #endif

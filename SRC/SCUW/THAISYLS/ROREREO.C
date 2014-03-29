@@ -1,13 +1,15 @@
-#include "Thai.h"
-#include "TCtype.h"
-#include "Global.h"
+#include "..\tctype.h"
+#include "..\thai.h"
 
-unsigned char *RoreReoRtn( TempIndx )
-register unsigned char *TempIndx;
-{
-	if ( *( TempIndx - 1 ) != RoreReo )
+#include "global.h"
+#include "routine.h"
+
+unsigned char *RoreReoRtn( register unsigned char *TempIndx ) {
+	if ( *( TempIndx - 1 ) != RoreReo ) {
 		return( FAIL );
-	if ( istrvwl( *( TempIndx - 2 ) ) )
+	}
+	if ( istrvwl( *( TempIndx - 2 ) ) ) {
 		return( TempIndx - 1 );
+	}
 	return( FAIL );
 }

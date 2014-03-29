@@ -248,9 +248,6 @@
     <ClInclude Include="SRC\SCUW\CONVERT.H">
       <Filter>Source Code\Header Files\SCUW</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\SCUW\INC.H">
-      <Filter>Source Code\Header Files\SCUW</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\SCUW\TCTYPE.H">
       <Filter>Source Code\Header Files\SCUW</Filter>
     </ClInclude>
@@ -337,6 +334,12 @@
     </ClInclude>
     <ClInclude Include="SRC\SCUW\GRPH.H">
       <Filter>Source Code\Header Files\SCUW</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\THAISYLS\GLOBAL.H">
+      <Filter>Source Code\Header Files\SCUW\THAISYLS</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\THAISYLS\ROUTINE.H">
+      <Filter>Source Code\Header Files\SCUW\THAISYLS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
