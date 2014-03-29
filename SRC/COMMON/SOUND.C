@@ -1,3 +1,9 @@
+/** SOUND.C 15 JAN 89
+*   Updated : Suttipong Kanakakorn
+*             Sun  08-06-1989  18:30:55
+*             Mon  10-23-1989  23:18:49
+*/
+
 #include <bios.h>
 #include <dos.h>
 

@@ -1,6 +1,8 @@
 #include "cwtype.h"
 
 /** find length of thai string
+*   Updated: Suttipong Kanakakorn, use pointer instead of array
+*            Sun  08-06-1989  16:32:15
 *  \param[in]  p_thaistring		thai string.
 *  \return int					length of thai string. */
 int thaistrlen( char *p_thaistring ) {

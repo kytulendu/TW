@@ -1,4 +1,9 @@
-/* AT&T  graphics module  for CW 1.20 */
+/** AT&T graphics module for CW 1.20
+*
+*   Kraisorn  Liansee
+*   Date:      04/21/1988
+*   Updated:   04/21/1988
+*/
 
 #include <dos.h>
 

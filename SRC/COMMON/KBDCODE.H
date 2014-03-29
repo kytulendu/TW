@@ -1,3 +1,8 @@
+/** KBDCODE.H 15 JAN 89
+*   Updated: Suttipong Kanakakorn
+*            Sun  08-06-1989  13:24:38
+*/
+
 #ifndef KBDCODE_H_INCLUDED
 #define KBDCODE_H_INCLUDED
 

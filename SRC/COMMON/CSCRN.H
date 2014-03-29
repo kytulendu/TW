@@ -4,6 +4,7 @@
 #define CSCRN_H_INCLUDED
 
 /** Draw line using Bresenham's line algorithm.
+*  author Zingl Alois
 *  code from http://members.chello.at/~easyfilter/bresenham.html
 *  more info http://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
 *  \param[in]  p_xStart		vertical position of start point.
@@ -29,6 +30,8 @@ void _rectangle( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, p_color*/
 void dispstrhgc( char *p_string, unsigned int p_x, unsigned int p_y, font_attr p_attr );
 
 /** display string with printf capability.
+*   Written: Suttipong Kanakakorn
+*            Wed  08-02-1989  00:33:25
 *  \param[in]  p_x			vertical position ( 0 - 89 ).
 *  \param[in]  p_y			horizontal position ( 0 - 16 ).
 *  \param[in]  p_attr		attribute of string.
@@ -49,6 +52,8 @@ void dispblank( unsigned int p_x, unsigned int p_y, unsigned int p_count, font_a
 void togglefont( font_attr *p_curfont, font_code p_code );
 
 /** Draw frame box on screen
+*   Written: Suttipong Kanakakorn
+*            Fri  08-04-1989  23:39:16
 *  \param[in]  p_xStart		vertical position of start point.
 *  \param[in]  p_yStart		horizontal position of start point.
 *  \param[in]  p_xEnd		vertical position of end point.

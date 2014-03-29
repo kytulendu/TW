@@ -1,10 +1,8 @@
-/*-----------------------------------------------------------------------*/
-/*            Graphics module header file for CW 1.20                    */
-/*                                                                       */
-/*                     Suttipong Kanakakorn                              */
-/*        Date    :        Sun  07-30-1989  16:01:13                     */
-/*        Updated :                                                      */
-/*-----------------------------------------------------------------------*/
+/** Graphics module header file for CW 1.20
+*
+*  Suttipong Kanakakorn
+*  Date    : Sun  07-30-1989  16:01:13
+*/
 
 #ifndef CWGRPHC_H_INCLUDED
 #define CWGRPHC_H_INCLUDED
