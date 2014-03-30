@@ -790,18 +790,14 @@ unsigned pulled_down_menu( unsigned *curmenu, unsigned *x, unsigned *y ) {
 				break;
 			case 0x8400:
 				savepic( );
-				dispstrhgc( " ••••••••••••••••••••••••••••••••••••••••••••••• ", 20 - CENTER_FACTOR, 5, 2 );
-				dispstrhgc( " – สร้างตารางโดยการกดปุ่ม Scroll Lock , แล้วกด Shift – ", 20 - CENTER_FACTOR, 6, 2 );
-				dispstrhgc( " – ร่วมกับปุ่มต่างๆทางด้านขวาเพื่อสร้างตารางดังต่อไปนี้       – ", 20 - CENTER_FACTOR, 7, 2 );
-				dispstrhgc( " –                                               – ", 20 - CENTER_FACTOR, 8, 2 );
-				dispstrhgc( " – minus(•) = •    plus(+) =                    – ", 20 - CENTER_FACTOR, 9, 2 );
-				dispstrhgc( " –                                               – ", 20 - CENTER_FACTOR, 10, 2 );
-				dispstrhgc( " – Home(7)  =        8    = ‘      PgDn(9)  =  – ", 20 - CENTER_FACTOR, 11, 2 );
-				dispstrhgc( " –                                               – ", 20 - CENTER_FACTOR, 12, 2 );
-				dispstrhgc( " –    4     = “       5    = –         6     = ’ – ", 20 - CENTER_FACTOR, 13, 2 );
-				dispstrhgc( " –                                               – ", 20 - CENTER_FACTOR, 14, 2 );
-				dispstrhgc( " – End(1)   =        2    =       PgDn(3)  =  – ", 20 - CENTER_FACTOR, 15, 2 );
-				dispstrhgc( " •กด <ESC> เพื่อทำงานต่อ••••••••••••••••••••••••••• ", 20 - CENTER_FACTOR, 16, 2 );
+				framebox( 20 - CENTER_FACTOR, 5, ( 20 - CENTER_FACTOR ) + 50, 16, REVERSEATTR );
+				dispstrhgc( "สร้างตารางโดยการกดปุ่ม Scroll Lock , แล้วกด Shift", ( 20 - CENTER_FACTOR ) + 3, 6, 2 );
+				dispstrhgc( "ร่วมกับปุ่มต่างๆทางด้านขวาเพื่อสร้างตารางดังต่อไปนี้", ( 20 - CENTER_FACTOR ) + 3, 7, 2 );
+				dispstrhgc( "minus(•) = •    plus(+) = ", ( 20 - CENTER_FACTOR ) + 3, 9, 2 );
+				dispstrhgc( "Home(7)  =        8    = ‘      PgDn(9)  = ", ( 20 - CENTER_FACTOR ) + 3, 11, 2 );
+				dispstrhgc( "   4     = “       5    = –         6     = ’", ( 20 - CENTER_FACTOR ) + 3, 13, 2 );
+				dispstrhgc( "End(1)   =        2    =       PgDn(3)  = ", ( 20 - CENTER_FACTOR ) + 3, 15, 2 );
+				dispstrhgc( "กด <ESC> เพื่อทำงานต่อ", ( 20 - CENTER_FACTOR ) + 3, 16, 2 );
 				while ( ebioskey( 0 ) != ESCKEY );
 				retpic( );
 				resscrn( scrnndx,
@@ -860,13 +856,12 @@ unsigned pulled_down_menu( unsigned *curmenu, unsigned *x, unsigned *y ) {
 				if ( i == RETKEY ) {
 					smode = ( lev3 == 1 ) ? CUR_DIR : CW_DIR;
 					savepic( );
-					dispstrhgc( " ••••••••••••••••••••••••• ", 50 - CENTER_FACTOR, 6, REVERSEATTR );
-					dispstrhgc( " ••••••••••••••••••••••••• ", 50 - CENTER_FACTOR, 8, REVERSEATTR );
+					blockmsg( 7 );
 					if ( *curmenu == 0x9200 ) {
-						dispstrhgc( " – กำลังอ่านตัวเลือก รอสักครู่... – ", 50 - CENTER_FACTOR, 7, REVERSEATTR );
+						dispstrhgc( "กำลังอ่านตัวเลือก รอสักครู่...", 35 - CENTER_FACTOR, 7, REVERSEATTR );
 						readoption( smode );
 					} else {
-						dispstrhgc( " – กำลังเก็บตัวเลือก รอสักครู่... – ", 50 - CENTER_FACTOR, 7, REVERSEATTR );
+						dispstrhgc( "กำลังเก็บตัวเลือก รอสักครู่...", 35 - CENTER_FACTOR, 7, REVERSEATTR );
 						saveoption( smode );
 					}
 					retpic( );
