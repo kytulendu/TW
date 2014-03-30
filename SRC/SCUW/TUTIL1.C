@@ -1,5 +1,8 @@
 /****************************************************************************/
 /*  tutil1.C -> Thai utility 1 , cut from str.c                             */
+/*  updated: Suttipong Kanakakorn                                           */
+/*          Wed  08-02-1989  09:52:44                                       */
+/*          Sun  08-06-1989  11:24:52                                       */
 /****************************************************************************/
 
 #include "..\common\cwtype.h"
@@ -13,6 +16,8 @@
 /* input                                                                     */
 /*      thaist : thai string                                                 */
 /* return : length of thai string                                            */
+/* Modify : Suttipong  Kanakakakorn                                          */
+/*          Mon  07-31-1989  08:32:36   use only pointer no index            */
 /*****************************************************************************/
 unsigned int thaistrlen( register unsigned char *thaist ) {
 	register int count = 0;

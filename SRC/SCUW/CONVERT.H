@@ -1,14 +1,13 @@
-/*
-Conversion Header file
-Kraisorn Liansee
+/** Conversion Header file
+*
+*   Kraisorn Liansee
+*   Date    : 4/19/89
+*   Updated : 4/20/89
 */
 
-/*--------------------------------------------*/
-/*       This module defines some data        */
-/*       required for converting 90 cols      */
-/*       CU-Writer (V1.10 on Hercules) into   */
-/*       80 cols (V1.2 Hercules/EGA/VGA)      */
-/*--------------------------------------------*/
+/** This module defines some data required for converting 90 cols
+*   CU-Writer (V1.10 on Hercules) into 80 cols (V1.2 Hercules/EGA/VGA)
+*/
 
 #ifndef CONVERT_H_INCLUDED
 #define CONVERT_H_INCLUDED

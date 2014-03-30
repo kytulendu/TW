@@ -1,3 +1,8 @@
+/**
+*   Update: Suttipong Kanakakorn
+*           Sun  07-30-1989  19:50:45
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <alloc.h>

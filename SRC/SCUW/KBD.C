@@ -1,3 +1,9 @@
+/**
+*   Update: Suttipong Kanakakorn
+*           Thu  08-03-1989  16:54:04
+*           Sun  08-06-1989  00:19:22
+*/
+
 #include <dir.h>
 
 #include "..\common\cwgrphc.h"

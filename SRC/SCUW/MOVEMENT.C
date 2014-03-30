@@ -1,3 +1,10 @@
+/**
+*   Update: Suttipong Kanakakorn
+*           Fri  08-04-1989  20:13:52
+*           Add top_of_page() and bottom_of_page()
+*   CUCC: Debug 255 Right Margin to work correctly
+*/
+
 #include <string.h>
 
 #include "const.h"

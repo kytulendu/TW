@@ -1,3 +1,8 @@
+/**
+*   Updated: Suttipong Kanakakorn
+*            Thu  08-03-1989  01:05:26
+*/
+
 #include <stdlib.h>
 #include <string.h>
 

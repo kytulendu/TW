@@ -1,3 +1,9 @@
+/**
+*   Update: Suttipong Kanakakorn
+*           Tue  08-01-1989  13:57:19
+*   CUCC :  Garbage Collection
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>

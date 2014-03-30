@@ -1,6 +1,8 @@
-/****************************************************************************/
-/*  MACRO for CW.EXE only                                                   */
-/****************************************************************************/
+/** MACRO for cw.exe only 15 JAN 89
+*  Updated: Suttipong Kanakakorn
+*           Sun  08-06-1989  10:04:26
+*/
+
 #ifndef CW_CONST_H_INCLUDED
 #define CW_CONST_H_INCLUDED
 

@@ -1,3 +1,10 @@
+/**
+*   update: Suttipong Kanakakorn
+*   Sun  07-30-1989  20:11:04
+*   Thu  08-03-1989  10:13:44
+*   CUCC : Add more comments
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <dir.h>

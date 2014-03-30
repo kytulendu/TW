@@ -1,3 +1,9 @@
+/**
+*   SCRN.C 15 JAN 89
+*   Updated: Suttipong Kanakakorn
+*            Sun  08-06-1989  09:31:59
+*/
+
 #include "..\common\cwgrphc.h"
 
 #include "var.h"

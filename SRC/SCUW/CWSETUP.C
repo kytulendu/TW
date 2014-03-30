@@ -1,6 +1,6 @@
-/*
-Written: Suttipong Kanakakorn
-Mon  07-31-1989  20:31:09
+/**
+*   Written: Suttipong Kanakakorn
+*   Mon  07-31-1989  20:31:09
 */
 
 #include <stdlib.h>
