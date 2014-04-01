@@ -90,5 +90,3 @@ cpthai.obj: cpthai.c
 
 prtbuf24.obj: prtbuf24.c
     tcc -c $(TCC_OPTION) prtbuf24.c
-
-

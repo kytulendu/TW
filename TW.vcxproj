@@ -93,6 +93,8 @@
     <None Include="SRC\MAKE.BAT" />
     <None Include="SRC\SCUF\MAKEFILE.MAK" />
     <None Include="SRC\SCUF\SCUF.TLR" />
+    <None Include="SRC\SCUP\MAKEFILE.MAK" />
+    <None Include="SRC\SCUP\SCUP.TLR" />
     <None Include="SRC\SCUW\MAKEFILE.MAK" />
     <None Include="SRC\SCUW\SCUW.TLR" />
     <None Include="SRC\SCUW\THAISYLS\MAKEFILE.MAK" />

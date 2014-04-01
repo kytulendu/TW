@@ -174,6 +174,12 @@
     <None Include="SRC\SCUF\SCUF.TLR">
       <Filter>Make Files\SCUF</Filter>
     </None>
+    <None Include="SRC\SCUP\MAKEFILE.MAK">
+      <Filter>Make Files\SCUP</Filter>
+    </None>
+    <None Include="SRC\SCUP\SCUP.TLR">
+      <Filter>Make Files\SCUP</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\COMMON\CONST.H">
