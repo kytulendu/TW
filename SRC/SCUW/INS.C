@@ -9,6 +9,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
 #include "..\common\ekbd.h"
@@ -597,11 +598,11 @@ void dispmacro( register int i ) {
 void editmacro( void ) {
 	register int i, c;
 	pagecomplete = NO;
-	dispstrhgc( " •••••••••••••••••••••••••••••••••••••••••••••••• ", 19 - CENTER_FACTOR, 4, 2 );
+	framebox( 19 - CENTER_FACTOR, 4, ( 19 - CENTER_FACTOR ) + 51, 15, REVERSEATTR );
 	for ( i = 0; i < 10; i++ ) {
 		dispmacro( i );
 	}
-	dispstrhgc( " •กด <ESC> เพื่อเลิกการแก้ไขคำย่อ••••••••••••••••••••• ", 19 - CENTER_FACTOR, 15, 2 );
+	dispstrhgc( "กด <ESC> เพื่อเลิกการแก้ไขคำย่อ", ( 19 - CENTER_FACTOR ) + 3, 15, 2 );
 	i = 0;
 	do {
 		c = getstring( &macro[i][0], 33 - CENTER_FACTOR, 5 + i, 35, 0, THAIENG );

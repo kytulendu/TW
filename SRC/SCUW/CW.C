@@ -11,6 +11,7 @@
 
 #define  DEFINE_VAR 1
 
+#include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
 #include "..\common\cusong.h"
 #include "..\common\ekbd.h"

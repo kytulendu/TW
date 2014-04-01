@@ -9,6 +9,7 @@
 #include <io.h>
 #include <dos.h>
 
+#include "..\common\cwtype.h"
 #include "..\common\cwgrphc.h"
 #include "..\common\cscrn.h"
 #include "..\common\ekbd.h"

@@ -1,5 +1,6 @@
 #include <stdlib.h>
 
+#include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
 

@@ -6,8 +6,8 @@
 
 #include <string.h>
 
-#include "..\common\cscrn.h"
 #include "..\common\cwtype.h"
+#include "..\common\cscrn.h"
 #include "..\common\ekbd.h"
 #include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
@@ -124,7 +124,8 @@ int getstring( char textst[], unsigned int x, unsigned int y,
 				dispstrhgc( textst, x, y, attr );
 			}
 			break;
-		case F10KEY: thaimode = !thaimode;
+		case F10KEY:
+			thaimode = !thaimode;
 			writelanguage( );
 			break;
 		default:
@@ -151,21 +152,25 @@ int getstring( char textst[], unsigned int x, unsigned int y,
 						oldlen = strlen( textst );
 						dispblank( x, y, maxlen, attr );
 						dispstrhgc( textst, x, y, attr );
-					} else
+					} else {
 						errorsound( );
+					}
 				}
 			}
 			break;
 		}
 		waitkbd( x + thaistrlen( textst ), y );
 		switch ( mode ) {
-		case THAIENG: inkey = readkbd( );
+		case THAIENG:
+			inkey = readkbd( );
 			break;
 		case NUMBER:
 		case ONEORTWO:
-		case ENGLISH: inkey = ebioskey( 0 );
+		case ENGLISH:
+			inkey = ebioskey( 0 );
 			break;
-		case ENGUPCASE:  inkey = ebioskey( 0 );
+		case ENGUPCASE:
+			inkey = ebioskey( 0 );
 			key = inkey & 0xff;
 			if ( ( key >= 'a' ) && ( key <= 'z' ) )
 				inkey = key - ( 'a' - 'A' );

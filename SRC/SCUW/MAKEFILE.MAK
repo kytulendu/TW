@@ -1,5 +1,5 @@
 #
-# makefile for TW.EXE
+# Makefile for TW.EXE
 #
 
 CC = TCC
@@ -19,8 +19,8 @@ CCFLAGS = -c -w -DCW -d -O -ml -f- -Z -K -k- -C -I$(INCLUDEPATH) -L$(LIBPATH)
         MENU.OBJ \
         KBD.OBJ STATUS.OBJ MOVE.OBJ MOVEMENT.OBJ WRAP.OBJ \
         ONSCRN.OBJ FILE.OBJ SEARCH.OBJ BLOCK.OBJ CW.OBJ CWSETUP.OBJ
-    TCC -c ..\COMMON\STAMPDATE.C
-    TLINK @SCUW.TLR
+    $(CC) -c ..\COMMON\STAMPDATE.C
+    $(LINKER) @SCUW.TLR
 
 SCRN.OBJ: SCRN.C VAR.H
     $(CC) $(CCFLAGS) SCRN.C

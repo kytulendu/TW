@@ -18,6 +18,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "..\common\cwtype.h"
 #include "..\common\const.h"
 #include "..\common\cscrn.h"
 #include "..\common\dir.h"

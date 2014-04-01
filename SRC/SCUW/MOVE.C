@@ -7,9 +7,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
-#include "..\common\cwtype.h"
 #include "..\common\ekbd.h"
 #include "..\common\kbdcode.h"
 
