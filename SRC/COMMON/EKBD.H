@@ -1,5 +1,3 @@
-#include "cwtype.h"
-
 #ifndef EKBD_H_INCLUDED
 #define EKBD_H_INCLUDED
 

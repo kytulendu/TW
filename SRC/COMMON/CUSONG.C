@@ -1,3 +1,4 @@
+#include "cwtype.h"
 #include "ekbd.h"
 #include "sound.h"
 

@@ -1,5 +1,3 @@
-#include "cwtype.h"
-
 #ifndef CSCRN_H_INCLUDED
 #define CSCRN_H_INCLUDED
 

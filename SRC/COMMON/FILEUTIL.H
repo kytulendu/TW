@@ -1,5 +1,3 @@
-#include "cwtype.h"
-
 #ifndef FILEUTIL_H_INCLUDED
 #define FILEUTIL_H_INCLUDED
 

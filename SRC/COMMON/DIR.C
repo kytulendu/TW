@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "cwtype.h"
 #include "cscrn.h"
 #include "cwtype.h"
 #include "ekbd.h"

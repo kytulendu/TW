@@ -1,4 +1,5 @@
-#include "cwtype.h"
+#include "..\common\cwtype.h"
+#include "..\common\grphc.h"
 
 /** find length of thai string
 *   Updated: Suttipong Kanakakorn, use pointer instead of array

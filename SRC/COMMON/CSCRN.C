@@ -10,6 +10,7 @@
 #include <stdio.h>
 #include <errno.h>
 
+#include "cwtype.h"
 #include "cwgrphc.h"
 #include "ekbd.h"
 #include "grphc.h"
