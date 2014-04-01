@@ -1,44 +1,56 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <bios.h>
+#include <conio.h>
+#include <dos.h>
 #include <graphics.h>
 #include <ctype.h>
 #include <fcntl.h>
 #include <io.h>
+#include <string.h>
 
-#include  "inc.h"
-#include  "key.h"
-#include "fed.h"
-
+#include "..\common\cwtype.h"
 #include "..\common\cwgrphc.h"
+#include "..\common\cscrn.h"
+#include "..\common\dir.h"
+#include "..\common\grphc.h"
+#include "..\common\ekbd.h"
+
+#include "fed.h"
+#include "key.h"
+#include "getstr.h"
+#include "tutil1.h"
+
+#include "fontmsg.h"
 
 extern int center_x, center_y;
 extern int herc_align;
 
-existfile( char *pname ) {
+int existfile( char *pname ) {
 	int fd;
-	if ( ( fd = open( pname, O_RDONLY ) ) == -1 )
+	if ( ( fd = open( pname, O_RDONLY ) ) == -1 ) {
 		return 0;
-	else
+	} else {
 		close( fd );
+	}
 	return !0;
 }
 
 /*
-void main()
-{
-char pname[81]="*.*",ans[2]="y";
-readfont();
-setgraph();
-clsall();
-center_x=320;center_y=348/2;
-fontnamebox(pname);
-error_message("แฟ้มข้อมูลผิดพลาด");
-immediatebox(30,4,"โปรดใส่ข้อมูล",ans);
-settext();
+void main( ) {
+	char pname[81]= "*.*", ans[2] = "y";
+	readfont( );
+	setgraph( );
+	clsall( );
+	center_x = 320; center_y = 348 / 2;
+	fontnamebox( pname );
+	error_message( "แฟ้มข้อมูลผิดพลาด" );
+	immediatebox( 30, 4, "โปรดใส่ข้อมูล", ans );
+	settext( );
 }
 */
 
-put_box( x1, y1, x2, y2 )
-int x1, y1, x2, y2;
-{
+int put_box( int x1, int y1, int x2, int y2 ) {
 	char *buff;
 	x1 += align; x2 += align;
 	if ( ( buff = ( char* ) malloc( imagesize( x1, y1, x2, y2 ) ) ) == NULL ) {
@@ -54,11 +66,11 @@ int x1, y1, x2, y2;
 	_rectangle( x1 + 2, y1 + 2, x2 - 2, y2 - 2 );
 }
 
-fontnamebox( char*pname, int creat )
-/*	use creat=1 when want to creat new file that doesn't exist	*/
-/*	    creat=0 when want to display a directory to screen when file
-not exist							*/
-{
+/** use
+*      creat = 1 when want to creat new file that doesn't exist
+*      creat = 0 when want to display a directory to screen when file not exist
+*/
+int fontnamebox( char*pname, int creat ) {
 	int ret;
 	savepic( );
 	put_box( 9 * 8 - 4, 5 * 20, 20 * 8 + 22 * 8 + 4, 6 * 20 + 7 );
@@ -66,16 +78,19 @@ not exist							*/
 	getname( pname, 21, 5, 20, REVERSEATTR );
 	if ( !creat ) {
 		if ( !existfile( pname ) ) {
-			if ( pname[0] == '\0' )	strcpy( pname, "*.*" );
+			if ( pname[0] == '\0' ) {
+				strcpy( pname, "*.*" );
+			}
 			ret = ( selectfile( pname ) == NO ) ? ESC : RET;
-		} else
+		} else {
 			ret = RET;
+		}
 	}
 	retpic( );
 	return ret;
 }
 
-error_message( char *prompt ) {
+int error_message( char *prompt ) {
 	savepic( );
 
 	put_box( center_x - 16 * thaistrlen( prompt ) / 2 - 5, 8 * 20 - 20,
@@ -85,7 +100,7 @@ error_message( char *prompt ) {
 	retpic( );
 }
 
-_waitkbd( int x, int y ) {
+int _waitkbd( int x, int y ) {
 	while ( !keypressed( ) ) {
 		delay( 5 );
 		setcurpos( x, y, 0 );
@@ -93,7 +108,7 @@ _waitkbd( int x, int y ) {
 	return getch( );
 }
 
-prompter( char *ans, int x, int y, char attr ) {
+int prompter( char *ans, int x, int y, char attr ) {
 	int k;
 	dispstrhgc( ans, x, y, attr );
 	while ( !strchr( "yYnN\r\x1b", ( k = _waitkbd( x, y ) ) ) );
@@ -101,7 +116,7 @@ prompter( char *ans, int x, int y, char attr ) {
 	return toupper( k );
 }
 
-immediatebox( int x, int y, char *str, char*ans ) {
+int immediatebox( int x, int y, char *str, char*ans ) {
 	static char buff[100];
 	int ret;
 	savepic( );
@@ -112,10 +127,15 @@ immediatebox( int x, int y, char *str, char*ans ) {
 	dispstrhgc( buff, x, y, REVERSEATTR );
 	ret = ( prompter( ans, x + thaistrlen( buff ) - 2, y, REVERSEATTR ) );
 	retpic( );
-	if ( ret == '\r' )	ret = toupper( *ans );
+	if ( ret == '\r' ) {
+		ret = toupper( *ans );
+	}
 	switch ( ret ) {
-	case 'Y':return 1;
-	case 'N':return 0;
-	case  27:return -1;
+	case 'Y':
+		return 1;
+	case 'N':
+		return 0;
+	case  27:
+		return -1;
 	}
 }

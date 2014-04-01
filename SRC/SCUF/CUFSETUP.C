@@ -1,19 +1,32 @@
-#include <io.h>
-#include <fcntl.h>
-#include <dos.h>
+/** cufsetup.c -> cufont setup
+*   By Suttipong Kanakakorn
+*   Fri  08-25-1989  23:14:04
+*/
 
-#define  DEFINE_VAR 1
-#include "inc.h"
+#include <stdlib.h>
+#include <stdio.h>
+#include <dir.h>
+#include <dos.h>
+#include <fcntl.h>
+#include <io.h>
+#include <string.h>
+
+#include "..\common\cwtype.h"
+
+#define DEFINE_VAR 1
+
 #include "var.h"
 
-#undef   DEFINE_VAR
+#undef DEFINE_VAR
+
+#include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
+#include "..\common\ekbd.h"
+#include "..\common\fileutil.h"
 #include "..\common\grdetect.h"
-/*
-cufsetup.c -> cufont setup
-By Suttipong Kanakakorn
-Fri  08-25-1989  23:14:04
-*/
+#include "..\common\grphc.h"
+
+#include "cufsetup.h"
 
 void set_directory( void );
 void usage( void );
@@ -33,30 +46,38 @@ void cufsetup( int argc, char *argv[] ) {
 		strupr( ++argv[0] );
 		while ( i = *( argv[0]++ ) )
 			switch ( i ) {
-			case 'H':  scrmode = HERCMONO;
+			case 'H':
+				scrmode = HERCMONO;
 				break;
 				/* e alone = ega, em = ega monochrome */
-			case 'E':  scrmode = EGA;
+			case 'E':
+				scrmode = EGA;
 				break;
 				/* m alone = mcga */
-			case 'M':  if ( scrmode == EGA )
-				scrmode = EGAMONO;
-					   else
-						   scrmode = MCGA;
+			case 'M':
+				if ( scrmode == EGA ) {
+					scrmode = EGAMONO;
+				} else {
+					scrmode = MCGA;
+				}
 				break;
-			case 'V':  scrmode = VGA;
+			case 'V':
+				scrmode = VGA;
 				break;
-			case 'A':  scrmode = ATT400;
+			case 'A':
+				scrmode = ATT400;
 				break;
 				/* /HL for Hercules, left-justified  */
-			case 'L':  herc_align = 0;
+			case 'L':
+				herc_align = 0;
 				align = 0;
 				break;
 			case 'N':
 			case 'W':
 			case 'P':
 				break;
-			default:  usage( );
+			default:
+				usage( );
 		}
 	}
 
@@ -88,18 +109,17 @@ void set_directory( void ) {
 int handler( int errval, int ax, int bp, int si ) {
 	/* char drive; */
 
-	/* errorsound(); */
+	/* errorsound( ); */
 	if ( ax >= 0 ) {
-		/* drive = 'A' + (ax & 0x00FF); */
+		/* drive = 'A' + ( ax & 0x00FF ); */
 		savepic( );
 		blockmsg( 10 );
 		dispprintf( 20, 10, 2,
 			"Disk error on drive %c ! กดปุ่มใดๆเพื่อทำงานต่อ",
 			'A' + ( ax & 0x00FF ) );
-		/* prchar(drive,REVERSEATTR,45-CENTER_FACTOR,10); */
+		/* prchar( drive, REVERSEATTR, 45 - CENTER_FACTOR, 10 ); */
 		ebioskey( 0 );
 		retpic( );
 	}
 	hardretn( -1 );
 }
-

@@ -2,11 +2,22 @@
 /*  GETSTR.C Suttipong Kanakakorn Fri  08-25-1989  22:43:56                 */
 /****************************************************************************/
 #include <bios.h>
+#include <dir.h>
+#include <string.h>
 
-#include "inc.h"
-#include "var.h"
+#include "..\common\cwtype.h"
+#include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
-/*****************************************************************************/
+#include "..\common\grphc.h"
+#include "..\common\kbdcode.h"
+
+#include "const.h"
+#include "var.h"
+
+#include "kbd.h"
+#include "tutil1.h"
+
+#include "getstr.h"
 
 /*****************************************************************************/
 /* get string                                                                */
@@ -18,7 +29,7 @@
 /*      attr   : attribute of string for displaying                          */
 /*      mode   : THAIENG,ENGLISH,ENGUPCASE,NUMBER,ONEORTWO                   */
 /*****************************************************************************/
-int getstring( char textst[], unsigned x, unsigned y, unsigned maxlen, char attr, strtype mode ) {
+int getstring( char textst[], unsigned int x, unsigned int y, unsigned int maxlen, char attr, strtype mode ) {
 	int inkey, key, oldlen, temp;
 	char keepchar;
 	keepchar = '\0';
@@ -27,18 +38,22 @@ int getstring( char textst[], unsigned x, unsigned y, unsigned maxlen, char attr
 	dispstrhgc( textst, x, y, attr );
 	waitkbd( x + thaistrlen( textst ), y );
 	switch ( mode ) {
-	case THAIENG: inkey = readkbd( );
+	case THAIENG:
+		inkey = readkbd( );
 		break;
 	case NUMBER:
 	case ONEORTWO:
-	case ENGLISH: inkey = bioskey( 0 );
+	case ENGLISH:
+		inkey = bioskey( 0 );
 		break;
-	case ENGUPCASE: inkey = bioskey( 0 );
+	case ENGUPCASE:
+		inkey = bioskey( 0 );
 		key = inkey & 0xff;
 		if ( ( key >= 'a' ) && ( key <= 'z' ) )
 			inkey = key - ( 'a' - 'A' );
 		break;
 	}
+
 	switch ( inkey ) {
 	case CNTRL_H:
 	case BSKEY:
@@ -48,10 +63,14 @@ int getstring( char textst[], unsigned x, unsigned y, unsigned maxlen, char attr
 	case RETKEY: break;
 	default: key = inkey & 0xff;
 		if ( mode == NUMBER ) {
-			if ( ( key < '0' ) || ( key > '9' ) ) break;
+			if ( ( key < '0' ) || ( key > '9' ) ) {
+				break;
+			}
 		}
 		if ( mode == ONEORTWO ) {
-			if ( ( key != '1' ) && ( key != '2' ) ) break;
+			if ( ( key != '1' ) && ( key != '2' ) ) {
+				break;
+			}
 		}
 		if ( ( inkey & 0xff ) >= 32 ) {
 			textst[0] = '\0';
@@ -59,21 +78,29 @@ int getstring( char textst[], unsigned x, unsigned y, unsigned maxlen, char attr
 		}
 		break;
 	}
+
 	do {
 		switch ( inkey ) {
 		case CNTRL_M:
-		case RETKEY: return( YES );
-		case CNTRL_U: return( NO );              /* Abort */
-		case ESCKEY: return( ESCKEY );
-		case UPKEY: return( UPKEY );
-		case DNKEY: return( DNKEY );
+		case RETKEY:
+			return( YES );
+		case CNTRL_U:
+			return( NO );									/* Abort */
+		case ESCKEY:
+			return( ESCKEY );
+		case UPKEY:
+			return( UPKEY );
+		case DNKEY:
+			return( DNKEY );
 		case CNTRL_H:
 		case BSKEY:
 		case LEKEY:
-		case CNTRL_S: temp = strlen( textst );
+		case CNTRL_S:
+			temp = strlen( textst );
 			if ( temp != 0 ) {
-				if ( temp < oldlen )
+				if ( temp < oldlen ) {
 					textst[temp] = keepchar;
+				}
 				keepchar = textst[temp - 1];
 				textst[temp - 1] = '\0';
 				dispblank( x, y, maxlen, attr );
@@ -81,7 +108,8 @@ int getstring( char textst[], unsigned x, unsigned y, unsigned maxlen, char attr
 			}
 			break;
 		case RIKEY:
-		case CNTRL_D: temp = strlen( textst );
+		case CNTRL_D:
+			temp = strlen( textst );
 			if ( ( temp < oldlen ) && ( temp < maxlen ) ) {
 				textst[temp] = keepchar;
 				keepchar = textst[temp + 1];
@@ -90,69 +118,84 @@ int getstring( char textst[], unsigned x, unsigned y, unsigned maxlen, char attr
 				dispstrhgc( textst, x, y, attr );
 			}
 			break;
-		case CNTRL_Y: if ( strlen( textst ) < oldlen )
-			textst[strlen( textst )] = keepchar;
+		case CNTRL_Y:
+			if ( strlen( textst ) < oldlen ) {
+				textst[strlen( textst )] = keepchar;
+			}
 			keepchar = textst[0];
 			textst[0] = '\0';
 			dispblank( x, y, maxlen, attr );
 			break;
-		case CNTRL_R: if ( strlen( textst ) < oldlen ) {
-			textst[strlen( textst )] = keepchar;
-			dispblank( x, y, maxlen, attr );
-			dispstrhgc( textst, x, y, attr );
-		}
-					  break;
-					  /*   case F10KEY  : thaimode = !thaimode;
-					  writelanguage();
-					  break;
-					  */   default: inkey = ( inkey & 0xff );
-					  if ( mode == NUMBER ) {
-						  if ( ( inkey < '0' ) || ( inkey > '9' ) ) break;
-					  }
-					  if ( mode == ONEORTWO ) {
-						  if ( ( inkey != '1' ) && ( inkey != '2' ) ) break;
-					  }
-					  if ( inkey >= 32 ) {
-						  if ( strlen( textst ) < maxlen ) {
-							  if ( whatlevel( inkey ) == MIDDLE ) {
-								  textst[strlen( textst ) + 1] = '\0';
-								  textst[strlen( textst )] = inkey;
-								  oldlen = strlen( textst );
-								  dispblank( x, y, maxlen, attr );
-								  dispstrhgc( textst, x, y, attr );
-							  } else {
-								  if ( ( strlen( textst ) != 0 ) &&
-									  ( whatlevel( inkey ) > whatlevel( textst[strlen( textst ) - 1] ) ) &&
-									  ( inkey != HUNAKADMITO ) ) {
-									  textst[strlen( textst ) + 1] = '\0';
-									  textst[strlen( textst )] = inkey;
-									  oldlen = strlen( textst );
-									  dispblank( x, y, maxlen, attr );
-									  dispstrhgc( textst, x, y, attr );
-								  }
-							  }
-						  }
-					  }
-					  break;
+		case CNTRL_R:
+			if ( strlen( textst ) < oldlen ) {
+				textst[strlen( textst )] = keepchar;
+				dispblank( x, y, maxlen, attr );
+				dispstrhgc( textst, x, y, attr );
+			}
+			break;
+			/*
+			case F10KEY:
+			thaimode = !thaimode;
+			writelanguage();
+			break;
+			*/
+		default:
+			inkey = ( inkey & 0xff );
+			if ( mode == NUMBER ) {
+				if ( ( inkey < '0' ) || ( inkey > '9' ) ) {
+					break;
+				}
+			}
+			if ( mode == ONEORTWO ) {
+				if ( ( inkey != '1' ) && ( inkey != '2' ) ) {
+					break;
+				}
+			}
+			if ( inkey >= 32 ) {
+				if ( strlen( textst ) < maxlen ) {
+					if ( whatlevel( inkey ) == MIDDLE ) {
+						textst[strlen( textst ) + 1] = '\0';
+						textst[strlen( textst )] = inkey;
+						oldlen = strlen( textst );
+						dispblank( x, y, maxlen, attr );
+						dispstrhgc( textst, x, y, attr );
+					} else {
+						if ( ( strlen( textst ) != 0 ) &&
+							( whatlevel( inkey ) > whatlevel( textst[strlen( textst ) - 1] ) ) &&
+							( inkey != HUNAKADMITO ) ) {
+							textst[strlen( textst ) + 1] = '\0';
+							textst[strlen( textst )] = inkey;
+							oldlen = strlen( textst );
+							dispblank( x, y, maxlen, attr );
+							dispstrhgc( textst, x, y, attr );
+						}
+					}
+				}
+			}
+			break;
 		}
 		waitkbd( x + thaistrlen( textst ), y );
 		switch ( mode ) {
-		case THAIENG: inkey = readkbd( );
+		case THAIENG:
+			inkey = readkbd( );
 			break;
 		case NUMBER:
 		case ONEORTWO:
-		case ENGLISH: inkey = bioskey( 0 );
+		case ENGLISH:
+			inkey = bioskey( 0 );
 			break;
-		case ENGUPCASE: inkey = bioskey( 0 );
+		case ENGUPCASE:
+			inkey = bioskey( 0 );
 			key = inkey & 0xff;
-			if ( ( key >= 'a' ) && ( key <= 'z' ) )
+			if ( ( key >= 'a' ) && ( key <= 'z' ) ) {
 				inkey = key - ( 'a' - 'A' );
+			}
 			break;
 		}
 	} while ( 1 );
 }
 
-int getname( char textst[], unsigned x, unsigned y, unsigned maxlen, char attr ) {
+int getname( char textst[], unsigned int x, unsigned int y, unsigned int maxlen, char attr ) {
 	int i;
 	char drv[MAXDRIVE], dir[MAXDIR], name[MAXFILE], ext[MAXEXT];
 	char textst2[80];

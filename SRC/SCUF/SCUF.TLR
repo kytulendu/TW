@@ -1,11 +1,10 @@
-/x/n/d/c \tc\lib\c0l +
-..\common\edisp ..\common\hdisp ..\common\adisp ..\common\grdetect +
-..\common\cwgrphc ..\common\cwegrph ..\common\cwagrph ..\common\ekbd +
-..\common\cscrn ..\common\fileutil ..\common\dir + ..\common\sound +
-getstr tutil1 cufsetup kbd file +
-fed write  int getch popup fontmsg +
-convert stampdat +
-.\drv\attf .\drv\cgaf .\drv\egavgaf .\drv\hercf +
-\tc\lib\graphics.lib +
-,\tw\twfont,\tw\twfont,\tc\lib\cl.lib
-
+/x/n/d/c \TC\LIB\C0L +
+..\COMMON\EDISP ..\COMMON\HDISP ..\COMMON\ADISP ..\COMMON\GRDETECT +
+..\COMMON\CWGRPHC ..\COMMON\CWEGRPH ..\COMMON\CWAGRPH ..\COMMON\EKBD +
+..\COMMON\CSCRN ..\COMMON\FILEUTIL ..\COMMON\DIR + ..\COMMON\SOUND +
+GETSTR TUTIL1 CUFSETUP KBD FILE +
+FED WRITE INT GETCH POPUP FONTMSG +
+CONVERT STAMPDAT +
+.\DRV\ATTF .\DRV\CGAF .\DRV\EGAVGAF .\DRV\HERCF +
+\TC\LIB\GRAPHICS.LIB +
+,\TW\TWFONT,\TW\TWFONT,\TC\LIB\CL.LIB

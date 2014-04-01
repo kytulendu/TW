@@ -1,32 +1,35 @@
-/*
-Updated: Suttipong Kanakakorn Sun  08-27-1989  23:07:23
-automatic file all font files
+/**
+*   Updated: Suttipong Kanakakorn Sun  08-27-1989  23:07:23
+*   automatic file all font files
 */
 
-#include <io.h>
-#include <dos.h>
-#include <string.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <dir.h>
+#include <dos.h>
 #include <fcntl.h>
+#include <io.h>
+#include <string.h>
 
-#include "inc.h"
+#include "..\common\cwtype.h"
+
 #include "var.h"
-#include "fed.h"
-#include "key.h"
 
-#define test_bit(buff,pos)	((buff)&(0x01<<(pos)))
-#define set_bit(buff,pos)	(*(buff)|=(0x01<<(pos)))
+#include "fed.h"
+#include "file.h"
+#include "key.h"
+#include "fontmsg.h"
+
+#include "convert.h"
+
+#define test_bit(buff,pos)	( ( buff )  & ( 0x01 << ( pos ) ) )
+#define set_bit(buff,pos)	( *( buff ) |= ( 0x01 << ( pos ) ) )
 
 /*
-extern char cuwordpath[],cufontpath[],cuprintpath[];
+extern char cuwordpath[], cufontpath[], cuprintpath[];
 */
 extern int loaded, load_first;
-search_file_mode  font_found;
-
-int load_scr( ), load_prn( ), load_24( ), load_sup_sub( ), load_fed( );
-int save_scr( ), save_prn( ), save_24( ), save_sup_sub( ), save_fed( );
-
-
+search_file_mode font_found;
 
 int( *load_func[] )( ) = {
 	load_scr, load_scr, load_prn, load_prn, load_24, load_24,
@@ -39,18 +42,17 @@ int( *save_func[] )( ) = {
 };
 
 char *file_name[] = {
-	"normal.fon",
-	"italic.fon",
-	"normal.prn",
-	"italic.prn",
-	"normal.p24",
-	"italic.p24",
-	"normals.p24",
-	"italics.p24"
+	"NORMAL.FON",
+	"ITALIC.FON",
+	"NORMAL.PRN",
+	"ITALIC.PRN",
+	"NORMAL.P24",
+	"ITALIC.P24",
+	"NORMALS.P24",
+	"ITALICS.P24"
 };
 
-
-load_font( ) {
+int load_font( ) {
 	char *oldfont, oldx = X, oldy = Y;
 	unsigned int oldbyte = BYTE;
 	char oldfname[MAXPATH];
@@ -65,17 +67,18 @@ load_font( ) {
 			return 0;
 		}
 
-		memcpy( oldfont, all_font, 256 * BYTE*Y );
+		memcpy( oldfont, all_font, 256 * BYTE * Y );
 	}
 	if ( new_load == 9 ) {
 		/*
-		strcpy(fname,cufontpath);
-		strcat(fname,"*.FED");
+		strcpy( fname, cufontpath );
+		strcat( fname, "*.FED" );
 		*/
-		if ( ( font_found = find_file( "*.FED", cuf_dir ) ) == CW_DIR )
+		if ( ( font_found = find_file( "*.FED", cuf_dir ) ) == CW_DIR ) {
 			sprintf( fname, "%s\\%s", cuf_dir, "*.FED" );
-		else
+		} else {
 			strcpy( fname, "*.FED" );
+		}
 
 		if ( fontnamebox( fname, 0 ) == ESC ) {
 			X = oldx; Y = oldy; BYTE = oldbyte;
@@ -88,19 +91,19 @@ load_font( ) {
 		}
 	} else {
 		/*
-		if (new_load==1 || new_load==2) {
-		strcpy(fname,cuwordpath);
-		strcat(fname,file_name[new_load-1]);
-		}   else    {
-		strcpy(fname,cuprintpath);
-		strcat(fname,file_name[new_load-1]);
+		if ( new_load == 1 || new_load == 2 ) {
+			strcpy( fname, cuwordpath );
+			strcat( fname, file_name[new_load-1] );
+		} else {
+			strcpy( fname, cuprintpath );
+			strcat( fname, file_name[new_load-1] );
 		}
 		*/
-		if ( ( font_found = find_file( file_name[new_load - 1], cuf_dir ) )
-			== CW_DIR )
+		if ( ( font_found = find_file( file_name[new_load - 1], cuf_dir ) ) == CW_DIR ) {
 			sprintf( fname, "%s\\%s", cuf_dir, file_name[new_load - 1] );
-		else
+		} else {
 			strcpy( fname, file_name[new_load - 1] );
+		}
 	}
 
 	load_first = 1;
@@ -119,20 +122,14 @@ load_font( ) {
 	return 1;
 }
 
-
-save_font( ) {
+int save_font( ) {
 	return ( ( *save_func[loaded - 1] )( ) );
 }
 
-
-
-save_fed( )
-/*
-/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-save font from all_font
-\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+/*** 
+*    save font from all_font
 */
-{
+int save_fed( ) {
 	int fd;
 	if ( ( fd = _creat( fname, FA_ARCH ) ) == -1 ) {
 		error_message( "ERROR : CREATING FONT FILE" );
@@ -162,27 +159,21 @@ save font from all_font
 	return ~0;
 }
 
-
-cleanup_load_routine( ) {
+int cleanup_load_routine( ) {
 	pos_x = pos_y = 0;
 	clearworkarea( );
 	make_char_block_image( );
 }
 
-load_fed( )
-/*
-/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
-malloc all_font
-load font into all_font
-set X, Y
-set pos_x,pos_y to zero
-draw grid
-malloc matrix_image
-set BYTE	=	sizeof X in bytes
-\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+/** malloc all_font
+*   load font into all_font
+*   set X, Y
+*   set pos_x,pos_y to zero
+*   draw grid
+*   malloc matrix_image
+*   set BYTE = sizeof X in bytes
 */
-
-{
+int load_fed( ) {
 	char dum[81];
 	int fd;
 	if ( ( fd = _open( fname, O_RDONLY | O_BINARY ) ) == -1 ) {
@@ -212,7 +203,7 @@ set BYTE	=	sizeof X in bytes
 }
 
 
-load_24( ) {
+int load_24( ) {
 	char *oldfon;
 
 	int fd, filelen;
@@ -226,9 +217,9 @@ load_24( ) {
 		return 0;
 	}
 
-	X = 18; Y = 24;	/*  font size for 24 pins			*/
-	/*  setup before call setup_memo		*/
-	setup_memo( );	/*  call for allocate spaces for all_font	*/
+	X = 18; Y = 24;	/* font size for 24 pins */
+	/* setup before call setup_memo */
+	setup_memo( );	/* call for allocate spaces for all_font */
 
 	if ( ( oldfon = ( char* ) malloc( filelen ) ) == NULL ) {
 		error_message( "Memory not enough" );
@@ -244,13 +235,9 @@ load_24( ) {
 	free( oldfon );
 	cleanup_load_routine( );
 	return ~0;
-
 }
 
-
-
-
-con_24_to_fed( char *oldfon, char *newfon ) {
+int con_24_to_fed( char *oldfon, char *newfon ) {
 	static  int ch, i, bit;
 	char *newch = newfon + 31 * 3 * 24;
 	static char *new;
@@ -261,36 +248,36 @@ con_24_to_fed( char *oldfon, char *newfon ) {
 		for ( i = 0; i<18; i++ ) {
 			new = newch + i / 8;
 			bit = 7 - i % 8;
-			if ( test_bit( *old, 7 ) )	set_bit( new, bit );
-			if ( test_bit( *old, 6 ) )	set_bit( new + 3, bit );
-			if ( test_bit( *old, 5 ) )	set_bit( new + 6, bit );
-			if ( test_bit( *old, 4 ) )	set_bit( new + 9, bit );
-			if ( test_bit( *old, 3 ) )	set_bit( new + 12, bit );
-			if ( test_bit( *old, 2 ) )	set_bit( new + 15, bit );
-			if ( test_bit( *old, 1 ) )	set_bit( new + 18, bit );
-			if ( test_bit( *old, 0 ) )	set_bit( new + 21, bit );
-			if ( test_bit( *( ++old ), 7 ) )	set_bit( new + 24, bit );
-			if ( test_bit( *( old ), 6 ) )	set_bit( new + 27, bit );
-			if ( test_bit( *( old ), 5 ) )	set_bit( new + 30, bit );
-			if ( test_bit( *( old ), 4 ) )	set_bit( new + 33, bit );
-			if ( test_bit( *( old ), 3 ) )	set_bit( new + 36, bit );
-			if ( test_bit( *( old ), 2 ) )	set_bit( new + 39, bit );
-			if ( test_bit( *( old ), 1 ) )	set_bit( new + 42, bit );
-			if ( test_bit( *( old ), 0 ) )	set_bit( new + 45, bit );
-			if ( test_bit( *( ++old ), 7 ) )	set_bit( new + 48, bit );
-			if ( test_bit( *( old ), 6 ) )	set_bit( new + 51, bit );
-			if ( test_bit( *( old ), 5 ) )	set_bit( new + 54, bit );
-			if ( test_bit( *( old ), 4 ) )	set_bit( new + 57, bit );
-			if ( test_bit( *( old ), 3 ) )	set_bit( new + 60, bit );
-			if ( test_bit( *( old ), 2 ) )	set_bit( new + 63, bit );
-			if ( test_bit( *( old ), 1 ) )	set_bit( new + 66, bit );
-			if ( test_bit( *( old ), 0 ) )	set_bit( new + 69, bit );
+			if ( test_bit( *old, 7 ) ) { set_bit( new, bit ); }
+			if ( test_bit( *old, 6 ) ) { set_bit( new + 3, bit ); }
+			if ( test_bit( *old, 5 ) ) { set_bit( new + 6, bit ); }
+			if ( test_bit( *old, 4 ) ) { set_bit( new + 9, bit ); }
+			if ( test_bit( *old, 3 ) ) { set_bit( new + 12, bit ); }
+			if ( test_bit( *old, 2 ) ) { set_bit( new + 15, bit ); }
+			if ( test_bit( *old, 1 ) ) { set_bit( new + 18, bit ); }
+			if ( test_bit( *old, 0 ) ) { set_bit( new + 21, bit ); }
+			if ( test_bit( *( ++old ), 7 ) ) { set_bit( new + 24, bit ); }
+			if ( test_bit( *( old ), 6 ) ) { set_bit( new + 27, bit ); }
+			if ( test_bit( *( old ), 5 ) ) { set_bit( new + 30, bit ); }
+			if ( test_bit( *( old ), 4 ) ) { set_bit( new + 33, bit ); }
+			if ( test_bit( *( old ), 3 ) ) { set_bit( new + 36, bit ); }
+			if ( test_bit( *( old ), 2 ) ) { set_bit( new + 39, bit ); }
+			if ( test_bit( *( old ), 1 ) ) { set_bit( new + 42, bit ); }
+			if ( test_bit( *( old ), 0 ) ) { set_bit( new + 45, bit ); }
+			if ( test_bit( *( ++old ), 7 ) ) { set_bit( new + 48, bit ); }
+			if ( test_bit( *( old ), 6 ) ) { set_bit( new + 51, bit ); }
+			if ( test_bit( *( old ), 5 ) ) { set_bit( new + 54, bit ); }
+			if ( test_bit( *( old ), 4 ) ) { set_bit( new + 57, bit ); }
+			if ( test_bit( *( old ), 3 ) ) { set_bit( new + 60, bit ); }
+			if ( test_bit( *( old ), 2 ) ) { set_bit( new + 63, bit ); }
+			if ( test_bit( *( old ), 1 ) ) { set_bit( new + 66, bit ); }
+			if ( test_bit( *( old ), 0 ) ) { set_bit( new + 69, bit ); }
 			++old;
 		}
 	}
 }
 
-save_24( ) {
+int save_24( ) {
 	char *newfon;
 
 	int fd;
@@ -315,7 +302,7 @@ save_24( ) {
 	return ~0;
 }
 
-con_fed_to_24( char *buff, char *new ) {
+int con_fed_to_24( char *buff, char *new ) {
 	int ch, i, bit;
 	char *old, *oldch = buff + 31 * 3 * 24;
 
@@ -325,39 +312,38 @@ con_fed_to_24( char *buff, char *new ) {
 		for ( i = 0; i<18; i++ ) {
 			old = oldch + i / 8;
 			bit = 7 - i % 8;
-			if ( test_bit( *old, bit ) )	set_bit( new, 7 );
-			if ( test_bit( *( old + 3 ), bit ) )	set_bit( new, 6 );
-			if ( test_bit( *( old + 6 ), bit ) )	set_bit( new, 5 );
-			if ( test_bit( *( old + 9 ), bit ) )	set_bit( new, 4 );
-			if ( test_bit( *( old + 12 ), bit ) )	set_bit( new, 3 );
-			if ( test_bit( *( old + 15 ), bit ) )	set_bit( new, 2 );
-			if ( test_bit( *( old + 18 ), bit ) )	set_bit( new, 1 );
-			if ( test_bit( *( old + 21 ), bit ) )	set_bit( new, 0 );
+			if ( test_bit( *old, bit ) ) { set_bit( new, 7 ); }
+			if ( test_bit( *( old + 3 ), bit ) ) { set_bit( new, 6 ); }
+			if ( test_bit( *( old + 6 ), bit ) ) { set_bit( new, 5 ); }
+			if ( test_bit( *( old + 9 ), bit ) ) { set_bit( new, 4 ); }
+			if ( test_bit( *( old + 12 ), bit ) ) { set_bit( new, 3 ); }
+			if ( test_bit( *( old + 15 ), bit ) ) { set_bit( new, 2 ); }
+			if ( test_bit( *( old + 18 ), bit ) ) { set_bit( new, 1 ); }
+			if ( test_bit( *( old + 21 ), bit ) ) { set_bit( new, 0 ); }
 			++new;
-			if ( test_bit( *( old + 24 ), bit ) )	set_bit( new, 7 );
-			if ( test_bit( *( old + 27 ), bit ) )	set_bit( new, 6 );
-			if ( test_bit( *( old + 30 ), bit ) )	set_bit( new, 5 );
-			if ( test_bit( *( old + 33 ), bit ) )	set_bit( new, 4 );
-			if ( test_bit( *( old + 36 ), bit ) )	set_bit( new, 3 );
-			if ( test_bit( *( old + 39 ), bit ) )	set_bit( new, 2 );
-			if ( test_bit( *( old + 42 ), bit ) )	set_bit( new, 1 );
-			if ( test_bit( *( old + 45 ), bit ) )	set_bit( new, 0 );
+			if ( test_bit( *( old + 24 ), bit ) ) { set_bit( new, 7 ); }
+			if ( test_bit( *( old + 27 ), bit ) ) { set_bit( new, 6 ); }
+			if ( test_bit( *( old + 30 ), bit ) ) { set_bit( new, 5 ); }
+			if ( test_bit( *( old + 33 ), bit ) ) { set_bit( new, 4 ); }
+			if ( test_bit( *( old + 36 ), bit ) ) { set_bit( new, 3 ); }
+			if ( test_bit( *( old + 39 ), bit ) ) { set_bit( new, 2 ); }
+			if ( test_bit( *( old + 42 ), bit ) ) { set_bit( new, 1 ); }
+			if ( test_bit( *( old + 45 ), bit ) ) { set_bit( new, 0 ); }
 			++new;
-			if ( test_bit( *( old + 48 ), bit ) )	set_bit( new, 7 );
-			if ( test_bit( *( old + 51 ), bit ) )	set_bit( new, 6 );
-			if ( test_bit( *( old + 54 ), bit ) )	set_bit( new, 5 );
-			if ( test_bit( *( old + 57 ), bit ) )	set_bit( new, 4 );
-			if ( test_bit( *( old + 60 ), bit ) )	set_bit( new, 3 );
-			if ( test_bit( *( old + 63 ), bit ) )	set_bit( new, 2 );
-			if ( test_bit( *( old + 66 ), bit ) )	set_bit( new, 1 );
-			if ( test_bit( *( old + 69 ), bit ) )	set_bit( new, 0 );
+			if ( test_bit( *( old + 48 ), bit ) ) { set_bit( new, 7 ); }
+			if ( test_bit( *( old + 51 ), bit ) ) { set_bit( new, 6 ); }
+			if ( test_bit( *( old + 54 ), bit ) ) { set_bit( new, 5 ); }
+			if ( test_bit( *( old + 57 ), bit ) ) { set_bit( new, 4 ); }
+			if ( test_bit( *( old + 60 ), bit ) ) { set_bit( new, 3 ); }
+			if ( test_bit( *( old + 63 ), bit ) ) { set_bit( new, 2 ); }
+			if ( test_bit( *( old + 66 ), bit ) ) { set_bit( new, 1 ); }
+			if ( test_bit( *( old + 69 ), bit ) ) { set_bit( new, 0 ); }
 			++new;
 		}
 	}
 }
 
-
-save_prn( ) {
+int save_prn( ) {
 	int fd;
 	char *prn_fon;
 
@@ -381,29 +367,34 @@ save_prn( ) {
 	return ~0;
 }
 
-fed_to_prn_ch( char *buff, char *res ) {
+int fed_to_prn_ch( char *buff, char *res ) {
 	int i, j;
 
-	for ( i = 0; i<8; i++ )
-		for ( j = 0; j<22; j++ )
-			if ( test_bit( *( buff + j / 8 + i * 6 ), 7 - ( j % 8 ) ) )
+	for ( i = 0; i < 8; i++ ) {
+		for ( j = 0; j < 22; j++ ) {
+			if ( test_bit( *( buff + j / 8 + i * 6 ), 7 - ( j % 8 ) ) ) {
 				set_bit( ( res + j ), 7 - i );
-	for ( i = 0; i<8; i++ )
-		for ( j = 0; j<22; j++ )
-			if ( test_bit( *( buff + j / 8 + i * 6 + 3 ), 7 - ( j % 8 ) ) )
+			}
+		}
+	}
+	for ( i = 0; i < 8; i++ ) {
+		for ( j = 0; j < 22; j++ ) {
+			if ( test_bit( *( buff + j / 8 + i * 6 + 3 ), 7 - ( j % 8 ) ) ) {
 				set_bit( ( res + j + 22 ), 7 - i );
+			}
+		}
+	}
 }
 
-
-conv_fed_to_22x16( char *buff, char *result ) {
+int conv_fed_to_22x16( char *buff, char *result ) {
 	int i;
 
-	for ( i = 0; i <= 255; i++ )
+	for ( i = 0; i <= 255; i++ ) {
 		fed_to_prn_ch( buff + i * 3 * 16, result + i * 44 );
+	}
 }
 
-
-load_prn( ) {
+int load_prn( ) {
 	int fd;
 	char *prn_fon;
 
@@ -433,29 +424,34 @@ load_prn( ) {
 	return ~0;
 }
 
-
-prn_to_fed_ch( char *buff, char *res ) {
+int prn_to_fed_ch( char *buff, char *res ) {
 	int i, j;
-	for ( j = 0; j<8; j++ )
-		for ( i = 0; i<22; i++ )
-			if ( test_bit( *( buff + i ), 7 - j ) )
+
+	for ( j = 0; j < 8; j++ ) {
+		for ( i = 0; i < 22; i++ ) {
+			if ( test_bit( *( buff + i ), 7 - j ) ) {
 				set_bit( res + i / 8 + j * 6, 7 - i % 8 );
-	for ( j = 0; j<8; j++ )
-		for ( i = 22; i<44; i++ )
-			if ( test_bit( *( buff + i ), 7 - j ) )
+			}
+		}
+	}
+	for ( j = 0; j < 8; j++ ) {
+		for ( i = 22; i < 44; i++ ) {
+			if ( test_bit( *( buff + i ), 7 - j ) ) {
 				set_bit( res + ( i - 22 ) / 8 + j * 6 + 3, 7 - ( i - 22 ) % 8 );
+			}
+		}
+	}
 }
 
-
-conv_22x16_to_fed( char *buff, char *result ) {
+int conv_22x16_to_fed( char *buff, char *result ) {
 	int i;
 
-	for ( i = 0; i <= 255; i++ )
+	for ( i = 0; i <= 255; i++ ) {
 		prn_to_fed_ch( buff + i * 44, result + i * 3 * 16 );
+	}
 }
 
-
-load_scr( ) {
+int load_scr( ) {
 	int fd;
 
 	X = 8; Y = 20;
@@ -474,7 +470,7 @@ load_scr( ) {
 	return ~0;
 }
 
-save_scr( ) {
+int save_scr( ) {
 	int fd;
 
 	if ( ( fd = _creat( fname, FA_ARCH ) ) == -1 ) {
@@ -489,7 +485,7 @@ save_scr( ) {
 	return ~0;
 }
 
-load_sup_sub( ) {
+int load_sup_sub( ) {
 	char *oldfon;
 
 	int fd, filelen;
@@ -519,22 +515,25 @@ load_sup_sub( ) {
 	return ~0;
 }
 
-con_sup_to_fed_chr( char *oldch, char *newch ) {
+int con_sup_to_fed_chr( char *oldch, char *newch ) {
 	int i, j;
-	for ( i = 0; i<18; i++ )
-		for ( j = 4; j<15; j++ )
-			if ( test_bit( *( oldch + ( j / 8 ) + i * 2 ), 7 - j % 8 ) )
+	for ( i = 0; i < 18; i++ ) {
+		for ( j = 4; j < 15; j++ ) {
+			if ( test_bit( *( oldch + ( j / 8 ) + i * 2 ), 7 - j % 8 ) ) {
 				set_bit( newch + ( j - 4 ) * 3 + ( i / 8 ), 7 - i % 8 );
+			}
+		}
+	}
 }
 
-
-con_sup_to_fed( char *oldfon, char *newfon ) {
+int con_sup_to_fed( char *oldfon, char *newfon ) {
 	int ch;
-	for ( ch = 32 - 32; ch<256 - 32; ch++ )
+	for ( ch = 32 - 32; ch < 256 - 32; ch++ ) {
 		con_sup_to_fed_chr( oldfon + ch * 18 * 2, newfon + ( 32 + ch ) * 3 * 12 );
+	}
 }
 
-save_sup_sub( ) {
+int save_sup_sub( ) {
 	char *newfon;
 
 	int fd;
@@ -558,17 +557,20 @@ save_sup_sub( ) {
 	return ~0;
 }
 
-con_fed_to_sup_chr( char *oldch, char *newch ) {
+int con_fed_to_sup_chr( char *oldch, char *newch ) {
 	int i, j;
-	for ( i = 0; i<18; i++ )
-		for ( j = 4; j<16; j++ )
-			if ( test_bit( *( oldch + ( j - 4 ) * 3 + ( i / 8 ) ), 7 - i % 8 ) )
+	for ( i = 0; i < 18; i++ ) {
+		for ( j = 4; j < 16; j++ ) {
+			if ( test_bit( *( oldch + ( j - 4 ) * 3 + ( i / 8 ) ), 7 - i % 8 ) ) {
 				set_bit( newch + ( j / 8 ) + i * 2, 7 - j % 8 );
+			}
+		}
+	}
 }
 
-
-con_fed_to_sup( char *oldfon, char *newfon ) {
+int con_fed_to_sup( char *oldfon, char *newfon ) {
 	int ch;
-	for ( ch = 32 - 32; ch<256 - 32; ch++ )
+	for ( ch = 32 - 32; ch < 256 - 32; ch++ ) {
 		con_fed_to_sup_chr( oldfon + ( ch + 32 ) * 12 * 3, newfon + ch * 2 * 18 );
+	}
 }

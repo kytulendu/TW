@@ -1,13 +1,19 @@
+#include <stdio.h>
 #include <dos.h>
 
-#include "fed.h"
-#include "inc.h"
+#include "..\common\cwtype.h"
 #include "..\common\cwgrphc.h"
+#include "..\common\cscrn.h"
+
+#include "fed.h"
+#include "write.h"
+
+#include "int.h"
 
 static int clock_busy = STOP;
 
-static  void interrupt far( *oldvect28 )( void );
-static  void interrupt far( *oldvect23 )( void );
+static void interrupt far( *oldvect28 )( void );
+static void interrupt far( *oldvect23 )( void );
 
 extern int draw_mode;
 
@@ -25,7 +31,7 @@ void start_clock( int func ) {
 	clock_busy = func;
 }
 
-get_active_clock( ) {
+int get_active_clock( ) {
 	return  clock_busy;
 }
 
@@ -41,11 +47,14 @@ void interrupt far newint28( void ) {
 		switch ( clock_busy ) {
 		case EDIT_FONT:blink( pos_x, pos_y );
 			switch ( draw_mode ) {
-			case 0:dispstrhgc( "Move mode", 50, 16, REVERSEATTR );
+			case 0:
+				dispstrhgc( "Move mode", 50, 16, REVERSEATTR );
 				return;
-			case 1:dispstrhgc( "Draw mode", 50, 16, REVERSEATTR );
+			case 1:
+				dispstrhgc( "Draw mode", 50, 16, REVERSEATTR );
 				return;
-			case 2:dispstrhgc( "Erasemode", 50, 16, REVERSEATTR );
+			case 2:
+				dispstrhgc( "Erasemode", 50, 16, REVERSEATTR );
 				return;
 			}
 			break;
@@ -72,7 +81,7 @@ void init_clock( ) {
 	setvect( 0x23, newint23 );
 }
 
-void	flush_clock( void ) {
+void flush_clock( void ) {
 	clock_busy = STOP;
 	setvect( 0x28, oldvect28 );
 	setvect( 0x23, oldvect23 );
