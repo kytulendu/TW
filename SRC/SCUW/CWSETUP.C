@@ -134,7 +134,7 @@ void cwsetup( int argc, char *argv[] ) {
 }
 
 void usage( void ) {
-	fputs( "Usage: cw [option] [file]\n", stderr );
+	fputs( "Usage: TW.EXE [option] [file]\n", stderr );
 	fputs( "Options\n", stderr );
 	fputs( "\t-h,\t/h  Hercules graphic adapter\n", stderr );
 	fputs( "\t-hl,\t/hl Hercules graphic adapter, left justify\n", stderr );
@@ -195,9 +195,9 @@ int readoption( search_file_mode mode ) {
 	each_option_setup *op;
 
 
-	sprintf( fname, "%s\\CW.CFG", cw_dir );
+	sprintf( fname, "%s\\TW.CFG", cw_dir );
 	if ( mode == CUR_DIR || mode == AUTO_FIND ) {
-		fp = fopen( "CW.CFG", "rt" );
+		fp = fopen( "TW.CFG", "rt" );
 	} else {
 		fp = fopen( fname, "rt" );
 	}
@@ -234,9 +234,9 @@ void saveoption( search_file_mode mode ) {
 	each_option_setup *op;
 
 	if ( mode == CUR_DIR || mode == AUTO_FIND ) {
-		fp = fopen( "CW.CFG", "wt" );
+		fp = fopen( "TW.CFG", "wt" );
 	} else {
-		sprintf( config_file, "%s\\CW.CFG", cw_dir );
+		sprintf( config_file, "%s\\TW.CFG", cw_dir );
 		fp = fopen( config_file, "wt" );
 	}
 	if ( fp == NULL ) {
@@ -339,7 +339,7 @@ void initvalue( unsigned *x, unsigned *y ) {
 }
 
 void print_file( void ) {
-	static char cup[] = "CUPRINT.EXE";
+	static char cup[] = "TWPRINT.EXE";
 	char ncup[40];
 
 	savepic( );
@@ -348,7 +348,7 @@ void print_file( void ) {
 		dispprintf( 4 + ( 2 + 37 + thaistrlen( filename ) + 2 - 13 ) / 2, 4, BOLDATTR,
 			"**โปรดสังเกตุ**" );
 		dispprintf( 4 + 2, 5, NORMALATTR,
-			"CUPRINT จะพิมพ์ข้อมูลจากไฟล์ ในดิสก์เท่านั้น" );
+			"TWPRINT จะพิมพ์ข้อมูลจากไฟล์ ในดิสก์เท่านั้น" );
 		dispprintf( 4 + 2, 6, NORMALATTR,
 			"แต่ไฟล์  %.30s  ในดิสก์ไม่ตรงกับข้อมูลในหน่วยความจำ", filename );
 		dispprintf( 4 + 2, 7, NORMALATTR,
@@ -364,7 +364,7 @@ void print_file( void ) {
 		strcat( ncup, "\\" );                           /* Search at CW dir */
 		strcat( ncup, cup );
 		if ( spawnl( P_WAIT, ncup, ncup, cup_option, filename, NULL ) == -1 ) {
-			printf( "\n\nCannot find file : CUPRINT.EXE\nPress any key\n\007" );
+			printf( "\n\nCannot find file : TWPRINT.EXE\nPress any key\n\007" );
 			getch( );
 		}
 	}
@@ -374,7 +374,7 @@ void print_file( void ) {
 }
 
 void edit_font( void ) {
-	static char cuf[] = "CUFONT.EXE";
+	static char cuf[] = "TWFONT.EXE";
 
 	if ( spawnlp( P_WAIT, cuf, cuf, cup_option, NULL ) == -1 )
 		showerrno( );
