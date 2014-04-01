@@ -168,6 +168,12 @@
     <None Include="SRC\SCUW\THAISYLS\MAKEFILE.MAK">
       <Filter>Make Files\SCUW\THAISYLS</Filter>
     </None>
+    <None Include="SRC\SCUF\MAKEFILE.MAK">
+      <Filter>Make Files\SCUF</Filter>
+    </None>
+    <None Include="SRC\SCUF\SCUF.TLR">
+      <Filter>Make Files\SCUF</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\COMMON\CONST.H">
@@ -341,6 +347,15 @@
     <ClInclude Include="SRC\SCUW\THAISYLS\ROUTINE.H">
       <Filter>Source Code\Header Files\SCUW\THAISYLS</Filter>
     </ClInclude>
+    <ClInclude Include="SRC\SCUF\CONVERT.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\FILE.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\TUTIL1.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRC\COMMON\CSCRN.C">
@@ -454,16 +469,10 @@
     <ClCompile Include="SRC\SCUP\TUTIL1.C">
       <Filter>Source Code\Source Files\SCUP</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\SCUF\CONST.C">
-      <Filter>Source Code\Source Files\SCUF</Filter>
-    </ClCompile>
     <ClCompile Include="SRC\SCUF\CONVERT.C">
       <Filter>Source Code\Source Files\SCUF</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUF\CUFSETUP.C">
-      <Filter>Source Code\Source Files\SCUF</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUF\DIR.C">
       <Filter>Source Code\Source Files\SCUF</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUF\FED.C">

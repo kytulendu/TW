@@ -91,6 +91,8 @@
     <None Include="SRC\COMMON\HDISP.ASM" />
     <None Include="SRC\COMMON\MAKEFILE.MAK" />
     <None Include="SRC\MAKE.BAT" />
+    <None Include="SRC\SCUF\MAKEFILE.MAK" />
+    <None Include="SRC\SCUF\SCUF.TLR" />
     <None Include="SRC\SCUW\MAKEFILE.MAK" />
     <None Include="SRC\SCUW\SCUW.TLR" />
     <None Include="SRC\SCUW\THAISYLS\MAKEFILE.MAK" />
@@ -113,13 +115,16 @@
     <ClInclude Include="SRC\COMMON\KBDCODE.H" />
     <ClInclude Include="SRC\COMMON\SOUND.H" />
     <ClInclude Include="SRC\SCUF\CONST.H" />
+    <ClInclude Include="SRC\SCUF\CONVERT.H" />
     <ClInclude Include="SRC\SCUF\FED.H" />
+    <ClInclude Include="SRC\SCUF\FILE.H" />
     <ClInclude Include="SRC\SCUF\FONTMSG.H" />
     <ClInclude Include="SRC\SCUF\GETCH.H" />
     <ClInclude Include="SRC\SCUF\INC.H" />
     <ClInclude Include="SRC\SCUF\KEY.H" />
     <ClInclude Include="SRC\SCUF\POPUP.H" />
     <ClInclude Include="SRC\SCUF\PROTO.H" />
+    <ClInclude Include="SRC\SCUF\TUTIL1.H" />
     <ClInclude Include="SRC\SCUF\VAR.H" />
     <ClInclude Include="SRC\SCUF\WRITE.H" />
     <ClInclude Include="SRC\SCUP\24PINS.H" />
@@ -172,10 +177,8 @@
     <ClCompile Include="SRC\COMMON\STAMPDAT.C" />
     <ClCompile Include="SRC\COMMON\TCONV.C" />
     <ClCompile Include="SRC\COMMON\TUTIL1.C" />
-    <ClCompile Include="SRC\SCUF\CONST.C" />
     <ClCompile Include="SRC\SCUF\CONVERT.C" />
     <ClCompile Include="SRC\SCUF\CUFSETUP.C" />
-    <ClCompile Include="SRC\SCUF\DIR.C" />
     <ClCompile Include="SRC\SCUF\FED.C" />
     <ClCompile Include="SRC\SCUF\FILE.C" />
     <ClCompile Include="SRC\SCUF\FONTMSG.C" />
