@@ -1,92 +1,94 @@
-# makefile for cuprint.exe
-# by Suttipong Kanakakorn
-# Sun  08-06-1989  16:24:05
 #
-# TCC_OPTION -w = enable all warning
+# makefile for TWPRINT.EXE
 #
-TCC_OPTION=-w
 
-\cw\cuprint.exe: \
-        ..\common\edisp.obj ..\common\hdisp.obj ..\common\adisp.obj \
-        ..\common\grdetect.obj \
-        ..\common\cwgrphc.obj ..\common\cwegrph.obj ..\common\cwagrph.obj \
-        ..\common\ekbd.obj \
-        ..\common\cscrn.obj ..\common\fileutil.obj ..\common\dir.obj \
-        ..\common\sound.obj \
-        kbd.obj getstr.obj tutil1.obj cupsetup.obj \
-        pmenu.obj smenu.obj prtutil.obj \
-        printing.obj prt.obj prtt.obj prtg.obj \
-        pic.obj dot.obj cpi.obj global.obj prncntrl.obj \
-        error.obj preproc.obj 24pins.obj attr.obj cpthai.obj \
-        prtbuf24.obj
-    tcc -c $(TCC_OPTION) ..\common\stampdate.c
-    tlink   @scup.tlr
+CC = TCC
+LINKER = TLINK
+LIBPATH = C:\TC\LIB
+INCLUDEPATH = C:\TC\INCLUDE;C:\TW\SRC\COMMON
+CCFLAGS = -c -w -d -O -ml -f- -Z -K -k- -C -I$(INCLUDEPATH) -L$(LIBPATH)
 
-kbd.obj: kbd.c
-    tcc -c $(TCC_OPTION) kbd.c
+\TW\TWPRINT.EXE: \
+        ..\COMMON\EDISP.OBJ ..\COMMON\HDISP.OBJ ..\COMMON\ADISP.OBJ \
+        ..\COMMON\GRDETECT.OBJ \
+        ..\COMMON\CWGRPHC.OBJ ..\COMMON\CWEGRPH.OBJ ..\COMMON\CWAGRPH.OBJ \
+        ..\COMMON\EKBD.OBJ \
+        ..\COMMON\CSCRN.OBJ ..\COMMON\FILEUTIL.OBJ ..\COMMON\DIR.OBJ \
+        ..\COMMON\SOUND.OBJ
+        KBD.OBJ GETSTR.OBJ TUTIL1.OBJ CUPSETUP.OBJ \
+        PMENU.OBJ SMENU.OBJ PRTUTIL.OBJ \
+        PRINTING.OBJ PRT.OBJ PRTT.OBJ PRTG.OBJ \
+        PIC.OBJ DOT.OBJ CPI.OBJ GLOBAL.OBJ PRNCNTRL.OBJ \
+        ERROR.OBJ PREPROC.OBJ 24PINS.OBJ ATTR.OBJ CPTHAI.OBJ \
+        PRTBUF24.OBJ
+	$(CC) -c ..\COMMON\STAMPDATE.C
+    $(LINKER) @SCUP.TLR
 
-getstr.obj: getstr.c
-    tcc -c $(TCC_OPTION) getstr.c
+KBD.OBJ: KBD.C
+    $(CC) $(CCFLAGS) KBD.C
 
-tutil1.obj: tutil1.c
-    tcc -c $(TCC_OPTION) tutil1.c
+GETSTR.OBJ: GETSTR.C
+    $(CC) $(CCFLAGS) GETSTR.C
 
-cupsetup.obj: cupsetup.c
-    tcc -c $(TCC_OPTION) cupsetup.c
+TUTIL1.OBJ: TUTIL1.C
+    $(CC) $(CCFLAGS) TUTIL1.C
 
-pmenu.obj: pmenu.c
-    tcc -c $(TCC_OPTION) pmenu.c
+CUPSETUP.OBJ: CUPSETUP.C
+    $(CC) $(CCFLAGS) CUPSETUP.C
 
-smenu.obj: smenu.c
-    tcc -c $(TCC_OPTION) smenu.c
+PMENU.OBJ: PMENU.C
+    $(CC) $(CCFLAGS) PMENU.C
 
-#pconfig.obj: pconfig.c
-#    tcc -c $(TCC_OPTION) pconfig.c
+SMENU.OBJ: SMENU.C
+    $(CC) $(CCFLAGS) SMENU.C
 
-prtutil.obj: prtutil.c
-    tcc -c $(TCC_OPTION) prtutil.c
+#PCONFIG.OBJ: PCONFIG.C
+#    $(CC) $(CCFLAGS) PCONFIG.C
 
-printing.obj: printing.c
-    tcc -c $(TCC_OPTION) printing.c
+PRTUTIL.OBJ: PRTUTIL.C
+    $(CC) $(CCFLAGS) PRTUTIL.C
 
-prt.obj: prt.c
-    tcc -c $(TCC_OPTION) prt.c
+PRINTING.OBJ: PRINTING.C
+    $(CC) $(CCFLAGS) PRINTING.C
 
-prtt.obj: prtt.c
-    tcc -c $(TCC_OPTION) prtt.c
+PRT.OBJ: PRT.C
+    $(CC) $(CCFLAGS) PRT.C
 
-prtg.obj: prtg.c
-    tcc -c $(TCC_OPTION) prtg.c
+PRTT.OBJ: PRTT.C
+    $(CC) $(CCFLAGS) PRTT.C
 
-pic.obj: pic.c
-    tcc -c $(TCC_OPTION) pic.c
+PRTG.OBJ: PRTG.C
+    $(CC) $(CCFLAGS) PRTG.C
 
-dot.obj: dot.c
-    tcc -c $(TCC_OPTION) dot.c
+PIC.OBJ: PIC.C
+    $(CC) $(CCFLAGS) PIC.C
 
-cpi.obj: cpi.c
-    tcc -c $(TCC_OPTION) cpi.c
+DOT.OBJ: DOT.C
+    $(CC) $(CCFLAGS) DOT.C
 
-global.obj: global.c
-    tcc -c $(TCC_OPTION) global.c
+CPI.OBJ: CPI.C
+    $(CC) $(CCFLAGS) CPI.C
 
-prncntrl.obj: prncntrl.c
-    tcc -c $(TCC_OPTION) prncntrl.c
+GLOBAL.OBJ: GLOBAL.C
+    $(CC) $(CCFLAGS) GLOBAL.C
 
-error.obj: error.c
-    tcc -c $(TCC_OPTION) error.c
+PRNCNTRL.OBJ: PRNCNTRL.C
+    $(CC) $(CCFLAGS) PRNCNTRL.C
 
-preproc.obj: preproc.c
-    tcc -c $(TCC_OPTION) preproc.c
+ERROR.OBJ: ERROR.C
+    $(CC) $(CCFLAGS) ERROR.C
 
-24pins.obj: 24pins.c
-    tcc -c $(TCC_OPTION) 24pins.c
+PREPROC.OBJ: PREPROC.C
+    $(CC) $(CCFLAGS) PREPROC.C
 
-attr.obj: attr.c
-    tcc -c $(TCC_OPTION) attr.c
+24PINS.OBJ: 24PINS.C
+    $(CC) $(CCFLAGS) 24PINS.C
 
-cpthai.obj: cpthai.c
-    tcc -c $(TCC_OPTION) cpthai.c
+ATTR.OBJ: ATTR.C
+    $(CC) $(CCFLAGS) ATTR.C
 
-prtbuf24.obj: prtbuf24.c
-    tcc -c $(TCC_OPTION) prtbuf24.c
+CPTHAI.OBJ: CPTHAI.C
+    $(CC) $(CCFLAGS) CPTHAI.C
+
+PRTBUF24.OBJ: PRTBUF24.C
+    $(CC) $(CCFLAGS) PRTBUF24.C

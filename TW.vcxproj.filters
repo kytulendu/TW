@@ -236,16 +236,10 @@
     <ClInclude Include="SRC\SCUF\GETCH.H">
       <Filter>Source Code\Header Files\SCUF</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\SCUF\INC.H">
-      <Filter>Source Code\Header Files\SCUF</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\SCUF\KEY.H">
       <Filter>Source Code\Header Files\SCUF</Filter>
     </ClInclude>
     <ClInclude Include="SRC\SCUF\POPUP.H">
-      <Filter>Source Code\Header Files\SCUF</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUF\PROTO.H">
       <Filter>Source Code\Header Files\SCUF</Filter>
     </ClInclude>
     <ClInclude Include="SRC\SCUF\VAR.H">
@@ -361,6 +355,12 @@
     </ClInclude>
     <ClInclude Include="SRC\SCUF\TUTIL1.H">
       <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\GLOBAL.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PRINTVAR.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

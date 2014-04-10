@@ -122,10 +122,8 @@
     <ClInclude Include="SRC\SCUF\FILE.H" />
     <ClInclude Include="SRC\SCUF\FONTMSG.H" />
     <ClInclude Include="SRC\SCUF\GETCH.H" />
-    <ClInclude Include="SRC\SCUF\INC.H" />
     <ClInclude Include="SRC\SCUF\KEY.H" />
     <ClInclude Include="SRC\SCUF\POPUP.H" />
-    <ClInclude Include="SRC\SCUF\PROTO.H" />
     <ClInclude Include="SRC\SCUF\TUTIL1.H" />
     <ClInclude Include="SRC\SCUF\VAR.H" />
     <ClInclude Include="SRC\SCUF\WRITE.H" />
@@ -134,7 +132,9 @@
     <ClInclude Include="SRC\SCUP\CPTHAI.H" />
     <ClInclude Include="SRC\SCUP\CUPTYPE.H" />
     <ClInclude Include="SRC\SCUP\FUNCMAC.H" />
+    <ClInclude Include="SRC\SCUP\GLOBAL.H" />
     <ClInclude Include="SRC\SCUP\INC.H" />
+    <ClInclude Include="SRC\SCUP\PRINTVAR.H" />
     <ClInclude Include="SRC\SCUP\PROTO.H" />
     <ClInclude Include="SRC\SCUP\TABLE.H" />
     <ClInclude Include="SRC\SCUW\BLOCK.H" />
