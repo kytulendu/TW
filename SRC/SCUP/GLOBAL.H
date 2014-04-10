@@ -102,4 +102,3 @@ extern char prog_date[];
 extern char prog_time[];
 
 extern int extbarprinting;
-
