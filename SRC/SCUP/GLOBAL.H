@@ -1,11 +1,15 @@
-/* Modified Suttipong Kanakakorn Mon  08-14-1989  10:57:02 */
-/* By CUCC 22 June 90 */
+/**
+*   Modified Suttipong Kanakakorn
+*   Mon  08-14-1989  10:57:02
+*   By CUCC 22 June 90
+*/
 
-#include <stdio.h>
+#ifndef SCUP_GLOBAL_H_INCLUDED
+#define SCUP_GLOBAL_H_INCLUDED
 
-/*  ******************************* */
-/*   3-level  buffer  declaration   */
-/*  ******************************* */
+/**
+*   3-level buffer declaration
+*/
 extern char *font[2]; /* Suttipong Kanakakorn Tue  08-15-1989  01:23:37 */
 extern char *fonts;   /* Suttipong Kanakakorn Tue  08-15-1989  01:23:51 */
 extern char *bupper1;
@@ -31,26 +35,29 @@ extern char blankline[];
 extern char oldfilename[];
 extern char filename[];
 extern char cup_dir[];
-/**************************
-   Menu data area .
-***************************/
+
+/**
+*   Menu data area.
+*/
 extern char mcol[];
 extern char smcol[];
 extern char mlenght;
-/**************************
-   Dotcommand global area .
- **************************/
-extern   FILE   *mfp;                  /* define mailmerge file ptr  */
-extern   char   *fieldname[];          /* define array of fieldnames */
-extern   char   *fieldcontent[];       /* define array of strings    */
-extern   int    fieldcount;            /* define number of fields    */
-extern   int    mailmergeflag;         /* each field content ready   */
-extern   int    mergefileexist;        /* .df successful             */
-extern   int    fieldnameexist;        /* .rv successful             */
-/*** Printer Data Area ****/
+
+/**
+*   Dotcommand global area.
+*/
+extern FILE *mfp;                       /* define mailmerge file ptr */
+extern char *fieldname[];               /* define array of fieldnames */
+extern char *fieldcontent[];            /* define array of strings */
+extern int fieldcount;                  /* define number of fields */
+extern int mailmergeflag;               /* each field content ready */
+extern int mergefileexist;              /* .df successful */
+extern int fieldnameexist;              /* .rv successful */
+
+/* Printer Data Area */
 extern int graphicprint;
-extern int prtcodestd;              /* YES standard,NO ku */
-extern int cpi;                      /* number of characters per inch */
+extern int prtcodestd;                  /* YES standard,NO ku */
+extern int cpi;                         /* number of characters per inch */
 extern int lineperpage;
 extern int userlineperpage;
 extern int pagelength;
@@ -60,13 +67,14 @@ extern char pagetitle[];
 extern char pageformat[];
 extern char heading[];
 extern char footing[];
-/* --------------------------------------
-    Location of pagetitle,heading,footing
-   0 -> no print       1 -> left  justify
-   2 -> center justify 3 -> right justify
-   4 -> right<-> odd pgno  left  <-> even
-   5 -> right<-> even      left  <->  odd
-   -------------------------------------- */
+
+/**
+*   Location of pagetitle,heading,footing
+*   0 -> no print       1 -> left  justify
+*   2 -> center justify 3 -> right justify
+*   4 -> right<-> odd pgno  left  <-> even
+*   5 -> right<-> even      left  <->  odd
+*/
 extern int locpagetitle;
 extern int locheading;
 extern int locfooting;
@@ -88,7 +96,9 @@ extern int stdcode;
 extern int curline;
 extern int curpage;
 extern int newpage;
-/*********************************/
+
+/* ---------------------------- */
+
 extern int thaimode;
 extern int quitprog;
 extern int rowmax[];
@@ -102,3 +112,5 @@ extern char prog_date[];
 extern char prog_time[];
 
 extern int extbarprinting;
+
+#endif /* SCUP_GLOBAL_H_INCLUDED */

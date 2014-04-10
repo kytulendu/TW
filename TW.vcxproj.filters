@@ -362,6 +362,66 @@
     <ClInclude Include="SRC\SCUP\PRINTVAR.H">
       <Filter>Source Code\Header Files\SCUP</Filter>
     </ClInclude>
+    <ClInclude Include="SRC\SCUP\ERROR.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\TUTIL1.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\CUPSETUP.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PRTUTIL.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\DOT.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PRNCNTRL.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PRINTING.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\ATTR.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\CPI.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\GETSTR.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\KBD.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PCONFIG.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PIC.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PMENU.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PREPROC.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PRT.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PRTBUF24.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PRTG.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\PRTT.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUP\SMENU.H">
+      <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRC\COMMON\CSCRN.C">

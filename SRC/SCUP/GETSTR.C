@@ -1,12 +1,25 @@
-/******  getstring *******/
-/* extract from pmenu.c  similar to getstr.c in prjcuw\scuw */
-/* Updated: Add function prototype
-By Suttipong Kanakakorn Mon  08-07-1989  00:26:14    */
+/** getstring
+*   extract from pmenu.c  similar to getstr.c in prjcuw\scuw
+*   Updated: Add function prototype
+*   By Suttipong Kanakakorn
+*   Mon  08-07-1989  00:26:14
+*/
 
+#include <stdio.h>
 #include <string.h>
+
+#include "..\common\cwtype.h"
+#include "..\common\cscrn.h"
+#include "..\common\ekbd.h"
+#include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
-#include "inc.h"
-#include "global.ext"
+#include "..\common\sound.h"
+
+#include "global.h"
+#include "tutil1.h"
+#include "kbd.h"
+
+#include "getstr.h"
 
 /*****************************************************************************/
 /* get string                                                                */
@@ -32,32 +45,40 @@ int getstring( char textst[], int x, int y, int maxlen, font_attr attr ) {
 	case CNTRL_S:
 	case LEKEY:
 	case CNTRL_M:
-	case RETKEY: break;
-	default: textst[0] = '\0';
+	case RETKEY:
+		break;
+	default:
+		textst[0] = '\0';
 		dispblank( x, y, maxlen, attr );
 		break;
 	}
 	do {
 		switch ( inkey ) {
 		case CNTRL_M:
-		case RETKEY: return( YES );
-		case CNTRL_U: return( NO );              /* Abort */
+		case RETKEY:
+			return( YES );
+		case CNTRL_U:
+			return( NO );							/* Abort */
 		case CNTRL_H:
 		case BSKEY:
 		case LEKEY:
-		case CNTRL_S: temp = strlen( textst );
+		case CNTRL_S:
+			temp = strlen( textst );
 			if ( temp != 0 ) {
-				if ( temp < oldlen )
+				if ( temp < oldlen ) {
 					textst[temp] = keepchar;
+				}
 				keepchar = textst[temp - 1];
 				textst[temp - 1] = '\0';
 				dispblank( x, y, maxlen, attr );
 				dispstrhgc( textst, x, y, attr );
 			}
 			break;
-		case ESCKEY: return( ESCKEY );
+		case ESCKEY:
+			return( ESCKEY );
 		case RIKEY:
-		case CNTRL_D: temp = strlen( textst );
+		case CNTRL_D:
+			temp = strlen( textst );
 			if ( ( temp < oldlen ) && ( temp < maxlen ) ) {
 				textst[temp] = keepchar;
 				keepchar = textst[temp + 1];
@@ -66,24 +87,29 @@ int getstring( char textst[], int x, int y, int maxlen, font_attr attr ) {
 				dispstrhgc( textst, x, y, attr );
 			}
 			break;
-		case CNTRL_Y: if ( strlen( textst ) < oldlen )
-			textst[strlen( textst )] = keepchar;
+		case CNTRL_Y:
+			if ( strlen( textst ) < oldlen )
+				textst[strlen( textst )] = keepchar;
 			keepchar = textst[0];
 			textst[0] = '\0';
 			dispblank( x, y, maxlen, attr );
 			break;
-		case CNTRL_R: if ( strlen( textst ) < oldlen ) {
-			textst[strlen( textst )] = keepchar;
-			dispblank( x, y, maxlen, attr );
-			dispstrhgc( textst, x, y, attr );
-		}
-					  break;
-		case F10KEY: if ( thaimode == YES )
-			thaimode = NO;
-					 else
-						 thaimode = YES;
+		case CNTRL_R:
+			if ( strlen( textst ) < oldlen ) {
+				textst[strlen( textst )] = keepchar;
+				dispblank( x, y, maxlen, attr );
+				dispstrhgc( textst, x, y, attr );
+			}
 			break;
-		default: inkey = ( inkey & 0xff );
+		case F10KEY:
+			if ( thaimode == YES ) {
+				thaimode = NO;
+			} else {
+				thaimode = YES;
+			}
+			break;
+		default:
+			inkey = ( inkey & 0xff );
 			if ( inkey >= 32 ) {
 				if ( strlen( textst ) < maxlen ) {
 					if ( whatlevel( inkey ) == MIDDLE ) {
@@ -101,8 +127,9 @@ int getstring( char textst[], int x, int y, int maxlen, font_attr attr ) {
 							oldlen = strlen( textst );
 							dispblank( x, y, maxlen, attr );
 							dispstrhgc( textst, x, y, attr );
-						} else
+						} else {
 							errorsound( );
+						}
 					}
 				}
 			}
@@ -129,7 +156,8 @@ int getname( char textst[], int x, int y, int maxlen, font_attr attr ) {
 	case LEKEY:
 	case CNTRL_M:
 	case RETKEY: break;
-	default: textst[0] = '\0';
+	default:
+		textst[0] = '\0';
 		dispblank( x, y, maxlen, attr );
 		break;
 	}
@@ -137,14 +165,16 @@ int getname( char textst[], int x, int y, int maxlen, font_attr attr ) {
 		switch ( inkey ) {
 		case RETKEY:
 		case CNTRL_M: return( YES );
-		case CNTRL_U: return( NO );                 /* Abort */
+		case CNTRL_U: return( NO );							/* Abort */
 		case BSKEY:
 		case LEKEY:
 		case CNTRL_H:
-		case CNTRL_S: temp = strlen( textst );
+		case CNTRL_S:
+			temp = strlen( textst );
 			if ( temp != 0 ) {
-				if ( temp < oldlen )
+				if ( temp < oldlen ) {
 					textst[temp] = keepchar;
+				}
 				keepchar = textst[temp - 1];
 				textst[temp - 1] = '\0';
 				dispblank( x, y, maxlen, attr );
@@ -153,7 +183,8 @@ int getname( char textst[], int x, int y, int maxlen, font_attr attr ) {
 			break;
 		case ESCKEY: return( ESCKEY );
 		case RIKEY:
-		case CNTRL_D: temp = strlen( textst );
+		case CNTRL_D:
+			temp = strlen( textst );
 			if ( ( temp < oldlen ) && ( temp < maxlen ) ) {
 				textst[temp] = keepchar;
 				keepchar = textst[temp + 1];
@@ -162,22 +193,27 @@ int getname( char textst[], int x, int y, int maxlen, font_attr attr ) {
 				dispstrhgc( textst, x, y, attr );
 			}
 			break;
-		case CNTRL_Y: if ( strlen( textst ) < oldlen )
-			textst[strlen( textst )] = keepchar;
+		case CNTRL_Y:
+			if ( strlen( textst ) < oldlen ) {
+				textst[strlen( textst )] = keepchar;
+			}
 			keepchar = textst[0];
 			textst[0] = '\0';
 			dispblank( x, y, maxlen, attr );
 			break;
-		case CNTRL_R: if ( strlen( textst ) < oldlen ) {
-			textst[strlen( textst )] = keepchar;
-			dispblank( x, y, maxlen, attr );
-			dispstrhgc( textst, x, y, attr );
-		}
-					  break;
-		default: inkey = ( inkey & 0xff );
+		case CNTRL_R:
+			if ( strlen( textst ) < oldlen ) {
+				textst[strlen( textst )] = keepchar;
+				dispblank( x, y, maxlen, attr );
+				dispstrhgc( textst, x, y, attr );
+			}
+			break;
+		default:
+			inkey = ( inkey & 0xff );
 			if ( inkey >= 32 ) {
-				if ( ( inkey >= 'a' ) && ( inkey <= 'z' ) )
+				if ( ( inkey >= 'a' ) && ( inkey <= 'z' ) ) {
 					inkey = inkey - ( 'a' - 'A' );
+				}
 				if ( ( strlen( textst ) < maxlen ) && ( inkey != ' ' ) ) {
 					textst[strlen( textst ) + 1] = '\0';
 					textst[strlen( textst )] = inkey;
@@ -208,7 +244,8 @@ int getnumber( char textst[], int x, int y, int maxlen, font_attr attr ) {
 	case CNTRL_S:
 	case CNTRL_M:
 	case RETKEY:
-	case LEKEY:  break;
+	case LEKEY:
+		break;
 	default:  textst[0] = '\0';
 		dispblank( x, y, maxlen, attr );
 		break;
@@ -221,7 +258,8 @@ int getnumber( char textst[], int x, int y, int maxlen, font_attr attr ) {
 		case BSKEY:
 		case LEKEY:
 		case CNTRL_H:
-		case CNTRL_S: temp = strlen( textst );
+		case CNTRL_S:
+			temp = strlen( textst );
 			if ( temp != 0 ) {
 				if ( temp < oldlen )
 					textst[temp] = keepchar;
@@ -231,9 +269,11 @@ int getnumber( char textst[], int x, int y, int maxlen, font_attr attr ) {
 				dispstrhgc( textst, x, y, attr );
 			}
 			break;
-		case ESCKEY: return( ESCKEY );
+		case ESCKEY:
+			return( ESCKEY );
 		case RIKEY:
-		case CNTRL_D: temp = strlen( textst );
+		case CNTRL_D:
+			temp = strlen( textst );
 			if ( ( temp < oldlen ) && ( temp < maxlen ) ) {
 				textst[temp] = keepchar;
 				keepchar = textst[temp + 1];
@@ -242,19 +282,23 @@ int getnumber( char textst[], int x, int y, int maxlen, font_attr attr ) {
 				dispstrhgc( textst, x, y, attr );
 			}
 			break;
-		case CNTRL_Y: if ( strlen( textst ) < oldlen )
-			textst[strlen( textst )] = keepchar;
+		case CNTRL_Y:
+			if ( strlen( textst ) < oldlen ) {
+				textst[strlen( textst )] = keepchar;
+			}
 			keepchar = textst[0];
 			textst[0] = '\0';
 			dispblank( x, y, maxlen, attr );
 			break;
-		case CNTRL_R: if ( strlen( textst ) < oldlen ) {
-			textst[strlen( textst )] = keepchar;
-			dispblank( x, y, maxlen, attr );
-			dispstrhgc( textst, x, y, attr );
-		}
-					  break;
-		default: inkey = ( inkey & 0xff );
+		case CNTRL_R:
+			if ( strlen( textst ) < oldlen ) {
+				textst[strlen( textst )] = keepchar;
+				dispblank( x, y, maxlen, attr );
+				dispstrhgc( textst, x, y, attr );
+			}
+			break;
+		default:
+			inkey = ( inkey & 0xff );
 			if ( ( inkey >= '0' ) && ( inkey <= '9' ) ) {
 				if ( strlen( textst ) < maxlen ) {
 					textst[strlen( textst ) + 1] = '\0';

@@ -1,21 +1,32 @@
-/*
-Written: Suttipong Kanakakorn
-Fri  08-11-1989  01:56:46
+/**
+*   Written: Suttipong Kanakakorn
+*   Fri  08-11-1989  01:56:46
 */
 
-#include <io.h>
-#include <fcntl.h>
-#include <string.h>
-#include <stdlib.h>
-#include <dos.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <dir.h>
-#include <process.h>
-#include "inc.h"
-#include "global.ext"
-#include "..\common\grdetect.h"
+#include <dos.h>
+#include <fcntl.h>
+#include <io.h>
+#include <string.h>
+
+#include "..\common\cwtype.h"
+#include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
+#include "..\common\ekbd.h"
+#include "..\common\fileutil.h"
+#include "..\common\grdetect.h"
 #include "..\common\kbdcode.h"
+
+#include "global.h"
+
+#include "24pins.h"
+#include "cuptype.h"
+#include "error.h"
+#include "prtutil.h"
+
+#include "cupsetup.h"
 
 #define ALL_FONT_SIZE 5120
 
@@ -29,43 +40,50 @@ void cupsetup( int argc, char *argv[] ) {
 
 	progname = argv[0];
 
-	/* Sorry for the pointer, but easy to expand argument
-	Suttipong
-	*/
+	/* Sorry for the pointer, but easy to expand argument, Suttipong */
 	while ( ( --argc > 0 ) && ( ( i = ( *++argv )[0] ) == '/' || i == '-' ) ) {
 		strupr( ++argv[0] );
-		while ( i = *( argv[0]++ ) )
+		while ( i = *( argv[0]++ ) ) {
 			switch ( i ) {
-			case 'H':  scrmode = HERCMONO;
+			case 'H':
+				scrmode = HERCMONO;
 				break;
-				/* e alone = ega, em = ega monochrome */
-			case 'E':  scrmode = EGA;
+
+			case 'E':/* e alone = ega, em = ega monochrome */
+				scrmode = EGA;
 				break;
-				/* m alone = mcga */
-			case 'M':  if ( scrmode == EGA )
-				scrmode = EGAMONO;
-					   else
-						   scrmode = MCGA;
+
+			case 'M':/* m alone = mcga */
+				if ( scrmode == EGA ) {
+					scrmode = EGAMONO;
+				} else {
+					scrmode = MCGA;
+				}
 				break;
-			case 'V':  scrmode = VGA;
+			case 'V':
+				scrmode = VGA;
 				break;
-			case 'A':  scrmode = ATT400;
+			case 'A':
+				scrmode = ATT400;
 				break;
-				/* /HL for Hercules, left-justified  */
-			case 'L':  herc_align = 0;
+			case 'L':/* /HL for Hercules, left-justified  */
+				herc_align = 0;
 				break;
 			case 'N':
 			case 'W':
 			case 'P':
 				break;
 			default:  usage( );
+			}
 		}
 	}
+
 	if ( argc >= 1 && ( file_exist( argv[0] ) ||
 		strchr( argv[0], '*' ) || strchr( argv[0], '?' ) ) ) {
 		placekey( RETKEY );
-		while ( i = *argv[0]++ )
+		while ( i = *argv[0]++ ) {
 			placekey( i );
+		}
 		placekey( RETKEY );
 	}
 
@@ -106,35 +124,35 @@ typedef struct {
 } each_option_setup;
 
 each_option_setup option_setup[] = {
-	"graphicprint", &graphicprint,
-	"prtcodestd", &prtcodestd,
-	"character/inch", &cpi,
-	"userlineperpage", &userlineperpage,
-	"pagelength", &pagelength,
-	"leftmargin", &leftmargin,
-	"rightmargin", &rightmargin,
-	"locpagetitle", &locpagetitle,
-	"locheading", &locheading,
-	"locfooting", &locfooting,
-	"printer", &printer,
-	"printer24pin", &printer24pin,
-	"maxcol", &maxcol,
-	"maxdot", &maxdot,
-	"maxbuffer", &maxbuffer,
-	"nlqmode", &nlqmode,
-	"pagebreak", &pagebreak,
-	"pagebegin", &pagebegin,
-	"pageend", &pageend,
-	"pagenumberoffset", &pagenumberoffset,
-	"copytoprint", &copytoprint,
-	"stdcode", &stdcode,
-	"smallpaper", &smallpaper,
-	NULL, NULL,
-	"pagetitle", pagetitle,
-	"pageformat", pageformat,
-	"heading", heading,
-	"footing", footing,
-	NULL, NULL
+	{ "graphicprint", &graphicprint },
+	{ "prtcodestd", &prtcodestd },
+	{ "character/inch", &cpi },
+	{ "userlineperpage", &userlineperpage },
+	{ "pagelength", &pagelength },
+	{ "leftmargin", &leftmargin },
+	{ "rightmargin", &rightmargin },
+	{ "locpagetitle", &locpagetitle },
+	{ "locheading", &locheading },
+	{ "locfooting", &locfooting },
+	{ "printer", &printer },
+	{ "printer24pin", &printer24pin },
+	{ "maxcol", &maxcol },
+	{ "maxdot", &maxdot },
+	{ "maxbuffer", &maxbuffer },
+	{ "nlqmode", &nlqmode },
+	{ "pagebreak", &pagebreak },
+	{ "pagebegin", &pagebegin },
+	{ "pageend", &pageend },
+	{ "pagenumberoffset", &pagenumberoffset },
+	{ "copytoprint", &copytoprint },
+	{ "stdcode", &stdcode },
+	{ "smallpaper", &smallpaper },
+	{ NULL, NULL },
+	{ "pagetitle", pagetitle },
+	{ "pageformat", pageformat },
+	{ "heading", heading },
+	{ "footing", footing },
+	{ NULL, NULL }
 };
 
 /* number of element of option_setup */
@@ -168,8 +186,9 @@ void readoption( search_file_mode mode ) {
 	if ( fp == NULL && mode == AUTO_FIND ) {
 		/* fopen file not success */
 		/* continue searching in cup_dir */
-		if ( ( fp = fopen( fname, "rt" ) ) == NULL )
+		if ( ( fp = fopen( fname, "rt" ) ) == NULL ) {
 			return; /* if not found in both dir use default value */
+		}
 	}
 	if ( fp == NULL ) {
 		showerrno( );
@@ -178,10 +197,11 @@ void readoption( search_file_mode mode ) {
 	/* If we reach here we succesfully open cw.cfg file */
 	for ( op = option_setup; op->option_name != NULL; op++ ) {
 		field = fscanf( fp, "%s %d", opname, &temp );
-		if ( field == 2 ) /* succesfully scan */
-			* ( int * ) op->p_option_value = temp;
-		else
+		if ( field == 2 ) { /* succesfully scan */
+			*( int * ) op->p_option_value = temp;
+		} else {
 			break;
+		}
 	}
 	for ( op++; op->option_name != NULL; op++ ) {
 		fscanf( fp, "%s", opname ); /* get option name */
@@ -221,20 +241,20 @@ void saveoption( search_file_mode mode ) {
 
 int handler( int errval, int ax, int bp, int si ) {
 	if ( ax >= 0 ) {
-		disperror( " error on disk drive   ! กดปุ่มใดๆเพื่อทำงานต่อ" );
+		disperror( "error on disk drive! กดปุ่มใดๆเพื่อทำงานต่อ" );
 		ebioskey( 0 );
 	}
 	hardretn( -1 );
 }
 
 /* -------------------------------------------------------------------- */
-/*      Function        :       cp_loadfont                             */
-/*      Description     :       load printer font                       */
-/*      Parameters      :       fname   - font filename                 */
-/*      Return value    :               - pointer to font table         */
-/*      Remark          :       This function allocate the font table   */
-/*      Written         :       Suttipong Kanakakorn                    */
-/*                              Tue  08-15-1989  00:23:58               */
+/* Function     : cp_loadfont                                           */
+/* Description  : load printer font                                     */
+/* Parameters   : fname - font filename                                 */
+/* Return value :       - pointer to font table                         */
+/* Remark       : This function allocate the font table                 */
+/* Written      : Suttipong Kanakakorn                                  */
+/*                Tue  08-15-1989  00:23:58                             */
 /* -------------------------------------------------------------------- */
 void *cp_loadfont( char *fname, unsigned font_size ) {
 	void *p;

@@ -1,5 +1,8 @@
-/* Updated: Suttipong Kanakakorn Wed  08-09-1989  00:05:24 */
-/* add function prototype */
+/**
+*   Updated: Suttipong Kanakakorn
+*   Wed  08-09-1989  00:05:24
+*   add function prototype
+*/
 
 #include <io.h>
 #include <dir.h>
@@ -9,19 +12,13 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include "inc.h"
+#include "..\common\cwtype.h"
+#include "..\common\const.h"
 
-/* function prototype */
-int is_command(char st[]);
-void get_argument(char arg[][40],char st[],int *no_arg);
-int getpr(void);
-void get_graphic_data(void);
-void process_command_0(int printer_data);
-void process_command_1(int printer_data);
-void process_command(int printer_data);
-void analyze_picture_file(char *st);
-void initialize_read(char *st);
-void read_picture_file(void);
+#include "const.h"
+#include "cuptype.h"
+
+#include "pic.h"
 
 char *print_buffer_pointer;
 int pic_print;
@@ -41,32 +38,36 @@ int dot_per_mode;            /* save number of dot in bit image mode */
 
 /*
 int is_command( char st[] ) {
-	int                         i;
+	int i;
 	i = 0;
 	if ( st[i] == BLANK ) {
-		while ( ( st[i] == BLANK ) && ( st[i] != NULL ) )
+		while ( ( st[i] == BLANK ) && ( st[i] != NULL ) ) {
 			i++;
-		if ( st[i] == '.' )
+		}
+		if ( st[i] == '.' ) {
 			return( YES );
-		else
+		} else {
 			return( NO );
+		}
 	} else {
-		if ( st[i] == '.' )
+		if ( st[i] == '.' ) {
 			return( YES );
-		else
+		} else {
 			return( NO );
+		}
 	}
 }
 
-/*
+
 void get_argument( char arg[][40], char st[], int *no_arg ) {
 	int                         i, j, k, spflg;
 	i = j = k = 0;
 	memset( arg, 0, 400 );
-	if ( st[i] == BLANK )
+	if ( st[i] == BLANK ) {
 		spflg = NO;
-	else
+	} else {
 		spflg = YES;
+	}
 	while ( st[i] != NULL ) {
 		if ( spflg == YES ) {
 			k = 0;
@@ -79,55 +80,64 @@ void get_argument( char arg[][40], char st[], int *no_arg ) {
 			spflg = NO;
 			j++;
 		} else {
-			while ( ( ( st[i] <= BLANK ) || ( st[i] == 0xa0 ) ) && ( st[i] != NULL ) )
+			while ( ( ( st[i] <= BLANK ) || ( st[i] == 0xa0 ) ) && ( st[i] != NULL ) ) {
 				i++;
+			}
 			spflg = YES;
 		}
 	}
 	*no_arg = j;
-	/*for ( i = 0; i<20; i++ )
-		printf( "%c%x ", arg[1][i], arg[1][i] ); */
+	/-*for ( i = 0; i < 20; i++ ) {
+	printf( "%c%x ", arg[1][i], arg[1][i] );
+	}*-/
 }
-*/
+
 
 int getpr( void ) {
 	char  buffer;
-	if ( _read( prd_handle, &buffer, 1 ) == 0 )
+	if ( _read( prd_handle, &buffer, 1 ) == 0 ) {
 		p_fileready = YES;
+	}
 	return( buffer );
 }
 
-
 void get_graphic_data( void ) {
-	extern int                  pic_offset;
-	char                        *buffer;
-	int                         number_dot, number_dot_lo, number_dot_high;
-	int                         i, j, base;
+	extern int pic_offset;
+	char *buffer;
+	int number_dot, number_dot_lo, number_dot_high;
+	int i, j, base;
 	number_dot_lo = getpr( );
 	number_dot_high = getpr( );
 	number_dot = number_dot_high * 256 + number_dot_lo;
 	buffer = ( char * ) calloc( 3264, sizeof( char ) );
-	if ( _read( prd_handle, buffer, number_dot ) == 0 )
+	if ( _read( prd_handle, buffer, number_dot ) == 0 ) {
 		p_fileready = YES;
-	if ( analyze_mode == NO )
+	}
+	if ( analyze_mode == NO ) {
 		switch ( dot_per_mode ) {
 		case 480:
 			base = pic_offset * 24;
-			for ( i = 0; i<number_dot; i++ )
-				for ( j = 0; j<4; j++ )
+			for ( i = 0; i < number_dot; i++ ) {
+				for ( j = 0; j < 4; j++ ) {
 					print_buffer_pointer[base + ( i * 4 ) + j] = buffer[i];
+				}
+			}
 			break;
 		case 960:
 			base = pic_offset * 24;
-			for ( i = 0; i<number_dot; i++ )
-				for ( j = 0; j<2; j++ )
+			for ( i = 0; i < number_dot; i++ ) {
+				for ( j = 0; j < 2; j++ ) {
 					print_buffer_pointer[base + ( i * 2 ) + j] = buffer[i];
+				}
+			}
 			break;
 		case 1920:
 			base = pic_offset * 24;
-			for ( i = 0; i<number_dot; i++ )
+			for ( i = 0; i < number_dot; i++ ) {
 				print_buffer_pointer[base + i] = buffer[i];
+			}
 			break;
+		}
 	}
 	free( buffer );
 }
@@ -144,10 +154,10 @@ void process_command_0( int printer_data ) {
 }
 
 void process_command_1( int printer_data ) {
-	extern int                  command_level;
-	extern int                  bit_image_mode;
-	extern int                  dot_per_mode;
-	extern int                  line_spacing;
+	extern int command_level;
+	extern int bit_image_mode;
+	extern int dot_per_mode;
+	extern int line_spacing;
 	switch ( printer_data ) {
 	case BIT_IMAGE_COMMAND:
 		switch ( getpr( ) ) {
@@ -221,47 +231,57 @@ void process_command_1( int printer_data ) {
 		break;
 	case SET_1_8_LINE_SPACE:
 		line_spacing = getpr( ) * 22;
-		if ( analyze_mode == YES )
-			if ( line_spacing<MINIMUM_LINE_SPACING )
+		if ( analyze_mode == YES ) {
+			if ( line_spacing < MINIMUM_LINE_SPACING ) {
 				dot_per_line++;
-			else
+			} else {
 				p_fileready = YES;
+			}
+		}
 		command_level = 0;
 		break;
 	case SET_1_6_LINE_SPACE:
 		line_spacing = getpr( ) * 30;
-		if ( analyze_mode == YES )
-			if ( line_spacing<MINIMUM_LINE_SPACING )
+		if ( analyze_mode == YES ) {
+			if ( line_spacing < MINIMUM_LINE_SPACING ) {
 				dot_per_line++;
-			else
+			} else {
 				p_fileready = YES;
+			}
+		}
 		command_level = 0;
 		break;
 	case SET_N_60_LINE_SPACE:
 		line_spacing = getpr( ) * 3;
-		if ( analyze_mode == YES )
-			if ( line_spacing<MINIMUM_LINE_SPACING )
+		if ( analyze_mode == YES ) {
+			if ( line_spacing < MINIMUM_LINE_SPACING ) {
 				dot_per_line++;
-			else
+			} else {
 				p_fileready = YES;
+			}
+		}
 		command_level = 0;
 		break;
 	case SET_N_180_LINE_SPACE:
 		line_spacing = getpr( );
-		if ( analyze_mode == YES )
-			if ( line_spacing<MINIMUM_LINE_SPACING )
+		if ( analyze_mode == YES ) {
+			if ( line_spacing < MINIMUM_LINE_SPACING ) {
 				dot_per_line++;
-			else
+			} else {
 				p_fileready = YES;
+			}
+		}
 		command_level = 0;
 		break;
 	case N_180_LINE_FEED:
 		line_spacing = getpr( );
-		if ( analyze_mode == YES )
-			if ( line_spacing<MINIMUM_LINE_SPACING )
+		if ( analyze_mode == YES ) {
+			if ( line_spacing < MINIMUM_LINE_SPACING ) {
 				dot_per_line++;
-			else
+			} else {
 				p_fileready = YES;
+			}
+		}
 		grp_ready = YES;
 		command_level = 0;
 		break;
@@ -269,7 +289,7 @@ void process_command_1( int printer_data ) {
 }
 
 void process_command( int printer_data ) {
-	extern int                 past_printer_data;
+	extern int past_printer_data;
 	past_printer_data = printer_data;
 	switch ( command_level ) {
 	case 0:
@@ -282,14 +302,15 @@ void process_command( int printer_data ) {
 }
 
 void analyze_picture_file( char *st ) {
-	extern int                  dot_per_line;
+	extern int dot_per_line;
 	dot_per_line = 1;
 	command_level = 0;
 	p_fileready = NO;
 	analyze_mode = YES;
 	prd_handle = open( st, O_RDONLY | O_BINARY );
-	while ( p_fileready == NO )
+	while ( p_fileready == NO ) {
 		process_command( getpr( ) );
+	}
 	close( prd_handle );
 }
 
@@ -301,8 +322,9 @@ void initialize_read( char *st ) {
 }
 
 void read_picture_file( void ) {
-	while ( ( p_fileready == NO ) && ( grp_ready == NO ) )
+	while ( ( p_fileready == NO ) && ( grp_ready == NO ) ) {
 		process_command( getpr( ) );
+	}
 	if ( p_fileready == YES ) {
 		pic_print = NO;
 		close( prd_handle );

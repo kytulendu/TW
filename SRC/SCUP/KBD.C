@@ -1,32 +1,39 @@
-/* keyboard function that different between cuprint.exe and cw.exe
-   Suttipong Kanakakorn Mon  08-07-1989  00:18:41
+/**
+*   keyboard function that different between cuprint.exe and cw.exe
+*   Suttipong Kanakakorn Mon  08-07-1989  00:18:41
 */
 
-#include "inc.h"
-#include "..\common\cwgrphc.h"
-#include "global.ext"
+#include <stdio.h>
 
-void waitkbd( unsigned x, unsigned y ) {
-	register unsigned i;
+#include "..\common\cwtype.h"
+#include "..\common\cwgrphc.h"
+#include "..\common\ekbd.h"
+#include "..\common\grphc.h"
+
+#include "global.h"
+
+#include "kbd.h"
+
+void waitkbd( unsigned int x, unsigned int y ) {
+	register unsigned int i;
 
 	setcurpos( x, y, thaimode );
 	while ( !keypressed( ) ) {
-		for ( i = 0; !keypressed( ) && i < 1200; i++ )
-			;
+		for ( i = 0; !keypressed( ) && i < 1200; i++ );
 		setcurpos( x, y, thaimode );
-		for ( i = 0; !keypressed( ) && i < 1200; i++ )
-			;
+		for ( i = 0; !keypressed( ) && i < 1200; i++ );
 		setcurpos( x, y, thaimode );
 	}
 	setcurpos( x, y, thaimode );
 }
 
 int readkbd( void ) {
-	register unsigned c;
+	register unsigned int c;
 
 	c = ebioskey( 0 );
-	if ( thaimode )
+	if ( thaimode ) {
 		return( thaikey( c ) );
-	else
+	} else {
 		return( c );
+	}
 }

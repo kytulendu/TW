@@ -9,7 +9,7 @@ Search for printer font easier
 #include        <string.h>
 #include        <stdio.h>
 #include        "24pins.h"
-#include        "global.ext"
+#include        "global.h"
 
 /* -------------------------------------------------------------------- */
 /*      Function        :       cp_init_textbuf                         */
@@ -19,24 +19,24 @@ Search for printer font easier
 /*      Remark          :       use GLOBAL variable "cp_buf"            */
 /* -------------------------------------------------------------------- */
 void    cp_init_textbuf( ) {
-	cp_buf.uppest = ( unsigned char * ) malloc( CP_MAX_TEXTBUF );
-	if ( cp_buf.uppest == NULL )
-		execerror( "Insufficient memory\n", "" );
+    cp_buf.uppest = ( unsigned char * ) malloc( CP_MAX_TEXTBUF );
+    if ( cp_buf.uppest == NULL )
+        execerror( "Insufficient memory\n", "" );
 
-	cp_buf.upper = ( unsigned char * ) malloc( CP_MAX_TEXTBUF );
-	if ( cp_buf.upper == NULL )
-		execerror( "Insufficient memory\n", "" );
+    cp_buf.upper = ( unsigned char * ) malloc( CP_MAX_TEXTBUF );
+    if ( cp_buf.upper == NULL )
+        execerror( "Insufficient memory\n", "" );
 
-	cp_buf.middle = ( unsigned char * ) malloc( CP_MAX_TEXTBUF );
-	if ( cp_buf.middle == NULL )
-		execerror( "Insufficient memory\n", "" );
+    cp_buf.middle = ( unsigned char * ) malloc( CP_MAX_TEXTBUF );
+    if ( cp_buf.middle == NULL )
+        execerror( "Insufficient memory\n", "" );
 
-	cp_buf.lower = ( unsigned char * ) malloc( CP_MAX_TEXTBUF );
-	if ( cp_buf.lower == NULL )
-		execerror( "Insufficient memory\n", "" );
+    cp_buf.lower = ( unsigned char * ) malloc( CP_MAX_TEXTBUF );
+    if ( cp_buf.lower == NULL )
+        execerror( "Insufficient memory\n", "" );
 
-	/* ----- clear attribute of text character ----- */
-	cp_control = 0;
+    /* ----- clear attribute of text character ----- */
+    cp_control = 0;
 }
 /* -------------------------------------------------------------------- */
 /*      Function        :       cp_init_grpbuf                          */
@@ -46,21 +46,21 @@ void    cp_init_textbuf( ) {
 /*      Remark          :       use GLOBAL variable "cp_lqbuf"          */
 /* -------------------------------------------------------------------- */
 void    cp_init_grpbuf( ) {
-	cp_lqbuf.upper = ( FONT * ) malloc( CP_LQ_MAXPRBUF );
-	if ( cp_lqbuf.upper == NULL )
-		execerror( "Insufficient memory\n", "" );
+    cp_lqbuf.upper = ( FONT * ) malloc( CP_LQ_MAXPRBUF );
+    if ( cp_lqbuf.upper == NULL )
+        execerror( "Insufficient memory\n", "" );
 
-	cp_lqbuf.middle = ( FONT * ) malloc( CP_LQ_MAXPRBUF );
-	if ( cp_lqbuf.middle == NULL )
-		execerror( "Insufficient memory\n", "" );
+    cp_lqbuf.middle = ( FONT * ) malloc( CP_LQ_MAXPRBUF );
+    if ( cp_lqbuf.middle == NULL )
+        execerror( "Insufficient memory\n", "" );
 
-	cp_lqbuf.lower = ( FONT * ) malloc( CP_LQ_MAXPRBUF );
-	if ( cp_lqbuf.lower == NULL )
-		execerror( "Insufficient memory\n", "" );
+    cp_lqbuf.lower = ( FONT * ) malloc( CP_LQ_MAXPRBUF );
+    if ( cp_lqbuf.lower == NULL )
+        execerror( "Insufficient memory\n", "" );
 
-	cp_lqbuf.extbar = ( FONT * ) malloc( CP_LQ_MAXPRBUF );
-	if ( cp_lqbuf.extbar == NULL )
-		execerror( "Insufficient memory\n", "" );
+    cp_lqbuf.extbar = ( FONT * ) malloc( CP_LQ_MAXPRBUF );
+    if ( cp_lqbuf.extbar == NULL )
+        execerror( "Insufficient memory\n", "" );
 }
 /* -------------------------------------------------------------------- */
 /*      Function        :       cp_combine_fontlq                       */
@@ -71,17 +71,17 @@ void    cp_init_grpbuf( ) {
 /*      Return values   :       NONE                                    */
 /* -------------------------------------------------------------------- */
 void    cp_combine_fontlq( FONT *combcode, FONT *sara, FONT *wannayok ) {
-	int     index;
+    int     index;
 
-	/* -- copy wannayok to combcode  */
-	memcpy( combcode, ( ( char * ) wannayok ) + 1, CP_LQ_FONTSIZE );
+    /* -- copy wannayok to combcode  */
+    memcpy( combcode, ( ( char * ) wannayok ) + 1, CP_LQ_FONTSIZE );
 
-	/* -- clear byte #2 in every column */
-	for ( index = 0; index < CP_LQCOL; index++ )
-		combcode->font[index][2] = 0;
-	/* -- COMBINE SARA AND COMBCODE --- */
-	for ( index = 0; index < CP_LQ_FONTSIZE; index++ )
-		combcode->font[0][index] |= sara->font[0][index];
+    /* -- clear byte #2 in every column */
+    for ( index = 0; index < CP_LQCOL; index++ )
+        combcode->font[index][2] = 0;
+    /* -- COMBINE SARA AND COMBCODE --- */
+    for ( index = 0; index < CP_LQ_FONTSIZE; index++ )
+        combcode->font[0][index] |= sara->font[0][index];
 }
 
 /* -------------------------------------------------------------------- */
@@ -92,22 +92,22 @@ void    cp_combine_fontlq( FONT *combcode, FONT *sara, FONT *wannayok ) {
 /*      Return values   :       pointer to combine code table           */
 /* -------------------------------------------------------------------- */
 FONT    *cp_create_lqcombine( FONT *fntable ) {
-	int      x, y;                   /* index to lq combine code table */
-	int      index;                          /* index to address in lq combine */
-	static   unsigned char *sara = "—”‘’÷◊";    /* sara set     */
-	static   unsigned char *wannayok = "ËÈÍÎÏ"; /* wannayok     */
-	FONT     *fontptr;               /* font pointer  */
+    int      x, y;                   /* index to lq combine code table */
+    int      index;                          /* index to address in lq combine */
+    static   unsigned char *sara = "—”‘’÷◊";    /* sara set     */
+    static   unsigned char *wannayok = "ËÈÍÎÏ"; /* wannayok     */
+    FONT     *fontptr;               /* font pointer  */
 
-	fontptr = ( FONT * ) malloc( CP_LQCOMB_TABSIZE );
-	for ( x = 0; x < 6; x++ ) {
-		for ( y = 0; y < 5; y++ ) {
-			index = 5 * x + y;
-			cp_combine_fontlq( fontptr + index,
-				cp_lq_font( fntable, sara[x] ),
-				cp_lq_font( fntable, wannayok[y] ) );
-		};
-	};
-	return ( fontptr );
+    fontptr = ( FONT * ) malloc( CP_LQCOMB_TABSIZE );
+    for ( x = 0; x < 6; x++ ) {
+        for ( y = 0; y < 5; y++ ) {
+            index = 5 * x + y;
+            cp_combine_fontlq( fontptr + index,
+                cp_lq_font( fntable, sara[x] ),
+                cp_lq_font( fntable, wannayok[y] ) );
+        };
+    };
+    return ( fontptr );
 }
 /* --------------------------------------------------------------------- */
 /*      Function        :       cp_loadfont_lqscr                        */
@@ -119,18 +119,18 @@ FONT    *cp_create_lqcombine( FONT *fntable ) {
 FONTSCR         *cp_loadfont_lqscr( fname )
 char    *fname;
 {
-	FONTSCR *p;
-	int  fd;
+    FONTSCR *p;
+    int  fd;
 
-	p = ( FONTSCR * ) malloc( CP_LQSCR_TABSIZE );
-	if ( p == NULL )
-		execerror( "Insufficient memory\n", "" );
-	fd = open( fname, O_RDONLY | O_BINARY );
-	if ( fd < 0 )
-		execerror( "Printer font file not found : ", fname );
-	read( fd, p, CP_LQSCR_TABSIZE );
-	close( fd );
-	return ( p );
+    p = ( FONTSCR * ) malloc( CP_LQSCR_TABSIZE );
+    if ( p == NULL )
+        execerror( "Insufficient memory\n", "" );
+    fd = open( fname, O_RDONLY | O_BINARY );
+    if ( fd < 0 )
+        execerror( "Printer font file not found : ", fname );
+    read( fd, p, CP_LQSCR_TABSIZE );
+    close( fd );
+    return ( p );
 }
 /* -------------------------------------------------------------------- */
 /*      Function        :       cp_combine_fontlqscr                    */
@@ -141,20 +141,20 @@ char    *fname;
 /*      Return values   :       NONE                                    */
 /* -------------------------------------------------------------------- */
 void    cp_combine_fontlqscr( FONTSCR *combcode, FONTSCR *sara, FONTSCR *wannayok ) {
-	int     index;
+    int     index;
 
-	/* -- clear combcode -- */
-	memset( combcode, 0, CP_LQSCR_FONTSIZE );
+    /* -- clear combcode -- */
+    memset( combcode, 0, CP_LQSCR_FONTSIZE );
 
-	/* -- combine sara and wannayok with shifting up wannayok 6 bits
-	and or with sara -- */
-	for ( index = 0; index < CP_LQCOL; index++ ) {
-		combcode->font[index][0] = 0x0F &
-			( ( wannayok->font[index][1] >> 3 ) |
-			( sara->font[index][0] ) );
-		combcode->font[index][1] = ( ( wannayok->font[index][1] << 5 ) |
-			( sara->font[index][1] ) );
-	};
+    /* -- combine sara and wannayok with shifting up wannayok 6 bits
+    and or with sara -- */
+    for ( index = 0; index < CP_LQCOL; index++ ) {
+        combcode->font[index][0] = 0x0F &
+            ( ( wannayok->font[index][1] >> 3 ) |
+            ( sara->font[index][0] ) );
+        combcode->font[index][1] = ( ( wannayok->font[index][1] << 5 ) |
+            ( sara->font[index][1] ) );
+    };
 }
 
 /* -------------------------------------------------------------------- */
@@ -165,21 +165,20 @@ void    cp_combine_fontlqscr( FONTSCR *combcode, FONTSCR *sara, FONTSCR *wannayo
 /*      Return values   :       pointer to combine code table           */
 /* -------------------------------------------------------------------- */
 FONTSCR *cp_create_lqscrcombine( FONTSCR *fntable ) {
-	int      x, y;                   /* index to lq combine code table */
-	static   unsigned char *sara = "—”‘’÷◊";    /* sara set     */
-	static   unsigned char *wannayok = "ËÈÍÎÏ"; /* wannayok     */
-	int      index;                          /* index to address in lq combine */
-	FONTSCR          *fontptr;               /* font pointer                   */
+    int      x, y;                   /* index to lq combine code table */
+    static   unsigned char *sara = "—”‘’÷◊";    /* sara set     */
+    static   unsigned char *wannayok = "ËÈÍÎÏ"; /* wannayok     */
+    int      index;                          /* index to address in lq combine */
+    FONTSCR          *fontptr;               /* font pointer                   */
 
-	fontptr = ( FONTSCR * ) malloc( CP_LQSCRCOMB_TABSIZE );
-	for ( x = 0; x < 6; x++ ) {
-		for ( y = 0; y < 5; y++ ) {
-			index = 5 * x + y;
-			cp_combine_fontlqscr( fontptr + index,
-				cp_lqscr_font( fntable, sara[x] ),
-				cp_lqscr_font( fntable, wannayok[y] ) );
-		};
-	};
-	return ( fontptr );
+    fontptr = ( FONTSCR * ) malloc( CP_LQSCRCOMB_TABSIZE );
+    for ( x = 0; x < 6; x++ ) {
+        for ( y = 0; y < 5; y++ ) {
+            index = 5 * x + y;
+            cp_combine_fontlqscr( fontptr + index,
+                cp_lqscr_font( fntable, sara[x] ),
+                cp_lqscr_font( fntable, wannayok[y] ) );
+        };
+    };
+    return ( fontptr );
 }
-
