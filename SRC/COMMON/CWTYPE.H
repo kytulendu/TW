@@ -1,5 +1,5 @@
-#ifndef CWTYPE_H_INCLUDED
-#define CWTYPE_H_INCLUDED
+#ifndef COMMON_CWTYPE_H_INCLUDED
+#define COMMON_CWTYPE_H_INCLUDED
 
 typedef enum Boolean {
 	NO = 0, YES = 1, FALSE = 0, TRUE = 1
@@ -47,4 +47,4 @@ typedef enum Font_code {
 	DOUBLEUNDERLINE = 18
 } font_code;
 
-#endif /* CWTYPE_H_INCLUDED */
+#endif /* COMMON_CWTYPE_H_INCLUDED */

@@ -1,5 +1,5 @@
-#ifndef MENU_H_INCLUDED
-#define MENU_H_INCLUDED
+#ifndef SCUW_MENU_H_INCLUDED
+#define SCUW_MENU_H_INCLUDED
 
 char *savescrn( int x1, int y1, int x2, int y2 );
 void resscrn( char *scrnindex, int x1, int y1, int x2, int y2 );
@@ -11,4 +11,4 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 void print_file( void );
 void showerrno( void );
 
-#endif
+#endif /* SCUW_MENU_H_INCLUDED */

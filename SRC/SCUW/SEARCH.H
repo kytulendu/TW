@@ -1,5 +1,5 @@
-#ifndef SEARCH_H_INCLUDED
-#define SEARCH_H_INCLUDED
+#ifndef SCUW_SEARCH_H_INCLUDED
+#define SCUW_SEARCH_H_INCLUDED
 
 int searchonlyinfo( void );
 int searchreplaceinfo( void );
@@ -16,4 +16,4 @@ void replaceword( unsigned int *x, unsigned int *y );
 int searchreplace( unsigned int *x, unsigned int *y );
 void replacing( unsigned int *x, unsigned int *y );
 
-#endif
+#endif /* SCUW_SEARCH_H_INCLUDED */

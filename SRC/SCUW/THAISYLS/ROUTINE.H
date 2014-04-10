@@ -1,5 +1,5 @@
-#ifndef ROUTINE_H_INCLUDED
-#define ROUTINE_H_INCLUDED
+#ifndef SCUW_THAISYLS_ROUTINE_H_INCLUDED
+#define SCUW_THAISYLS_ROUTINE_H_INCLUDED
 
 unsigned char *dummy( unsigned char *TempIndx );
 
@@ -49,4 +49,4 @@ unsigned char *SaraUmRtn( register unsigned char *TempIndx );
 unsigned char *SaraUURtn( unsigned char *TempIndx );
 unsigned char *WoreWaanRtn( register unsigned char *TempIndx );
 
-#endif
+#endif /* SCUW_THAISYLS_ROUTINE_H_INCLUDED */

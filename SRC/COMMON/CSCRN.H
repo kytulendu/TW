@@ -1,5 +1,5 @@
-#ifndef CSCRN_H_INCLUDED
-#define CSCRN_H_INCLUDED
+#ifndef COMMON_CSCRN_H_INCLUDED
+#define COMMON_CSCRN_H_INCLUDED
 
 /** Draw line using Bresenham's line algorithm.
 *  author Zingl Alois
@@ -82,4 +82,4 @@ char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int  p_yEnd );
 *  \param[in]  p_yEnd		horizontal position of end point. */
 void resscrn( char *p_scrnindex, int p_xStart, int p_yStart, int p_xEnd, int p_yEnd );
 
-#endif /* CSCRN_H_INCLUDED */
+#endif /* COMMON_CSCRN_H_INCLUDED */

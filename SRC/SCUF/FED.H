@@ -1,5 +1,5 @@
-#ifndef FED_H_INCLUDED
-#define FED_H_INCLUDED
+#ifndef SCUF_FED_H_INCLUDED
+#define SCUF_FED_H_INCLUDED
 
 #define BYTE_X(X)	( _ceil( ( X ), 8 ) )
 #define STOP	0
@@ -88,4 +88,4 @@ void terminate( void );
 void file_menu( void );
 void main_menu( void );
 
-#endif /* FED_H_INCLUDED */
+#endif /* SCUF_FED_H_INCLUDED */

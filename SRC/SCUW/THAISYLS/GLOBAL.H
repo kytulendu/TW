@@ -1,5 +1,5 @@
-#ifndef GLOBAL_H_INCLUDED
-#define GLOBAL_H_INCLUDED
+#ifndef SCUW_THAISYLS_GLOBAL_H_INCLUDED
+#define SCUW_THAISYLS_GLOBAL_H_INCLUDED
 
 /*------------------Global Reference------------------*/
 
@@ -21,4 +21,4 @@ int nstrcmp( register char *source, register char *destination );
 #define FAIL 0
 #endif
 
-#endif
+#endif /* SCUW_THAISYLS_GLOBAL_H_INCLUDED */

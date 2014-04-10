@@ -1,5 +1,5 @@
-#ifndef COVERT_H_INCLUDED
-#define COVERT_H_INCLUDED
+#ifndef SCUF_COVERT_H_INCLUDED
+#define SCUF_COVERT_H_INCLUDED
 
 int load_font( );
 int save_font( );
@@ -25,4 +25,4 @@ int save_sup_sub( );
 int con_fed_to_sup_chr( char *oldch, char *newch );
 int con_fed_to_sup( char *oldfon, char *newfon );
 
-#endif /* COVERT_H_INCLUDED */
+#endif /* SCUF_COVERT_H_INCLUDED */

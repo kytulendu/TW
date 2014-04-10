@@ -1,5 +1,5 @@
-#ifndef EDIT_H_INCLUDED
-#define EDIT_H_INCLUDED
+#ifndef SCUW_EDIT_H_INCLUDED
+#define SCUW_EDIT_H_INCLUDED
 
 void findstrcode( char fontcode[], font_attr attr );
 unsigned findlineno( struct line_node *line );
@@ -14,4 +14,4 @@ void loadtoline( char *text );
 void storeline( struct line_node *line );
 void refreshline( unsigned int x, unsigned int y );
 
-#endif
+#endif /* SCUW_EDIT_H_INCLUDED */

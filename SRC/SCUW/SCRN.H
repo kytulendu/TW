@@ -1,6 +1,6 @@
-#ifndef SCRN_H_INCLUDED
-#define SCRN_H_INCLUDED
+#ifndef SCUW_SCRN_H_INCLUDED
+#define SCUW_SCRN_H_INCLUDED
 
 void cls( void );
 
-#endif
+#endif /* SCUW_SCRN_H_INCLUDED */

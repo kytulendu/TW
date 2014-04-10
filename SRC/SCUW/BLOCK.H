@@ -1,5 +1,5 @@
-#ifndef BLOCK_H_INCLUDED
-#define BLOCK_H_INCLUDED
+#ifndef SCUW_BLOCK_H_INCLUDED
+#define SCUW_BLOCK_H_INCLUDED
 
 void toggleblk( void );
 void markbegin( unsigned int x );
@@ -23,4 +23,4 @@ void blkcmd( unsigned int key, unsigned int *x );
 void blockcommand( unsigned int *x );
 int chkspace( char * );
 
-#endif /* BLOCK_H_INCLUDED */
+#endif /* SCUW_BLOCK_H_INCLUDED */

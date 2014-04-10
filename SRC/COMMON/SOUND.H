@@ -1,5 +1,5 @@
-#ifndef SOUND_H_INCLUDED
-#define SOUND_H_INCLUDED
+#ifndef COMMON_SOUND_H_INCLUDED
+#define COMMON_SOUND_H_INCLUDED
 
 #define CC 262*2
 #define DD 294*2
@@ -31,4 +31,4 @@ void soundnoise( unsigned int p_freq, unsigned int p_duration );
 /** Play error sound */
 void errorsound( void );
 
-#endif /* SOUND_H_INCLUDED */
+#endif /* COMMON_SOUND_H_INCLUDED */

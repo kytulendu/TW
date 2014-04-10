@@ -11,9 +11,9 @@ All rights reserved.
 
 #define KoreGai		(unsigned char) 0xA1	/*	ก	*/
 #define KorKai		(unsigned char) 0xA2	/*	ข	*/
-#define KorKuad		(unsigned char) 0xA3	/*		*/
+#define KorKuad		(unsigned char) 0xA3	/*	ฃ	*/
 #define KoreKwai	(unsigned char) 0xA4	/*	ค	*/
-#define KoreKon		(unsigned char) 0xA5	/*		*/
+#define KoreKon		(unsigned char) 0xA5	/*	ฅ	*/
 #define KoreRakung	(unsigned char) 0xA6	/*	ฆ	*/
 #define NgorNgoo	(unsigned char) 0xA7	/*	ง	*/
 #define JoreJarn	(unsigned char) 0xA8	/*	จ	*/
@@ -80,22 +80,21 @@ All rights reserved.
 #define	MaiJattawa	(unsigned char) 0xEB	/*	ไม้จัตวา	*/
 #define	Karan		(unsigned char) 0xEC	/*	การันต์	*/
 
-#define	_Exclamation	(unsigned char) 0x21	/* ! */
-#define	_Dollar		(unsigned char) 0x24	/* $ */
-#define	_Percent	(unsigned char) 0x25	/* % */
-#define	_OpenParen	(unsigned char) 0x28	/* วงเล็บเปิด*/
-#define	_CloseParen	(unsigned char) 0x29	/* วงเล็บปิด */
-#define	_Hyphen		(unsignec char) 0x2D	/* - */
-#define	_FullStop	(unsigned char) 0x2E	/* . */
+#define	_Exclamation	(unsigned char) 0x21	/*	!	*/
+#define	_Dollar		(unsigned char) 0x24	/*	$	*/
+#define	_Percent	(unsigned char) 0x25	/*	%	*/
+#define	_OpenParen	(unsigned char) 0x28	/*	วงเล็บเปิด	*/
+#define	_CloseParen	(unsigned char) 0x29	/*	วงเล็บปิด	*/
+#define	_Hyphen		(unsignec char) 0x2D	/*	-	*/
+#define	_FullStop	(unsigned char) 0x2E	/*	.	*/
 
 #define	_Colon		(unsigned char) 0x3A
 #define	_SemiColon	(unsigned char) 0x3B
-#define	_Question	(unsigned char) 0x3F	/* ? */
-#define _LeftBracket	(unsigned char) 0x5B	/* [ */
-#define	_RightBracket	(unsigned char) 0x5D	/* ] */
-#define	_LeftBrace	(unsigned char) 0x7B	/* { */
-#define	_RightBrace	(unsigned char) 0x7D	/* } */
-#define	_Baht		(unsigned char) 0xDF	/* ฿	*/
+#define	_Question	(unsigned char) 0x3F	/*	?	*/
+#define _LeftBracket	(unsigned char) 0x5B	/*	[	*/
+#define	_RightBracket	(unsigned char) 0x5D	/*	]	*/
+#define	_LeftBrace	(unsigned char) 0x7B	/*	{	*/
+#define	_RightBrace	(unsigned char) 0x7D	/*	}	*/
+#define	_Baht		(unsigned char) 0xDF	/*	฿	*/
 
 # endif __THAI__
-

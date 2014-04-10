@@ -1,6 +1,6 @@
-#ifndef DIR_H_INCLUDED
-#define DIR_H_INCLUDED
+#ifndef COMMON_DIR_H_INCLUDED
+#define COMMON_DIR_H_INCLUDED
 
 int selectfile( char mask[] );
 
-#endif /* DIR_H_INCLUDED */
+#endif /* COMMON_DIR_H_INCLUDED */

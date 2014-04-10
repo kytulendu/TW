@@ -1,5 +1,5 @@
-#ifndef INS_H_INCLUDED
-#define INS_H_INCLUDED
+#ifndef SCUW_INS_H_INCLUDED
+#define SCUW_INS_H_INCLUDED
 
 void insertblank( unsigned int j, char code );
 void insert_line( struct line_node *currentline, struct line_node *newline );
@@ -18,4 +18,4 @@ void blankmaro( int y );
 void dispmacro( int i );
 void editmacro( void );
 
-#endif
+#endif /* SCUW_INS_H_INCLUDED */

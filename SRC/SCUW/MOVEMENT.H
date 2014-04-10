@@ -1,5 +1,5 @@
-#ifndef MOVEMENT_H_INCLUDED
-#define MOVEMENT_H_INCLUDED
+#ifndef SCUW_MOVEMENT_H_INCLUDED
+#define SCUW_MOVEMENT_H_INCLUDED
 
 void cursor_up( void );
 void cursor_down( unsigned int y );
@@ -12,4 +12,4 @@ void scroll_down( void );
 void top_of_page( void );
 void bottom_of_page( void );
 
-#endif
+#endif /* SCUW_MOVEMENT_H_INCLUDED */

@@ -1,5 +1,5 @@
-#ifndef DEL_H_INCLUDED
-#define DEL_H_INCLUDED
+#ifndef SCUW_DEL_H_INCLUDED
+#define SCUW_DEL_H_INCLUDED
 
 void delete_char( unsigned int x );
 void deletereturn( struct line_node *line );
@@ -10,4 +10,4 @@ void deltoendline( unsigned int x, unsigned int y );
 void deleteline( struct line_node *line );
 void delete_line( void );
 
-#endif
+#endif /* SCUW_DEL_H_INCLUDED */

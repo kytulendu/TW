@@ -3,8 +3,8 @@
 *           Sun  08-06-1989  10:04:26
 */
 
-#ifndef CW_CONST_H_INCLUDED
-#define CW_CONST_H_INCLUDED
+#ifndef SCUW_CONST_H_INCLUDED
+#define SCUW_CONST_H_INCLUDED
 
 #define MAXCOL 266
 #define MAXRMAR 256
@@ -17,4 +17,4 @@
 
 #define ISBLANK(X)  ((X)==' ' || (X)==WRAPBLANK)
 
-#endif /* CW_CONST_H_INCLUDED */
+#endif /* SCUW_CONST_H_INCLUDED */

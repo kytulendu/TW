@@ -12,8 +12,8 @@
 
 #include "const.h"
 
-#ifndef VAR_H_INCLUDED
-#define VAR_H_INCLUDED
+#ifndef SCUW_VAR_H_INCLUDED
+#define SCUW_VAR_H_INCLUDED
 
 #ifdef  DEFINE_VAR
 #define EXTERN
@@ -249,5 +249,5 @@ EXTERN unsigned int command_tab[] = {
 
 #undef EXTERN /* restore it */
 
-#endif /* VAR_H_INCLUDED  */
+#endif /* SCUW_VAR_H_INCLUDED  */
 

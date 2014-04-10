@@ -1,5 +1,5 @@
-#ifndef MOVE_CONST_H_INCLUDED
-#define MOVE_CONST_H_INCLUDED
+#ifndef SCUW_MOVE_CONST_H_INCLUDED
+#define SCUW_MOVE_CONST_H_INCLUDED
 
 void goline( unsigned int linetogo );
 void gocol( unsigned int coltogo, unsigned int *x );
@@ -15,4 +15,4 @@ void gobeginblk( unsigned int *x );
 void goendblk( unsigned int *x );
 void quick( unsigned int *x, unsigned int *y );
 
-#endif
+#endif /* SCUW_MOVE_CONST_H_INCLUDED */

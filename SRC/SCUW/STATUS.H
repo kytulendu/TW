@@ -1,5 +1,5 @@
-#ifndef STATUS_H_INCLUDED
-#define STATUS_H_INCLUDED
+#ifndef SCUW_STATUS_H_INCLUDED
+#define SCUW_STATUS_H_INCLUDED
 
 void relmarstatus( void );
 void arabictothai( char *st );
@@ -15,4 +15,4 @@ void writefilename( void );
 void writedriveno( void );
 void writestatus( unsigned int x );
 
-#endif
+#endif /* SCUW_STATUS_H_INCLUDED */

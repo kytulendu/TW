@@ -1,5 +1,5 @@
-#ifndef CWSETUP_H_INCLUDED
-#define CWSETUP_H_INCLUDED
+#ifndef SCUW_CWSETUP_H_INCLUDED
+#define SCUW_CWSETUP_H_INCLUDED
 
 void cwsetup( int argc, char *argv[] );
 void usage( void );
@@ -13,4 +13,4 @@ void initvalue( unsigned int *x, unsigned int *y );
 void edit_font( void );
 void offbreak( void );
 
-#endif
+#endif /* SCUW_CWSETUP_H_INCLUDED */

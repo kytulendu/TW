@@ -8,8 +8,8 @@
 *   Updated : Sun  08-27-1989 20:25:09
 */
 
-#ifndef GRDETECT_H_INCLUDED
-#define GRDETECT_H_INCLUDED
+#ifndef COMMON_GRDETECT_H_INCLUDED
+#define COMMON_GRDETECT_H_INCLUDED
 
 typedef enum Graphics_hardware {
 	DETECT, /* request autodetection */
@@ -34,4 +34,4 @@ int is_mcga( void );
 /* check if there is any transition on 0x3BF port */
 int check_vretrace( void );
 
-#endif /* GRDETECT_H_INCLUDED */
+#endif /* COMMON_GRDETECT_H_INCLUDED */

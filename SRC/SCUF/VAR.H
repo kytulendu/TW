@@ -5,8 +5,8 @@
 /*         : Mon  07-31-1989  20:13:05                                      */
 /****************************************************************************/
 
-#ifndef __VAR_H_
-#define __VAR_H_
+#ifndef SCUF_VAR_H_INCLUDED
+#define SCUF_VAR_H_INCLUDED
 
 #ifdef  DEFINE_VAR
 #define EXTERN
@@ -45,4 +45,4 @@ EXTERN boolean thaimode = YES;    /*  current mode is thai or eng */
 
 #undef EXTERN /* restore it */
 
-#endif /* __VAR_H */
+#endif /* SCUF_VAR_H_INCLUDED */

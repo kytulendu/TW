@@ -1,5 +1,5 @@
-#ifndef EKBD_H_INCLUDED
-#define EKBD_H_INCLUDED
+#ifndef COMMON_EKBD_H_INCLUDED
+#define COMMON_EKBD_H_INCLUDED
 
 /** encapsulate bioskey for future expanded like macro keyboard .
 *  \param[in]  p_cmd		keyboard scancode.
@@ -13,4 +13,4 @@ void placekey( int p_key );
 /** check whether key is pressed or not. */
 boolean keypressed( void );
 
-#endif /* EKBD_H_INCLUDED */
+#endif /* COMMON_EKBD_H_INCLUDED */

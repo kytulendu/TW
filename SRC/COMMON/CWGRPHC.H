@@ -4,8 +4,8 @@
 *  Date    : Sun  07-30-1989  16:01:13
 */
 
-#ifndef CWGRPHC_H_INCLUDED
-#define CWGRPHC_H_INCLUDED
+#ifndef COMMON_CWGRPHC_H_INCLUDED
+#define COMMON_CWGRPHC_H_INCLUDED
 
 #ifdef  DEFINE_VAR
 #define EXTERN
@@ -148,4 +148,4 @@ void wrchardot( unsigned int x, unsigned int y );
 
 #define wrchardot( x, y )			( *wrchardot_ptr )( x, y )
 */
-#endif /* CWGRPHC_H_INCLUDED */
+#endif /* COMMON_CWGRPHC_H_INCLUDED */

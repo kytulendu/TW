@@ -1,5 +1,5 @@
-#ifndef POPUP_H_INCLUDED
-#define POPUP_H_INCLUDED
+#ifndef SCUF_POPUP_H_INCLUDED
+#define SCUF_POPUP_H_INCLUDED
 
 #define CENTER 1
 
@@ -11,4 +11,4 @@ int popup_message( char *item[] );
 int popup_menu( char *item[], char**buff );
 int remove_menu( char **p );
 
-#endif /* POPUP_H_INCLUDED */
+#endif /* SCUF_POPUP_H_INCLUDED */

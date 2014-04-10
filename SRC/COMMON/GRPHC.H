@@ -1,5 +1,5 @@
-#ifndef GRPHC_H_INCLUDED
-#define GRPHC_H_INCLUDED
+#ifndef COMMON_GRPHC_H_INCLUDED
+#define COMMON_GRPHC_H_INCLUDED
 
 /* From cwgraphc.c edisp.asm hdisp.asm */
 void prchar( unsigned int c, unsigned int attr, unsigned int x, unsigned int y );
@@ -22,4 +22,4 @@ int whatlevel( char c );
 void rdchardot( unsigned int x, unsigned int y );
 void wrchardot( unsigned int x, unsigned int y );
 
-#endif /* GRPHC_H_INCLUDED */
+#endif /* COMMON_GRPHC_H_INCLUDED */
