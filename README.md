@@ -63,20 +63,30 @@ Information about CU-Writer
 CU-Writer developers
 --------------------
 
-`Computer Service Centre and Faculty of Engineering, Chulalongkorn University`
 `สถาบันบริการคอมพิวเตอร์ จุฬาลงกรณ์มหาวิทยาลัย และ ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย`
+
+`Computer Service Centre and Faculty of Engineering, Chulalongkorn University`
 
 `สำนวน หิรัญวงษ์		Sumnuan Hirunwong`
 
 `ไกรศร เลียนษี		Kraisorn  Liansee`
+
 `ดำเกิง ธรรมเถกิงกิจ`
+
 `ทศพล อภิกุลวณิช		Thotsapol Aphikulvanich`
+
 `ธณัฎฐ์ จิระกาล		Tanat Chirakarn`
+
 `ประสาท โตปิตุมาตุคุณ`
+
 `ลักษณ์ชัย ลือชัยชนะกุล`
+
 `วิทยา วงศ์อนวัช`
+
 `สุทธิพงษ์ คนาคกร		Suttipong Kanakakorn`
+
 `สุบรรณ เย็นใจชน		Subun Yenjaichon`
+
 `สุวพจน์ จันทโรจนวงศ์`
 
 Thai Writer developer(s)
