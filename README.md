@@ -16,9 +16,9 @@ Next is port to OpenWATCOM.
 
 System Requirement
 ------------------
-  * IBM PC or Compatible with 8086 or 8088 CPU 512 Kb RAM or better
+  * IBM PC or Compatible with 8086 or 8088 CPU, 512 KB RAM or better
   * DOS 3.3 or better
-  * Hercules, EGA , VGA, MCGA or AT&T 400 (Graphic card in AT&T PC 6300/Olivetti M24)
+  * Hercules, EGA, VGA, MCGA or AT&T 400 (Graphic card in AT&T PC 6300/Olivetti M24)
   * One or two 5.25" 360Kb floppy disk drive
   * Free hard drive space 700Kb (Optional)
   * 9 pin or 24 pin Dot-Matrix printer (Optional)
@@ -26,11 +26,11 @@ System Requirement
 License
 -------
 CU-Writer 1.41 is in [public domain](http://unlicense.org/),
-so this software is released in to public domain too.
+so is this software.
 
 Download
 --------
-All downloads is in my Google drive, which can be found [here](https://drive.google.com/folderview?id=0B0EZlcQoXgS1RnVnNDVhc3MzV1k&usp=sharing)
+All downloads is in my Google drive, which can be found [here](http://goo.gl/aMYPds)
 Include all version of CU-Writer, both DOS and Win16 version that I can find.
 
 Compiling the source code
@@ -63,26 +63,21 @@ Information about CU-Writer
 CU-Writer developers
 --------------------
 
-Computer Service Centre
-and
-Faculty of Engineering, Chulalongkorn University
+`Computer Service Centre and Faculty of Engineering, Chulalongkorn University`
+`สถาบันบริการคอมพิวเตอร์ จุฬาลงกรณ์มหาวิทยาลัย และ ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย`
 
-สถาบันบริการคอมพิวเตอร์ จุฬาลงกรณ์มหาวิทยาลัย
-และ
-ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย
+`สำนวน หิรัญวงษ์		Sumnuan Hirunwong`
 
-สำนวน หิรัญวงษ์		Sumnuan Hirunwong
-
-ไกรศร เลียนษี			Kraisorn  Liansee
-ดำเกิง ธรรมเถกิงกิจ
-ทศพล อภิกุลวณิช		Thotsapol Aphikulvanich
-ธณัฎฐ์ จิระกาล		Tanat Chirakarn
-ประสาท โตปิตุมาตุคุณ
-ลักษณ์ชัย ลือชัยชนะกุล
-วิทยา วงศ์อนวัช
-สุทธิพงษ์ คนาคกร		Suttipong Kanakakorn
-สุบรรณ เย็นใจชน		Subun Yenjaichon
-สุวพจน์ จันทโรจนวงศ์
+`ไกรศร เลียนษี		Kraisorn  Liansee`
+`ดำเกิง ธรรมเถกิงกิจ`
+`ทศพล อภิกุลวณิช		Thotsapol Aphikulvanich`
+`ธณัฎฐ์ จิระกาล		Tanat Chirakarn`
+`ประสาท โตปิตุมาตุคุณ`
+`ลักษณ์ชัย ลือชัยชนะกุล`
+`วิทยา วงศ์อนวัช`
+`สุทธิพงษ์ คนาคกร		Suttipong Kanakakorn`
+`สุบรรณ เย็นใจชน		Subun Yenjaichon`
+`สุวพจน์ จันทโรจนวงศ์`
 
 Thai Writer developer(s)
 ------------------------
