@@ -77,7 +77,7 @@ CU-Writer developers
 
 `ธณัฎฐ์ จิระกาล		Tanat Chirakarn`
 
-`ประสาท โตปิตุมาตุคุณ`
+`ประสาท โตปิตุมาตุคุณ	Prasart Topitumatukhun`
 
 `ลักษณ์ชัย ลือชัยชนะกุล`
 
@@ -88,6 +88,8 @@ CU-Writer developers
 `สุบรรณ เย็นใจชน		Subun Yenjaichon`
 
 `สุวพจน์ จันทโรจนวงศ์`
+
+...
 
 Thai Writer developer(s)
 ------------------------

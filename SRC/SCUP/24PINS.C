@@ -327,6 +327,7 @@ int cp_set_reset( unsigned char ch, unsigned char *cntptr ) {
         };
         break;
     }
+	return 0;
 }
 
 /* ------------------------------------------------------------------------ */
