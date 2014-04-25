@@ -1373,5 +1373,3 @@ _awrchardot endp
 
 ADISP_TEXT ENDS
           END
-
-

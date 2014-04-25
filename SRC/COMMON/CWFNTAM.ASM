@@ -22,4 +22,3 @@
                       add &reg&,8000h - 050h
     br1:
                       endm
-

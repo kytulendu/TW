@@ -1423,5 +1423,3 @@ _hwrchardot endp
 
 HDISP_TEXT ENDS
           END
-
-

@@ -13,5 +13,3 @@
     shift_up              macro reg
                           sub &reg&,80
                           endm
-
-

@@ -1376,5 +1376,3 @@ _ewrchardot endp
 
 EDISP_TEXT ENDS
           END
-
-

@@ -47,4 +47,3 @@ void esettext( void ) {
 unsigned compute_off( register unsigned int x, register unsigned int y ) {
 	return ( 80 * y + x / 8 );
 }
-

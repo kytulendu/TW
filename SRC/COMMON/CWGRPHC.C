@@ -165,4 +165,3 @@ void setgraph( ) {
 	}
 	( *setgraph_ptr )( );
 }
-
