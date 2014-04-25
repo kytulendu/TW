@@ -37,6 +37,8 @@
 #include "24pins.h"
 #include "global.h"
 
+#include "prt.h"
+
 typedef struct {
     char byte1;
     char byte2;

@@ -144,11 +144,9 @@
     <ClInclude Include="SRC\SCUP\PCONFIG.H" />
     <ClInclude Include="SRC\SCUP\PIC.H" />
     <ClInclude Include="SRC\SCUP\PMENU.H" />
-    <ClInclude Include="SRC\SCUP\PREPROC.H" />
     <ClInclude Include="SRC\SCUP\PRINTING.H" />
     <ClInclude Include="SRC\SCUP\PRINTVAR.H" />
     <ClInclude Include="SRC\SCUP\PRNCNTRL.H" />
-    <ClInclude Include="SRC\SCUP\PROTO.H" />
     <ClInclude Include="SRC\SCUP\PRT.H" />
     <ClInclude Include="SRC\SCUP\PRTBUF24.H" />
     <ClInclude Include="SRC\SCUP\PRTG.H" />

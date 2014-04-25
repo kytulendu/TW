@@ -218,9 +218,6 @@
     <ClInclude Include="SRC\SCUP\INC.H">
       <Filter>Source Code\Header Files\SCUP</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\SCUP\PROTO.H">
-      <Filter>Source Code\Header Files\SCUP</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\SCUP\TABLE.H">
       <Filter>Source Code\Header Files\SCUP</Filter>
     </ClInclude>
@@ -402,9 +399,6 @@
       <Filter>Source Code\Header Files\SCUP</Filter>
     </ClInclude>
     <ClInclude Include="SRC\SCUP\PMENU.H">
-      <Filter>Source Code\Header Files\SCUP</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUP\PREPROC.H">
       <Filter>Source Code\Header Files\SCUP</Filter>
     </ClInclude>
     <ClInclude Include="SRC\SCUP\PRT.H">
