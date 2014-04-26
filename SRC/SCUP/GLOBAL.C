@@ -3,7 +3,10 @@
 
 #include <stdio.h>
 #include <dir.h>
-#include "inc.h"
+
+#include "..\common\cwtype.h"
+
+#include "const.h"
 
 /*  ******************************* */
 /*   3-level  buffer  declaration   */
@@ -23,7 +26,7 @@ char *extbar1;
 char *extbar2;
 char *extbar3;
 
-int  table[96] = {
+int table[96] = {
     /* ------------------------------------------------------------------------------
     converse code from so-mo-oo to Kaset
     0    1    2    3    4    5    6    7    8    9    a    b    c    d    e    f
@@ -42,79 +45,78 @@ char tablev[48] = {
 };
 /*
 int  gtable[16] = {
-0x03, 0x02, 0x01, 0x03, 0x03,
-0x01, 0x00, 0x03, 0x01, 0x01,
-0x01, 0x02, 0x02, 0x02, 0x02,
-0x00
+	0x03, 0x02, 0x01, 0x03, 0x03,
+	0x01, 0x00, 0x03, 0x01, 0x01,
+	0x01, 0x02, 0x02, 0x02, 0x02,
+	0x00
 };
 */
 /*
 char mask241[8][3] = {
-0xc0, 0x00, 0x00,
-0x18, 0x00, 0x00,
-0x03, 0x00, 0x00,
-0x00, 0x60, 0x00,
-0x00, 0x0c, 0x00,
-0x00, 0x01, 0x80,
-0x00, 0x00, 0x30,
-0x00, 0x00, 0x06
+	0xc0, 0x00, 0x00,
+	0x18, 0x00, 0x00,
+	0x03, 0x00, 0x00,
+	0x00, 0x60, 0x00,
+	0x00, 0x0c, 0x00,
+	0x00, 0x01, 0x80,
+	0x00, 0x00, 0x30,
+	0x00, 0x00, 0x06
 };
 
 char mask242[8][3] = {
-0x60, 0x00, 0x00,
-0x0c, 0x00, 0x00,
-0x01, 0x80, 0x00,
-0x00, 0x30, 0x00,
-0x00, 0x06, 0x00,
-0x00, 0x00, 0xc0,
-0x00, 0x00, 0x18,
-0x00, 0x00, 0x03
+	0x60, 0x00, 0x00,
+	0x0c, 0x00, 0x00,
+	0x01, 0x80, 0x00,
+	0x00, 0x30, 0x00,
+	0x00, 0x06, 0x00,
+	0x00, 0x00, 0xc0,
+	0x00, 0x00, 0x18,
+	0x00, 0x00, 0x03
 };
 */
 
-FILE   *fp, *fopen( );
+FILE *fp, *fopen( );
 
 int  fileready = NO;
 char oldfilename[MAXPATH];
 char filename[MAXPATH];
 char cup_dir[MAXDRIVE + MAXDIR];
-/**************************
-Menu data area .
-***************************/
+
+/* Menu data area */
 char mcol[3];
 char smcol[3];
 char mlenght = 24;
-/**************************
-Dotcommand global area .
-**************************/
-FILE   *mfp;                  /* define mailmerge file ptr  */
-char   *fieldname[20];    /* define array of fieldnames */
-char   *fieldcontent[20]; /* define array of strings    */
-int    fieldcount;            /* define number of fields    */
-int    mailmergeflag = NO;      /* each field content ready   */
-int    mergefileexist = NO;     /* .df successful             */
-int    fieldnameexist = NO;     /* .rv successful             */
-/**************************/
-/*** Printer Data Area ****/
+
+/* Dotcommand global area */
+FILE *mfp;													/* define mailmerge file ptr  */
+char *fieldname[20];										/* define array of fieldnames */
+char *fieldcontent[20];										/* define array of strings    */
+int fieldcount;												/* define number of fields    */
+int mailmergeflag = NO;										/* each field content ready   */
+int mergefileexist = NO;									/* .df successful             */
+int fieldnameexist = NO;									/* .rv successful             */
+
+/* Printer Data Area */
 int graphicprint = YES;
-int prtcodestd = NO;              /* YES standard,NO ku */
-int cpi = 10;                      /* number of characters per inch */
+int prtcodestd = NO;										/* YES standard,NO ku */
+int cpi = 10;												/* number of characters per inch */
 int lineperpage = 33;
 int userlineperpage = 33;
-int pagelength = 11;            /* page length in inches */
+int pagelength = 11;										/* page length in inches */
 int leftmargin = 1;
 int rightmargin = 80;
 char pagetitle[200] = "หน้าที่ ";
 char pageformat[200] = "หน้าที่ %d";
 char heading[200];
 char footing[200];
-/* --------------------------------------
-Location of pagetitle,heading,footing
-0 -> no print       1 -> left  justify
-2 -> center justify 3 -> right justify
-4 -> right<-> odd pgno  left  <-> even
-5 -> right<-> even      left  <->  odd
--------------------------------------- */
+
+/**
+*   Location of pagetitle,heading,footing
+*   0 -> no print       1 -> left  justify
+*   2 -> center justify 3 -> right justify
+*   4 -> right<-> odd pgno  left  <-> even
+*   5 -> right<-> even      left  <->  odd
+*/
 int locpagetitle = 0;
 int locheading = 0;
 int locfooting = 0;
@@ -136,7 +138,7 @@ int stdcode = YES;
 int curline = 0;
 int curpage = 0;
 int newpage = NO;
-/*********************************/
+
 int thaimode = NO;
 int quitprog = NO;
 int rowmax[3] = { 7, 7, 7 };
