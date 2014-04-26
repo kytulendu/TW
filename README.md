@@ -81,7 +81,7 @@ CU-Writer developers
 
 `ลักษณ์ชัย ลือชัยชนะกุล`
 
-`วิทยา วงศ์อนวัช`
+`วิทยา วงศ์อนวัช		Wittaya Wonganawat`
 
 `สุทธิพงษ์ คนาคกร		Suttipong Kanakakorn`
 
@@ -91,8 +91,8 @@ CU-Writer developers
 
 ...
 
-Thai Writer developer(s)
-------------------------
+Thai Writer developer
+---------------------
 Khral MacCharrver / Khral Steelforge aka. Kytulendu Rrit
 
 Credits
