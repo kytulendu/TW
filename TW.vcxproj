@@ -139,7 +139,6 @@
     <ClInclude Include="SRC\SCUP\FUNCMAC.H" />
     <ClInclude Include="SRC\SCUP\GETSTR.H" />
     <ClInclude Include="SRC\SCUP\GLOBAL.H" />
-    <ClInclude Include="SRC\SCUP\INC.H" />
     <ClInclude Include="SRC\SCUP\KBD.H" />
     <ClInclude Include="SRC\SCUP\PCONFIG.H" />
     <ClInclude Include="SRC\SCUP\PIC.H" />

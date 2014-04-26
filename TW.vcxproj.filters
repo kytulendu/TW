@@ -215,9 +215,6 @@
     <ClInclude Include="SRC\SCUP\FUNCMAC.H">
       <Filter>Source Code\Header Files\SCUP</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\SCUP\INC.H">
-      <Filter>Source Code\Header Files\SCUP</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\SCUP\TABLE.H">
       <Filter>Source Code\Header Files\SCUP</Filter>
     </ClInclude>
