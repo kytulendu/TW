@@ -180,6 +180,9 @@
     <None Include="SRC\SCUP\SCUP.TLR">
       <Filter>Make Files\SCUP</Filter>
     </None>
+    <None Include="SRC\COMMON\ACOMMON.ASM">
+      <Filter>Source Code\Source Files\COMMON</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\COMMON\CONST.H">
@@ -412,6 +415,9 @@
     </ClInclude>
     <ClInclude Include="SRC\SCUP\SMENU.H">
       <Filter>Source Code\Header Files\SCUP</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\CCOMMON.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -696,6 +702,9 @@
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\NSTRCMP.C">
       <Filter>Source Code\Source Files\SCUW\THAISYLS</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\CCOMMON.C">
+      <Filter>Source Code\Source Files\COMMON</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

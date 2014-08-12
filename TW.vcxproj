@@ -83,6 +83,7 @@
     <None Include="NORMALS.PRN" />
     <None Include="README.md" />
     <None Include="SRC\CLEAN.BAT" />
+    <None Include="SRC\COMMON\ACOMMON.ASM" />
     <None Include="SRC\COMMON\ADISP.ASM" />
     <None Include="SRC\COMMON\CWFNTAM.ASM" />
     <None Include="SRC\COMMON\CWFNTHM.ASM" />
@@ -104,6 +105,7 @@
     <None Include="TWPRINT.CFG" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="SRC\COMMON\CCOMMON.H" />
     <ClInclude Include="SRC\COMMON\CONST.H" />
     <ClInclude Include="SRC\COMMON\CSCRN.H" />
     <ClInclude Include="SRC\COMMON\CUSONG.H" />
@@ -183,6 +185,7 @@
     <ClInclude Include="SRC\SCUW\WRAP.H" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="SRC\COMMON\CCOMMON.C" />
     <ClCompile Include="SRC\COMMON\CSCRN.C" />
     <ClCompile Include="SRC\COMMON\CUSONG.C" />
     <ClCompile Include="SRC\COMMON\CWAGRPH.C" />

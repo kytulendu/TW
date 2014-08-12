@@ -14,7 +14,6 @@
 leveltable		db   0,2,0,0,2,2,2,2,1,1,1,2,0,0,0,0
 				db   0,0,0,0,0,0,0,3,3,3,3,3,3,3,3,0
 				db   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-
 ; Kedmanee keyboard table
 kedmanee_table	db   000h,001h,002h,003h,004h,005h,006h,007h
 				db   008h,009h,00ah,00bh,00ch,00dh,00eh,00fh
@@ -32,49 +31,6 @@ kedmanee_table	db   000h,001h,002h,003h,004h,005h,006h,007h
 				db   0e9h,0c3h,0e8h,0d2h,0cah,0b7h,0d7h,0b9h
 				db   0c2h,0e6h,0beh,0cbh,0d0h,0d5h,0cdh,0e4h
 				db   0bbh,0d1h,0bch,0b0h,07ch,02ch,025h,07fh
-
-;========================================================================;
-;                  Thai character code convertion table                  ;
-;========================================================================;
-;--------------------------------------------------------------------;
-
-; TIS-620 to KU
-std_to_ku		db   0e6h,0e7h,0e8h,0e9h,0eah,0ebh,0ech,0edh
-				db   0eeh,0efh,0f0h,0f1h,0f2h,0f3h,0f4h,08ah
-				db   088h,089h,087h,086h,080h,085h,084h,081h
-				db   080h,081h,082h,083h,088h,083h,0f5h,0f6h
-				db   0a0h,0a1h,0a2h,09ah,0a3h,09bh,0a4h,0a5h
-				db   0a6h,0a7h,0a8h,0a9h,0aah,0abh,0ach,0adh
-				db   0aeh,0afh,0b0h,0b1h,0b2h,0b3h,0b4h,0b5h
-				db   0b6h,0b7h,0b8h,0b9h,0bah,0bbh,0bch,0bdh
-				db   0beh,0bfh,0c0h,0c1h,0c2h,0c3h,0cdh,0c4h
-				db   0c5h,0c6h,0c7h,0c8h,0c9h,0cah,0cbh,0d6h
-				db   0cch,0ddh,0ceh,0cfh,0d9h,0dah,0dbh,0dch
-				db   0d7h,0d8h,0e5h,020h,020h,020h,020h,0f7h
-				db   0d0h,0d1h,0d2h,0d3h,0d4h,020h,0d5h,0dfh
-				db   0e0h,0e1h,0e2h,0e3h,0e4h,0deh,0fah,0fbh
-				db   090h,091h,092h,093h,094h,095h,096h,097h
-				db   098h,099h,0fch,0fdh,020h,020h,0feh,0ffh
-
-; KU to TIS-620
-ku_to_std		db   098h,099h,09ah,09bh,096h,095h,093h,092h
-				db   090h,091h,08fh,020h,020h,020h,020h,020h
-				db   0f0h,0f1h,0f2h,0f3h,0f4h,0f5h,0f6h,0f7h
-				db   0f8h,0f9h,0a3h,0a5h,020h,020h,020h,020h
-				db   0a0h,0a1h,0a2h,0a4h,0a6h,0a7h,0a8h,0a9h
-				db   0aah,0abh,0ach,0adh,0aeh,0afh,0b0h,0b1h
-				db   0b2h,0b3h,0b4h,0b5h,0b6h,0b7h,0b8h,0b9h
-				db   0bah,0bbh,0bch,0bdh,0beh,0bfh,0c0h,0c1h
-				db   0c2h,0c3h,0c4h,0c5h,0c7h,0c8h,0c9h,0cah
-				db   0cbh,0cch,0cdh,0ceh,0d0h,0c6h,0d2h,0d3h
-				db   0e0h,0e1h,0e2h,0e3h,0e4h,0e6h,0cfh,0d8h
-				db   0d9h,0d4h,0d5h,0d6h,0d7h,0d1h,0edh,0e7h
-				db   0e8h,0e9h,0eah,0ebh,0ech,0dah,080h,081h
-				db   082h,083h,084h,085h,086h,087h,088h,089h
-				db   08ah,08bh,08ch,08dh,08eh,09eh,09fh,0dfh
-				db   020h,020h,0eeh,0efh,0fah,0fbh,0feh,0ffh
-
-;--------------------------------------------------------------------;
 
 	PUBLIC curfont
 curfont			db   20 dup (0)
@@ -169,21 +125,18 @@ _chardot		db   20 dup (0)
 	_BSS		SEGMENT WORD PUBLIC 'BSS'
 	_BSS		ENDS
 
-	TCOMMON_TEXT	SEGMENT BYTE PUBLIC 'CODE'
-				ASSUME  CS:TCOMMON_TEXT, DS:DGROUP
-
+	ACOMMON_TEXT	SEGMENT BYTE PUBLIC 'CODE'
+				ASSUME  CS:ACOMMON_TEXT, DS:DGROUP
+				
 ;=============================================================================;
 ; _thaikey -  Change ascii value of key from english to thai                  ;
 ;                                                                             ;
 ;     USAGE : thaikey(unsigned key)                                           ;
 ;=============================================================================;
-
-    PUBLIC _thaikey
-
 ; thaikey(unsigned key){
-;     return (kedmanee_table[key]);
+;     return (kedmanee_table[key]); ?
 ;}
-
+    PUBLIC _thaikey
 _thaikey PROC FAR
     PUSH    BP
     MOV     BP,SP
@@ -196,57 +149,6 @@ _thaikey PROC FAR
     RET
 
 _thaikey ENDP
-
-;=============================================================================;
-; stdtoku                                                                     ;
-;       change standard code to KU codee                                      ;
-; USAGE : stdtoku(unsigned stdcode)                                           ;
-;         return KU code                                                      ;
-;=============================================================================;
-    PUBLIC _stdtoku
-_stdtoku   proc  far
-           push  bp
-           mov   bp,sp
-           mov   bx,offset DGROUP:std_to_ku
-           mov   ax,[bp+6]
-           cmp   al,080h
-           jb    no_change
-           sub   al,080h
-           xlat
-no_change:
-           pop   bp
-           ret
-_stdtoku   endp
-
-;=============================================================================;
-; kutostd                                                                     ;
-;       change KU code to standard code                                       ;
-; USAGE : kutostd(unsigned kucode)                                            ;
-;         return standard code                                                ;
-;=============================================================================;
-
-; from C:\GIT\TCONV\
-; C equivalence of this function
-;/** Change KU code character to TIS-620 code character.
-;*  \param[in]  p_stdcode		KU code character.
-;*  \return unsigned char		TIS-620 code character. */
-;unsigned char ku2std( unsigned char p_kucode ) {
-;	return ( ( p_kucode >= 0x80 ) ? ku_to_std[p_kucode - 0x80] : p_kucode );
-;}
-    PUBLIC _kutostd
-_kutostd   proc  far
-           push  bp
-           mov   bp,sp
-           mov   bx,offset DGROUP:ku_to_std ;lookup table
-           mov   ax,[bp+6]
-           cmp   al,080h
-           jb    nochange ;jump if below
-           sub   al,080h
-           xlat
-nochange:
-           pop   bp
-           ret
-_kutostd   endp
 
 ;=============================================================================;
 ; asm_keypressed -  check keyboard status                                     ;
@@ -303,6 +205,6 @@ outlev:
            ret
 _whatlevel endp
 
-	TCOMMON_TEXT	ENDS
+	ACOMMON_TEXT	ENDS
 
 END
