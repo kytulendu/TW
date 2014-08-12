@@ -25,8 +25,8 @@ DGROUP           GROUP     _DATA,_BSS
 _DATA            SEGMENT   WORD PUBLIC 'DATA'
 
 extrn _dfont:byte,_ditalicfont:byte
-extrn    curfont:byte, enlargefont:byte, offsetfont:word
-extrn     chulalogo1:word, chulalogo2:word, _chardot:byte
+extrn curfont:byte, enlargefont:byte, offsetfont:word
+extrn chulalogo1:word, chulalogo2:word, _chardot:byte
 extrn _graph_seg:word
 extrn _screen_buffptr:dword
 
