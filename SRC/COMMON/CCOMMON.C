@@ -1,3 +1,10 @@
+/*
+===============================================================================
+Thai relate function.
+By Khral Steelforge <https://github.com/kytulendu>.
+===============================================================================
+*/
+
 #include "ccommon.h"
 
 /* Thai character code conversion table */
@@ -58,6 +65,13 @@ unsigned char kedmanee_table[] = {
 	0xbb, 0xd1, 0xbc, 0xb0, 0x7c, 0x2c, 0x25, 0x7f,
 };*/
 
+/* Look-Up Table for level of a character */
+int leveltable[] ={
+	0, 2, 0, 0, 2, 2, 2, 2, 1, 1, 1, 2, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
+
 unsigned char stdtoku( unsigned char p_stdcode ) {
 	return ( ( p_stdcode >= 0x80 ) ? std_to_ku[p_stdcode - 0x80] : p_stdcode );
 }
@@ -70,3 +84,6 @@ unsigned char thaikey( unsigned char p_key ) {
 	return ( kedmanee_table[p_key] );
 }
 */
+int whatlevel( unsigned char p_char ) {
+	return ( p_char > 0xD0 ) ? leveltable[p_char - 0xD0] : 0;
+}

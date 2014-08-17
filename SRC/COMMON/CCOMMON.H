@@ -1,3 +1,10 @@
+/*
+===============================================================================
+Thai relate function.
+By Khral Steelforge <https://github.com/kytulendu>.
+===============================================================================
+*/
+
 /** Change TIS-620 code character to KU code character.
 *  \param[in]  p_stdcode		TIS-620 code character.
 *  \return unsigned char		KU code character. */
@@ -12,3 +19,12 @@ unsigned char kutostd( unsigned char p_kucode );
 *  \param[in]  p_key		KU code character.
 *  \return unsigned char	Kedmanee keyboard code. */
 /*unsigned char thaikey( unsigned char p_key );*/
+
+/** Determining at what level a given character is.
+*  \param[in]  p_key		KU code character.
+*  \return int				Level of character.
+*	0 : Ordinary (middle) level
+*	1 : Lower level (สระอุ, สระอู)
+*	2 : Upper level (สระอิ, สระอี)
+*	3 : Top level (วรรณยุกต์) */
+int whatlevel( unsigned char p_char );

@@ -5,15 +5,6 @@
 	DGROUP		GROUP	_DATA,_BSS
 	_DATA		SEGMENT	WORD PUBLIC 'DATA'
 
-; Table Look-Up for level of a character
-; new table
-;leveltable		db   0,2,0,0,2,2,2,2,1,1,1,2,0,0,0,0
-;				db   0,0,0,0,0,0,0,3,3,3,3,3,3,2,3,0
-;				db   0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0
-
-leveltable		db   0,2,0,0,2,2,2,2,1,1,1,2,0,0,0,0
-				db   0,0,0,0,0,0,0,3,3,3,3,3,3,3,3,0
-				db   0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 ; Kedmanee keyboard table
 kedmanee_table	db   000h,001h,002h,003h,004h,005h,006h,007h
 				db   008h,009h,00ah,00bh,00ch,00dh,00eh,00fh
@@ -175,35 +166,6 @@ nextpress:
     RET
 
 _asm_keypressed ENDP
-
-;=============================================================================;
-; whatlevel                                                                   ;
-;     find level of character                                                 ;
-; USAGE : whatlevel(unsigned c)                                               ;
-;     return 0 : MIDDLE level                                                 ;
-;            1 : BELOW level                                                  ;
-;            2 : UPPER level                                                  ;
-;            3 : TOPEST level                                                 ;
-; Suttipong Kanakakorn Mon  11-06-1989  20:45:46 start leveltable at d0       ;
-;=============================================================================;
-    PUBLIC _whatlevel
-_whatlevel proc     far
-           push     bp
-           mov      bp,sp
-           cmp      byte ptr [bp+6],0d0h
-           jae      lev1
-           xor      ax,ax       ; middle level
-           jmp      outlev
-lev1:
-           mov      al,[bp+6]   ; get character
-           sub      al,0d0h
-           mov      bx,offset DGROUP:leveltable
-           xlat                 ; look up table for level
-           xor      ah,ah
-outlev:
-           pop      bp
-           ret
-_whatlevel endp
 
 	ACOMMON_TEXT	ENDS
 
