@@ -1,7 +1,7 @@
 /*
 ===============================================================================
 Thai relate function.
-By Khral Steelforge <https://github.com/kytulendu>.
+Copyright (C) 2014 Khral Steelforge <https://github.com/kytulendu>.
 ===============================================================================
 */
 
@@ -66,7 +66,7 @@ unsigned char kedmanee_table[] = {
 };*/
 
 /* Look-Up Table for level of a character */
-int leveltable[] ={
+int leveltable[] = {
 	0, 2, 0, 0, 2, 2, 2, 2, 1, 1, 1, 2, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0

@@ -26,7 +26,8 @@ System Requirement
 License
 -------
 CU-Writer 1.41 is in [public domain](http://unlicense.org/),
-so is this software.
+so is this software, but some source code is in other license,
+please see source code for detail.
 
 Download
 --------

@@ -18,7 +18,6 @@ void clsall( void );
 void clsgraph( unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2 );
 void clrline( unsigned int x1, unsigned int y1, unsigned int x2 );
 void prakeaw( void );
-int whatlevel( char c );
 void rdchardot( unsigned int x, unsigned int y );
 void wrchardot( unsigned int x, unsigned int y );
 
