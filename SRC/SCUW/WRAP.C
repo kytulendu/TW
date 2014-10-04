@@ -298,4 +298,3 @@ void compress_blank( register unsigned char *s ) {
 		*s = '\0';
 	}
 }
-

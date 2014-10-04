@@ -280,4 +280,3 @@ void quick( unsigned int *x, unsigned int *y ) {
 		break;
 	}
 }
-

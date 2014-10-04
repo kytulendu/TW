@@ -847,4 +847,4 @@ void blockcommand( unsigned int *x ) {
 	waitkbd( 3, 2 );
 	key = ebioskey( 0 );
 	blkcmd( key, x );
-}
+}

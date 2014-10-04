@@ -17,4 +17,4 @@
 
 #define ISBLANK(X)  ((X)==' ' || (X)==WRAPBLANK)
 
-#endif /* SCUW_CONST_H_INCLUDED */
+#endif /* SCUW_CONST_H_INCLUDED */

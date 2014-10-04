@@ -97,4 +97,4 @@ All rights reserved.
 #define	_RightBrace	(unsigned char) 0x7D	/*	}	*/
 #define	_Baht		(unsigned char) 0xDF	/*	ß	*/
 
-# endif __THAI__
+#endif /* __THAI__ */

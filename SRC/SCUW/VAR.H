@@ -250,4 +250,3 @@ EXTERN unsigned int command_tab[] = {
 #undef EXTERN /* restore it */
 
 #endif /* SCUW_VAR_H_INCLUDED  */
-

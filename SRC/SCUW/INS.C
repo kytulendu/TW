@@ -625,4 +625,3 @@ void editmacro( void ) {
 		}
 	} while ( 1 );
 }
-

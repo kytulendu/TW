@@ -70,4 +70,4 @@ extern short int _tctype[];
 #define ispunc(c)		(isbpunc(c) || isfpunc(c))
 #endif
 
-#endif __TCTYPE__
+#endif /* __TCTYPE__ */

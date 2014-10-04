@@ -181,4 +181,4 @@ int alt_char_map( int c ) {
 		break;
 	}
 	return ( k );
-}
+}

@@ -24,4 +24,3 @@ int nstrcmp( register char *source, register char *destination ) {
 	}
 	return( 0 ); /* when same return zero */
 }
-

@@ -23,4 +23,3 @@ short int findchar( unsigned char ch, unsigned char *strbuf ) {
 	}
 	return( NULL );
 }
-

@@ -199,4 +199,3 @@ void bottom_of_page( void ) {
 	}
 	loadtoline( curline->text );
 }
-

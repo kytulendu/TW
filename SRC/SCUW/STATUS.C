@@ -116,4 +116,3 @@ void writestatus( unsigned int x ) {
 	writeattr( );
 	relmarstatus( );
 }
-

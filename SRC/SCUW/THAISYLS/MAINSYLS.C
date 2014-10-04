@@ -52,4 +52,4 @@ unsigned char *FINDCUT( unsigned char *lm, unsigned char *eot, unsigned char *rm
 		}
 	}
 	return( RightMargin );		/* Reach LeftLimit, return RightMargin */
-}
+}

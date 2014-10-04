@@ -206,4 +206,3 @@ void onscreen( unsigned x, unsigned y ) {
 	prchar( key, 0, 3, 2 );
 	doonscrn( key, x, y );
 }
-

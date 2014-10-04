@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <dir.h>
 
-#define  DEFINE_VAR 1
+#define DEFINE_VAR 1
 
 #include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
@@ -22,7 +22,7 @@
 #include "convert.h"
 #include "var.h"
 
-#undef   DEFINE_VAR
+#undef DEFINE_VAR
 
 #include "..\common\cwgrphc.h"
 #include "..\common\grdetect.h"
@@ -98,8 +98,8 @@ unsigned menu_to_key( register unsigned int curmenu ) {
 
 void main( int argc, char *argv[] ) {
 	extern char prog_date[], prog_time[];
-	unsigned x = 0, y = 0;		/* (x,y) position -> (0,0) at upper left on screen */
-	unsigned curmenu = 0x1100;
+	unsigned int x = 0, y = 0;		/* (x,y) position -> (0,0) at upper left on screen */
+	unsigned int curmenu = 0x1100;
 	int i;
 
 	cwsetup( argc, argv );
@@ -107,7 +107,35 @@ void main( int argc, char *argv[] ) {
 	writestatus( 0 );
 	writetab( );
 
-#ifndef EDA_VERSION
+#ifdef EDA_VERSION
+
+	framebox( 21 - CENTER_FACTOR, 5, ( 21 - CENTER_FACTOR ) + 45, 11, REVERSEATTR );
+	dispstrhgc( "CU  WRITER", 35 - CENTER_FACTOR, 6, REVERSEATTR );
+	dispstrhgc( "Version 1.2", 38 - CENTER_FACTOR, 7, REVERSEATTR );
+	dispstrhgc( "EDA version", 38 - CENTER_FACTOR, 8, REVERSEATTR );
+	dispstrhgc( "อภินันทนาการจาก จุฬาลงกรณ์มหาวิทยาลัย", 28 - CENTER_FACTOR, 9, REVERSEATTR );
+	dispstrhgc( "มอบแด่ กระทรวงต่างประเทศ", 33 - CENTER_FACTOR, 10, REVERSEATTR );
+
+#else
+#ifdef CW_VERSION
+
+	framebox( 21 - CENTER_FACTOR, 5, ( 21 - CENTER_FACTOR ) + 45, 13, REVERSEATTR );
+	/*
+	framebox( 21 - CENTER_FACTOR, 5, ( 21 - CENTER_FACTOR ) + 45, 14, REVERSEATTR );
+	*/
+	dispstrhgc( "CU  WRITER", 34 - CENTER_FACTOR, 6, REVERSEATTR );
+	dispstrhgc( "Version 1.41", 37 - CENTER_FACTOR, 7, REVERSEATTR );
+	dispprintf( 33 - CENTER_FACTOR, 8, REVERSEATTR, "%11s  %8s", prog_date, prog_time );
+	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", 30 - CENTER_FACTOR, 9, REVERSEATTR );
+	dispstrhgc( "พัฒนาโดย สถาบันบริการคอมพิวเตอร์ ร่วมกับ", 27 - CENTER_FACTOR, 10, REVERSEATTR );
+	dispstrhgc( "ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์", 25 - CENTER_FACTOR, 11, REVERSEATTR );
+	/*
+	dispstrhgc("และ ชมรมคอมพิวเตอร์ อบจ.", 33 - CENTER_FACTOR, 12, REVERSEATTR );
+	dispstrhgc("จุฬาลงกรณ์มหาวิทยาลัย", 33 - CENTER_FACTOR, 13, REVERSEATTR );
+	*/
+	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 35 - CENTER_FACTOR, 12, REVERSEATTR );
+
+#else
 
 	framebox( 21 - CENTER_FACTOR, 5, ( 21 - CENTER_FACTOR ) + 45, 14, REVERSEATTR );
 	dispstrhgc( "THAI  WRITER", ( 24 - CENTER_FACTOR ) + 9, 6, REVERSEATTR );
@@ -118,36 +146,7 @@ void main( int argc, char *argv[] ) {
 	dispstrhgc( "The Forge Warband, Iron Legion", ( 24 - CENTER_FACTOR ) + 5, 11, REVERSEATTR );
 	dispstrhgc( "พัฒนาจาก เวิร์ดจุฬา โดย มหาวิทยาลัยจุฬาลงกรณ์", ( 24 - CENTER_FACTOR ) + 1, 13, REVERSEATTR );
 
-	/*
-	framebox( 21 - CENTER_FACTOR, 5, ( 21 - CENTER_FACTOR ) + 45, 13, REVERSEATTR );
-	*/
-	/*
-	framebox( 21 - CENTER_FACTOR, 5, ( 21 - CENTER_FACTOR ) + 45, 14, REVERSEATTR );
-	*/
-	/*
-	dispstrhgc( "CU  WRITER", 34 - CENTER_FACTOR, 6, REVERSEATTR );
-	dispstrhgc( "Version 1.41", 37 - CENTER_FACTOR, 7, REVERSEATTR );
-	dispprintf( 33 - CENTER_FACTOR, 8, REVERSEATTR, "%11s  %8s", prog_date, prog_time );
-	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", 30 - CENTER_FACTOR, 9, REVERSEATTR );
-	dispstrhgc( "พัฒนาโดย สถาบันบริการคอมพิวเตอร์ ร่วมกับ", 27 - CENTER_FACTOR, 10, REVERSEATTR );
-	dispstrhgc( "ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์", 25 - CENTER_FACTOR, 11, REVERSEATTR );
-	*/
-	/*
-	dispstrhgc("และ ชมรมคอมพิวเตอร์ อบจ.", 33 - CENTER_FACTOR, 12, REVERSEATTR );
-	dispstrhgc("จุฬาลงกรณ์มหาวิทยาลัย", 33 - CENTER_FACTOR, 13, REVERSEATTR );
-	*/
-	/*
-	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 35 - CENTER_FACTOR, 12, REVERSEATTR );
-	*/
-#else
-
-	framebox( 21 - CENTER_FACTOR, 5, ( 21 - CENTER_FACTOR ) + 45, 11, REVERSEATTR );
-	dispstrhgc( "CU  WRITER", 35 - CENTER_FACTOR, 6, REVERSEATTR );
-	dispstrhgc( "Version 1.2", 38 - CENTER_FACTOR, 7, REVERSEATTR );
-	dispstrhgc( "EDA version", 38 - CENTER_FACTOR, 8, REVERSEATTR );
-	dispstrhgc( "อภินันทนาการจาก จุฬาลงกรณ์มหาวิทยาลัย", 28 - CENTER_FACTOR, 9, REVERSEATTR );
-	dispstrhgc( "มอบแด่ กระทรวงต่างประเทศ", 33 - CENTER_FACTOR, 10, REVERSEATTR );
-
+#endif
 #endif
 
 	if ( cu_song ) {
@@ -155,6 +154,7 @@ void main( int argc, char *argv[] ) {
 	}
 	ebioskey( 0 );
 	cls( );
+
 	do {
 		dispstrhgc( "   ", wind.col, 2, 0 );
 		i = pulled_down_menu( &curmenu, &x, &y );
@@ -620,6 +620,7 @@ void main( int argc, char *argv[] ) {
 			errorsound( );
 		}
 	} while ( !quitprog );
+
 	if ( changeflag ) {
 		blockmsg( 10 );
 		dispstrhgc( "ยังไม่ได้จัดเก็บแฟ้มข้อมูล ต้องการจัดเก็บหรือไม่ (Y/N)?", 24 - CENTER_FACTOR, 10, 2 );

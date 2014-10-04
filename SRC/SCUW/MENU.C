@@ -924,4 +924,4 @@ unsigned pulled_down_menu( unsigned *curmenu, unsigned *x, unsigned *y ) {
 			break;
 		}
 	} while ( 1 );
-}
+}
