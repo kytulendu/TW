@@ -9,6 +9,8 @@
 #include <bios.h>
 
 #include "cwtype.h"
+#include "grphc.h"
+
 #include "ekbd.h"
 
 extern boolean thaimode;
