@@ -1,6 +1,9 @@
-/** extended keyboard routine
-*   Written: Suttipong Kanakakorn
-*            Thu  08-03-1989  16:59:05
+/*
+* ===============================================================================
+* extended keyboard routine
+* Written: Suttipong Kanakakorn
+*          Thu  08-03-1989  16:59:05
+* ===============================================================================
 */
 
 #include <bios.h>

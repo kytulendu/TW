@@ -1,9 +1,12 @@
-/** Graphics hardware detector module for TURBO C 2.0
+/*
+* ===============================================================================
+* Graphics hardware detector module for TURBO C 2.0
 *
-*   Kraisorn Liansee
-*   Date    : 4/27/89
-*   Updated : 4/27/89
-*   Updated : Suttipong Kanakakorn Sun  08-20-1989  11:28:45
+* Kraisorn Liansee
+* Date    : 4/27/89
+* Updated : 4/27/89
+* Updated : Suttipong Kanakakorn Sun  08-20-1989  11:28:45
+* ===============================================================================
 */
 
 #include <dos.h>

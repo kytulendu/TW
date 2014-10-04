@@ -1,7 +1,7 @@
 #ifndef COMMON_GRPHC_H_INCLUDED
 #define COMMON_GRPHC_H_INCLUDED
 
-/* From cwgraphc.c edisp.asm hdisp.asm */
+/* From cwgraphc.c adisp.asm edisp.asm hdisp.asm */
 void prchar( unsigned int c, unsigned int attr, unsigned int x, unsigned int y );
 void prblank( unsigned int x, unsigned int y );
 void setcurpos( unsigned int x, unsigned int y, int thaimode );

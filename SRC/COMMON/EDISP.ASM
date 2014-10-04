@@ -2,41 +2,25 @@
 ; DISP.ASM  3 JAN 89      /**** MODIFIED ****/                               ;
 ; FOR EGA/VGA/MCGA                                                           ;
 ;****************************************************************************;
-PUBLIC    _eprchar
-PUBLIC    _eprblank
-PUBLIC    _esetcurpos
-PUBLIC    _eplot
-
-PUBLIC    _esavepic
-PUBLIC    _eretpic
-
-PUBLIC    _eclsall
-PUBLIC    _eclsgraph
-PUBLIC    _eclrline
-PUBLIC    _eprakeaw
-PUBLIC    _erdchardot
-PUBLIC    _ewrchardot
-PUBLIC    _eputwind
-PUBLIC    _egetwind
 
 INCLUDE   cwfntm.asm
 
-DGROUP           GROUP     _DATA,_BSS
-_DATA            SEGMENT   WORD PUBLIC 'DATA'
+	DGROUP		GROUP     _DATA,_BSS
+	_DATA		SEGMENT   WORD PUBLIC 'DATA'
 
-extrn _dfont:byte,_ditalicfont:byte
+EXTRN _dfont:byte,_ditalicfont:byte
 EXTRN curfont:BYTE,enlargefont:BYTE,offsetfont:WORD
 EXTRN chulalogo1:WORD,chulalogo2:WORD,_chardot:BYTE
-extrn _graph_seg:word
-extrn _screen_buffptr:dword
+EXTRN _graph_seg:word
+EXTRN _screen_buffptr:dword
 
-_DATA            ENDS
-_BSS             SEGMENT  WORD PUBLIC 'BSS'
-_BSS             ENDS
+	_DATA		ENDS
+	_BSS		SEGMENT  WORD PUBLIC 'BSS'
+	_BSS		ENDS
 
-EDISP_TEXT  SEGMENT   BYTE PUBLIC 'CODE'
+EDISP_TEXT		SEGMENT   BYTE PUBLIC 'CODE'
            ASSUME    CS:EDISP_TEXT,DS:DGROUP
-           extrn     _compute_off:far
+           EXTRN     _compute_off:far
 ;=============================================================================;
 ; prchar                                                                      ;
 ;     print character at specified cursor position                            ;
@@ -51,14 +35,15 @@ EDISP_TEXT  SEGMENT   BYTE PUBLIC 'CODE'
 ;                         bit 6 -> enlarge                                    ;
 ;                         bit 7 -> double underline                           ;
 ;=============================================================================;
-_eprchar proc     far
+PUBLIC _eprchar
+_eprchar proc far
         push     bp
         push     si
         push     di
         push     es
         mov      bp,sp
-        mov      ax,_graph_seg   ; display at page 0
-        mov      es,ax
+        ;mov      ax,_graph_seg   ; display at page 0
+        ;mov      es,ax
 ; ascii value * 20 is offset in font
 ; we will set DS:[BX+SI] point at font
         mov      si,[bp+12]   ; get character
@@ -210,8 +195,6 @@ nomoretest:
         xor      si,si
 nochangefont:
 ; we will set ES:[DI] point at screen
-
-;********  MODIFIED **********
 
 ; we will write character now ! (using standard code)
          mov      al,[bp+12]   ; get character
@@ -431,17 +414,13 @@ noenlarge:
 ; above-middle level has ascii code < 0e4h
 ; topest level has ascii code >= 0e4h
 above_level:
-
-         cmp      al,0e6h
-         jae      cont4
-         jmp      above_middle
-cont4:   cmp      al,0edh
-         jb       cont5
-         jmp      above_middle
-;cont4:   cmp      al,0edh
+        cmp      al,0e6h
+        jae      cont4
+        jmp      above_middle
+cont4:  cmp      al,0edh
+        jb       cont5
 ;         jne      cont5
-;         jmp      above_middle
-
+        jmp      above_middle
 cont5:   mov      ax,[bp+18]
          mov      cl,20       ; 20 lines per row
          mul      cl
@@ -489,7 +468,6 @@ noenlargetop:
          jmp      out_write
 
 above_middle:
-
          mov      ax,[bp+18]
          mov      cl,20       ; 20 lines per row
          mul      cl
@@ -546,6 +524,7 @@ _eprchar  endp
 ;          ( don't forward cursor position )                                  ;
 ;     USAGE : prblank(unsigned x,unsigned y)                                  ;
 ;=============================================================================;
+PUBLIC _eprblank
 _eprblank proc     far
          push     bp
          push     di
@@ -618,6 +597,9 @@ _eprblank endp
 ;    xor cursor at specified cursor position                                  ;
 ;    USAGE : setcurpos(unsigned x,unsigned y,int thaimode)                    ;
 ;=============================================================================;
+
+PUBLIC _esetcurpos
+
 _esetcurpos proc     far
            push     bp
            push     di
@@ -702,6 +684,8 @@ _esetcurpos endp
 ;          7 - (x mod 8)                                                      ;
 ;     USAGE : plot(unsigned x,unsigned y)                                     ;
 ;=============================================================================;
+PUBLIC _eplot
+
 _eplot proc     far
       push     bp
       push     di
@@ -732,6 +716,8 @@ _eplot endp
 ; savepic                                                                     ;
 ;     save picture from screen memory page 1 to page 0                        ;
 ;=============================================================================;
+PUBLIC _esavepic
+
 _esavepic   proc far
            push si
            push di
@@ -763,6 +749,8 @@ _esavepic   endp
 ; retpic                                                                      ;
 ;     return picture from screen memory page 0 to page 1                      ;
 ;=============================================================================;
+PUBLIC _eretpic
+
 _eretpic proc far
         push si
         push di
@@ -794,6 +782,8 @@ _eretpic endp
 ; clsall                                                                      ;
 ;       clear screen memory page 1 to blank                                   ;
 ;=============================================================================;
+PUBLIC _eclsall
+
 _eclsall proc  far
         push  di
         push  es
@@ -815,6 +805,8 @@ _eclsall endp
 ;     clear graphic screen for window specified                               ;
 ; USAGE : clsgraph(int x1,int y1,int x2,int y2)                               ;
 ;=============================================================================;
+PUBLIC _eclsgraph
+
 _eclsgraph  proc  far
            push  bp
            push  di
@@ -871,6 +863,8 @@ _eclsgraph  endp
 ;     clear line y1 from x1 to x2                                             ;
 ; USAGE : clrline(int x1,int y1,int x2)                                       ;
 ;=============================================================================;
+PUBLIC _eclrline
+
 _eclrline   proc  far
            push  bp
            push  di
@@ -917,6 +911,8 @@ _eclrline   endp
 ; prakeaw                                                                     ;
 ;       write parkeaw at upper left cornor                                    ;
 ;=============================================================================;
+PUBLIC _eprakeaw
+
 _eprakeaw proc  far
          push  si
          push  di
@@ -1066,6 +1062,7 @@ _eprakeaw proc  far
          ret
 _eprakeaw endp
 
+PUBLIC _erdchardot
 
 _erdchardot proc     far
            push     bp
@@ -1154,6 +1151,7 @@ _erdchardot proc     far
            ret
 _erdchardot endp
 
+PUBLIC _ewrchardot
 
 _ewrchardot proc     far
            push     bp
@@ -1270,6 +1268,7 @@ _ewrchardot endp
      fic_getwind_stack    ends
 
 
+PUBLIC _egetwind
    _egetwind              proc far
                           push bp
                           push ds
@@ -1320,7 +1319,7 @@ _ewrchardot endp
 ;        from buffer area
 ;------------------------------------------------------
 
-
+PUBLIC _eputwind
 
      fic_putwind_stack    struc
 

@@ -1,12 +1,13 @@
-/** EGA/VGA graphics module for CW 1.20
-*
-*   Kraisorn  Liansee
-*   Date:      04/21/1988
-*   Updated:   04/21/1988
-*
-*   Updated: Suttipong Kanakakorn
-*            Mon  07-31-1989  19:03:13
-*            Tue  08-22-1989  01:53:19
+/*
+* ===============================================================================
+* EGA/VGA graphics module for CW 1.20
+* Kraisorn  Liansee
+* Date:      04/21/1988
+* Updated:   04/21/1988
+* Updated: Suttipong Kanakakorn
+* Mon  07-31-1989  19:03:13
+* Tue  08-22-1989  01:53:19
+* ===============================================================================
 */
 
 #include <dos.h>

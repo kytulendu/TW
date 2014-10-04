@@ -1,9 +1,12 @@
 /*
-===============================================================================
-Thai relate function.
-By Khral Steelforge <https://github.com/kytulendu>.
-===============================================================================
+* ===============================================================================
+* Thai relate function.
+* By Khral Steelforge <https://github.com/kytulendu>.
+* ===============================================================================
 */
+
+#ifndef COMMON_CCOMMON_H_INCLUDED
+#define COMMON_CCOMMON_H_INCLUDED
 
 /** Change TIS-620 code character to KU code character.
 *  \param[in]  p_stdcode		TIS-620 code character.
@@ -28,3 +31,5 @@ unsigned char kutostd( unsigned char p_kucode );
 *	2 : Upper level (สระอิ, สระอี)
 *	3 : Top level (วรรณยุกต์) */
 int whatlevel( unsigned char p_char );
+
+#endif /* COMMON_CCOMMON_H_INCLUDED */

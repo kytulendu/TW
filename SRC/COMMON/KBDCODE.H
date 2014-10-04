@@ -1,6 +1,9 @@
-/** KBDCODE.H 15 JAN 89
-*   Updated: Suttipong Kanakakorn
-*            Sun  08-06-1989  13:24:38
+/*
+* ===============================================================================
+* KBDCODE.H 15 JAN 89
+* Updated: Suttipong Kanakakorn
+*          Sun  08-06-1989  13:24:38
+* ===============================================================================
 */
 
 #ifndef COMMON_KBDCODE_H_INCLUDED

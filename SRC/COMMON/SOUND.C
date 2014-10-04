@@ -1,7 +1,10 @@
-/** SOUND.C 15 JAN 89
-*   Updated : Suttipong Kanakakorn
-*             Sun  08-06-1989  18:30:55
-*             Mon  10-23-1989  23:18:49
+/*
+* ===============================================================================
+* SOUND.C 15 JAN 89
+* Updated : Suttipong Kanakakorn
+*           Sun  08-06-1989  18:30:55
+*           Mon  10-23-1989  23:18:49
+* ===============================================================================
 */
 
 #include <bios.h>
@@ -42,7 +45,10 @@ void biosdelay( long millisecs ) {
 
 	i = biostime( 0, 0 );
 	millisecs = i + 182L * millisecs / 10000L;
-	if ( millisecs == i ) millisecs++;
+	if ( millisecs == i ) {
+		millisecs++;
+	}
+
 	do {
 		i = biostime( 0, 0 );
 	} while ( i < millisecs );

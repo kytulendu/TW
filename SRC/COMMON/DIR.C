@@ -1,6 +1,8 @@
-/**
-*   Updated: Suttipong Kanakakorn
-*            Sun  08-06-1989  18:24:10
+/*
+* ===============================================================================
+* Updated: Suttipong Kanakakorn
+*          Sun  08-06-1989  18:24:10
+* ===============================================================================
 */
 
 #include <stdlib.h>
@@ -110,6 +112,7 @@ void freedir( void ) {
 		free( tempdir2 );
 	}
 }
+
 void dirpgup( void ) {
 	struct dirnode *tempdir;
 	int count, countrow;
@@ -127,6 +130,7 @@ void dirpgup( void ) {
 	}
 	showpagedir( );
 }
+
 void setdirpos( struct dirnode *namewant ) {
 	int count;
 	struct dirnode *tempdir;
@@ -145,6 +149,7 @@ void setdirpos( struct dirnode *namewant ) {
 		}
 	}
 }
+
 void dirpgdn( void ) {
 	struct dirnode *tempdir;
 	int count, countrow;
@@ -163,6 +168,7 @@ void dirpgdn( void ) {
 	showpagedir( );
 	setdirpos( tempdir );
 }
+
 void dirup( void ) {
 	struct dirnode *tempdir;
 	int count;

@@ -1,11 +1,14 @@
-/** Graphics hardware detector header for TURBO C 2.00
+/*
+* ===============================================================================
+* Graphics hardware detector header for TURBO C 2.00
 *
-*   Kraisorn Liansee
-*   Date    : 4/27/89
-*   Updated : 4/27/89
+* Kraisorn Liansee
+* Date    : 4/27/89
+* Updated : 4/27/89
 *
-*   Suttipong Kanakakorn
-*   Updated : Sun  08-27-1989 20:25:09
+* Suttipong Kanakakorn
+* Updated : Sun  08-27-1989 20:25:09
+* ===============================================================================
 */
 
 #ifndef COMMON_GRDETECT_H_INCLUDED

@@ -1,15 +1,18 @@
-/** Graphics module for CW 1.20
+/*
+* ===============================================================================
+* Graphics module for CW 1.20
 *
-*   Kraisorn Liansee
-*   Date    : 04/21/89
-*   Updated : 04/21/89
+* Kraisorn Liansee
+* Date    : 04/21/89
+* Updated : 04/21/89
 *
-*   Suttipong Kanakakorn
-*   Updated : Sun  07-30-1989  17:46:05
-*           : Tue  08-15-1989  02:09:46
-*             Use macro instead of function call
-*           : Tue  08-22-1989  02:01:28
-*             Add egamono mode
+* Suttipong Kanakakorn
+* Updated : Sun  07-30-1989  17:46:05
+*         : Tue  08-15-1989  02:09:46
+*           Use macro instead of function call
+*         : Tue  08-22-1989  02:01:28
+*           Add egamono mode
+* ===============================================================================
 */
 
 #include <stdio.h>
@@ -85,7 +88,6 @@ void setgraph( ) {
 #ifdef EDA_VERSION
 	scrmode = DETECT;
 #endif
-	/* Test graphic card RAM if less than 32KB */
 	if ( ( screen_buffptr = malloc( ( unsigned int ) 32768L ) ) == NULL ) {
 		fputs( "Not enough memory\n", stderr );
 		exit( 1 );

@@ -197,7 +197,6 @@
     <ClCompile Include="SRC\COMMON\GRDETECT.C" />
     <ClCompile Include="SRC\COMMON\SOUND.C" />
     <ClCompile Include="SRC\COMMON\STAMPDAT.C" />
-    <ClCompile Include="SRC\COMMON\TCONV.C" />
     <ClCompile Include="SRC\COMMON\TUTIL1.C" />
     <ClCompile Include="SRC\SCUF\CONVERT.C" />
     <ClCompile Include="SRC\SCUF\CUFSETUP.C" />

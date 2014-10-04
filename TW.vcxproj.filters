@@ -454,9 +454,6 @@
     <ClCompile Include="SRC\COMMON\STAMPDAT.C">
       <Filter>Source Code\Source Files\COMMON</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\COMMON\TCONV.C">
-      <Filter>Source Code\Source Files\COMMON</Filter>
-    </ClCompile>
     <ClCompile Include="SRC\COMMON\TUTIL1.C">
       <Filter>Source Code\Source Files\COMMON</Filter>
     </ClCompile>

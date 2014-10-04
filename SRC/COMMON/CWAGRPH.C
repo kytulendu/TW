@@ -1,14 +1,15 @@
-/** AT&T graphics module for CW 1.20
-*
-*   Kraisorn  Liansee
-*   Date:      04/21/1988
-*   Updated:   04/21/1988
+/*
+* ===============================================================================
+* AT&T graphics module for CW 1.20
+* Kraisorn  Liansee
+* Date:      04/21/1988
+* Updated:   04/21/1988
+* ===============================================================================
 */
 
 #include <dos.h>
 
 extern unsigned int graph_seg;
-extern int is_ega, is_vga;
 
 void asetgraph( void ) {
 	union REGS inregs, outregs;
