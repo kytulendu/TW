@@ -9,6 +9,6 @@
 #ifndef COMMON_CONST_H_INCLUDED
 #define COMMON_CONST_H_INCLUDED
 
-#define BLANK                ' '
+#define BLANK ' '
 
 #endif /* COMMON_CONST_H_INCLUDED */

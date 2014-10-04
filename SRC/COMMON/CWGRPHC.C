@@ -40,42 +40,6 @@ void plot( unsigned int x, unsigned int y ) {
 	( *plot_ptr )( x, y );
 }
 
-void settext( ) {
-	( *settext_ptr )( );
-}
-
-void savepic( ) {
-	( *savepic_ptr )( );
-}
-
-void retpic( ) {
-	( *retpic_ptr )( );
-}
-
-void clsall( ) {
-	( *clsall_ptr )( );
-}
-
-void clsgraph( unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2 ) {
-	( *clsgraph_ptr )( x1, y1, x2, y2 );
-}
-
-void clrline( unsigned int x1, unsigned int y1, unsigned int x2 ) {
-	( *clrline_ptr )( x1, y1, x2 );
-}
-
-void prakeaw( ) {
-	( *prakeaw_ptr )( );
-}
-
-void rdchardot( unsigned int x, unsigned int y ) {
-	( *rdchardot_ptr )( x, y );
-}
-
-void wrchardot( unsigned int x, unsigned int y ) {
-	( *wrchardot_ptr )( x, y );
-}
-
 void setgraph( ) {
 	static int first = 1;
 
@@ -166,4 +130,40 @@ void setgraph( ) {
 		exit( 1 );
 	}
 	( *setgraph_ptr )( );
+}
+
+void settext( ) {
+	( *settext_ptr )( );
+}
+
+void savepic( ) {
+	( *savepic_ptr )( );
+}
+
+void retpic( ) {
+	( *retpic_ptr )( );
+}
+
+void clsall( ) {
+	( *clsall_ptr )( );
+}
+
+void clsgraph( unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2 ) {
+	( *clsgraph_ptr )( x1, y1, x2, y2 );
+}
+
+void clrline( unsigned int x1, unsigned int y1, unsigned int x2 ) {
+	( *clrline_ptr )( x1, y1, x2 );
+}
+
+void prakeaw( ) {
+	( *prakeaw_ptr )( );
+}
+
+void rdchardot( unsigned int x, unsigned int y ) {
+	( *rdchardot_ptr )( x, y );
+}
+
+void wrchardot( unsigned int x, unsigned int y ) {
+	( *wrchardot_ptr )( x, y );
 }

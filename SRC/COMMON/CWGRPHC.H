@@ -110,45 +110,46 @@ EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 
 /* ===================================================================== */
 
+/***/
 void prchar( unsigned int c, unsigned int attr, unsigned int x, unsigned int y );
+
+/***/
 void prblank( unsigned int x, unsigned int y );
+
+/***/
 void setcurpos( unsigned int x, unsigned int y, int thaimode );
+
+/***/
 void plot( unsigned int x, unsigned int y );
-void settext( );
-void savepic( );
-void retpic( );
-void clsall( );
+
+/** set graphic mode */
+void setgraph( void );
+
+/** set text mode */
+void settext( void );
+
+/***/
+void savepic( void );
+
+/***/
+void retpic( void );
+
+/** clear screen*/
+void clsall( void );
+
+/***/
 void clsgraph( unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2 );
+
+/***/
 void clrline( unsigned int x1, unsigned int y1, unsigned int x2 );
-void prakeaw( );
+
+/** display Prakeaw ( Chula University logo ) at top-left of screen ( fixed position ) */
+void prakeaw( void );
+
+/***/
 void rdchardot( unsigned int x, unsigned int y );
+
+/***/
 void wrchardot( unsigned int x, unsigned int y );
 
-/*
-#define prchar( c, attr, x, y )		( *prchar_ptr )( c, attr, x, y )
-
-#define prblank( x, y )				( *prblank_ptr )( x, y )
-
-#define setcurpos( x, y, thaimode )	( *setcurpos_ptr )( x, y, thaimode )
-
-#define plot( x, y )				( *plot_ptr )( x, y )
-
-#define settext( )					( *settext_ptr)( )
-
-#define savepic( )					( *savepic_ptr)( )
-
-#define retpic( )					( *retpic_ptr)( )
-
-#define clsall( )					( *clsall_ptr)( )
-
-#define clsgraph( x1, y1, x2, y2 )	( *clsgraph_ptr )( x1, y1, x2, y2 );
-
-#define clrline( x1, y1, x2 )		( *clrline_ptr )( x1, y1, x2 )
-
-#define prakeaw( )					( *prakeaw_ptr )( )
-
-#define rdchardot( x, y )			( *rdchardot_ptr )( x, y )
-
-#define wrchardot( x, y )			( *wrchardot_ptr )( x, y )
-*/
 #endif /* COMMON_CWGRPHC_H_INCLUDED */

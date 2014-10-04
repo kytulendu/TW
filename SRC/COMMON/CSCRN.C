@@ -19,10 +19,6 @@
 
 #include "cscrn.h"
 
-/*
-* author Zingl Alois
-* http://members.chello.at/~easyfilter/bresenham.html
-*/
 void _line( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, int p_color*/ ) {
 	int dx = abs( p_xEnd - p_xStart ), sx = p_xStart < p_xEnd ? 1 : -1;
 	int dy = -abs( p_yEnd - p_yStart ), sy = p_yStart < p_yEnd ? 1 : -1;

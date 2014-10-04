@@ -22,19 +22,19 @@ typedef enum Graphics_hardware {
 	UNKNOWN_HW = -1
 } graphics_hardware;
 
-/* check current video configuration */
+/** check current video configuration */
 void graph_detecthardware( graphics_hardware *mode_ptr );
 
-/* check if the equipped adaptor is EGA or VGA */
+/** check if the equipped adaptor is EGA or VGA */
 int is_egavga( void );
 
-/* determines EGA/VGA adaptor configuration */
+/** determines EGA/VGA adaptor configuration */
 void egavga_class( graphics_hardware *mode_ptr );
 
-/* check if the equipped adaptor is MCGA */
+/** check if the equipped adaptor is MCGA */
 int is_mcga( void );
 
-/* check if there is any transition on 0x3BF port */
+/** check if there is any transition on 0x3BF port */
 int check_vretrace( void );
 
 #endif /* COMMON_GRDETECT_H_INCLUDED */
