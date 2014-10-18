@@ -2,9 +2,9 @@
 # makefile for common object file
 #
 
-CC = TCC
-INCLUDEPATH = C:\TC\INCLUDE
-CCFLAGS = -c -w -DCW -d -O -ml -f- -Z -K -k- -I$(INCLUDEPATH)
+CC = BCC
+INCLUDEPATH = C:\BC\INCLUDE
+CCFLAGS = -c -w -DCW -ml -d -O -f- -Z -K -I$(INCLUDEPATH)
 ASM = WASMR
 ASMFLAGS = -zq -wx
 
