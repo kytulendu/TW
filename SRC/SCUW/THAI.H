@@ -1,9 +1,11 @@
 /*
-thai.h -- thai characters
-
-Copyright Subun & Tanat
-Used with permission, Sahaviriya System
-All rights reserved.
+* ===============================================================================
+* THAI.H -- thai characters
+*
+* Copyright Subun & Tanat
+* Used with permission, Sahaviriya System
+* All rights reserved.
+* ===============================================================================
 */
 
 #ifndef __THAI__
@@ -85,7 +87,7 @@ All rights reserved.
 #define	_Percent	(unsigned char) 0x25	/*	%	*/
 #define	_OpenParen	(unsigned char) 0x28	/*	วงเล็บเปิด	*/
 #define	_CloseParen	(unsigned char) 0x29	/*	วงเล็บปิด	*/
-#define	_Hyphen		(unsignec char) 0x2D	/*	-	*/
+#define	_Hyphen		(unsigned char) 0x2D	/*	-	*/
 #define	_FullStop	(unsigned char) 0x2E	/*	.	*/
 
 #define	_Colon		(unsigned char) 0x3A
