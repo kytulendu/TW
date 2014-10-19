@@ -48,7 +48,7 @@ void writetab( void ) {
 		if ( tab[i + firstcol] == NO )
 			prchar( '-', 0, wind.col + i, 3 );
 		else
-			prchar( '!', 0, wind.col + i, 3 );
+			prchar( '|', 0, wind.col + i, 3 );
 		i++;
 	}
 	if ( ( rightmar - 1 - firstcol ) < wind.length ) {
