@@ -3,17 +3,27 @@ CD ..
 DEL *.EXE
 CD SRC
 CD COMMON
-MAKE
+ECHO Building Common library.
+MAKE >> ..\LOG.LOG
+ECHO Done!
 CD ..
 CD SCUW
 CD THAISYLS
-MAKE
+ECHO Building Thai Syllable Separation library.
+MAKE >> ..\..\LOG.LOG
+ECHO Done!
 CD..
-MAKE
+ECHO Building Editor.
+MAKE >> ..\LOG.LOG
+ECHO Done!
 CD ..
 CD SCUP
-MAKE
+ECHO Building Printer.
+MAKE >> ..\LOG.LOG
+ECHO Done!
 CD ..
 CD SCUF
-MAKE
+ECHO Building Font Editor.
+MAKE >> ..\LOG.LOG
+ECHO Done!
 CD ..

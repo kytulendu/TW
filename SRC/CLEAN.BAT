@@ -1,6 +1,7 @@
 @ECHO OFF
 ECHO.
 ECHO Cleaning project ...
+DEL *.LOG
 CD COMMON
 DEL *.OBJ
 DEL *.ERR
