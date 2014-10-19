@@ -102,18 +102,6 @@
     <None Include="NORMALS.P24">
       <Filter>Fonts</Filter>
     </None>
-    <None Include="ITALIC.PRN">
-      <Filter>Fonts</Filter>
-    </None>
-    <None Include="ITALICS.PRN">
-      <Filter>Fonts</Filter>
-    </None>
-    <None Include="NORMAL.PRN">
-      <Filter>Fonts</Filter>
-    </None>
-    <None Include="NORMALS.PRN">
-      <Filter>Fonts</Filter>
-    </None>
     <None Include="README.md">
       <Filter>Documents</Filter>
     </None>
@@ -182,6 +170,9 @@
     </None>
     <None Include="SRC\COMMON\ACOMMON.ASM">
       <Filter>Source Code\Source Files\COMMON</Filter>
+    </None>
+    <None Include="SRC\CONFIG.MAK">
+      <Filter>Make Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

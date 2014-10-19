@@ -69,18 +69,14 @@
     <None Include="ITALIC.FON" />
     <None Include="ITALIC.P24" />
     <None Include="ITALIC.P9" />
-    <None Include="ITALIC.PRN" />
     <None Include="ITALICS.P24" />
     <None Include="ITALICS.P9" />
-    <None Include="ITALICS.PRN" />
     <None Include="LICENSE" />
     <None Include="NORMAL.FON" />
     <None Include="NORMAL.P24" />
     <None Include="NORMAL.P9" />
-    <None Include="NORMAL.PRN" />
     <None Include="NORMALS.P24" />
     <None Include="NORMALS.P9" />
-    <None Include="NORMALS.PRN" />
     <None Include="README.md" />
     <None Include="SRC\CLEAN.BAT" />
     <None Include="SRC\COMMON\ACOMMON.ASM" />
@@ -91,6 +87,7 @@
     <None Include="SRC\COMMON\EDISP.ASM" />
     <None Include="SRC\COMMON\HDISP.ASM" />
     <None Include="SRC\COMMON\MAKEFILE.MAK" />
+    <None Include="SRC\CONFIG.MAK" />
     <None Include="SRC\MAKE.BAT" />
     <None Include="SRC\SCUF\MAKEFILE.MAK" />
     <None Include="SRC\SCUF\SCUF.TLR" />
