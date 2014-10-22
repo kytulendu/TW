@@ -61,13 +61,17 @@ void setupnode( void ) {
 	sentinel->next = sentinel;
 	sentinel->previous = sentinel;
 	sentinel->text = NULL;
+#ifdef WANT_TO_USE_GRAPH
 	sentinel->graph = NULL;
+#endif
 	sentinel->wrap = NO;
 	curline = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 	curline->wrap = NO;
 	curline->text = ( char * ) malloc( 1 );
 	*( curline->text ) = '\0';
+#ifdef WANT_TO_USE_GRAPH
 	curline->graph = NULL;
+#endif
 	insert_line( sentinel, curline );
 	curpage = curline;
 	loadtoline( curline->text );
@@ -557,14 +561,14 @@ int main( int argc, char *argv[] ) {
 						inscntrl( SUBCODE, x, y );
 						break;
 
-					/*
+#ifdef WANT_TO_USE_GRAPH
 					case ALTG:
 						insertgraph();
 						break;
 					case ALTD:
 						deletegraph();
 						break;
-					*/
+#endif
 
 					case ALTX: quitprog = YES;
 						keymain = ESCKEY;

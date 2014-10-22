@@ -157,7 +157,9 @@ unsigned int fcol, lcol; /* first column in 1'st line & last column in last line
 	firstline->next = firstline;		/* set up     */
 	firstline->previous = firstline;	/* first node */
 	firstline->wrap = fline->wrap;
+#ifdef WANT_TO_USE_GRAPH
 	firstline->graph = NULL;			/* graphic image is not copied */
+#endif
 	i = linearcolumn( fline->text, fcol, &font );
 	findstrcode( fontcode, font );		/* find string of control code */
 	firstline->text = ( char * ) malloc( strlen( fontcode ) + strlen( fline->text ) - i + 1 );
@@ -178,7 +180,9 @@ unsigned int fcol, lcol; /* first column in 1'st line & last column in last line
 		fline = fline->next;
 		newline = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 		newline->wrap = fline->wrap;
+#ifdef WANT_TO_USE_GRAPH
 		newline->graph = NULL;
+#endif
 		if ( fline != lline ) {
 			newline->text = ( char * ) malloc( strlen( fline->text ) + 1 );
 			strcpy( newline->text, fline->text );
@@ -270,9 +274,11 @@ unsigned int fcol, lcol; /* first column in 1'st line & last column in last line
 		if ( freeline->text != NULL ) {
 			free( freeline->text );
 		}
+#ifdef WANT_TO_USE_GRAPH
 		if ( freeline->graph != NULL ) {
 			free( freeline->graph );
 		}
+#endif
 		free( freeline );
 	}
 	deletereturn( fline );
@@ -376,7 +382,7 @@ struct line_node *rdfiletospace( char file_name[] ) {
 	FILE *fip, *fopen( );
 	register int i;
 	struct line_node *space, *newline, *currentline, *freeline;
-	static char text_str[MAXCOL * 5];
+	static unsigned char text_str[MAXCOL * 5];
 	if ( ( fip = fopen( file_name, "rt" ) ) != NULL ) {
 		blockmsg( 11 );
 		dispstrhgc( "กำลังอ่านข้อมูลจากแผ่นจานแม่เหล็กอยู่ กรุณารอสักครู่..." , 25 - CENTER_FACTOR, 11, 2 );
@@ -389,7 +395,9 @@ struct line_node *rdfiletospace( char file_name[] ) {
 		space->next = space;
 		space->previous = space;
 		space->wrap = NO;
+#ifdef WANT_TO_USE_GRAPH
 		space->graph = NULL;
+#endif
 		space->text = ( char * ) malloc( 1 );
 
 		if ( space->text == NULL ) {
@@ -406,8 +414,10 @@ struct line_node *rdfiletospace( char file_name[] ) {
 			if ( ( text_str[0] == '.' ) &&
 				( text_str[1] == 'G' ) &&
 				( text_str[2] == 'R' ) ) {
+#ifdef WANT_TO_USE_GRAPH
 				space->graph = NULL;
-				/* space->graph = readgraph( text_str + 4 ); */
+				space->graph = readgraph( text_str + 4 );
+#endif
 				free( space->text );
 				space->text = NULL;
 			} else {
@@ -441,7 +451,9 @@ struct line_node *rdfiletospace( char file_name[] ) {
 					}
 
 					newline->text = NULL;
+#ifdef WANT_TO_USE_GRAPH
 					newline->graph = NULL;
+#endif
 					newline->wrap = NO;
 					insert_line( currentline, newline );
 				}
@@ -450,12 +462,14 @@ struct line_node *rdfiletospace( char file_name[] ) {
 					text_str[i - 1] = '\0';
 					i--;
 				}
-				/*
-				if ((text_str[0] == '.') &&
-				(text_str[1] == 'G') &&
-				(text_str[2] == 'R')) {
-				*//* newline->graph = readgraph( text_str + 4 ); */
-				/*} else {*/
+
+#ifdef WANT_TO_USE_GRAPH
+				if ( ( text_str[0] == '.' ) &&
+					( text_str[1] == 'G' ) &&
+					( text_str[2] == 'R' ) ) {
+					newline->graph = readgraph( text_str + 4 );
+				} else {
+#endif
 					if ( ( i > 0 ) && ( text_str[i - 1] == WRAPCODE ) ) {
 						text_str[i - 1] = '\0';
 						newline->wrap = YES;
@@ -472,7 +486,9 @@ struct line_node *rdfiletospace( char file_name[] ) {
 						}
 					}
 					strcpy( newline->text, text_str );
-				/*}*/
+#ifdef WANT_TO_USE_GRAPH
+				}
+#endif
 				currentline = newline;
 			}
 		}
@@ -500,17 +516,21 @@ no_mem_avail:
 			if ( freeline->text != NULL ) {
 				free( freeline->text );
 			}
+#ifdef WANT_TO_USE_GRAPH
 			if ( freeline->graph != NULL ) {
 				free( freeline->graph );
 			}
+#endif
 			free( freeline );
 		}
 		if ( space->text != NULL ) {
 			free( space->text );
 		}
+#ifdef WANT_TO_USE_GRAPH
 		if ( space->graph != NULL ) {
 			free( space->graph );
 		}
+#endif
 		free( space );
 	}
 	return( NULL );
@@ -713,9 +733,11 @@ unsigned int colbegin, colend;		/* physical column */
 	if ( ( fip = fopen( file_name, "wt" ) ) != NULL ) {
 		dispstrhgc( "กำลังจัดเก็บแฟ้มข้อมูลอยู่ กรุณารอสักครู่...", 22 - CENTER_FACTOR, 11, 2 );
 		currentline = linebegin;
-		/* if ( currentline->graph != NULL ) {
+#ifdef WANT_TO_USE_GRAPH
+		if ( currentline->graph != NULL ) {
 			fprintf( fip, ".GR %s\n", currentline->graph );
-		}*/
+		}
+#endif
 		firstround = linearcolumn( currentline->text, colbegin, &font );
 		findstrcode( fontcode, font );
 		fputs( fontcode, fip );
@@ -744,9 +766,11 @@ unsigned int colbegin, colend;		/* physical column */
 			putc( '\n', fip );
 			firstround = 0;
 			currentline = currentline->next;
-			/*if ( currentline->graph != NULL ) {
+#ifdef WANT_TO_USE_GRAPH
+			if ( currentline->graph != NULL ) {
 				fprintf( fip, ".GR %s\n", currentline->graph );
-			}*/
+			}
+#endif
 		}
 		templine = currentline->text;
 		count = linearcolumn( templine, colend, &font );
@@ -771,7 +795,7 @@ unsigned int colbegin, colend;		/* physical column */
 		}
 		putc( 0x1a, fip );
 		fclose( fip );
-	}/*else {
+	}/* else {
 	   fileerror = YES;
 	} */
 	/*

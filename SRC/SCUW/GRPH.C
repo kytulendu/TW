@@ -1,8 +1,25 @@
-#ifndef WANT_TO_USE_GRAPH
+#ifdef WANT_TO_USE_GRAPH
 
+#include <stdlib.h>
+#include <fcntl.h>
 #include <io.h>
+#include <string.h>
+
+#include "..\common\cwtype.h"
+#include "..\common\cwgrphc.h"
+#include "..\common\cscrn.h"
+#include "..\common\dir.h"
+#include "..\common\ekbd.h"
+#include "..\common\fileutil.h"
+#include "..\common\sound.h"
+
+#include "var.h"
 #include "convert.h"
-#include "inc.h"
+
+#include "edit.h"
+#include "getstr.h"
+
+#include "grph.h"
 
 char *readgraph( char *filename ) {
 	long filelen, namelen;
@@ -20,7 +37,7 @@ char *readgraph( char *filename ) {
 	return( buffer );
 }
 
-paintlinegraph( char *graph, unsigned y ) {
+void paintlinegraph( char *graph, unsigned y ) {
 	unsigned endy, x;
 	char tp;
 
@@ -39,7 +56,7 @@ paintlinegraph( char *graph, unsigned y ) {
 			x = wind.col * 8;
 		} else {
 			if ( tp < 128 ) {
-				h_line_g( x, x + tp, y );
+				h_line_g( x, x + tp, y ); /* invalid function */
 			} else {
 				tp -= 128;
 			}
@@ -58,8 +75,8 @@ void notavailable( void ) {
 	retpic( );
 }
 
-insertgraph( ) {
-	notavailable( );
+void insertgraph( ) {
+	/*notavailable( );*/
 	int i;
 	char graphname[30];
 	storeline( curline );
@@ -82,7 +99,7 @@ insertgraph( ) {
 	loadtoline( curline->text );
 }
 
-deletegraph( ) {
+void deletegraph( ) {
 	notavailable( );
 	if ( curline->graph != NULL ) {
 		free( curline->graph );

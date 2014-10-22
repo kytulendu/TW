@@ -155,10 +155,11 @@ void displine( struct line_node *line, unsigned y, unsigned linenum ) {
 		prchar( '+', 0, wind.col + wind.length - 1, y );
 	}
 	y -= wind.row;
-	/*
-	if (graphbuff[y] != NULL)
-	paintlinegraph(graphbuff[y],y);
-	*/
+#ifdef WANT_TO_USE_GRAPH
+	if ( graphbuff[y] != NULL ) {
+		paintlinegraph( graphbuff[y], y );
+	}
+#endif
 }
 
 /****************************************************************************/
@@ -176,104 +177,106 @@ void disppagebreak( unsigned y ) {
 }
 
 /****************************************************************************/
+#ifdef WANT_TO_USE_GRAPH
 void set_graphic_buffer( ) {
-	/*    unsigned count,i,j,m,n;
-	unsigned linenum = lineno,linenum2;
+	unsigned count, i, j, m, n;
+	unsigned linenum = lineno, linenum2;
 	struct line_node *templine;
 	char *gr;
 
 	templine = curpage;
-	while (templine != curline) {    /* find lineno of curpage */
-	linenum--;
-	templine = templine->next;
-}
-j = 0;
-while ( j < wind.width ) {
-	if ( graphbuff[j] != NULL )
-		free( graphbuff[j] );
-	graphbuff[j] = NULL;
-	j++;
-}
-
-return;
-
-templine = curpage;
-count = 0;
-while ( ( templine->graph == NULL ) &&
-	( count != 66 ) && ( templine->previous != sentinel ) ) {
-	templine = templine->previous;
-	count++;
-}
-if ( templine->graph != NULL ) {
-	gr = templine->graph;
-	gr += strlen( gr ) + 4;
-	while ( ( count != 0 ) && ( *gr != 0x80 ) ) {
-		m = 0;
-		while ( ( m != 20 ) && ( *gr != 0x80 ) ) {
-			gr += strlen( gr ) + 1;
-			m++;
-		}
-		count--;
+	while ( templine != curline ) {    /* find lineno of curpage */
+		linenum--;
+		templine = templine->next;
 	}
-	linenum2 = linenum;
-	i = 0;
-	while ( ( *gr != 0x80 ) && ( i < wind.width ) ) {
-		m = 0;
-		n = 0;
-		while ( ( m != 20 ) && ( gr[n] != 0x80 ) ) {
-			n += strlen( gr + n ) + 1;
-			m++;
-		}
-		graphbuff[i] = ( char * ) malloc( n );
-		memcpy( graphbuff[i], gr, n );
-		gr += n;
-		i++;
-		linenum2++;
-		if ( ( pagebreak == YES ) &&
-			( ( ( linenum2 - 1 ) % lineperpage ) == 0 ) ) {
-			if ( i != wind.width )
-				i++;
-		}
+	j = 0;
+	while ( j < wind.width ) {
+		if ( graphbuff[j] != NULL )
+			free( graphbuff[j] );
+		graphbuff[j] = NULL;
+		j++;
 	}
-}
 
-templine = curpage;
-i = 0;
-while ( ( i < wind.width ) && ( templine != sentinel ) ) {
+	return;
+
+	templine = curpage;
+	count = 0;
+	while ( ( templine->graph == NULL ) &&
+		( count != 66 ) && ( templine->previous != sentinel ) ) {
+		templine = templine->previous;
+		count++;
+	}
 	if ( templine->graph != NULL ) {
-		j = i;
-		linenum2 = linenum;
 		gr = templine->graph;
-		gr += strlen( templine->graph ) + 4;
-		while ( ( *gr != 0x80 ) && ( j < wind.width ) ) {
+		gr += strlen( gr ) + 4;
+		while ( ( count != 0 ) && ( *gr != 0x80 ) ) {
+			m = 0;
+			while ( ( m != 20 ) && ( *gr != 0x80 ) ) {
+				gr += strlen( gr ) + 1;
+				m++;
+			}
+			count--;
+		}
+		linenum2 = linenum;
+		i = 0;
+		while ( ( *gr != 0x80 ) && ( i < wind.width ) ) {
 			m = 0;
 			n = 0;
 			while ( ( m != 20 ) && ( gr[n] != 0x80 ) ) {
 				n += strlen( gr + n ) + 1;
 				m++;
 			}
-			graphbuff[j] = ( char * ) malloc( n );
-			memcpy( graphbuff[j], gr, n );
+			graphbuff[i] = ( char * ) malloc( n );
+			memcpy( graphbuff[i], gr, n );
 			gr += n;
+			i++;
 			linenum2++;
-			j++;
 			if ( ( pagebreak == YES ) &&
 				( ( ( linenum2 - 1 ) % lineperpage ) == 0 ) ) {
-				if ( j != wind.width )
-					j++;
+				if ( i != wind.width )
+					i++;
 			}
 		}
 	}
-	templine = templine->next;
-	i++;
-	linenum++;
-	if ( ( pagebreak == YES ) &&
-		( ( ( linenum - 1 ) % lineperpage ) == 0 ) ) {
-		if ( i != wind.width )
-			i++;
+
+	templine = curpage;
+	i = 0;
+	while ( ( i < wind.width ) && ( templine != sentinel ) ) {
+		if ( templine->graph != NULL ) {
+			j = i;
+			linenum2 = linenum;
+			gr = templine->graph;
+			gr += strlen( templine->graph ) + 4;
+			while ( ( *gr != 0x80 ) && ( j < wind.width ) ) {
+				m = 0;
+				n = 0;
+				while ( ( m != 20 ) && ( gr[n] != 0x80 ) ) {
+					n += strlen( gr + n ) + 1;
+					m++;
+				}
+				graphbuff[j] = ( char * ) malloc( n );
+				memcpy( graphbuff[j], gr, n );
+				gr += n;
+				linenum2++;
+				j++;
+				if ( ( pagebreak == YES ) &&
+					( ( ( linenum2 - 1 ) % lineperpage ) == 0 ) ) {
+					if ( j != wind.width )
+						j++;
+				}
+			}
+		}
+		templine = templine->next;
+		i++;
+		linenum++;
+		if ( ( pagebreak == YES ) &&
+			( ( ( linenum - 1 ) % lineperpage ) == 0 ) ) {
+			if ( i != wind.width )
+				i++;
+		}
 	}
-}   */
 }
+#endif
 
 /****************************************************************************/
 /*  Display all line in page from linked list. Stop display if keyboard is  */
@@ -283,7 +286,9 @@ while ( ( i < wind.width ) && ( templine != sentinel ) ) {
 void showpage( void ) {
 	register unsigned y = 0, linenum = lineno;
 	struct line_node *temppage = curpage;
-	/*    set_graphic_buffer();   */
+#ifdef WANT_TO_USE_GRAPH
+	set_graphic_buffer();
+#endif
 	while ( temppage != curline ) {    /* find lineno of curpage */
 		linenum--;
 		temppage = temppage->next;
@@ -566,9 +571,9 @@ void refreshline( unsigned x, unsigned y ) {
 		prchar( '+', 0, wind.col + wind.length - 1, y );
 	}
 	y -= wind.row;
-	/*
-	if (graphbuff[y] != NULL) {
-	paintlinegraph(graphbuff[y],y);
+#ifdef WANT_TO_USE_GRAPH
+	if ( graphbuff[y] != NULL ) {
+		paintlinegraph( graphbuff[y], y );
 	}
-	*/
+#endif
 }

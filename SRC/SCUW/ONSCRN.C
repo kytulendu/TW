@@ -66,19 +66,19 @@ void writetab( void ) {
 void centerline( unsigned y ) {
 	int i, j, k, count;
 	for ( i = 1; ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ); i++ );
-	for ( j = strlen( workline.middle ) - 1;
-		( workline.middle[j] == ' ' ) || ( workline.middle[j] == WRAPBLANK ); j-- );
-		if ( ( rightmar - leftmar ) > ( j - i ) ) {
-			k = leftmar + ( ( rightmar - leftmar ) - ( j - i ) ) / 2;
-			if ( k < i ) {
-				for ( count = i - k; count > 0; count-- )
-					delete_char( 0 );
-			} else {
-				for ( count = k - i; count > 0; count-- )
-					insertblank( 1, ' ' );
-			}
-			refreshline( 0, y );
+	for ( j = strlen( workline.middle ) - 1; ( workline.middle[j] == ' ' )
+		|| ( workline.middle[j] == WRAPBLANK ); j-- );
+	if ( ( rightmar - leftmar ) > ( j - i ) ) {
+		k = leftmar + ( ( rightmar - leftmar ) - ( j - i ) ) / 2;
+		if ( k < i ) {
+			for ( count = i - k; count > 0; count-- )
+				delete_char( 0 );
+		} else {
+			for ( count = k - i; count > 0; count-- )
+				insertblank( 1, ' ' );
 		}
+		refreshline( 0, y );
+	}
 }
 
 void doonscrn( register unsigned key, unsigned x, unsigned y ) {

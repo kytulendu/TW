@@ -57,9 +57,11 @@ void abandonfile( void ) {
 		templine = currentline;
 		currentline = currentline->next;
 		free( templine->text );
+#ifdef WANT_TO_USE_GRAPH
 		if ( templine->graph != NULL ) {
 			free( templine->graph );
 		}
+#endif
 		free( templine );
 	}
 	free( sentinel );

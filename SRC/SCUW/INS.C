@@ -160,10 +160,7 @@ void printcntrl( register unsigned x, register unsigned y ) {
 	};
 }
 
-/****************************************************************************/
-/* insert character 'c' at cursor position *x,*y                            */
-/****************************************************************************/
-int insert_char( char c, unsigned *x, unsigned *y ) {
+int insert_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 	register unsigned i;
 	unsigned j;
 	if ( ( *x + firstcol + 1 ) <= MAXCOL ) {   /* if out of line , not insert */
@@ -306,10 +303,8 @@ int insert_char( char c, unsigned *x, unsigned *y ) {
 		return( NO );
 	}
 }
-/****************************************************************************/
-/* Overwrite character 'c' at cursor position *x,*y                         */
-/****************************************************************************/
-int ovrwrite_char( char c, unsigned *x, unsigned *y ) {
+
+int ovrwrite_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 	register unsigned i;
 	unsigned j;
 	if ( ( *x + firstcol + 1 ) <= MAXCOL ) {   /* no write at last column */
@@ -469,7 +464,9 @@ void insertreturn( struct line_node *line, unsigned thaicol ) {
 	findstrcode( fontcode, font );
 	line2 = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 	line2->wrap = line->wrap;
+#ifdef WANT_TO_USE_GRAPH
 	line2->graph = NULL;
+#endif
 	line2->text = ( char * ) malloc( strlen( line->text ) + strlen( fontcode ) - i + 1 );
 	strcpy( line2->text, fontcode );
 	strcpy( ( line2->text ) + strlen( fontcode ), ( line->text ) + i );

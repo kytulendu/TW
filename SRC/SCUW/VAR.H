@@ -30,7 +30,9 @@ struct line_node {
 	struct line_node *previous;     /* pointer to previous line */
 	struct line_node *next;         /* pointer to next line */
 	unsigned char *text;            /* pointer to text stream */
+#ifdef WANT_TO_USE_GRAPH
 	unsigned char *graph;           /* pointer to graph */
+#endif
 	char wrap;                      /* wrap flag for each line */
 };
 
@@ -47,11 +49,11 @@ struct windowtype {
 EXTERN struct windowtype wind;
 
 struct Workline {
-	char topest[MAXCOL + 3];
-	char upper[MAXCOL + 3];
-	char middle[MAXCOL + 3];
-	char below[MAXCOL + 3];
-	char attr[MAXCOL + 3];
+	unsigned char topest[MAXCOL + 3];
+	unsigned char upper[MAXCOL + 3];
+	unsigned char middle[MAXCOL + 3];
+	unsigned char below[MAXCOL + 3];
+	unsigned char attr[MAXCOL + 3];
 };
 EXTERN struct Workline workline;
 
@@ -233,14 +235,14 @@ EXTERN unsigned int command_tab[] = {
 	0x8370, 0x8711,
 
 	/* Graphic stuff */
-	/*
+#ifdef WANT_TO_USE_GRAPH
 	0x8100, ALTG,
 	0x8200, ALTD,
 	0x9100, CNTRL_B,
 	0x9200, F9KEY,
 	0x9500, ALTY,
 	0x9600, ALTM,
-	*/
+#endif
 	0x8100, CNTRL_B,
 	0x8200, F9KEY,
 	0x8500, 0x8501,
