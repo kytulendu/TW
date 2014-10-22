@@ -32,10 +32,49 @@
 
 #include "cwsetup.h"
 
+extern int herc_align; /* from hdisp.asm */
+
+static char cup_option[16]; /* assume that only 16 char max for argument */
+
+typedef struct {
+	char *option_name;
+	int *p_option_value;
+	int p_option_default;
+	unsigned char maxlen;
+	strtype stype;
+} each_option_setup;
+
+each_option_setup option_setup[] = {
+		{ "รหัส (1.สมอ. 2.เกษตร)", ( int * ) &stdcode, YES, 1, ONEORTWO },
+		{ "แบ่งหน้า (1.แบ่ง 2.ไม่แบ่ง)", ( int * ) &pagebreak, YES, 1, ONEORTWO },
+		{ "ตัดคำอัตโนมัติ (1.ตัด 2.ไม่ตัด)", ( int * ) &wordwrap, YES, 1, ONEORTWO },
+		{ "สร้างไฟล์สำรองทุกครั้งที่มีการเก็บข้อมูล (1.สร้าง 2.ไม่สร้าง)", ( int * ) &create_bak, YES, 1, ONEORTWO },
+		{ "มีเพลง (1. มี 2. ไม่มี) ", ( int * ) &cu_song, YES, 1, ONEORTWO },
+		{ "กั้นหน้าซ้าย", &leftmar, 1, 3, NUMBER },
+		{ "กั้นหน้าขวา (ไม่เกิน 256)", &rightmar, 65, 3, NUMBER },
+		{ "จำนวนบรรทัดต่อหน้า", &lineperpage, 33, 3, NUMBER },
+};
+
+/* number of element of option_setup */
+#define NELEM_OPTION ( sizeof( option_setup ) / sizeof( option_setup[0] ) )
+
 void set_option_to_default( void );
 
-extern int herc_align; /* from hdisp.asm */
-static char cup_option[16]; /* assume that only 16 char max for argument */
+void usage( void ) {
+	fputs( "Usage: TW.EXE [option] [file]\n", stderr );
+	fputs( "Options:\n", stderr );
+	fputs( " -h,  /h  Hercules Graphic Card.\n", stderr );
+	fputs( " -hl, /hl Hercules Graphic Card, left justify.\n", stderr );
+	fputs( " -v,  /v  VGA.\n", stderr );
+	fputs( " -e,  /e  EGA with EGA display.\n", stderr );
+	fputs( " -em, /em EGA with Monochrome display.\n", stderr );
+	fputs( " -m,  /m  MCGA.\n", stderr );
+	fputs( " -a,  /a  AT&T400.\n", stderr );
+	fputs( " -n,  /n  No backup file created.\n", stderr );
+	fputs( " -w,  /w  No word wrap.\n", stderr );
+	fputs( " -p,  /p  No page break.\n", stderr );
+	exit( 1 );
+}
 
 void cwsetup( int argc, char *argv[] ) {
 	unsigned int dummy;
@@ -47,15 +86,15 @@ void cwsetup( int argc, char *argv[] ) {
 		strcat( cup_option, argv[0] );
 		strcat( cup_option, " " );
 		strupr( ++argv[0] );
-		while ( i = *argv[0]++ )
+		while ( i = *argv[0]++ ) {
 			switch ( i ) {
-			case 'H':		/* e alone = ega, em = ega monochrome */
+			case 'H':
 				scrmode = HERCMONO;
 				break;
-			case 'E':		/* m alone = mcga */
+			case 'E':		/* e alone = EGA, em = EGA Monochrome */
 				scrmode = EGA;
 				break;
-			case 'M':
+			case 'M':		/* m alone = MCGA */
 				if ( scrmode == EGA ) {
 					scrmode = EGAMONO;
 				} else {
@@ -68,7 +107,7 @@ void cwsetup( int argc, char *argv[] ) {
 			case 'A':
 				scrmode = ATT400;
 				break;
-			case 'L':		/* /L for Hercules,  left-justified  */
+			case 'L':		/* /L for Hercules, left-justified  */
 				herc_align = 0;
 				break;
 			case 'N':
@@ -84,6 +123,7 @@ void cwsetup( int argc, char *argv[] ) {
 				cu_song = YES;
 				break;
 			default:  usage( );
+			}
 		}
 	}
 	if ( cup_option[0] == '\0' ) {
@@ -108,6 +148,7 @@ void cwsetup( int argc, char *argv[] ) {
 	if ( readoption( AUTO_FIND ) == 0 ) {
 		set_option_to_default( );
 	}
+
 	readscrfont( dfont, "NORMAL.FON", cw_dir );
 	readscrfont( ditalicfont, "ITALIC.FON", cw_dir );
 
@@ -133,22 +174,6 @@ void cwsetup( int argc, char *argv[] ) {
 	offbreak( );		/* Turn off Ctrl-C checking */
 }
 
-void usage( void ) {
-	fputs( "Usage: TW.EXE [option] [file]\n", stderr );
-	fputs( "Options\n", stderr );
-	fputs( "\t-h,\t/h  Hercules graphic adapter\n", stderr );
-	fputs( "\t-hl,\t/hl Hercules graphic adapter, left justify\n", stderr );
-	fputs( "\t-v,\t/v  vga\n", stderr );
-	fputs( "\t-e,\t/e  ega with ega display\n", stderr );
-	fputs( "\t-em,\t/em ega with monochrome display\n", stderr );
-	fputs( "\t-m,\t/m  mcga\n", stderr );
-	fputs( "\t-a,\t/a  at&t400\n", stderr );
-	fputs( "\t-n,\t/n  no backup file created\n", stderr );
-	fputs( "\t-w,\t/w  no word wrap\n", stderr );
-	fputs( "\t-p,\t/p  no page break\n", stderr );
-	exit( 1 );
-}
-
 void set_directory( void ) {
 	char drive[MAXDRIVE], dir[MAXDIR], name[MAXFILE], ext[MAXEXT];
 
@@ -158,37 +183,7 @@ void set_directory( void ) {
 	cw_dir[strlen( cw_dir ) - 1] = '\0'; /* clear \ */
 }
 
-typedef struct {
-	char *option_name;
-	int *p_option_value;
-	int p_option_default;
-	unsigned char maxlen;
-	strtype stype;
-} each_option_setup;
-
-each_option_setup option_setup[] = {
-	{ "รหัส (1.สมอ. 2.เกษตร)", ( int * ) &stdcode, YES, 1, ONEORTWO },
-	{ "แบ่งหน้า (1.แบ่ง 2.ไม่แบ่ง)", ( int * ) &pagebreak, YES, 1, ONEORTWO },
-	{ "ตัดคำอัตโนมัติ (1.ตัด 2.ไม่ตัด)", ( int * ) &wordwrap, YES, 1, ONEORTWO },
-	{ "สร้างไฟล์สำรองทุกครั้งที่มีการเก็บข้อมูล (1.สร้าง 2.ไม่สร้าง)", ( int * ) &create_bak, YES, 1, ONEORTWO },
-	{ "มีเพลง (1. มี 2. ไม่มี) ", ( int * ) &cu_song, YES, 1, ONEORTWO },
-	{ "กั้นหน้าซ้าย", &leftmar, 1, 3, NUMBER },
-	{ "กั้นหน้าขวา (ไม่เกิน 256)", &rightmar, 65, 3, NUMBER },
-	{ "จำนวนบรรทัดต่อหน้า", &lineperpage, 33, 3, NUMBER },
-};
-
-/* number of element of option_setup */
-#define NELEM_OPTION ( sizeof( option_setup ) / sizeof( option_setup[0] ) )
-
-/*  read option from file cw.cfg
-mode == AUTO try reading from current directoy first, then cw_dir
-if not found use the default value
-mode == CUR_DIR read from current dir
-if not found display error
-mode == CW_DIR  read from cw.exe directory
-if not found display error
-*/
-int readoption( search_file_mode mode ) {
+int readoption( search_file_mode p_mode ) {
 	FILE *fp;
 	char fname[MAXPATH];
 	int  field, temp;
@@ -196,44 +191,44 @@ int readoption( search_file_mode mode ) {
 
 
 	sprintf( fname, "%s\\TW.CFG", cw_dir );
-	if ( mode == CUR_DIR || mode == AUTO_FIND ) {
+	if ( p_mode == CUR_DIR || p_mode == AUTO_FIND ) {
 		fp = fopen( "TW.CFG", "rt" );
 	} else {
 		fp = fopen( fname, "rt" );
 	}
-	if ( fp == NULL && mode == AUTO_FIND ) {
+	if ( fp == NULL && p_mode == AUTO_FIND ) {
 		/* fopen file not succes */
 		/* continue searching in cw_dir */
-		if ( ( fp = fopen( fname, "rt" ) ) == NULL )
+		if ( ( fp = fopen( fname, "rt" ) ) == NULL ) {
 			return 0; /* if not found in both dir return 0 for autofind */
+		}
 	}
 	if ( fp == NULL ) {
 		showerrno( );
-		/* if search in CUR_DIR or CW_DIR and not found return -1 */
-		return -1;
+		return -1; /* if search in CUR_DIR or CW_DIR and not found return -1 */
 	}
 	/* If we reach here we succesfully open cw.cfg file */
 	for ( op = option_setup; op < option_setup + NELEM_OPTION; op++ ) {
 		field = fscanf( fp, "%d", &temp );
 		if ( field == 1 ) { /* succesfully scan */
-			if ( *op->p_option_value == -1 ) /* not set from command line */
-				/* so set it */
-				*op->p_option_value = temp;
+			if ( *op->p_option_value == -1 ) { /* not set from command line */
+				*op->p_option_value = temp; /* so set it */
+			}
 		} else { /* error */
 			break;
 		}
 	}
 	fclose( fp );
+
 	return 1;
 }
 
-/* save option to file cw.cfg in either current directory or cw_dir */
-void saveoption( search_file_mode mode ) {
+void saveoption( search_file_mode p_mode ) {
 	FILE *fp;
 	char config_file[MAXPATH];
 	each_option_setup *op;
 
-	if ( mode == CUR_DIR || mode == AUTO_FIND ) {
+	if ( p_mode == CUR_DIR || p_mode == AUTO_FIND ) {
 		fp = fopen( "TW.CFG", "wt" );
 	} else {
 		sprintf( config_file, "%s\\TW.CFG", cw_dir );
@@ -250,8 +245,6 @@ void saveoption( search_file_mode mode ) {
 }
 
 void dispoption( int i ) {
-
-	/* dispstrhgc("     ", 65 - CENTER_FACTOR + 2, i + 6, 0); */
 	dispstrhgc( option_setup[i].option_name,
 		65 - CENTER_FACTOR - thaistrlen( option_setup[i].option_name ),
 		i + 6, 0 );
@@ -376,8 +369,9 @@ void print_file( void ) {
 void edit_font( void ) {
 	static char cuf[] = "TWFONT.EXE";
 
-	if ( spawnlp( P_WAIT, cuf, cuf, cup_option, NULL ) == -1 )
+	if ( spawnlp( P_WAIT, cuf, cuf, cup_option, NULL ) == -1 ) {
 		showerrno( );
+	}
 	initscrn( );
 	showpageall( );
 }

@@ -1,10 +1,22 @@
 #ifndef SCUW_CW_H_INCLUDED
 #define SCUW_CW_H_INCLUDED
 
-void dispkey( unsigned int key );
+/** Display key combination when press control at top left of screen.
+*  \param[in]  p_key		Key code.*/
+void dispkey( register unsigned int p_key );
+
+/** Set up first set of linked list,it must consist of at least two line
+*   below follow.
+*   1. sentinel line - Next pointer of sentinel node point to first line
+*                      & previous pointer point to last line to form
+*                      circular linked list.
+*   2. first line    - It's contain no string but it's serious required !. */
 void setupnode( void );
-char *chulaname( void );
+
+/** Initialize screen.*/
 void initscrn( void );
-unsigned menu_to_key( unsigned int curmenu );
+
+/** Menu selection to keyboard shortcut command.*/
+unsigned menu_to_key( register unsigned int p_curmenu );
 
 #endif /* SCUW_CW_H_INCLUDED */

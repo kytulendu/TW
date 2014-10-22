@@ -6,6 +6,7 @@
 /****************************************************************************/
 
 #include "..\common\cwtype.h"
+#include "..\common\ccommon.h"
 #include "..\common\grphc.h"
 #include "..\common\cscrn.h"
 

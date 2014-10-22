@@ -1,10 +1,12 @@
-/****************************************************************************/
-/*  VAR.C 15 JAN 89                                                         */
-/*  var.c combine with var.h By Noom Suttipong Sun  07-30-1989  15:37:35    */
-/*  Updated: Suttipong Kanakakorn                                           */
-/*         : Mon  07-31-1989  20:13:05                                      */
-/*  CUCC   : Add more comments						                        */
-/****************************************************************************/
+/*
+* ===============================================================================
+* VAR.C 15 JAN 89
+* var.c combine with var.h By Noom Suttipong Sun  07-30-1989  15:37:35
+* Updated: Suttipong Kanakakorn
+*        : Mon  07-31-1989  20:13:05
+* CUCC   : Add more comments
+* ===============================================================================
+*/
 
 #include <dir.h>
 
@@ -36,13 +38,13 @@ EXTERN struct line_node *sentinel;  /* sentinel of linked list */
 EXTERN struct line_node *curpage;   /* pointer to current page */
 EXTERN struct line_node *curline;   /* pointer to current line */
 
-struct  windowtype {
-	unsigned int row;              /* row of upper left corner */
-	unsigned int col;              /* column of upper left corner */
-	unsigned int length;           /* no. of maximum column */
-	unsigned int width;            /* no. of line per page */
+struct windowtype {
+	unsigned int row;               /* row of upper left corner */
+	unsigned int col;               /* column of upper left corner */
+	unsigned int length;            /* no. of maximum column */
+	unsigned int width;             /* no. of line per page */
 };
-EXTERN struct  windowtype wind;
+EXTERN struct windowtype wind;
 
 struct Workline {
 	char topest[MAXCOL + 3];
@@ -75,7 +77,7 @@ EXTERN char replace[80]; /* string to replace the souce text */
 EXTERN char option[10];  /* replace option */
 EXTERN int keymain;
 
-EXTERN int tab[MAXCOL];   /* tab set */
+EXTERN int tab[MAXCOL];  /* tab set */
 
 /* End first part                                                       */
 /* ==================================================================== */
@@ -164,7 +166,7 @@ EXTERN unsigned int command_tab[] = {
 	0x2420, 0x2401,                               /* Bottom of Page */
 	0x2430, CPGDNKEY,                             /* Bottom of File */
 	0x2500, CNTRL_I,                              /* Goto TAB pos */
-	0x2600, ALTP, 				 /* Goto Page */
+	0x2600, ALTP,                                 /* Goto Page */
 	0x2700, ALTL,                                 /* Goto Line */
 
 	0x3100, CNTRL_G,
@@ -184,7 +186,6 @@ EXTERN unsigned int command_tab[] = {
 	0x4800, F8KEY,
 	0x4900, F10KEY,
 
-	/***** Modified *****/
 	0x4a10, ALTA,
 	0x4a20, ALTB,
 	0x4a30, ALTC,
@@ -203,7 +204,7 @@ EXTERN unsigned int command_tab[] = {
 	0x4a01, ALTU,
 	0x4a11, ALTV,
 	0x4a21, ALTY,
-	/************************/
+
 	0x5100, 0x5101,
 	0x5200, 0x5201,
 	0x5300, CNTRL_L,
@@ -223,7 +224,6 @@ EXTERN unsigned int command_tab[] = {
 	0x7600, 0x7601,
 	0x7700, 0x7701,
 
-	/********** Modified ************/
 	0x8310, 0x8111,
 	0x8320, 0x8211,
 	0x8330, 0x8311,
@@ -231,13 +231,15 @@ EXTERN unsigned int command_tab[] = {
 	0x8350, 0x8511,
 	0x8360, 0x8611,
 	0x8370, 0x8711,
+
+	/* Graphic stuff */
 	/*
-	0x8100,ALTG,
-	0x8200,ALTD,
-	0x9100,CNTRL_B,
-	0x9200,F9KEY,
-	0x9500,ALTY,
-	0x9600,ALTM,
+	0x8100, ALTG,
+	0x8200, ALTD,
+	0x9100, CNTRL_B,
+	0x9200, F9KEY,
+	0x9500, ALTY,
+	0x9600, ALTM,
 	*/
 	0x8100, CNTRL_B,
 	0x8200, F9KEY,

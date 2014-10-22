@@ -1,8 +1,12 @@
-/**
-*   update: Suttipong Kanakakorn
-*   Sun  07-30-1989  20:11:04
-*   Thu  08-03-1989  10:13:44
-*   CUCC : Add more comments
+/*
+* ===============================================================================
+* CU-Writer main program.
+*
+* update : Suttipong Kanakakorn
+*          Sun  07-30-1989  20:11:04
+*          Thu  08-03-1989  10:13:44
+* CUCC   : Add more comments
+* ===============================================================================
 */
 
 #include <stdio.h>
@@ -44,22 +48,14 @@
 
 #include "cw.h"
 
-void dispkey( register unsigned int key ) {
-	dispstrhgc( "   ", wind.col, 2, 0 );
-	if ( ( key & 0xff ) < 32 ) {
-		prchar( '^', 0, wind.col, 2 );
-		prchar( ( key & 0xff ) + 0x40, 0, wind.col + 1, 2 );
+void dispkey( register unsigned int p_key ) {
+	dispstrhgc( "   ", wind.col, 2, NORMALATTR );
+	if ( ( p_key & 0xff ) < 32 ) {
+		prchar( '^', 0, wind.col, REVERSEATTR );
+		prchar( ( p_key & 0xff ) + 0x40, 0, wind.col + 1, REVERSEATTR );
 	}
 }
 
-/****************************************************************************/
-/*  Set up first set of linked list,it must consist of at least two line    */
-/*  below follow.                                                           */
-/*  1. sentinel line - Next pointer of sentinel node point to first line    */
-/*                     & previous pointer point to last line to form        */
-/*                     circular linked list.                                */
-/*  2. first line - It's contain no string but it's serious required !.     */
-/****************************************************************************/
 void setupnode( void ) {
 	sentinel = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 	sentinel->next = sentinel;
@@ -86,17 +82,17 @@ void initscrn( void ) {
 	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
 	dispstrhgc( "– ESC<->MENU", 66, 1, BOLDATTR );
 	for ( countcol = 1; countcol <= 10; countcol++ ) {
-		headmenu( countcol, 0x00 );
+		headmenu( countcol, NORMALATTR );
 	}
 }
 
-unsigned menu_to_key( register unsigned int curmenu ) {
+unsigned menu_to_key( register unsigned int p_curmenu ) {
 	register int i;
-	for ( i = 0; ( command_tab[i] != curmenu ) && ( command_tab[i] != 0 ); i += 2 );
+	for ( i = 0; ( command_tab[i] != p_curmenu ) && ( command_tab[i] != 0 ); i += 2 );
 	return( command_tab[i + 1] );
 }
 
-void main( int argc, char *argv[] ) {
+int main( int argc, char *argv[] ) {
 	extern char prog_date[], prog_time[];
 	unsigned int x = 0, y = 0;		/* (x,y) position -> (0,0) at upper left on screen */
 	unsigned int curmenu = 0x1100;
@@ -156,7 +152,7 @@ void main( int argc, char *argv[] ) {
 	cls( );
 
 	do {
-		dispstrhgc( "   ", wind.col, 2, 0 );
+		dispstrhgc( "   ", wind.col, 2, NORMALATTR );
 		i = pulled_down_menu( &curmenu, &x, &y );
 		if ( filename[0] != '\0' ) {
 			switch ( i ) {
@@ -634,4 +630,6 @@ void main( int argc, char *argv[] ) {
 		}
 	}
 	settext( );
+
+	return 0;
 }
