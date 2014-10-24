@@ -4,8 +4,7 @@
 #include "global.h"
 #include "routine.h"
 
-/**
-*   Programmer : Subun Yenjaichon
+/** Programmer   : Subun Yenjaichon
 *   Date written : Monday, 9 May, 1988 3:09:08 PM
 *   Last Updated : Friday, 20 May, 1988 12:01:14 PM
 */

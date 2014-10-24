@@ -4,8 +4,7 @@
 #include "global.h"
 #include "routine.h"
 
-/**
-*   Module name  : Syl_Sep  (Syllable Separation)
+/** Module name  : Syl_Sep  (Syllable Separation)
 *   Parameters   : None
 *   Function     : Find the location of the given text to be separated
 *   Return       : Pointer to that location (Real Right Margin)

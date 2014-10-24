@@ -4,10 +4,9 @@
 #include "global.h"
 #include "routine.h"
 
-/**
-*   Programmer  : Subun Yenjaichon
-*   Date Written    : Wednesday, 11 May, 1988 4:02:08 PM
-*   Last Updated    : Saturday, 14 May, 1988 9:39:42 AM
+/** Programmer   : Subun Yenjaichon
+*   Date Written : Wednesday, 11 May, 1988 4:02:08 PM
+*   Last Updated : Saturday, 14 May, 1988 9:39:42 AM
 */
 
 unsigned char *SaraAirRtn( register unsigned char *TempIndx ) {

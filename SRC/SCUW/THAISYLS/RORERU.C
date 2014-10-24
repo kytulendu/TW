@@ -3,10 +3,9 @@
 #include "global.h"
 #include "routine.h"
 
-/**
-*   Programmer  : Subun Yenjaichon
-*   Date Written    : Monday, 16 May, 1988 10:55:24 AM
-*   Last Updated    : Monday, 16 May, 1988 10:55:48 AM
+/** Programmer   : Subun Yenjaichon
+*   Date Written : Monday, 16 May, 1988 10:55:24 AM
+*   Last Updated : Monday, 16 May, 1988 10:55:48 AM
 */
 
 unsigned char *RoreRuRtn( unsigned char *TempIndx ) {

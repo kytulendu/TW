@@ -4,11 +4,10 @@
 #include "global.h"
 #include "routine.h"
 
-/**
-*   Written:      Tanat Chirakarn
-*   Modified:     Subun Yenjaichon
-*   Date Written:   7 May, 1988
-*   Date Modified: 23 May, 1988
+/** Written       : Tanat Chirakarn
+*   Modified      : Subun Yenjaichon
+*   Date Written  : 7 May, 1988
+*   Date Modified : 23 May, 1988
 */
 
 unsigned char *Ueer1( unsigned char *TempIndx );

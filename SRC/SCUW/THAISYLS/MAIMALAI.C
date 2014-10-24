@@ -4,10 +4,9 @@
 #include "global.h"
 #include "routine.h"
 
-/**
-*   Programmer  : Subun Yenjaichon
-*   Date Written    : Thursday, 12 May, 1988 8:54:52 AM
-*   Last Updated    : Saturday, 14 May, 1988 12:08:05 PM
+/** Programmer   : Subun Yenjaichon
+*   Date Written : Thursday, 12 May, 1988 8:54:52 AM
+*   Last Updated : Saturday, 14 May, 1988 12:08:05 PM
 */
 
 unsigned char *MaiMalaiFC( unsigned char *TempIndx );

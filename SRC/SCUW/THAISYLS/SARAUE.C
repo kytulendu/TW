@@ -4,9 +4,8 @@
 #include "global.h"
 #include "routine.h"
 
-/**
-* Date Written : 17 May, 1988 8:38:18 AM
-* Last Update  : 18 May, 1988 2:19:20 PM
+/** Date Written : 17 May, 1988 8:38:18 AM
+*   Last Update  : 18 May, 1988 2:19:20 PM
 */
 
 unsigned char *SaraUeRtn( unsigned char *TempIndx ) {

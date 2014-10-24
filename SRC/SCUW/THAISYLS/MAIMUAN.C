@@ -4,10 +4,9 @@
 #include "global.h"
 #include "routine.h"
 
-/**
-*   Programmer  :   Mr. Subun Yenjaichon
-*   Date Written    :   Tuesday, 17 May, 1988 11:20:44 AM
-*   Last Updated    :   Tuesday, 17 May, 1988 11:21:07 AM
+/** Programmer   : Mr. Subun Yenjaichon
+*   Date Written : Tuesday, 17 May, 1988 11:20:44 AM
+*   Last Updated : Tuesday, 17 May, 1988 11:21:07 AM
 */
 
 unsigned char *MaiMuanRtn( unsigned char *TempIndx ) {

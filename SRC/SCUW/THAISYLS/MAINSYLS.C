@@ -23,8 +23,7 @@
 */
 
 /** The Main Function Thai Syllable Separate that will return
-*   the Real Right Margin
-*/
+*   the Real Right Margin */
 
 /* Function name must be capital letter for asm call */
 

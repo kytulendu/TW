@@ -3,10 +3,9 @@
 #include "global.h"
 #include "routine.h"
 
-/**
-*  Programmer  : Subun Yenjaichon
-*   Date Written    : Monday, 16 May, 1988 9:40:59 AM
-*   Last Updated    : Monday, 16 May, 1988 9:41:26 AM
+/** Programmer   : Subun Yenjaichon
+*   Date Written : Monday, 16 May, 1988 9:40:59 AM
+*   Last Updated : Monday, 16 May, 1988 9:41:26 AM
 */
 
 unsigned char *SaraARtn( unsigned char *TempIndx ) {

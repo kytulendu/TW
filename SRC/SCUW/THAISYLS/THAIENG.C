@@ -8,9 +8,9 @@
 
 /** Thai English Cut Routine
 *
-*   Programmer  :   Subun Yenjaichon
-*   Date Written :  Saturday, 7 May, 1988 9:53:12 AM
-*   Last Updated :  Saturday, 7 May, 1988 9:53:28 AM
+*   Programmer   : Subun Yenjaichon
+*   Date Written : Saturday, 7 May, 1988 9:53:12 AM
+*   Last Updated : Saturday, 7 May, 1988 9:53:28 AM
 */
 
 unsigned char *ThaiEngCutRtn( unsigned char *TempIndx ) {
