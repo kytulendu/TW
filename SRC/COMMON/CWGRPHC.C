@@ -24,16 +24,16 @@
 
 #include "cwgrphc.h"
 
-void prchar( unsigned int c, unsigned int attr, unsigned int x, unsigned int y ) {
-	( *prchar_ptr )( c, attr, x, y );
+void prchar( unsigned char p_char, unsigned int p_attr, unsigned int x, unsigned int y ) {
+	( *prchar_ptr )( p_char, p_attr, x, y );
 }
 
 void prblank( unsigned int x, unsigned int y ) {
 	( *prblank_ptr )( x, y );
 }
 
-void setcurpos( unsigned int x, unsigned int y, int thaimode ) {
-	( *setcurpos_ptr )( x, y, thaimode );
+void setcurpos( unsigned int x, unsigned int y, int p_thaimode ) {
+	( *setcurpos_ptr )( x, y, p_thaimode );
 }
 
 void plot( unsigned int x, unsigned int y ) {

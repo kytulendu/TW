@@ -27,7 +27,7 @@ EXTERN unsigned char *screen_buffptr;
 
 /* ===================================================================== */
 
-typedef void( Prchar_func )( unsigned int c, unsigned int attr, unsigned int x, unsigned int y );
+typedef void( Prchar_func )( unsigned char p_char, unsigned int p_attr, unsigned int x, unsigned int y );
 typedef Prchar_func *Prchar_ptr;
 
 EXTERN Prchar_ptr  prchar_ptr;
@@ -43,7 +43,7 @@ EXTERN Prblank_ptr  prblank_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Setcurpos_func )( unsigned int x, unsigned int y, int thaimode );
+typedef void ( Setcurpos_func )( unsigned int x, unsigned int y, int p_thaimode );
 typedef Setcurpos_func *Setcurpos_ptr;
 
 EXTERN Setcurpos_func hsetcurpos, esetcurpos, asetcurpos;
@@ -111,13 +111,13 @@ EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 /* ===================================================================== */
 
 /***/
-void prchar( unsigned int c, unsigned int attr, unsigned int x, unsigned int y );
+void prchar( unsigned char p_char, unsigned int p_attr, unsigned int x, unsigned int y );
 
 /***/
 void prblank( unsigned int x, unsigned int y );
 
 /***/
-void setcurpos( unsigned int x, unsigned int y, int thaimode );
+void setcurpos( unsigned int x, unsigned int y, int p_thaimode );
 
 /***/
 void plot( unsigned int x, unsigned int y );
