@@ -12,7 +12,7 @@
 
 #include "global.h"
 
-int nstrcmp( register char *source, register char *destination ) {
+int nstrcmp( register unsigned char *source, register unsigned char *destination ) {
 	if ( source != destination ) {
 		while ( *source ) {
 			if ( *source++ != *destination++ ) {
