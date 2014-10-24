@@ -13,23 +13,24 @@
 #include <stdlib.h>
 #include <dir.h>
 
-#define DEFINE_VAR 1
-
 #include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
 #include "..\common\cusong.h"
 #include "..\common\ekbd.h"
+#include "..\common\grdetect.h"
 #include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
 #include "..\common\sound.h"
 
 #include "convert.h"
+
+#define DEFINE_VAR 1
+
 #include "var.h"
 
 #undef DEFINE_VAR
 
 #include "..\common\cwgrphc.h"
-#include "..\common\grdetect.h"
 
 #include "block.h"
 #include "cwsetup.h"
