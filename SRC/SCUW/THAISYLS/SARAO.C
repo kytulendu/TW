@@ -109,8 +109,10 @@ unsigned char *SaraORtn( register unsigned char *TempIndx ) {
 			return( TempIndx - 2 );							/* cut before consonant that before Sara O */
 		}
 		break;
-
+/*
 	default:
 		return( TempIndx - 1 );
+*/
 	}
+	return( TempIndx - 1 );
 }

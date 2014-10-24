@@ -377,7 +377,7 @@ unsigned char *SaraRWithTonal( register unsigned char *TempIndx ) {
 			if ( chbufp1 != NgorNgoo ) {
 				return( TempIndx );
 			}
-			return;
+			break;
 		case SoreSoe:
 			if ( chbufp1 != NoreNoo ) {						/* ซ่าน */
 				return( TempIndx );
