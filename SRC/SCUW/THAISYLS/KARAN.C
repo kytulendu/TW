@@ -4,10 +4,9 @@
 #include "global.h"
 #include "routine.h"
 
-/**
-*   Programmer  : Subun Yenjaichon
-*   Written Date    : Monday, 16 May, 1988 1:04:44 PM
-*   Last Updated    : Tuesday, 17 May, 1988 11:15:14 AM
+/** Programmer   : Subun Yenjaichon
+*   Written Date : Monday, 16 May, 1988 1:04:44 PM
+*   Last Updated : Tuesday, 17 May, 1988 11:15:14 AM
 */
 
 unsigned char *KaranRtn( unsigned char *TempIndx ) {
@@ -203,7 +202,7 @@ unsigned char *KaranRtn( unsigned char *TempIndx ) {
 			break;
 		case PorePla:
 			for ( i = 0; i <= 0; ++i ) {
-				if ( !( nstrcmp( LoreLingRoreReoTable5[i], TempIndxm3 ) ) ) {
+				if ( !( nstrcmp( PorePlaRoreReoTable5[i], TempIndxm3 ) ) ) {
 					return( ( TempIndxp1 <= RightMargin ) ? TempIndxp1 : TempIndxm4 );
 				}
 			}

@@ -4,13 +4,12 @@
 #include "global.h"
 #include "routine.h"
 
-/**
-*   Module Name : HorHeebRtn
-*   Programmer  : Subun yenjaichon
-*   Date Written    : Friday, 20 May, 1988 2:04:06 PM
-*   Last Updated    :
-*   parameter   : TempIndx (pointer to unsigned char)
-*   return value    : pointer that pointer to cut pointer.
+/** Module Name  : HorHeebRtn
+*   Programmer   : Subun yenjaichon
+*   Date Written : Friday, 20 May, 1988 2:04:06 PM
+*   Last Updated :
+*   parameter    : TempIndx (pointer to unsigned char)
+*   return value : pointer that pointer to cut pointer.
 */
 
 unsigned char *HorHeebRtn( unsigned char *TempIndx ) {

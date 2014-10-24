@@ -8,8 +8,8 @@
 *   Function     : Find the location of the given text to be separated
 *   Return       : Pointer to that location (Real Right Margin)
 *
-*   Author       :  Tanat Chirakarn
-*                   Subun Yenjaichon
+*   Author       : Tanat Chirakarn
+*                  Subun Yenjaichon
 *
 *   Date Written : Friday, 6 May, 1988 8:38:18 AM
 *   Last Update  : Monday, 9 May, 1988 2:19:20 PM
@@ -490,6 +490,7 @@ unsigned char *CheckOther( unsigned char *TempIndx ) {
 			return( FAIL );
 		}
 	}
+	return( FAIL );
 }
 
 unsigned char *SaraAEEkRtn( unsigned char *TempIndx ) {
