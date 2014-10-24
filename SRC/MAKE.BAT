@@ -1,4 +1,7 @@
 @ECHO OFF
+ECHO. >> LOG.LOG
+ECHO =============================================================================== >> LOG.LOG
+ECHO. >> LOG.LOG
 CD ..
 DEL *.EXE
 CD SRC
