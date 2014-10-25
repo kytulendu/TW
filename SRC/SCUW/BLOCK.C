@@ -513,7 +513,7 @@ int readblk( unsigned int *x ) {
 			loadtoline( curline->text );
 		}
 	}
-	return;
+	return 0;
 }
 
 unsigned long getfilesize( void ) {
@@ -543,7 +543,7 @@ unsigned long getfilesize( void ) {
 			ebioskey( 0 );
 			settext( );
 			exit( 1 );
-			break;
+			break; /* can't be executed */
 		}
 		keepline = templine;
 	}
