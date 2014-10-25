@@ -1,14 +1,13 @@
-/****************************************************************************/
-/*  BLOCK.C 15 JAN 89                                                       */
-/****************************************************************************/
-
-/**
-*   Updated: Suttipong Kanakakorn
-*            Thu  08-03-1989  10:47:20
-*            - Create .bak,
-*            - use dispprintf instead of dispstr for compress program size
-*            Fri  08-04-1989  22:10:45
-*            - reduce case in function blkcmd to reduce size of program
+/*
+* ===============================================================================
+* BLOCK.C 15 JAN 89
+* Updated: Suttipong Kanakakorn
+*          Thu  08-03-1989  10:47:20
+*           - Create .bak,
+*           - use dispprintf instead of dispstr for compress program size
+*          Fri  08-04-1989  22:10:45
+*           - reduce case in function blkcmd to reduce size of program
+* ===============================================================================
 */
 
 #include <stdlib.h>
@@ -45,23 +44,11 @@
 
 #include "block.h"
 
-/****************************************************************************/
-/*  Hide/display block. It cause the visual marking of a block to be alter- */
-/*  nately switched off and on. Block manipulation commands (copy, move,    */
-/*  delete, and write to a file) work only when the block is displayed.     */
-/*  Block related cursor movements (jump to beginning/end of block) work    */
-/*  whether the block is hidden or displayed).                              */
-/****************************************************************************/
 void toggleblk( void ) {
 	dispblock = !dispblock;
 	pagecomplete = NO;
 }
 
-/****************************************************************************/
-/*  Mark the beginning of a block. The marker itself is not visible on the  */
-/*  screen, and the block only becomes visibly marked when the End block    */
-/*  marker is set.                                                          */
-/****************************************************************************/
 void markbegin( unsigned int x ) {
 	blkbegin.lineno = lineno;
 	blkbegin.column = firstcol + x;
@@ -79,11 +66,6 @@ void markbegin( unsigned int x ) {
 	pagecomplete = NO;
 }
 
-/****************************************************************************/
-/*  Mark the end of a block. The marker itself is not visible on the screen */
-/*  and the block only becomes visibly marked when the Begin block marker   */
-/*  is set.                                                                 */
-/****************************************************************************/
 void markend( unsigned int x ) {
 	blkend.lineno = lineno;
 	blkend.column = firstcol + x;
@@ -101,10 +83,6 @@ void markend( unsigned int x ) {
 	pagecomplete = NO;
 }
 
-/****************************************************************************/
-/*  Check block it is marked or not. Return YES if it is marked , else      */
-/*  return NO.                                                              */
-/****************************************************************************/
 int haveblock( void ) {
 	if ( ( blkbegin.lineno == blkend.lineno ) &&
 		( blkbegin.column == blkend.column ) ) {
@@ -114,10 +92,6 @@ int haveblock( void ) {
 	}
 }
 
-/****************************************************************************/
-/*  Check position of input to see it is in block or not. Return YES if it  */
-/*  is in block , else return NO.                                           */
-/****************************************************************************/
 int inblock( unsigned int linenum, unsigned int colnum ) {	/* column origin 0 */
 	if ( ( linenum >= blkbegin.lineno ) &&
 		( linenum <= blkend.lineno ) ) {
@@ -137,22 +111,12 @@ int inblock( unsigned int linenum, unsigned int colnum ) {	/* column origin 0 */
 	}
 }
 
-/****************************************************************************/
-/*  Copy linked list from assigned line & column (first & last) to space    */
-/*  allocated from MS-DOS. Data structer of space is circular linked list,  */
-/*  previous pointer of first line point to last line & next pointer of     */
-/*  last line point to first line. Return value is pointer to first line    */
-/*  of space. Text is copied only,no graphic image is.                      */
-/****************************************************************************/
-struct line_node *copytospace( fline, lline, fcol, lcol )
-struct line_node *fline, *lline; /* first line & last line to be copied */
-unsigned int fcol, lcol; /* first column in 1'st line & last column in last line,
-					 column is origin 0 */
-{
+struct line_node *copytospace( struct line_node *fline, struct line_node *lline,
+	unsigned int fcol, unsigned int lcol ) {
 	struct line_node *firstline, *templine, *newline;
 	unsigned int i, j;
 	font_attr font;
-	char fontcode[9], *temp;
+	unsigned char fontcode[9], *temp;
 	firstline = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 	firstline->next = firstline;		/* set up     */
 	firstline->previous = firstline;	/* first node */
@@ -200,15 +164,8 @@ unsigned int fcol, lcol; /* first column in 1'st line & last column in last line
 	return( firstline );
 }
 
-/****************************************************************************/
-/*  Insert source linked list pointed by sourceline,that previous pointer   */
-/*  point to last line,to destination linked list pointed by destline and   */
-/*  first column (in thai) is destcol.                                      */
-/****************************************************************************/
-void insertlinklist( sourceline, destline, destcol )
-struct line_node *sourceline, *destline;
-unsigned int destcol; /* thai column */
-{
+void insertlinklist( struct line_node *sourceline, struct line_node *destline,
+	unsigned int destcol ) {
 	int i;
 	struct line_node *lastline;
 	font_attr font;
@@ -248,13 +205,8 @@ unsigned int destcol; /* thai column */
 	}
 }
 
-/****************************************************************************/
-/*  Delete part of linked list from struct from assigned parameter.         */
-/****************************************************************************/
-void deletelinklist( fline, lline, fcol, lcol )
-struct line_node *fline, *lline; /* first line & last line to be deleted */
-unsigned int fcol, lcol; /* first column in 1'st line & last column in last line, origin 0 */
-{
+void deletelinklist( struct line_node *fline, struct line_node *lline,
+	unsigned int fcol, unsigned int lcol ) {
 	struct line_node *templine, *freeline;
 	insertreturn( lline, lcol );
 	lline = lline->next;
@@ -284,9 +236,6 @@ unsigned int fcol, lcol; /* first column in 1'st line & last column in last line
 	deletereturn( fline );
 }
 
-/****************************************************************************/
-/*  Insert block at current cursor position.                                */
-/****************************************************************************/
 void copyblk( unsigned int *x ) {
 	struct line_node *fline, *lline, *space;
 	if ( haveblock( ) && dispblock ) {
@@ -308,9 +257,6 @@ void copyblk( unsigned int *x ) {
 	}
 }
 
-/****************************************************************************/
-/*  Delete block at current cursor position.                                */
-/****************************************************************************/
 void deleteblk( void ) {
 	struct line_node *firstline, *lastline;
 	if ( haveblock( ) && dispblock ) {
@@ -329,9 +275,6 @@ void deleteblk( void ) {
 	}
 }
 
-/****************************************************************************/
-/*  Move block to insert to current cursor position.                        */
-/****************************************************************************/
 void moveblk( unsigned int *x ) {
 	struct line_node *space, *fline, *lline;
 	if ( haveblock( ) && dispblock ) {
@@ -371,21 +314,14 @@ void moveblk( unsigned int *x ) {
 	}
 }
 
-/****************************************************************************/
-/*  Read file from disk. Parameter is filename wanted to read. Space is     */
-/*  allocated from MS-DOS. Data structer of space is circular linked list,  */
-/*  previous pointer of first line point to last line & next pointer of     */
-/*  last line point to first line. Return value is pointer to space,        */
-/*  if error return NULL.                                                   */
-/****************************************************************************/
-struct line_node *rdfiletospace( char file_name[] ) {
+struct line_node *rdfiletospace( char *file_name ) {
 	FILE *fip, *fopen( );
 	register int i;
 	struct line_node *space, *newline, *currentline, *freeline;
 	static unsigned char text_str[MAXCOL * 5];
 	if ( ( fip = fopen( file_name, "rt" ) ) != NULL ) {
 		blockmsg( 11 );
-		dispstrhgc( "กำลังอ่านข้อมูลจากแผ่นจานแม่เหล็กอยู่ กรุณารอสักครู่..." , 25 - CENTER_FACTOR, 11, 2 );
+		dispstrhgc( "กำลังอ่านข้อมูลจากแผ่นจานแม่เหล็กอยู่ กรุณารอสักครู่...", 25 - CENTER_FACTOR, 11, REVERSEATTR );
 		space = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 
 		if ( space == NULL ) {
@@ -497,7 +433,7 @@ struct line_node *rdfiletospace( char file_name[] ) {
 	} else {
 		errorsound( );
 		blockmsg( 10 );
-		dispstrhgc( "ไม่พบแฟ้มข้อมูลนี้ ! กด <ESC> เพื่อทำงานต่อ" , 27 - CENTER_FACTOR, 10, 2 );
+		dispstrhgc( "ไม่พบแฟ้มข้อมูลนี้ ! กด <ESC> เพื่อทำงานต่อ", 27 - CENTER_FACTOR, 10, REVERSEATTR );
 		while ( ebioskey( 0 ) != ESCKEY );
 		return( NULL );
 	}
@@ -505,9 +441,9 @@ no_mem_avail:
 	fclose( fip );
 	errorsound( );
 	blockmsg( 11 );
-	dispstrhgc( "หน่วยความจำไม่พอ ! กด <ESC> เพื่อทำงานต่อ", 26 - CENTER_FACTOR, 11, 2 );
+	dispstrhgc( "หน่วยความจำไม่พอ ! กด <ESC> เพื่อทำงานต่อ", 26 - CENTER_FACTOR, 11, REVERSEATTR );
 	while ( ebioskey( 0 ) != ESCKEY );
-	dispstrhgc( "กำลังคืนหน่วยความจำให้ระบบ กรุณารอสักครู่ ...", 26 - CENTER_FACTOR, 11, 2 );
+	dispstrhgc( "กำลังคืนหน่วยความจำให้ระบบ กรุณารอสักครู่ ...", 26 - CENTER_FACTOR, 11, REVERSEATTR );
 	if ( space != NULL ) {
 		currentline = space->next;
 		while ( currentline != space ) {
@@ -536,12 +472,6 @@ no_mem_avail:
 	return( NULL );
 }
 
-/****************************************************************************/
-/*  Find size of space that allocated form MS-DOS. Data structer of space   */
-/*  is circular linked list, previous pointer of first line point to last   */
-/*  line & next pointer of last line point to first line. Return value is   */
-/*  number of line of space.                                                */
-/****************************************************************************/
 unsigned int spacesize( struct line_node *space ) {
 	struct line_node *temp;
 	unsigned int size = 0;
@@ -553,19 +483,16 @@ unsigned int spacesize( struct line_node *space ) {
 	return( size );
 }
 
-/****************************************************************************/
-/*  Read block from file to insert to current cursor position               */
-/****************************************************************************/
 int readblk( unsigned int *x ) {
 	char file_name[22];
 	struct line_node *space;
 	int i;
 	storeline( curline );
 	pagecomplete = NO;
-	framebox( 18 - CENTER_FACTOR, 4, 18 - CENTER_FACTOR + 53, 6, 2 );
-	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการอ่าน :", 18 - CENTER_FACTOR + 4, 5, 2 );
+	framebox( 18 - CENTER_FACTOR, 4, 18 - CENTER_FACTOR + 53, 6, REVERSEATTR );
+	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการอ่าน :", 18 - CENTER_FACTOR + 4, 5, REVERSEATTR );
 	strcpy( file_name, "*.*" );
-	i = getname( file_name, 46 - CENTER_FACTOR, 5, 22, 2 );
+	i = getname( file_name, 46 - CENTER_FACTOR, 5, 22, REVERSEATTR );
 	if ( ( i == YES ) && ( file_name[0] != '\0' ) ) {
 		if ( havewild( file_name ) ) {
 			selectfile( file_name );
@@ -597,7 +524,7 @@ unsigned long getfilesize( void ) {
 
 	keepline = templine;
 	if ( templine == NULL ) {
-		dispstrhgc( "getfilesize err", 1, 1, 2 );
+		dispstrhgc( "getfilesize err", 1, 1, REVERSEATTR );
 		ebioskey( 0 );
 	}
 	++lineno;
@@ -610,9 +537,9 @@ unsigned long getfilesize( void ) {
 		++lineno;
 
 		if ( templine == NULL ) {
-			dispstrhgc( "getfilesize err", 1, 1, 2 );
-			dispstrhgc( keepline->text, 1, 2, 2 );
-			dispprintf( 1, 3, 2, "Line no = %u", lineno );
+			dispstrhgc( "getfilesize err", 1, 1, REVERSEATTR );
+			dispstrhgc( keepline->text, 1, 2, REVERSEATTR );
+			dispprintf( 1, 3, REVERSEATTR, "Line no = %u", lineno );
 			ebioskey( 0 );
 			settext( );
 			exit( 1 );
@@ -625,6 +552,7 @@ unsigned long getfilesize( void ) {
 }
 
 struct dfree *dfreep;
+
 unsigned long diskfree( int driveno ) {
 	unsigned long avail, bsec, sclus;
 	getdfree( driveno, dfreep );
@@ -634,7 +562,7 @@ unsigned long diskfree( int driveno ) {
 	return( avail * bsec * sclus );
 }
 
-int chkspace( char fname[] ) {
+int chkspace( char *fname ) {
 	unsigned long diskspace, filesize;
 	int i, flag;
 	struct ffblk fdat;
@@ -643,9 +571,9 @@ int chkspace( char fname[] ) {
 	flag = fnsplit( fname, drv, dir, name, ext );	/* Analyse Fname */
 	filesize = getfilesize( );
 	framebox( 17 - CENTER_FACTOR, 8, 17 - CENTER_FACTOR + 55, 12, REVERSEATTR );
-	dispstrhgc( "ขนาดแฟ้มข้อมูล =                   ไบต์", 32 - CENTER_FACTOR, 9, 2 );
-	dispstrhgc( "เนื้อที่ว่างบนแผ่นจานแม่เหล็ก =                   ไบต์", 22 - CENTER_FACTOR, 10, 2 );
-	dispprintf( 48 - CENTER_FACTOR, 9, 2, "%#10lu", filesize );
+	dispstrhgc( "ขนาดแฟ้มข้อมูล =                   ไบต์", 32 - CENTER_FACTOR, 9, REVERSEATTR );
+	dispstrhgc( "เนื้อที่ว่างบนแผ่นจานแม่เหล็ก =                   ไบต์", 22 - CENTER_FACTOR, 10, REVERSEATTR );
+	dispprintf( 48 - CENTER_FACTOR, 9, REVERSEATTR, "%#10lu", filesize );
 
 	if ( flag & DRIVE ) {	/* Has it Drive */
 		i = drv[0] - 'A' + 1;
@@ -659,9 +587,9 @@ int chkspace( char fname[] ) {
 		diskspace += ( unsigned long ) fdat.ff_fsize;	/* By old file size */
 	}
 
-	dispprintf( 48 - CENTER_FACTOR, 10, 2, "%10lu", diskspace );
+	dispprintf( 48 - CENTER_FACTOR, 10, REVERSEATTR, "%10lu", diskspace );
 	if ( diskspace < filesize ) {
-		dispstrhgc( "เนื้อที่บนแผ่นจานแม่เหล็กไม่พอ ! กดปุ่ม ESC เพื่อทำงานต่อ...", 22 - CENTER_FACTOR, 11, 2 );
+		dispstrhgc( "เนื้อที่บนแผ่นจานแม่เหล็กไม่พอ ! กดปุ่ม ESC เพื่อทำงานต่อ...", 22 - CENTER_FACTOR, 11, REVERSEATTR );
 		errorsound( );
 		while ( ebioskey( 0 ) != ESCKEY );
 		return( 0 );
@@ -670,11 +598,8 @@ int chkspace( char fname[] ) {
 	}
 }
 
-void writeblk( file_name, linebegin, colbegin, lineend, colend )
-char file_name[];
-struct line_node *linebegin, *lineend;
-unsigned int colbegin, colend;		/* physical column */
-{
+void writeblk( char *file_name, struct line_node *linebegin,
+	unsigned int colbegin, struct line_node *lineend, unsigned int colend ) {
 	FILE *fip;
 	struct line_node *currentline;
 	int key, i, j, firstround, count;	/* fileerror = NO; */
@@ -689,18 +614,18 @@ unsigned int colbegin, colend;		/* physical column */
 	pagecomplete = NO;
 	storeline( curline );
 
-	framebox( 17 - CENTER_FACTOR, 4, 17 - CENTER_FACTOR + 55, 6, 2 );
-	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการจัดเก็บ :", 17 - CENTER_FACTOR + 4, 5, 2 );
+	framebox( 17 - CENTER_FACTOR, 4, 17 - CENTER_FACTOR + 55, 6, REVERSEATTR );
+	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการจัดเก็บ :", 17 - CENTER_FACTOR + 4, 5, REVERSEATTR );
 	i = getname( file_name, 47 - CENTER_FACTOR, 5, 22, 2 );
 	if ( ( i != YES ) || ( file_name[0] == '\0' ) ) {
 		return;
 	}
 
-	framebox( 17 - CENTER_FACTOR, 8, 17 - CENTER_FACTOR + 55, 12, 2 );
+	framebox( 17 - CENTER_FACTOR, 8, 17 - CENTER_FACTOR + 55, 12, REVERSEATTR );
 	fnsplit( file_name, drv, dir, name, ext );
 
 	if ( file_exist( file_name ) ) {
-		dispstrhgc( "แฟ้มข้อมูลเดิมมีอยู่แล้ว ต้องการเขียนทับหรือไม่ ? (Y/N)", 23 - CENTER_FACTOR, 10, 2 );
+		dispstrhgc( "แฟ้มข้อมูลเดิมมีอยู่แล้ว ต้องการเขียนทับหรือไม่ ? (Y/N)", 23 - CENTER_FACTOR, 10, REVERSEATTR );
 		do {
 			key = toupper( ebioskey( 0 ) & 0xff );
 		} while ( ( key != 'N' ) && ( key != 'Y' ) );
@@ -731,7 +656,7 @@ unsigned int colbegin, colend;		/* physical column */
 	}
 
 	if ( ( fip = fopen( file_name, "wt" ) ) != NULL ) {
-		dispstrhgc( "กำลังจัดเก็บแฟ้มข้อมูลอยู่ กรุณารอสักครู่...", 22 - CENTER_FACTOR, 11, 2 );
+		dispstrhgc( "กำลังจัดเก็บแฟ้มข้อมูลอยู่ กรุณารอสักครู่...", 22 - CENTER_FACTOR, 11, REVERSEATTR );
 		currentline = linebegin;
 #ifdef WANT_TO_USE_GRAPH
 		if ( currentline->graph != NULL ) {
@@ -802,7 +727,7 @@ unsigned int colbegin, colend;		/* physical column */
 	if ( fileerror == YES ) {
 		errorsound( );
 		blockmsg( 10 );
-		dispstrhgc( "จัดเก็บแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ", 24 - CENTER_FACTOR, 10, 2 );
+		dispstrhgc( "จัดเก็บแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ", 24 - CENTER_FACTOR, 10, REVERSEATTR );
 		while ( ebioskey( 0 ) != ESCKEY );
 	} */
 }

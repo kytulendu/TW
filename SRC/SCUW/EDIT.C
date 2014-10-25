@@ -1,6 +1,8 @@
-/****************************************************************************/
-/*  EDIT.C 15 JAN 89                                                        */
-/****************************************************************************/
+/*
+* ===============================================================================
+* EDIT.C 15 JAN 89
+* ===============================================================================
+*/
 
 #include <stdlib.h>
 #include <conio.h>
@@ -21,10 +23,7 @@
 
 #include "edit.h"
 
-/****************************************************************************/
-/*  From attribute given,find string of ascii control code.                 */
-/****************************************************************************/
-void findstrcode( char fontcode[], font_attr attr ) {
+void findstrcode( char *fontcode, font_attr attr ) {
 	int i = 0;
 	if ( ( attr & ONELINEATTR ) != 0 ) {
 		fontcode[i] = ONELINECODE;
@@ -57,11 +56,8 @@ void findstrcode( char fontcode[], font_attr attr ) {
 	fontcode[i] = '\0';
 }
 
-/****************************************************************************/
-/*  Find line number from line pointer given.                               */
-/****************************************************************************/
-unsigned findlineno( struct line_node *line ) {
-	register unsigned linenumber = 1;
+unsigned int findlineno( struct line_node *line ) {
+	register unsigned int linenumber = 1;
 	struct line_node *templine;
 	templine = sentinel->next;
 	while ( templine != line ) {
@@ -71,9 +67,6 @@ unsigned findlineno( struct line_node *line ) {
 	return( linenumber );
 }
 
-/****************************************************************************/
-/*  Find line pointer from line number given.                               */
-/****************************************************************************/
 struct line_node *linepointer( unsigned linenum ) {
 	struct line_node *line;
 	line = sentinel->next;
@@ -83,12 +76,8 @@ struct line_node *linepointer( unsigned linenum ) {
 	return( line );
 }
 
-/****************************************************************************/
-/*  Display line from link list at row given. First column to be displayed  */
-/*  is in global variable "firstcol".                                       */
-/****************************************************************************/
 void displine( struct line_node *line, unsigned y, unsigned linenum ) {
-	register unsigned x = 0;
+	register unsigned int x = 0;
 	int count = firstcol;
 	font_attr tempfont, curfont = 0;
 	char *st;
@@ -149,38 +138,34 @@ void displine( struct line_node *line, unsigned y, unsigned linenum ) {
 	}
 	clrline( wind.col + x, y, wind.col + wind.length - 1 );
 	if ( line->wrap == NO ) {
-		prchar( '<', 0, wind.col + wind.length - 1, y );
+		prchar( '<', NORMALATTR, wind.col + wind.length - 1, y );
 	}
 	if ( *st != '\0' ) {
-		prchar( '+', 0, wind.col + wind.length - 1, y );
+		prchar( '+', NORMALATTR, wind.col + wind.length - 1, y );
 	}
-	y -= wind.row;
 #ifdef WANT_TO_USE_GRAPH
+	y -= wind.row;
 	if ( graphbuff[y] != NULL ) {
 		paintlinegraph( graphbuff[y], y );
 	}
 #endif
 }
 
-/****************************************************************************/
-/*  Display page break line at row given.                                   */
-/****************************************************************************/
 void disppagebreak( unsigned y ) {
-	register unsigned i = 0, j;
+	register unsigned int i = 0, j;
 	y += wind.row;
 	j = wind.col + wind.length - 1;
 	while ( i != j ) {
-		prchar( '-', 0, wind.col + i, y );
+		prchar( '-', NORMALATTR, wind.col + i, y );
 		i++;
 	}
-	prchar( 'P', 0, i, y );
+	prchar( 'P', NORMALATTR, i, y );
 }
 
-/****************************************************************************/
 #ifdef WANT_TO_USE_GRAPH
 void set_graphic_buffer( ) {
-	unsigned count, i, j, m, n;
-	unsigned linenum = lineno, linenum2;
+	unsigned int count, i, j, m, n;
+	unsigned int linenum = lineno, linenum2;
 	struct line_node *templine;
 	char *gr;
 
@@ -191,13 +176,14 @@ void set_graphic_buffer( ) {
 	}
 	j = 0;
 	while ( j < wind.width ) {
-		if ( graphbuff[j] != NULL )
+		if ( graphbuff[j] != NULL ) {
 			free( graphbuff[j] );
+		}
 		graphbuff[j] = NULL;
 		j++;
 	}
 
-	return;
+	/*return;*/
 
 	templine = curpage;
 	count = 0;
@@ -233,8 +219,9 @@ void set_graphic_buffer( ) {
 			linenum2++;
 			if ( ( pagebreak == YES ) &&
 				( ( ( linenum2 - 1 ) % lineperpage ) == 0 ) ) {
-				if ( i != wind.width )
+				if ( i != wind.width ) {
 					i++;
+				}
 			}
 		}
 	}
@@ -261,8 +248,9 @@ void set_graphic_buffer( ) {
 				j++;
 				if ( ( pagebreak == YES ) &&
 					( ( ( linenum2 - 1 ) % lineperpage ) == 0 ) ) {
-					if ( j != wind.width )
+					if ( j != wind.width ) {
 						j++;
+					}
 				}
 			}
 		}
@@ -278,13 +266,8 @@ void set_graphic_buffer( ) {
 }
 #endif
 
-/****************************************************************************/
-/*  Display all line in page from linked list. Stop display if keyboard is  */
-/*  pressed,then set flag "pagecomplete" to NO,else "pagecomplete" is set   */
-/*  to YES.                                                                 */
-/****************************************************************************/
 void showpage( void ) {
-	register unsigned y = 0, linenum = lineno;
+	register unsigned int y = 0, linenum = lineno;
 	struct line_node *temppage = curpage;
 #ifdef WANT_TO_USE_GRAPH
 	set_graphic_buffer();
@@ -322,7 +305,7 @@ void showpage( void ) {
 				return;
 			}
 			clrline( wind.col, wind.row + y, wind.col + wind.length - 1 );
-			prchar( '.', 0, wind.col + wind.length - 1, wind.row + y );
+			prchar( '.', NORMALATTR, wind.col + wind.length - 1, wind.row + y );
 			y++;
 		}
 	}
@@ -331,9 +314,6 @@ void showpage( void ) {
 	return;
 }
 
-/****************************************************************************/
-/*  Show all lines in page,ignore pressing keyboard.                        */
-/****************************************************************************/
 void showpageall( void ) {
 	if ( filename[0] != '\0' ) {
 		do {
@@ -347,11 +327,8 @@ void showpageall( void ) {
 	}
 }
 
-/****************************************************************************/
-/*  Find value of current row from global variable "curpage" and "curline". */
-/****************************************************************************/
-unsigned findrow( void ) {
-	register unsigned row = 0, linenum = lineno;
+unsigned int findrow( void ) {
+	register unsigned int row = 0, linenum = lineno;
 	struct line_node *temppage = curpage;
 	while ( temppage != curline ) {
 		linenum--;
@@ -370,10 +347,7 @@ unsigned findrow( void ) {
 	return( row );
 }
 
-/****************************************************************************/
-/*  Adjust column to right position.                                        */
-/****************************************************************************/
-void adjustcol( unsigned *x ) {
+void adjustcol( unsigned int *x ) {
 	if ( ( *x + firstcol ) >= strlen( workline.middle ) ) {
 		if ( firstcol > ( strlen( workline.middle ) - 1 ) ) {
 			firstcol = strlen( workline.middle ) - 1;
@@ -397,11 +371,8 @@ void adjustcol( unsigned *x ) {
 	}
 }
 
-/****************************************************************************/
-/*  Load line from linked list to workline.                                 */
-/****************************************************************************/
 void loadtoline( char *address ) {
-	register unsigned index = 1;
+	register unsigned int index = 1;
 	font_attr curfont, oldfont;
 
 	workline.middle[0] = ' ';
@@ -451,14 +422,12 @@ void loadtoline( char *address ) {
 	}
 	workline.middle[index] = '\0';
 }
-/****************************************************************************/
-/*  Store line from workline to linked list                                 */
-/****************************************************************************/
+
 void storeline( struct line_node *curline ) {
-	unsigned count, col;
+	unsigned int count, col;
 	static char oneline[MAXCOL * 5];
 	char oldfont, fontcode[9];
-	char *keep_ptr;             /************ Modified *************/
+	char *keep_ptr;
 	count = 0;
 	col = 1;
 	oldfont = 0;
@@ -502,20 +471,18 @@ void storeline( struct line_node *curline ) {
 
 	keep_ptr = curline->text;
 	curline->text = ( char * ) malloc( count + 1 );
-	if ( curline->text != NULL )             /****** Modified ******/
-	{
-		if ( keep_ptr != NULL )
+	if ( curline->text != NULL ) {
+		if ( keep_ptr != NULL ) {
 			free( keep_ptr );
+		}
 		strcpy( curline->text, oneline );
 	} else {
 		curline->text = keep_ptr;
-		dispstrhgc( "Internal error in storeline", 1, 1, 2 );
+		dispstrhgc( "Internal error in storeline", 1, 1, REVERSEATTR );
 		getch( );
 	}
 }
-/****************************************************************************/
-/*  Display line from workline at row given.Start display from column given.*/
-/****************************************************************************/
+
 void refreshline( unsigned x, unsigned y ) {
 	register int i, len;
 	char attr;
@@ -570,8 +537,8 @@ void refreshline( unsigned x, unsigned y ) {
 	} else {
 		prchar( '+', 0, wind.col + wind.length - 1, y );
 	}
-	y -= wind.row;
 #ifdef WANT_TO_USE_GRAPH
+	y -= wind.row;
 	if ( graphbuff[y] != NULL ) {
 		paintlinegraph( graphbuff[y], y );
 	}

@@ -605,7 +605,7 @@ int main( int argc, char *argv[] ) {
 					}
 					if ( !keypressed( ) ) {
 						writecolno( firstcol + x );
-						dispstrhgc( "   ", wind.col, 2, 0 );
+						dispstrhgc( "   ", wind.col, 2, NORMALATTR );
 						if ( !keypressed( ) ) {
 							writepageline( );
 						}
@@ -624,7 +624,7 @@ int main( int argc, char *argv[] ) {
 
 	if ( changeflag ) {
 		blockmsg( 10 );
-		dispstrhgc( "ยังไม่ได้จัดเก็บแฟ้มข้อมูล ต้องการจัดเก็บหรือไม่ (Y/N)?", 24 - CENTER_FACTOR, 10, 2 );
+		dispstrhgc( "ยังไม่ได้จัดเก็บแฟ้มข้อมูล ต้องการจัดเก็บหรือไม่ (Y/N)?", 24 - CENTER_FACTOR, 10, REVERSEATTR );
 		keymain = 0;
 		while ( ( keymain != 'n' ) && ( keymain != 'N' )
 			&& ( keymain != 'y' ) && ( keymain != 'Y' ) ) {

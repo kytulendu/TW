@@ -1,6 +1,10 @@
-/**
-*   Written: Suttipong Kanakakorn
-*   Mon  07-31-1989  20:31:09
+/*
+* ===============================================================================
+* CWSETUP.C
+*
+* Written: Suttipong Kanakakorn
+* Mon  07-31-1989  20:31:09
+* ===============================================================================
 */
 
 #include <stdlib.h>
@@ -160,7 +164,7 @@ void cwsetup( int argc, char *argv[] ) {
 	for ( i = 5; i < ( rightmar - 6 ); i += 5 ) {
 		tab[i] = YES;
 	}
-	for ( i = 0; i <= 10; i++ ) {
+	for ( i = 0; i < 10; i++ ) {
 		macro[i][0] = '\0';
 	}
 	filename[0] = '\0';
@@ -247,8 +251,8 @@ void saveoption( search_file_mode p_mode ) {
 void dispoption( int i ) {
 	dispstrhgc( option_setup[i].option_name,
 		65 - CENTER_FACTOR - thaistrlen( option_setup[i].option_name ),
-		i + 6, 0 );
-	dispprintf( 65 - CENTER_FACTOR, i + 6, 0, " :%d",
+		i + 6, NORMALATTR );
+	dispprintf( 65 - CENTER_FACTOR, i + 6, NORMALATTR, " :%d",
 		*option_setup[i].p_option_value );
 }
 
@@ -262,7 +266,7 @@ void setoption( void ) {
 	if ( wordwrap == 0 ) { wordwrap = 2; }
 	if ( create_bak == 0 ) { create_bak = 2; }
 	if ( cu_song == 0 ) { cu_song = 2; }
-	framebox( 14 - CENTER_FACTOR, 5, 14 - CENTER_FACTOR + 67, 5 + 1 + NELEM_OPTION, 0 );
+	framebox( 14 - CENTER_FACTOR, 5, 14 - CENTER_FACTOR + 67, 5 + 1 + NELEM_OPTION, NORMALATTR );
 	for ( i = 0; i < NELEM_OPTION; i++ ) {
 		dispoption( i );
 	}
@@ -270,7 +274,7 @@ void setoption( void ) {
 	do {
 		itoa( *option_setup[i].p_option_value, st, 10 );
 		c = getstring( st, 65 + 2 - CENTER_FACTOR, 6 + i, option_setup[i].maxlen,
-			0, option_setup[i].stype );
+			NORMALATTR, option_setup[i].stype );
 		*option_setup[i].p_option_value = atoi( st );
 
 		switch ( c ) {

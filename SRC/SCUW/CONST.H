@@ -15,6 +15,6 @@
 
 #define HUNAKADMITO 0xdb  /* treat as upper level */
 
-#define ISBLANK(X)  ((X)==' ' || (X)==WRAPBLANK)
+#define ISBLANK(X)  ( (X) == ' ' || (X) == WRAPBLANK )
 
 #endif /* SCUW_CONST_H_INCLUDED */

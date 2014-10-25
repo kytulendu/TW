@@ -1,3 +1,9 @@
+/*
+* ===============================================================================
+* STATUS.C
+* ===============================================================================
+*/
+
 #include <stdlib.h>
 
 #include "..\common\cwtype.h"
@@ -26,26 +32,26 @@ void arabictothai( char *st ) {
 
 void writepage( void ) {
 	char page[4];
-	dispstrhgc( "หน้า    ", 4, 2, 0 );
+	dispstrhgc( "หน้า    ", 4, 2, NORMALATTR );
 	itoa( ( ( lineno - 1 ) / lineperpage ) + 1, page, 10 );
 	arabictothai( page );
-	dispstrhgc( page, 8, 2, 0 );
+	dispstrhgc( page, 8, 2, NORMALATTR );
 }
 
 void writeline( void ) {
 	char line[5];
-	dispstrhgc( "บรรทัด    ", 11, 2, 0 );
+	dispstrhgc( "บรรทัด    ", 11, 2, NORMALATTR );
 	itoa( ( ( lineno - 1 ) % lineperpage ) + 1, line, 10 );
 	arabictothai( line );
-	dispstrhgc( line, 17, 2, 0 );
+	dispstrhgc( line, 17, 2, NORMALATTR );
 }
 
 void writelineno( void ) {
 	char st2[6];
-	dispstrhgc( "     บรรทัด       ", 4, 2, 0 );
+	dispstrhgc( "     บรรทัด       ", 4, 2, NORMALATTR );
 	itoa( lineno, st2, 10 );
 	arabictothai( st2 );
-	dispstrhgc( st2, 15, 2, 0 );
+	dispstrhgc( st2, 15, 2, NORMALATTR );
 }
 
 void writepageline( void ) {
@@ -59,18 +65,18 @@ void writepageline( void ) {
 
 void writecolno( unsigned int x ) {
 	char st2[5];
-	dispstrhgc( "คอลัมน์", 21, 2, 00 );
+	dispstrhgc( "คอลัมน์", 21, 2, NORMALATTR );
 	itoa( x + 1, st2, 10 );
-	dispstrhgc( "    ", 27, 2, 00 );
+	dispstrhgc( "    ", 27, 2, NORMALATTR );
 	arabictothai( st2 );
-	dispstrhgc( st2, 27, 2, 0 );
+	dispstrhgc( st2, 27, 2, NORMALATTR );
 }
 
 void writeinsmode( void ) {
 	if ( insertmode ) {
-		dispstrhgc( "พิมพ์แทรก", 33, 2, 00 );
+		dispstrhgc( "พิมพ์แทรก", 33, 2, NORMALATTR );
 	} else {
-		dispstrhgc( " พิมพ์ทับ ", 33, 2, 00 );
+		dispstrhgc( " พิมพ์ทับ ", 33, 2, NORMALATTR );
 	}
 }
 
@@ -83,11 +89,11 @@ void writelanguage( void ) {
 }
 
 void writeattr( void ) {
-	dispstrhgc( "            ", 50 - 1, 2, 0 );
+	dispstrhgc( "            ", 50 - 1, 2, NORMALATTR );
 	if ( fontused == 0 ) {
 		dispstrhgc( " ตัวอักษรปกติ", 50 - 1, 2, fontused );
 	} else if ( ( fontused & 0x08 ) == 0x08 ) {
-	dispstrhgc( "ตัวยกขึ้น", 50 - 1, 2, fontused & 0xf7 );
+		dispstrhgc( "ตัวยกขึ้น", 50 - 1, 2, fontused & 0xf7 );
 	} else if ( ( fontused & 0x10 ) == 0x10 ) {
 		dispstrhgc( "ตัวห้อย", 50 - 1, 2, fontused & 0xef );
 	} else {
@@ -96,15 +102,15 @@ void writeattr( void ) {
 }
 
 void writefilename( void ) {
-	dispstrhgc( "แฟ้มข้อมูล :                     ", 58 - SHRINK_FACTOR, 0, 00 );
+	dispstrhgc( "แฟ้มข้อมูล :                     ", 58 - SHRINK_FACTOR, 0, NORMALATTR );
 	if ( filename[0] != '\0' ) {
 		dispstrhgc( filename, 68 - SHRINK_FACTOR, 0, BOLDATTR );
 	}
 }
 
 void writedriveno( void ) {
-	dispstrhgc( "ไดรฟ์  :", 50 - SHRINK_FACTOR, 0, 0 );
-	prchar( 'A' + getdisk( ), BOLDATTR, 55 - SHRINK_FACTOR, 0 );
+	dispstrhgc( "ไดรฟ์  :", 50 - SHRINK_FACTOR, 0, NORMALATTR );
+	prchar( 'A' + getdisk( ), BOLDATTR, 55 - SHRINK_FACTOR, NORMALATTR );
 }
 void writestatus( unsigned int x ) {
 	writepageline( );

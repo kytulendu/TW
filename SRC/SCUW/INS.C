@@ -1,9 +1,11 @@
-/****************************************************************************/
-/*  INS.C 15 JAN 89                                                         */
-/*  Update: Suttipong Kanakakorn                                            */
-/*            Sat  08-05-1989  03:59:22                                     */
-/*          CUCC Debug 256 right margin                                     */
-/****************************************************************************/
+/*
+* ===============================================================================
+* INS.C 15 JAN 89
+* Update: Suttipong Kanakakorn
+*         Sat  08-05-1989  03:59:22
+*         CUCC Debug 256 right margin
+* ===============================================================================
+*/
 
 #include <stdlib.h>
 #include <string.h>
@@ -34,9 +36,6 @@
 
 #include "ins.h"
 
-/****************************************************************************/
-/*  Insert blank to workline at specified column(origin 1).                 */
-/****************************************************************************/
 void insertblank( register unsigned j, char code ) {
 	register int i;
 	i = strlen( workline.middle );
@@ -67,18 +66,14 @@ void insertblank( register unsigned j, char code ) {
 	}
 	changeflag = YES;
 }
-/****************************************************************************/
-/*  Insert new line after line specified.                                   */
-/****************************************************************************/
+
 void insert_line( struct line_node *currentline, struct line_node *newline ) {
 	newline->previous = currentline;
 	newline->next = currentline->next;
 	( currentline->next )->previous = newline;
 	currentline->next = newline;
 }
-/****************************************************************************/
-/*  Shift right screen by number given.                                     */
-/****************************************************************************/
+
 void shiftscrn( unsigned count, unsigned *x ) {
 	storeline( curline );
 	while ( ( count != 0 ) && ( ( firstcol + wind.length ) <= MAXCOL ) ) {
@@ -88,10 +83,7 @@ void shiftscrn( unsigned count, unsigned *x ) {
 	}
 	pagecomplete = NO;  /* set flag to refresh screen */
 }
-/****************************************************************************/
-/*  Sound beeper then display message "line too long" and wait keyboard     */
-/*  for ESCAPE key.                                                         */
-/****************************************************************************/
+
 void linetoolong( void ) {
 	errorsound( );
 	framebox( 22 - CENTER_FACTOR, 6, 22 - CENTER_FACTOR + 44, 8, REVERSEATTR );
@@ -99,12 +91,10 @@ void linetoolong( void ) {
 	while ( ebioskey( 0 ) != ESCKEY );
 	pagecomplete = NO;
 }
-/****************************************************************************/
-/*  Insert print control character at column given.                         */
-/****************************************************************************/
+
 void inscntrl( char cntrl, unsigned x, unsigned y ) {
-	register unsigned i = MAXCOL;
-	register unsigned j = x + firstcol + 1;
+	register unsigned int i = MAXCOL;
+	register unsigned int j = x + firstcol + 1;
 	while ( i >= j ) {
 		workline.middle[i + 1] = workline.middle[i];  /* shift right */
 		workline.upper[i + 1] = workline.upper[i];    /*  by ignore  */
@@ -122,10 +112,7 @@ void inscntrl( char cntrl, unsigned x, unsigned y ) {
 	loadtoline( curline->text );    /* load back and redisplay line        */
 	refreshline( 0, y );             /* to show new attribute of character  */
 }
-/****************************************************************************/
-/*  Wait keyboard for insert control character then insert it to workline   */
-/*  at current cursor position.                                             */
-/****************************************************************************/
+
 void printcntrl( register unsigned x, register unsigned y ) {
 	register int key;
 
@@ -161,8 +148,8 @@ void printcntrl( register unsigned x, register unsigned y ) {
 }
 
 int insert_char( unsigned char c, unsigned int *x, unsigned int *y ) {
-	register unsigned i;
-	unsigned j;
+	register unsigned int i;
+	unsigned int j;
 	if ( ( *x + firstcol + 1 ) <= MAXCOL ) {   /* if out of line , not insert */
 		if ( wordwrap && ( ( *x + firstcol + 1 ) >= ( rightmar + 5 ) ) ) {
 			if ( relmargin == NO ) {
@@ -305,8 +292,8 @@ int insert_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 }
 
 int ovrwrite_char( unsigned char c, unsigned int *x, unsigned int *y ) {
-	register unsigned i;
-	unsigned j;
+	register unsigned int i;
+	unsigned int j;
 	if ( ( *x + firstcol + 1 ) <= MAXCOL ) {   /* no write at last column */
 		if ( wordwrap && ( ( *x + firstcol + 1 ) >= ( rightmar + 5 ) ) ) {
 			if ( relmargin == NO ) {
@@ -451,10 +438,7 @@ int ovrwrite_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 	}
 }
 
-/****************************************************************************/
-/*  Insert return at line & column given,don't update block position.       */
-/****************************************************************************/
-void insertreturn( struct line_node *line, unsigned thaicol ) {
+void insertreturn( struct line_node *line, unsigned int thaicol ) {
 	font_attr font = 0;
 	char fontcode[9], *text;
 	struct line_node *line2;
@@ -478,10 +462,7 @@ void insertreturn( struct line_node *line, unsigned thaicol ) {
 	insert_line( line, line2 );
 }
 
-/****************************************************************************/
-/*  Insert return at current line & column given,also update block position.*/
-/****************************************************************************/
-void insert_ret( unsigned *x ) {
+void insert_ret( unsigned int *x ) {
 	storeline( curline );
 	insertreturn( curline, *x + firstcol );
 	curline->wrap = NO;
@@ -518,10 +499,7 @@ void insert_ret( unsigned *x ) {
 	changeflag = YES;
 }
 
-/****************************************************************************/
-/*  Return cursor to first column of next line of current line.             */
-/****************************************************************************/
-void returnkey( unsigned *x, register unsigned y ) {
+void returnkey( unsigned int *x, register unsigned int y ) {
 	if ( firstcol != 0 ) {
 		firstcol = 0;
 		pagecomplete = NO;
@@ -551,18 +529,12 @@ void returnkey( unsigned *x, register unsigned y ) {
 	}
 }
 
-/****************************************************************************/
-/*  Insert return then return cursor.                                       */
-/****************************************************************************/
-void ret_with_ins( unsigned *x, unsigned y ) {
+void ret_with_ins( unsigned int *x, unsigned int y ) {
 	insert_ret( x );
 	returnkey( x, y );
 }
 
-/****************************************************************************/
-/*  Insert macro word at current cursor position.                           */
-/****************************************************************************/
-void insertmacro( char *macro, unsigned *x, unsigned *y ) {
+void insertmacro( char *macro, unsigned int *x, unsigned int *y ) {
 	int quit = NO;
 	while ( ( *macro != '\0' ) && ( quit == NO ) ) {
 		if ( !insert_char( *macro, x, y ) ) {
@@ -575,10 +547,7 @@ void insertmacro( char *macro, unsigned *x, unsigned *y ) {
 }
 
 void blankmaro( int y ) {
-	/*
-	dispstrhgc(" – CTRL-F   =                                     – ",19-CENTER_FACTOR,y,2);
-	*/
-	dispprintf( 19 - CENTER_FACTOR, y, 2, " – CTRL-F   =%37s– ", " " );
+	dispprintf( 19 - CENTER_FACTOR, y, REVERSEATTR, " – CTRL-F   =%37s– ", " " );
 }
 
 /* Modify by Suttpong Sat  08-05-1989  03:07:24 */
@@ -589,8 +558,8 @@ void dispmacro( register int i ) {
 	};
 
 	blankmaro( 5 + i );
-	dispstrhgc( numstr[i], 28 - CENTER_FACTOR, 5 + i, 2 );
-	dispstrhgc( &macro[i][0], 33 - CENTER_FACTOR, 5 + i, 2 );
+	dispstrhgc( numstr[i], 28 - CENTER_FACTOR, 5 + i, REVERSEATTR );
+	dispstrhgc( &macro[i][0], 33 - CENTER_FACTOR, 5 + i, REVERSEATTR );
 }
 
 void editmacro( void ) {
@@ -600,25 +569,30 @@ void editmacro( void ) {
 	for ( i = 0; i < 10; i++ ) {
 		dispmacro( i );
 	}
-	dispstrhgc( "กด <ESC> เพื่อเลิกการแก้ไขคำย่อ", ( 19 - CENTER_FACTOR ) + 3, 15, 2 );
+	dispstrhgc( "กด <ESC> เพื่อเลิกการแก้ไขคำย่อ", ( 19 - CENTER_FACTOR ) + 3, 15, REVERSEATTR );
 	i = 0;
 	do {
-		c = getstring( &macro[i][0], 33 - CENTER_FACTOR, 5 + i, 35, 0, THAIENG );
+		c = getstring( &macro[i][0], 33 - CENTER_FACTOR, 5 + i, 35, NORMALATTR, THAIENG );
 		switch ( c ) {
-		case UPKEY: dispmacro( i );
-			if ( i == 0 )
+		case UPKEY:
+			dispmacro( i );
+			if ( i == 0 ) {
 				i = 9;
-			else
+			} else {
 				i--;
+			}
 			break;
 		case YES:
-		case DNKEY: dispmacro( i );
-			if ( i == 9 )
+		case DNKEY:
+			dispmacro( i );
+			if ( i == 9 ) {
 				i = 0;
-			else
+			} else {
 				i++;
+			}
 			break;
-		case ESCKEY: writelanguage( );
+		case ESCKEY:
+			writelanguage( );
 			return;
 		}
 	} while ( 1 );

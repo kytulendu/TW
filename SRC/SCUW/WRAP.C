@@ -1,6 +1,10 @@
-/**
-*   Updated: Suttipong Kanakakorn
-*            Thu  08-03-1989  01:05:26
+/*
+* ===============================================================================
+* STATUS.C
+*
+* Updated: Suttipong Kanakakorn
+*          Thu  08-03-1989  01:05:26
+* ===============================================================================
 */
 
 #include <stdlib.h>
@@ -23,16 +27,12 @@
 
 #include "wrap.h"
 
-/****************************************************************************/
-/*  Insert blank code (bit 8 = 1) to justify text to right margin. Text     */
-/*  must be in workline,not linked list.                                    */
-/****************************************************************************/
 void justify_right( void ) {
 	register int count, i, j, k, already = NO;
 	for ( i = strlen( workline.middle ) - 1;
 		( ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ) ) &&
 		( i > 0 );
-	i-- );
+		i-- );
 	if ( ( i < rightmar ) && ( i > 0 ) ) {
 		for ( j = 1;
 			( workline.middle[j] == ' ' ) || ( workline.middle[j] == WRAPBLANK );
@@ -63,9 +63,6 @@ void justify_right( void ) {
 	}
 }
 
-/****************************************************************************/
-/*  Reform paragraph from line specified to end of paragraph.               */
-/****************************************************************************/
 void reform( void ) {
 	struct line_node *templine, *firstline, *freeline;
 	unsigned char *temp1, *temp2, *temp3, *cuthere;
@@ -286,8 +283,6 @@ void autowrap( unsigned int *x, unsigned int *y ) {
 	pagecomplete = NO;
 }
 
-/* leave the leading blank alone, just compress the rest
-and trim the trailing blank */
 void compress_blank( register unsigned char *s ) {
 	register unsigned char *r;
 

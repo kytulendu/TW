@@ -1,4 +1,7 @@
 char *readgraph( char *filename );
-void paintlinegraph( char *graph, unsigned linewant );
-void paintgraph( char *graph, unsigned linewant );
+void paintlinegraph( char *graph, unsigned int y );
+/*
+void paintgraph( char *graph, unsigned int linewant );
+*/
+void insertgraph( );
 void deletegraph( );

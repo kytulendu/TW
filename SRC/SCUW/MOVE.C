@@ -1,6 +1,10 @@
-/**
-*   Updated: Suttipong Kanakakorn
-*            Fri  08-04-1989  20:53:38
+/*
+* ===============================================================================
+* MOVE.C
+*
+* Updated: Suttipong Kanakakorn
+*          Fri  08-04-1989  20:53:38
+* ===============================================================================
 */
 
 #include <ctype.h>
@@ -27,9 +31,6 @@
 
 #include "move.h"
 
-/****************************************************************************/
-/*  Go to line specified.                                                   */
-/****************************************************************************/
 void goline( unsigned int linetogo ) {
 	storeline( curline );
 	curline = sentinel->next;
@@ -43,9 +44,6 @@ void goline( unsigned int linetogo ) {
 	pagecomplete = NO;
 }
 
-/****************************************************************************/
-/*  Go to column specified.(Column origin 0)                                */
-/****************************************************************************/
 void gocol( unsigned int coltogo, unsigned int *x ) {
 	if ( coltogo > MAXCOL ) {
 		workline.middle[MAXCOL + 1] = '\0';
@@ -67,9 +65,6 @@ void gocol( unsigned int coltogo, unsigned int *x ) {
 	adjustcol( x ); /* adjust if cursor is positioned to end of enlarge char */
 }
 
-/****************************************************************************/
-/*  Go to first column of line.                                             */
-/****************************************************************************/
 void home( unsigned int *x ) {
 	*x = 0;
 	if ( firstcol != 0 ) {
@@ -78,16 +73,10 @@ void home( unsigned int *x ) {
 	}
 }
 
-/****************************************************************************/
-/*  Go to end of line.                                                      */
-/****************************************************************************/
 void endline( unsigned int *x ) {
 	gocol( strlen( workline.middle ) - 1, x );
 }
 
-/****************************************************************************/
-/*  Go to top of file.                                                      */
-/****************************************************************************/
 void topfile( unsigned int *x ) {
 	storeline( curline );
 	if ( curpage != sentinel->next ) {
@@ -101,9 +90,6 @@ void topfile( unsigned int *x ) {
 	loadtoline( curline->text );
 }
 
-/****************************************************************************/
-/*  Go to end of file.                                                      */
-/****************************************************************************/
 void endfile( unsigned int *x ) {
 	int count, linenum;
 	storeline( curline );
@@ -190,9 +176,9 @@ void gotopage( void ) {
 	char st[4];
 	int linetogo;
 	st[0] = '\0';
-	framebox( 30 - CENTER_FACTOR, 4, 30 - CENTER_FACTOR + 29, 6, 2 );
-	dispstrhgc( "ต้องการไปที่หน้าที่เท่าไร ? ", 30 - CENTER_FACTOR + 3, 5, 2 );
-	if ( getstring( st, 54 - CENTER_FACTOR, 5, 3, 2, NUMBER ) ) {
+	framebox( 30 - CENTER_FACTOR, 4, 30 - CENTER_FACTOR + 29, 6, REVERSEATTR );
+	dispstrhgc( "ต้องการไปที่หน้าที่เท่าไร ? ", 30 - CENTER_FACTOR + 3, 5, REVERSEATTR );
+	if ( getstring( st, 54 - CENTER_FACTOR, 5, 3, REVERSEATTR, NUMBER ) ) {
 		linetogo = ( atoi( st ) * lineperpage ) - lineperpage + 1;
 		if ( linetogo >= 1 ) {
 			goline( linetogo );
@@ -205,9 +191,9 @@ void gotoline( void ) {
 	char st[5];
 	register int linetogo;
 	st[0] = '\0';
-	framebox( 22 - CENTER_FACTOR, 4, 22 - CENTER_FACTOR + 49, 6, 2 );
-	dispstrhgc( " – ต้องการไปที่บรรทัดที่เท่าไร ? (นับจากต้นแฟ้มข้อมูล)", 22 - CENTER_FACTOR, 5, 2 );
-	if ( getstring( st, 65 - CENTER_FACTOR, 5, 4, 2, NUMBER ) ) {
+	framebox( 22 - CENTER_FACTOR, 4, 22 - CENTER_FACTOR + 49, 6, REVERSEATTR );
+	dispstrhgc( " – ต้องการไปที่บรรทัดที่เท่าไร ? (นับจากต้นแฟ้มข้อมูล)", 22 - CENTER_FACTOR, 5, REVERSEATTR );
+	if ( getstring( st, 65 - CENTER_FACTOR, 5, 4, REVERSEATTR, NUMBER ) ) {
 		linetogo = atoi( st );
 		if ( linetogo >= 1 ) {
 			goline( linetogo );

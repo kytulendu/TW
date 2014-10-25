@@ -1,8 +1,11 @@
-/**
-*   add function file_exist by Suttipong Kanakakorn
-*   Thu  08-03-1989  00:16:25
-*   use framebox instead of dispstrhgc
-*   Sat  08-05-1989  02:59:38
+/*
+* ===============================================================================
+* FILE.C
+*
+* add function file_exist by Suttipong Kanakakorn
+*  Thu  08-03-1989  00:16:25
+* use framebox instead of dispstrhgc
+*  Sat  08-05-1989  02:59:38
 */
 
 #include <stdlib.h>
@@ -13,6 +16,7 @@
 #include "..\common\cwgrphc.h"
 #include "..\common\cscrn.h"
 #include "..\common\ekbd.h"
+#include "..\common\sound.h"
 
 #include "convert.h"
 #include "var.h"
@@ -21,16 +25,13 @@
 #include "file.h"
 
 int handler( int errval, int ax, int bp, int si ) {
-	/* char drive; */
 	char *scrn;
 
-	/* errorsound(); */
+	errorsound( );
 	if ( ax >= 0 ) {
-		/* drive = 'A' + (ax & 0x00FF); */
 		scrn = savescrn( 18 - CENTER_FACTOR, 9, 71 - CENTER_FACTOR, 11 );
 		blockmsg( 10 );
 		dispprintf( 25 - CENTER_FACTOR, 10, 2, "Disk error on drive %c ! กดปุ่มใดๆเพื่อทำงานต่อ", 'A' + ( ax & 0x00FF ) );
-		/* prchar( drive, REVERSEATTR, 45 - CENTER_FACTOR, 10 ); */
 		ebioskey( 0 );
 		resscrn( scrn, 18 - CENTER_FACTOR, 9, 71 - CENTER_FACTOR, 11 );
 	}

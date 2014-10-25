@@ -1,8 +1,12 @@
-/**
-*   Update: Suttipong Kanakakorn
-*           Fri  08-04-1989  20:13:52
-*           Add top_of_page() and bottom_of_page()
-*   CUCC: Debug 255 Right Margin to work correctly
+/*
+* ===============================================================================
+* MOVEMENT.C
+*
+* Update: Suttipong Kanakakorn
+*         Fri  08-04-1989  20:13:52
+*         Add top_of_page() and bottom_of_page()
+* CUCC: Debug 255 Right Margin to work correctly
+* ===============================================================================
 */
 
 #include <string.h>
@@ -16,9 +20,6 @@
 
 #include "movement.h"
 
-/****************************************************************************/
-/*  Up line one line.                                                       */
-/****************************************************************************/
 void cursor_up( void ) {
 	if ( curline->previous != sentinel ) {  /* top of file ? */
 		storeline( curline );
@@ -33,10 +34,8 @@ void cursor_up( void ) {
 		loadtoline( curline->text );
 	}
 }
-/****************************************************************************/
-/*  Down line one line.                                                     */
-/****************************************************************************/
-void cursor_down( unsigned y ) {
+
+void cursor_down( unsigned int y ) {
 	if ( curline->next != sentinel ) {  /* end of file ? */
 		storeline( curline );
 		lineno++;                       /* increment lineno */
@@ -58,11 +57,9 @@ void cursor_down( unsigned y ) {
 		loadtoline( curline->text );
 	}
 }
-/****************************************************************************/
-/*  Left cursor.                                                            */
-/****************************************************************************/
-void cursor_left( unsigned *x ) {
-	unsigned i = *x + firstcol;
+
+void cursor_left( unsigned int *x ) {
+	unsigned int i = *x + firstcol;
 	if ( i != 0 ) {    /* Home of line ? */
 		gocol( i - 1, x );
 	} else {
@@ -72,10 +69,8 @@ void cursor_left( unsigned *x ) {
 		}
 	}
 }
-/****************************************************************************/
-/*  Right cursor.                                                           */
-/****************************************************************************/
-void cursor_right( unsigned *x, unsigned y ) {
+
+void cursor_right( unsigned int *x, unsigned int y ) {
 	if ( ( *x + firstcol + 1 ) == strlen( workline.middle ) ) {
 		if ( curline->next != sentinel ) {
 			cursor_down( y );
@@ -83,8 +78,9 @@ void cursor_right( unsigned *x, unsigned y ) {
 		}
 	} else {
 		if ( ( *x + firstcol + 1 ) < MAXCOL ) {    /* 5 to TUDCUM in 255 RMAR */
-			if ( *x >= ( wind.length - 2 ) )
+			if ( *x >= ( wind.length - 2 ) ) {
 				shiftscrn( 20, x );
+			}
 			if ( ( workline.attr[*x + firstcol + 1] & ENLARGEATTR ) == ENLARGEATTR ) {
 				( *x )++;
 			}
@@ -94,9 +90,7 @@ void cursor_right( unsigned *x, unsigned y ) {
 		}
 	}
 }
-/****************************************************************************/
-/*  Up page.                                                                */
-/****************************************************************************/
+
 void page_up( void ) {
 	int count;
 	storeline( curline );
@@ -115,9 +109,7 @@ void page_up( void ) {
 	}
 	loadtoline( curline->text );
 }
-/****************************************************************************/
-/*  Down page.                                                              */
-/****************************************************************************/
+
 void page_down( void ) {
 	int count;
 	if ( curpage->next != sentinel ) { /* bottom of file ? */
@@ -135,12 +127,7 @@ void page_down( void ) {
 		loadtoline( curline->text );
 	}
 }
-/****************************************************************************/
-/*  Scroll page up.                                                         */
-/*  WARNING : Curline is not updated in this routine,it must be updated     */
-/*            by calling function (main) after call if current cursor       */
-/*            position is at bottom of screen.                              */
-/****************************************************************************/
+
 void scroll_up( void ) {
 	if ( curpage->previous != sentinel ) {   /* top of file ? */
 		storeline( curline );
@@ -150,9 +137,6 @@ void scroll_up( void ) {
 	}
 }
 
-/****************************************************************************/
-/*  Scroll page down.                                                       */
-/****************************************************************************/
 void scroll_down( void ) {
 	if ( curpage->next != sentinel ) {  /* end of file ? */
 		storeline( curline );
@@ -168,9 +152,6 @@ void scroll_down( void ) {
 	}
 }
 
-/**************************************************************************/
-/*   Goto top of page (CTRL-QE in wordstar)                               */
-/**************************************************************************/
 void top_of_page( void ) {
 	storeline( curline );
 	while ( curline != curpage ) {
@@ -180,9 +161,6 @@ void top_of_page( void ) {
 	loadtoline( curline->text );
 }
 
-/**************************************************************************/
-/*   Goto bottom of page (CTRL-QX in wordstar)                            */
-/**************************************************************************/
 void bottom_of_page( void ) {
 	int count;
 

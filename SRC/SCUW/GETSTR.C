@@ -1,8 +1,11 @@
-/****************************************************************************/
-/*  GETSTR.C 15 JAN 89                                                      */
-/*  Updated: Suttipong Kanakakorn                                           */
-/*          Wed  08-02-1989  09:52:44                                       */
-/****************************************************************************/
+/*
+* ===============================================================================
+* GETSTR.C 15 JAN 89
+*
+* Updated : Suttipong Kanakakorn
+*           Wed  08-02-1989  09:52:44
+* ===============================================================================
+*/
 
 #include <string.h>
 
@@ -23,17 +26,7 @@
 
 #include "getstr.h"
 
-/*****************************************************************************/
-/* get string                                                                */
-/* input                                                                     */
-/*      textst : string want to get                                          */
-/*      x      : vertical position ( 0 - 89 )                                */
-/*      y      : horisontal position ( 0 - 16 )                              */
-/*      maxlen : maximum length of string                                    */
-/*      attr   : attribute of string for displaying                          */
-/*      mode   : THAIENG,ENGLISH,ENGUPCASE,NUMBER,ONEORTWO                   */
-/*****************************************************************************/
-int getstring( char textst[], unsigned int x, unsigned int y,
+int getstring( char *textst, unsigned int x, unsigned int y,
 	unsigned int maxlen, char attr, strtype mode ) {
 	int inkey, key, oldlen, temp;
 	char keepchar;
@@ -44,11 +37,13 @@ int getstring( char textst[], unsigned int x, unsigned int y,
 	dispstrhgc( textst, x, y, attr );
 	waitkbd( x + thaistrlen( textst ), y );
 	switch ( mode ) {
-	case THAIENG: inkey = readkbd( );
+	case THAIENG:
+		inkey = readkbd( );
 		break;
 	case NUMBER:
 	case ONEORTWO:
-	case ENGLISH: inkey = ebioskey( 0 );
+	case ENGLISH:
+		inkey = ebioskey( 0 );
 		break;
 	case ENGUPCASE:
 		inkey = ebioskey( 0 );
@@ -81,19 +76,25 @@ int getstring( char textst[], unsigned int x, unsigned int y,
 	do {
 		switch ( inkey ) {
 		case CNTRL_M:
-		case RETKEY: return( YES );
-		case CNTRL_U: return( NO );              /* Abort */
-		case ESCKEY: return( ESCKEY );
-		case UPKEY: return( UPKEY );
-		case DNKEY: return( DNKEY );
+		case RETKEY:
+			return( YES );
+		case CNTRL_U:
+			return( NO );              /* Abort */
+		case ESCKEY:
+			return( ESCKEY );
+		case UPKEY:
+			return( UPKEY );
+		case DNKEY:
+			return( DNKEY );
 		case CNTRL_H:
 		case BSKEY:
 		case LEKEY:
 		case CNTRL_S:
 			temp = strlen( textst );
 			if ( temp != 0 ) {
-				if ( temp < oldlen )
+				if ( temp < oldlen ) {
 					textst[temp] = keepchar;
+				}
 				keepchar = textst[temp - 1];
 				textst[temp - 1] = '\0';
 				dispblank( x, y, maxlen, attr );
@@ -112,8 +113,9 @@ int getstring( char textst[], unsigned int x, unsigned int y,
 			}
 			break;
 		case CNTRL_Y:
-			if ( strlen( textst ) < oldlen )
+			if ( strlen( textst ) < oldlen ) {
 				textst[strlen( textst )] = keepchar;
+			}
 			keepchar = textst[0];
 			textst[0] = '\0';
 			dispblank( x, y, maxlen, attr );
@@ -132,10 +134,14 @@ int getstring( char textst[], unsigned int x, unsigned int y,
 		default:
 			inkey = ( inkey & 0xff );
 			if ( mode == NUMBER ) {
-				if ( ( inkey < '0' ) || ( inkey > '9' ) ) break;
+				if ( ( inkey < '0' ) || ( inkey > '9' ) ) {
+					break; 
+				}
 			}
 			if ( mode == ONEORTWO ) {
-				if ( ( inkey != '1' ) && ( inkey != '2' ) ) break;
+				if ( ( inkey != '1' ) && ( inkey != '2' ) ) {
+					break; 
+				}
 			}
 			if ( inkey >= 32 && strlen( textst ) < maxlen ) {
 				if ( whatlevel( inkey ) == MIDDLE ) {
@@ -173,14 +179,15 @@ int getstring( char textst[], unsigned int x, unsigned int y,
 		case ENGUPCASE:
 			inkey = ebioskey( 0 );
 			key = inkey & 0xff;
-			if ( ( key >= 'a' ) && ( key <= 'z' ) )
+			if ( ( key >= 'a' ) && ( key <= 'z' ) ) {
 				inkey = key - ( 'a' - 'A' );
+			}
 			break;
 		}
 	} while ( 1 );
 }
 
-int getname( char textst[], unsigned int x, unsigned int y, unsigned int maxlen, char attr ) {
+int getname( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, char attr ) {
 	int i;
 
 	char drv[MAXDRIVE + 1], dir[MAXDIR + 1], name[MAXFILE + 1], ext[MAXEXT + 1];

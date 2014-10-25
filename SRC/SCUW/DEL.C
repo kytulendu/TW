@@ -1,6 +1,8 @@
-/****************************************************************************/
-/*  DEL.C 15 JAN 89                                                         */
-/****************************************************************************/
+/*
+* ===============================================================================
+* DEL.C 15 JAN 89
+* ===============================================================================
+*/
 
 #include <stdlib.h>
 #include <string.h>
@@ -17,9 +19,6 @@
 
 #include "del.h"
 
-/****************************************************************************/
-/*  Delete character of current line at column given.                       */
-/****************************************************************************/
 void delete_char( unsigned int x ) {
 	register unsigned int i = x + firstcol + 1;
 	unsigned int j = strlen( workline.middle );
@@ -71,9 +70,6 @@ void delete_char( unsigned int x ) {
 	changeflag = YES;
 }
 
-/****************************************************************************/
-/*  Concatenate line given with next line.(Or delete return of line given.) */
-/****************************************************************************/
 void deletereturn( struct line_node *line ) {
 	char *temp;
 	struct line_node *linedeleted;
@@ -151,12 +147,16 @@ void backspace( unsigned int *x ) {
 				}
 			}
 			if ( haveblock( ) ) {
-				if ( lineno == blkbegin.lineno )
-					if ( ( *x + firstcol ) <= blkbegin.column )
+				if ( lineno == blkbegin.lineno ) {
+					if ( ( *x + firstcol ) <= blkbegin.column ) {
 						blkbegin.column--;
-				if ( lineno == blkend.lineno )
-					if ( ( *x + firstcol ) <= blkend.column )
+					}
+				}
+				if ( lineno == blkend.lineno ) {
+					if ( ( *x + firstcol ) <= blkend.column ) {
 						blkend.column--;
+					}
+				}
 			}
 			i = *x + firstcol - 1;
 		}
