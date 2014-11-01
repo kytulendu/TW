@@ -410,6 +410,18 @@
     <ClInclude Include="SRC\COMMON\CCOMMON.H">
       <Filter>Source Code\Header Files\COMMON</Filter>
     </ClInclude>
+    <ClInclude Include="SRC\SCUF\CUFSETUP.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\GETSTR.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\INT.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUF\KBD.H">
+      <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRC\COMMON\CSCRN.C">

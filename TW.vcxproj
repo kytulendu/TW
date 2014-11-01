@@ -117,10 +117,14 @@
     <ClInclude Include="SRC\COMMON\SOUND.H" />
     <ClInclude Include="SRC\SCUF\CONST.H" />
     <ClInclude Include="SRC\SCUF\CONVERT.H" />
+    <ClInclude Include="SRC\SCUF\CUFSETUP.H" />
     <ClInclude Include="SRC\SCUF\FED.H" />
     <ClInclude Include="SRC\SCUF\FILE.H" />
     <ClInclude Include="SRC\SCUF\FONTMSG.H" />
     <ClInclude Include="SRC\SCUF\GETCH.H" />
+    <ClInclude Include="SRC\SCUF\GETSTR.H" />
+    <ClInclude Include="SRC\SCUF\INT.H" />
+    <ClInclude Include="SRC\SCUF\KBD.H" />
     <ClInclude Include="SRC\SCUF\KEY.H" />
     <ClInclude Include="SRC\SCUF\POPUP.H" />
     <ClInclude Include="SRC\SCUF\TUTIL1.H" />
