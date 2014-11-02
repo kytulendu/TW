@@ -16,8 +16,7 @@
 boolean file_exist( char *filename ) {
 	int fd;
 
-	fd = open( filename, O_RDONLY || O_BINARY );
-	if ( fd == -1 ) {
+	if ( ( fd = open( filename, O_RDONLY || O_BINARY ) ) == -1 ) {
 		return NO;
 	} else {
 		close( fd );
@@ -49,14 +48,8 @@ int havewild( char *filname ) {
 	return( NO );
 }
 
-/**
-*   read screen font from current dir first, if not found try reading from search_path
-*
-*   Tue  08-01-1989  13:52:17
-*/
 void readscrfont( void *font_buffer, char *fontname, char *search_path ) {
 	register int handle;
-	/* long filelen; */
 	char fn[MAXPATH];
 
 	if ( ( handle = open( fontname, O_RDONLY || O_BINARY ) ) == -1 ) {
@@ -64,7 +57,6 @@ void readscrfont( void *font_buffer, char *fontname, char *search_path ) {
 		handle = open( fn, O_RDONLY || O_BINARY );
 	}
 	if ( handle != -1 ) {
-		/* filelen = filelength(handle); */
 		read( handle, font_buffer, 20 * 256 );
 		close( handle );
 	} else {
