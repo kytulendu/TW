@@ -254,9 +254,6 @@
     <ClInclude Include="SRC\COMMON\CSCRN.H">
       <Filter>Source Code\Header Files\COMMON</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\COMMON\SOUND.H">
-      <Filter>Source Code\Header Files\COMMON</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\COMMON\CUSONG.H">
       <Filter>Source Code\Header Files\COMMON</Filter>
     </ClInclude>
@@ -421,6 +418,9 @@
     </ClInclude>
     <ClInclude Include="SRC\SCUF\KBD.H">
       <Filter>Source Code\Header Files\SCUF</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\SOUND.H">
+      <Filter>Source Code\Header Files\COMMON</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
