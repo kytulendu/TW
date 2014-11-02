@@ -67,16 +67,16 @@ void set_option_to_default( void );
 void usage( void ) {
 	fputs( "Usage: TW.EXE [option] [file]\n", stderr );
 	fputs( "Options:\n", stderr );
-	fputs( " -h,  /h  Hercules Graphic Card.\n", stderr );
-	fputs( " -hl, /hl Hercules Graphic Card, left justify.\n", stderr );
-	fputs( " -v,  /v  VGA.\n", stderr );
-	fputs( " -e,  /e  EGA with EGA display.\n", stderr );
-	fputs( " -em, /em EGA with Monochrome display.\n", stderr );
-	fputs( " -m,  /m  MCGA.\n", stderr );
-	fputs( " -a,  /a  AT&T400.\n", stderr );
-	fputs( " -n,  /n  No backup file created.\n", stderr );
-	fputs( " -w,  /w  No word wrap.\n", stderr );
-	fputs( " -p,  /p  No page break.\n", stderr );
+	fputs( "\t-h,  /h  Hercules Graphic Card.\n", stderr );
+	fputs( "\t-hl, /hl Hercules Graphic Card, left justify.\n", stderr );
+	fputs( "\t-v,  /v  VGA.\n", stderr );
+	fputs( "\t-e,  /e  EGA with EGA display.\n", stderr );
+	fputs( "\t-em, /em EGA with Monochrome display.\n", stderr );
+	fputs( "\t-m,  /m  MCGA.\n", stderr );
+	fputs( "\t-a,  /a  AT&T400.\n", stderr );
+	fputs( "\t-n,  /n  No backup file created.\n", stderr );
+	fputs( "\t-w,  /w  No word wrap.\n", stderr );
+	fputs( "\t-p,  /p  No page break.\n", stderr );
 	exit( 1 );
 }
 
