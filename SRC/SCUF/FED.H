@@ -36,10 +36,6 @@ extern char cuprintpath[];
 #define SIGN "FONT EDITOR Version 1.0"
 #define	SIGN_LENGTH strlen(SIGN)
 
-/**
-*   function prototype, add by Suttipong Kanakakorn
-*   Sat  08-26-1989  01:47:11
-*/
 void setup_screen( void );
 void init_graph_and_cursor( void );
 void fed( void );
@@ -82,6 +78,10 @@ int select_font( int *page, char *status );
 void help( void );
 void help_select( void );
 void edit( int ch );
+
+/** draw grid
+*   malloc all_font
+*   set BYTE = sizeof X in bytes*/
 void setup_memo( void );
 void free_all( void );
 void terminate( void );

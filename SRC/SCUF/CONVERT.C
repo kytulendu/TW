@@ -1,6 +1,10 @@
-/**
-*   Updated: Suttipong Kanakakorn Sun  08-27-1989  23:07:23
-*   automatic file all font files
+/*
+* ===============================================================================
+* CONVERT.C
+*
+* Updated: Suttipong Kanakakorn Sun  08-27-1989  23:07:23
+*          automatic file all font files
+* ===============================================================================
 */
 
 #include <stdlib.h>
@@ -29,6 +33,7 @@
 extern char cuwordpath[], cufontpath[], cuprintpath[];
 */
 extern int loaded, load_first;
+
 search_file_mode font_found;
 
 int( *load_func[] )( ) = {
@@ -60,8 +65,8 @@ int load_font( ) {
 	strcpy( oldfname, fname );
 
 	if ( !first_file ) {
-		if ( ( oldfont = ( char* ) malloc( 256 * BYTE*Y ) ) == NULL ) {
-			error_message( "Not enough memory11" );
+		if ( ( oldfont = ( char* ) malloc( 256 * BYTE * Y ) ) == NULL ) {
+			error_message( "Error: Not enough memory." );
 			X = oldx; Y = oldy; BYTE = oldbyte;
 			strcpy( fname, oldfname );
 			return 0;
@@ -126,13 +131,47 @@ int save_font( ) {
 	return ( ( *save_func[loaded - 1] )( ) );
 }
 
-/*** 
-*    save font from all_font
-*/
+int cleanup_load_routine( );
+
+int cleanup_load_routine( ) {
+	pos_x = pos_y = 0;
+	clearworkarea( );
+	make_char_block_image( );
+}
+
+int load_fed( ) {
+	char dum[81];
+	int fd;
+	if ( ( fd = _open( fname, O_RDONLY | O_BINARY ) ) == -1 ) {
+		error_message( "Error: Reading font file." );
+		return 0;
+	};
+	if ( _read( fd, dum, SIGN_LENGTH ) == -1 || strncmp( dum, SIGN, SIGN_LENGTH ) ) {
+		error_message( "Error: Invalid font file." );
+		return 0;
+	};
+	if ( _read( fd, &X, 1 ), _read( fd, &X, 1 ) == -1 ) {
+		error_read( );
+		return 0;
+	};
+	if ( _read( fd, &Y, 1 ) == -1 ) {
+		error_read( );
+		return 0;
+	};
+	setup_memo( );
+	if ( _read( fd, all_font, 256 * BYTE * Y ) == -1 ) {
+		error_read( );
+		return 0;
+	}
+	close( fd );
+	cleanup_load_routine( );
+	return ~0;
+}
+
 int save_fed( ) {
 	int fd;
 	if ( ( fd = _creat( fname, FA_ARCH ) ) == -1 ) {
-		error_message( "ERROR : CREATING FONT FILE" );
+		error_message( "Error: Creating font file." );
 		return 0;
 	};
 	if ( _write( fd, SIGN, SIGN_LENGTH ) == -1 ) {
@@ -159,61 +198,17 @@ int save_fed( ) {
 	return ~0;
 }
 
-int cleanup_load_routine( ) {
-	pos_x = pos_y = 0;
-	clearworkarea( );
-	make_char_block_image( );
-}
-
-/** malloc all_font
-*   load font into all_font
-*   set X, Y
-*   set pos_x,pos_y to zero
-*   draw grid
-*   malloc matrix_image
-*   set BYTE = sizeof X in bytes
-*/
-int load_fed( ) {
-	char dum[81];
-	int fd;
-	if ( ( fd = _open( fname, O_RDONLY | O_BINARY ) ) == -1 ) {
-		error_message( "ERROR : OPENING FONT FILE" );
-		return 0;
-	};
-	if ( _read( fd, dum, SIGN_LENGTH ) == -1 || strncmp( dum, SIGN, SIGN_LENGTH ) ) {
-		error_message( "ERROR : INVALID FONT FILE" );
-		return 0;
-	};
-	if ( _read( fd, &X, 1 ), _read( fd, &X, 1 ) == -1 ) {
-		error_read( );
-		return 0;
-	};
-	if ( _read( fd, &Y, 1 ) == -1 ) {
-		error_read( );
-		return 0;
-	};
-	setup_memo( );
-	if ( _read( fd, all_font, 256 * BYTE*Y ) == -1 ) {
-		error_read( );
-		return 0;
-	}
-	close( fd );
-	cleanup_load_routine( );
-	return ~0;
-}
-
-
 int load_24( ) {
 	char *oldfon;
 
 	int fd, filelen;
 
 	if ( ( fd = _open( fname, O_RDONLY ) ) == -1 ) {
-		error_message( "Open reading error" );
+		error_message( "Error: Reading font file." );
 		return 0;
 	}
 	if ( ( filelen = filelength( fd ) ) != 3 * 18 * ( 256 - 32 ) ) {
-		error_message( "Incorrect font file!" );
+		error_message( "Error: Invalid font file." );
 		return 0;
 	}
 
@@ -222,7 +217,7 @@ int load_24( ) {
 	setup_memo( );	/* call for allocate spaces for all_font */
 
 	if ( ( oldfon = ( char* ) malloc( filelen ) ) == NULL ) {
-		error_message( "Memory not enough" );
+		error_message( "Error: Not enough memory." );
 		return 0;
 	}
 
@@ -238,14 +233,14 @@ int load_24( ) {
 }
 
 int con_24_to_fed( char *oldfon, char *newfon ) {
-	static  int ch, i, bit;
+	static int ch, i, bit;
 	char *newch = newfon + 31 * 3 * 24;
 	static char *new;
 	register char *old = oldfon;
 
-	for ( ch = 32 - 32; ch<256 - 32; ch++ ) {
+	for ( ch = 32 - 32; ch < 256 - 32; ch++ ) {
 		newch += 3 * 24;
-		for ( i = 0; i<18; i++ ) {
+		for ( i = 0; i < 18; i++ ) {
 			new = newch + i / 8;
 			bit = 7 - i % 8;
 			if ( test_bit( *old, 7 ) ) { set_bit( new, bit ); }
@@ -256,6 +251,7 @@ int con_24_to_fed( char *oldfon, char *newfon ) {
 			if ( test_bit( *old, 2 ) ) { set_bit( new + 15, bit ); }
 			if ( test_bit( *old, 1 ) ) { set_bit( new + 18, bit ); }
 			if ( test_bit( *old, 0 ) ) { set_bit( new + 21, bit ); }
+
 			if ( test_bit( *( ++old ), 7 ) ) { set_bit( new + 24, bit ); }
 			if ( test_bit( *( old ), 6 ) ) { set_bit( new + 27, bit ); }
 			if ( test_bit( *( old ), 5 ) ) { set_bit( new + 30, bit ); }
@@ -264,6 +260,7 @@ int con_24_to_fed( char *oldfon, char *newfon ) {
 			if ( test_bit( *( old ), 2 ) ) { set_bit( new + 39, bit ); }
 			if ( test_bit( *( old ), 1 ) ) { set_bit( new + 42, bit ); }
 			if ( test_bit( *( old ), 0 ) ) { set_bit( new + 45, bit ); }
+
 			if ( test_bit( *( ++old ), 7 ) ) { set_bit( new + 48, bit ); }
 			if ( test_bit( *( old ), 6 ) ) { set_bit( new + 51, bit ); }
 			if ( test_bit( *( old ), 5 ) ) { set_bit( new + 54, bit ); }
@@ -283,14 +280,14 @@ int save_24( ) {
 	int fd;
 
 	if ( ( newfon = ( char* ) malloc( 18 * 3 * ( 256 - 32 ) ) ) == NULL ) {
-		error_message( "Memory not enough" );
+		error_message( "Error: Not enough memory." );
 		return 0;
 	}
 	memset( newfon, 0, 18 * 3 * ( 256 - 32 ) );
 
 	con_fed_to_24( all_font, newfon );
 	if ( ( fd = _creat( fname, FA_ARCH ) ) == -1 ) {
-		error_message( "Error creating" );
+		error_message( "Error: Creating font file." );
 		return 0;
 	}
 	if ( _write( fd, newfon, 18 * 3 * ( 256 - 32 ) ) == -1 ) {
@@ -306,10 +303,10 @@ int con_fed_to_24( char *buff, char *new ) {
 	int ch, i, bit;
 	char *old, *oldch = buff + 31 * 3 * 24;
 
-	for ( ch = 32 - 32; ch<256 - 32; ch++ ) {
+	for ( ch = 32 - 32; ch < 256 - 32; ch++ ) {
 		oldch += 3 * 24;
 
-		for ( i = 0; i<18; i++ ) {
+		for ( i = 0; i < 18; i++ ) {
 			old = oldch + i / 8;
 			bit = 7 - i % 8;
 			if ( test_bit( *old, bit ) ) { set_bit( new, 7 ); }
@@ -348,18 +345,18 @@ int save_prn( ) {
 	char *prn_fon;
 
 	if ( ( prn_fon = calloc( 44, 256 ) ) == NULL ) {
-		error_message( "Error : not enough memory" );
+		error_message( "Error: Not enough memory." );
 		return 0;
 	}
 
 	conv_fed_to_22x16( all_font, prn_fon );
 
 	if ( ( fd = _creat( fname, FA_ARCH ) ) == -1 ) {
-		error_message( "Error : writing font file" );
+		error_message( "Error: Creating font file." );
 		return 0;
 	}
 	if ( _write( fd, prn_fon, 44 * 256 ) == -1 ) {
-		error_message( "Error : not enough disk space or disk error" );
+		error_message( "Error: Not enough disk space or disk error." );
 		return 0;
 	}
 	_close( fd );
@@ -399,12 +396,12 @@ int load_prn( ) {
 	char *prn_fon;
 
 	if ( ( prn_fon = malloc( ( unsigned ) ( 44 * 256 ) ) ) == NULL ) {
-		error_message( "Error : not enough memory" );
+		error_message( "Error: Not enough memory." );
 		return 0;
 	}
 	memset( prn_fon, 0, 44 * 256 );
 	if ( ( fd = _open( fname, O_RDONLY ) ) == -1 ) {
-		error_message( "Error : opening font file" );
+		error_message( "Error: Reading font file." );
 		return 0;
 	}
 	if ( _read( fd, prn_fon, 44 * 256 ) == -1 ) {
@@ -458,7 +455,7 @@ int load_scr( ) {
 	setup_memo( );
 
 	if ( ( fd = _open( fname, O_RDONLY ) ) == -1 ) {
-		error_message( "Error : opening font file" );
+		error_message( "Error: Reading font file." );
 		return 0;
 	}
 	if ( _read( fd, all_font, 20 * 256 ) == -1 ) {
@@ -474,11 +471,11 @@ int save_scr( ) {
 	int fd;
 
 	if ( ( fd = _creat( fname, FA_ARCH ) ) == -1 ) {
-		error_message( "Error : creating font file" );
+		error_message( "Error: Creating font file." );
 		return 0;
 	}
 	if ( _write( fd, all_font, 20 * 256 ) == -1 ) {
-		error_message( "Error : not enough disk space or disk error" );
+		error_message( "Error: Not enough disk space or disk error." );
 		return 0;
 	}
 	_close( fd );
@@ -490,15 +487,15 @@ int load_sup_sub( ) {
 
 	int fd, filelen;
 	if ( ( fd = _open( fname, O_RDONLY ) ) == -1 ) {
-		error_message( "Open reading error" );
+		error_message( "Error: Reading font file." );
 		return 0;
 	}
 	if ( ( filelen = filelength( fd ) ) != 2 * 18 * ( 256 - 32 ) ) {
-		error_message( "Invalid font file!" );
+		error_message( "Error: Invalid font file." );
 		return 0;
 	}
 	if ( ( oldfon = ( char* ) malloc( filelen ) ) == NULL ) {
-		error_message( "Memory not enough" );
+		error_message( "Error: Not enough memory." );
 		return 0;
 	}
 	X = 18; Y = 12;
@@ -538,14 +535,14 @@ int save_sup_sub( ) {
 
 	int fd;
 	if ( ( newfon = ( char* ) malloc( 18 * 2 * ( 256 - 32 ) ) ) == NULL ) {
-		error_message( "Memory not enough" );
+		error_message( "Error: Not enough memory." );
 		return 0;
 	}
 	memset( newfon, 0, 18 * 2 * ( 256 - 32 ) );
 
 	con_fed_to_sup( all_font, newfon );
 	if ( ( fd = _creat( fname, FA_ARCH ) ) == -1 ) {
-		error_message( "Error creating" );
+		error_message( "Error: Creating font file." );
 		return 0;
 	}
 	if ( write( fd, newfon, 18 * 2 * ( 256 - 32 ) ) == -1 ) {

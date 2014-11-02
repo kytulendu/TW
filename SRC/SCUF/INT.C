@@ -1,3 +1,9 @@
+/*
+* ===============================================================================
+* INT.C
+* ===============================================================================
+*/
+
 #include <stdio.h>
 #include <dos.h>
 
@@ -45,7 +51,8 @@ void interrupt far newint28( void ) {
 	( *oldvect28 )( );
 	if ( clock_busy )
 		switch ( clock_busy ) {
-		case EDIT_FONT:blink( pos_x, pos_y );
+		case EDIT_FONT:
+			blink( pos_x, pos_y );
 			switch ( draw_mode ) {
 			case 0:
 				dispstrhgc( "Move mode", 50, 16, REVERSEATTR );
@@ -61,7 +68,7 @@ void interrupt far newint28( void ) {
 		case SELECT_FONT:
 			variable_blink( sel_x, sel_y );
 			sprintf( buff, "Character # %3d : 0x%02x", cur_char, cur_char );
-			dispstrhgc( buff, 55, 0, 0 );
+			dispstrhgc( buff, 55, 0, NORMALATTR );
 			return;
 	}
 }
@@ -86,4 +93,3 @@ void flush_clock( void ) {
 	setvect( 0x28, oldvect28 );
 	setvect( 0x23, oldvect23 );
 }
-

@@ -1,6 +1,12 @@
-/** cufsetup.c -> cufont setup
-*   By Suttipong Kanakakorn
-*   Fri  08-25-1989  23:14:04
+/*
+* ===============================================================================
+* CUFSETUP.C
+*
+* CUFONT setup
+*
+* By Suttipong Kanakakorn
+* Fri  08-25-1989  23:14:04
+* ===============================================================================
 */
 
 #include <stdlib.h>
@@ -39,9 +45,6 @@ void cufsetup( int argc, char *argv[] ) {
 
 	progname = argv[0];
 
-	/* Sorry for the pointer, but easy to expand argument
-	Suttipong
-	*/
 	while ( ( --argc > 0 ) && ( ( i = ( *++argv )[0] ) == '/' || i == '-' ) ) {
 		strupr( ++argv[0] );
 		while ( i = *( argv[0]++ ) )
@@ -87,8 +90,8 @@ void cufsetup( int argc, char *argv[] ) {
 }
 
 void usage( void ) {
-	fputs( "Usage: cuprint [option] [file]\n", stderr );
-	fputs( "Options\n", stderr );
+	fputs( "Usage: TWFONT.EXE [option]\n", stderr );
+	fputs( "Options:\n", stderr );
 	fputs( "\t-h,  /h  Hercules graphic adapter\n", stderr );
 	fputs( "\t-hl, /hl Hercules graphic adapter, left justify\n", stderr );
 	fputs( "\t-v,  /v  vga\n", stderr );

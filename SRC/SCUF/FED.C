@@ -1,7 +1,11 @@
-/**
-*   update: Suttipong Kanakakorn
-*           Sun  07-30-1989  20:11:04
-*           Thu  08-03-1989  10:13:44
+/*
+* ===============================================================================
+* FED.C
+*
+* update: Suttipong Kanakakorn
+*         Sun  07-30-1989  20:11:04
+*         Thu  08-03-1989  10:13:44
+* ===============================================================================
 */
 
 #include <stdlib.h>
@@ -31,6 +35,7 @@
 #include "fed.h"
 
 int first_file = 1, new_load = 0;
+
 char cufontpath[127];
 char cuwordpath[127];
 char cuprintpath[127];
@@ -163,7 +168,7 @@ void fed( void ) {
 }
 
 int _ceil( int x, int y ) {
-	return ( ( x / y ) + ( ( x%y ) ? 1 : 0 ) );
+	return ( ( x / y ) + ( ( x % y ) ? 1 : 0 ) );
 }
 
 void clearworkarea( void ) {
@@ -409,11 +414,11 @@ void draw_grid( unsigned int x, unsigned int y ) {
 }
 
 void error_write( void ) {
-	error_message( "ERROR : WRITING FONT FILE" );
+	error_message( "Error: Writing font file." );
 }
 
 void error_read( void ) {
-	error_message( "ERROR : READING FONT FILE" );
+	error_message( "Error: Reading font file." );
 }
 
 int char_per_row( void ) {
@@ -491,7 +496,6 @@ void insert_char( int ch ) {
 	print_table( which_page( ch ) );
 }
 
-
 void delete_char( int ch ) {
 	memcpy( all_font + ch*BYTE*Y, all_font + ( ch + 1 )*BYTE*Y, ( 255 - ch )*BYTE*Y );
 	print_table( which_page( ch ) );
@@ -505,7 +509,6 @@ void or_char( int ch1, int ch2 ) {
 		i2++;
 	}
 }
-
 
 int select_font( int *page, char *status ) {
 	static int ch = 0;
@@ -567,7 +570,9 @@ void help( void ) {
 		"<C>olumninsert <D>eletecolumn",
 		"'.' change mode",
 		"Arrow key to move cursor",
-		"Shift+Arrow key", 0 };
+		"Shift+Arrow key",
+		0
+	};
 	popup_message( editing_menu );
 }
 
@@ -583,7 +588,6 @@ void help_select( void ) {
 	};
 	popup_message( select_menu );
 }
-
 
 void edit( int ch ) {
 	struct viewporttype tmp;
@@ -703,11 +707,6 @@ exit:
 	print_table( which_page( ch ) );
 }
 
-/**
-*   draw grid
-*   malloc all_font
-*   set BYTE = sizeof X in bytes
-*/
 void setup_memo( void ) {
 	static int first = 1;
 
@@ -726,7 +725,6 @@ void setup_memo( void ) {
 	}
 	memset( all_font, 0, 256 * BYTE*Y );
 }
-
 
 void free_all( void ) {
 	free( dot_image );

@@ -1,5 +1,11 @@
-#include <graphics.h>
+/*
+* ===============================================================================
+* POPUP.C
+* ===============================================================================
+*/
+
 #include <alloc.h>
+#include <graphics.h>
 
 #include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
@@ -18,6 +24,9 @@ extern int center_x, center_y;
 
 int menu_top, menu_left, menu_right, menu_bottom;
 char **menu_list;
+
+int menu_width( );
+int menu_height( );
 
 int menu_width( ) {
 	int i = 0, width = 0;
@@ -72,14 +81,14 @@ int popup_message( char *item[] ) {
 	/* Draw frame */
 	put_box( menu_left - align, menu_top, menu_right - align, menu_bottom );
 
-	dispstrhgc( item[0], 40 - width / 2, 8 - height / 2, 0 );
+	dispstrhgc( item[0], 40 - width / 2, 8 - height / 2, NORMALATTR );
 	/*
 	line( menu_left, menu_top + 20 + 2, menu_right, menu_top + 20 + 2 );
 	*/
 	line( menu_left - herc_align * 8, menu_top + 20 + 2,
 		menu_right - herc_align * 8, menu_top + 20 + 2 );
 	for ( i = 1; i < amount; i++ ) {
-		dispstrhgc( item[i], 40 - width / 2, 8 - height / 2 + i, 0 );
+		dispstrhgc( item[i], 40 - width / 2, 8 - height / 2 + i, NORMALATTR );
 	}
 	/*
 	line( menu_left, menu_top + 20 + 2, menu_right, menu_top + 20 + 2 );
@@ -117,7 +126,7 @@ int popup_menu( char *item[], char**buff ) {
 	put_box( menu_left - align, menu_top, menu_right - align, menu_bottom );
 
 	for ( i = 0; i<amount; i++ )
-		dispstrhgc( item[i], 40 - width / 2, 8 - height / 2 + i, 0 );
+		dispstrhgc( item[i], 40 - width / 2, 8 - height / 2 + i, NORMALATTR );
 
 	/*
 	line(menu_left,menu_top+20+2,menu_right,menu_top+20+2);
@@ -149,7 +158,7 @@ int popup_menu( char *item[], char**buff ) {
 			i = 1;
 			oldi = amount - 1;
 		}
-		dispstrhgc( item[oldi], 40 - width / 2, 8 - height / 2 + oldi, 0 );
+		dispstrhgc( item[oldi], 40 - width / 2, 8 - height / 2 + oldi, NORMALATTR );
 		dispstrhgc( item[i], 40 - width / 2, 8 - height / 2 + i, REVERSEATTR );
 	}
 exit:

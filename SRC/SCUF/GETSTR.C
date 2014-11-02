@@ -1,6 +1,9 @@
-/****************************************************************************/
-/*  GETSTR.C Suttipong Kanakakorn Fri  08-25-1989  22:43:56                 */
-/****************************************************************************/
+/*
+* ===============================================================================
+* GETSTR.C Suttipong Kanakakorn Fri  08-25-1989  22:43:56
+* ===============================================================================
+*/
+
 #include <bios.h>
 #include <dir.h>
 #include <string.h>
@@ -10,6 +13,7 @@
 #include "..\common\cwgrphc.h"
 #include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
+#include "..\common\ccommon.h"
 
 #include "const.h"
 #include "var.h"
@@ -19,16 +23,6 @@
 
 #include "getstr.h"
 
-/*****************************************************************************/
-/* get string                                                                */
-/* input                                                                     */
-/*      textst : string want to get                                          */
-/*      x      : vertical position ( 0 - 89 )                                */
-/*      y      : horisontal position ( 0 - 16 )                              */
-/*      maxlen : maximum length of string                                    */
-/*      attr   : attribute of string for displaying                          */
-/*      mode   : THAIENG,ENGLISH,ENGUPCASE,NUMBER,ONEORTWO                   */
-/*****************************************************************************/
 int getstring( char textst[], unsigned int x, unsigned int y, unsigned int maxlen, char attr, strtype mode ) {
 	int inkey, key, oldlen, temp;
 	char keepchar;
@@ -60,8 +54,10 @@ int getstring( char textst[], unsigned int x, unsigned int y, unsigned int maxle
 	case CNTRL_S:
 	case LEKEY:
 	case CNTRL_M:
-	case RETKEY: break;
-	default: key = inkey & 0xff;
+	case RETKEY:
+		break;
+	default:
+		key = inkey & 0xff;
 		if ( mode == NUMBER ) {
 			if ( ( key < '0' ) || ( key > '9' ) ) {
 				break;
@@ -133,12 +129,12 @@ int getstring( char textst[], unsigned int x, unsigned int y, unsigned int maxle
 				dispstrhgc( textst, x, y, attr );
 			}
 			break;
-			/*
-			case F10KEY:
+/*
+		case F10KEY:
 			thaimode = !thaimode;
-			writelanguage();
+			writelanguage( );
 			break;
-			*/
+*/
 		default:
 			inkey = ( inkey & 0xff );
 			if ( mode == NUMBER ) {

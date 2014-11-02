@@ -1,3 +1,8 @@
+/*
+* ===============================================================================
+* KBD.C
+* ===============================================================================
+*/
 #include <bios.h>
 #include <dir.h>
 
@@ -25,7 +30,7 @@ void waitkbd( unsigned int x, unsigned int y ) {
 }
 
 int readkbd( void ) {
-	unsigned c;
+	unsigned int c;
 	c = bioskey( 0 );
 	switch ( c ) {
 	case ALTA:

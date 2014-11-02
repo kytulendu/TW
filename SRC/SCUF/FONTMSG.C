@@ -1,3 +1,9 @@
+/*
+* ===============================================================================
+* FONTMSG.C
+* ===============================================================================
+*/
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <bios.h>
@@ -26,6 +32,8 @@
 extern int center_x, center_y;
 extern int herc_align;
 
+int existfile( char *pname );
+
 int existfile( char *pname ) {
 	int fd;
 	if ( ( fd = open( pname, O_RDONLY ) ) == -1 ) {
@@ -36,26 +44,12 @@ int existfile( char *pname ) {
 	return !0;
 }
 
-/*
-void main( ) {
-	char pname[81]= "*.*", ans[2] = "y";
-	readfont( );
-	setgraph( );
-	clsall( );
-	center_x = 320; center_y = 348 / 2;
-	fontnamebox( pname );
-	error_message( "แฟ้มข้อมูลผิดพลาด" );
-	immediatebox( 30, 4, "โปรดใส่ข้อมูล", ans );
-	settext( );
-}
-*/
-
 int put_box( int x1, int y1, int x2, int y2 ) {
 	char *buff;
 	x1 += align; x2 += align;
 	if ( ( buff = ( char* ) malloc( imagesize( x1, y1, x2, y2 ) ) ) == NULL ) {
 		settext( );
-		puts( "Error memory not enough" );
+		puts( "Error: Not enough memory." );
 		exit( 1 );
 	}
 	getimage( x1, y1, x2, y2, buff );
@@ -66,11 +60,7 @@ int put_box( int x1, int y1, int x2, int y2 ) {
 	_rectangle( x1 + 2, y1 + 2, x2 - 2, y2 - 2 );
 }
 
-/** use
-*      creat = 1 when want to creat new file that doesn't exist
-*      creat = 0 when want to display a directory to screen when file not exist
-*/
-int fontnamebox( char*pname, int creat ) {
+int fontnamebox( char *pname, int creat ) {
 	int ret;
 	savepic( );
 	put_box( 9 * 8 - 4, 5 * 20, 20 * 8 + 22 * 8 + 4, 6 * 20 + 7 );
@@ -100,6 +90,8 @@ int error_message( char *prompt ) {
 	retpic( );
 }
 
+int _waitkbd( int x, int y );
+
 int _waitkbd( int x, int y ) {
 	while ( !keypressed( ) ) {
 		delay( 5 );
@@ -107,6 +99,8 @@ int _waitkbd( int x, int y ) {
 	}
 	return getch( );
 }
+
+int prompter( char *ans, int x, int y, char attr );
 
 int prompter( char *ans, int x, int y, char attr ) {
 	int k;
@@ -116,7 +110,7 @@ int prompter( char *ans, int x, int y, char attr ) {
 	return toupper( k );
 }
 
-int immediatebox( int x, int y, char *str, char*ans ) {
+int immediatebox( int x, int y, char *str, char *ans ) {
 	static char buff[100];
 	int ret;
 	savepic( );
