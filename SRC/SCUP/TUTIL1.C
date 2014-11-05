@@ -1,5 +1,6 @@
 #include "..\common\cwtype.h"
 #include "..\common\grphc.h"
+#include "..\common\ccommon.h"
 
 #include "tutil1.h"
 

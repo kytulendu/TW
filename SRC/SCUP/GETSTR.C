@@ -14,6 +14,7 @@
 #include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
 #include "..\common\sound.h"
+#include "..\common\ccommon.h"
 
 #include "global.h"
 #include "tutil1.h"

@@ -26,6 +26,7 @@
 
 #include "..\common\cwtype.h"
 #include "..\common\grphc.h"
+#include "..\common\ccommon.h"
 
 #include "cpthai.h"
 #include "cuptype.h"
