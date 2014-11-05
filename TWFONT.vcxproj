@@ -76,34 +76,10 @@
     <None Include="NORMAL.P9" />
     <None Include="NORMALS.P24" />
     <None Include="NORMALS.P9" />
-    <None Include="SRC\CLEAN.BAT" />
-    <None Include="SRC\COMMON\ACOMMON.ASM" />
-    <None Include="SRC\COMMON\ADISP.ASM" />
-    <None Include="SRC\COMMON\CWFNTAM.ASM" />
-    <None Include="SRC\COMMON\CWFNTHM.ASM" />
-    <None Include="SRC\COMMON\CWFNTM.ASM" />
-    <None Include="SRC\COMMON\EDISP.ASM" />
-    <None Include="SRC\COMMON\HDISP.ASM" />
-    <None Include="SRC\COMMON\MAKEFILE.MAK" />
-    <None Include="SRC\CONFIG.MAK" />
-    <None Include="SRC\MAKE.BAT" />
     <None Include="SRC\SCUF\MAKEFILE.MAK" />
     <None Include="SRC\SCUF\SCUF.TLR" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SRC\COMMON\CCOMMON.H" />
-    <ClInclude Include="SRC\COMMON\CONST.H" />
-    <ClInclude Include="SRC\COMMON\CSCRN.H" />
-    <ClInclude Include="SRC\COMMON\CUSONG.H" />
-    <ClInclude Include="SRC\COMMON\CWGRPHC.H" />
-    <ClInclude Include="SRC\COMMON\CWTYPE.H" />
-    <ClInclude Include="SRC\COMMON\DIR.H" />
-    <ClInclude Include="SRC\COMMON\EKBD.H" />
-    <ClInclude Include="SRC\COMMON\FILEUTIL.H" />
-    <ClInclude Include="SRC\COMMON\GRDETECT.H" />
-    <ClInclude Include="SRC\COMMON\GRPHC.H" />
-    <ClInclude Include="SRC\COMMON\KBDCODE.H" />
-    <ClInclude Include="SRC\COMMON\SOUND.H" />
     <ClInclude Include="SRC\SCUF\CONST.H" />
     <ClInclude Include="SRC\SCUF\CONVERT.H" />
     <ClInclude Include="SRC\SCUF\CUFSETUP.H" />
@@ -121,19 +97,6 @@
     <ClInclude Include="SRC\SCUF\WRITE.H" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SRC\COMMON\CCOMMON.C" />
-    <ClCompile Include="SRC\COMMON\CSCRN.C" />
-    <ClCompile Include="SRC\COMMON\CUSONG.C" />
-    <ClCompile Include="SRC\COMMON\CWAGRPH.C" />
-    <ClCompile Include="SRC\COMMON\CWEGRPH.C" />
-    <ClCompile Include="SRC\COMMON\CWGRPHC.C" />
-    <ClCompile Include="SRC\COMMON\DIR.C" />
-    <ClCompile Include="SRC\COMMON\EKBD.C" />
-    <ClCompile Include="SRC\COMMON\FILEUTIL.C" />
-    <ClCompile Include="SRC\COMMON\GRDETECT.C" />
-    <ClCompile Include="SRC\COMMON\SOUND.C" />
-    <ClCompile Include="SRC\COMMON\STAMPDAT.C" />
-    <ClCompile Include="SRC\COMMON\TUTIL1.C" />
     <ClCompile Include="SRC\SCUF\CONVERT.C" />
     <ClCompile Include="SRC\SCUF\CUFSETUP.C" />
     <ClCompile Include="SRC\SCUF\FED.C" />

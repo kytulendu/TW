@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Fonts">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Documents">
+      <UniqueIdentifier>{df3c1deb-ea8f-46d5-9928-c45dc853fcde}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Make Files">
+      <UniqueIdentifier>{6fa3afe9-de49-4b77-b893-6f7662f1923a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Make Files\COMMON">
+      <UniqueIdentifier>{75c154b7-e1f4-4ac7-9f38-bb3260087097}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ITALIC.FON">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMAL.FON">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="README.md">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="TAX.DOC">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="TEST.DOC">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="LICENSE">
+      <Filter>Documents</Filter>
+    </None>
+    <None Include="SRC\COMMON\MAKEFILE.MAK">
+      <Filter>Make Files\COMMON</Filter>
+    </None>
+    <None Include="SRC\CLEAN.BAT">
+      <Filter>Make Files</Filter>
+    </None>
+    <None Include="SRC\MAKE.BAT">
+      <Filter>Make Files</Filter>
+    </None>
+    <None Include="SRC\CONFIG.MAK">
+      <Filter>Make Files</Filter>
+    </None>
+    <None Include="SRC\COMMON\ACOMMON.ASM">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="SRC\COMMON\ADISP.ASM">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="SRC\COMMON\CWFNTAM.ASM">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="SRC\COMMON\CWFNTHM.ASM">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="SRC\COMMON\CWFNTM.ASM">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="SRC\COMMON\EDISP.ASM">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="SRC\COMMON\HDISP.ASM">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="ITALIC.P9">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="ITALIC.P24">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="ITALICS.P9">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="ITALICS.P24">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMAL.P9">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMAL.P24">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMALS.P9">
+      <Filter>Fonts</Filter>
+    </None>
+    <None Include="NORMALS.P24">
+      <Filter>Fonts</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SRC\COMMON\CCOMMON.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\CONST.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\CSCRN.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\CUSONG.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\CWGRPHC.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\CWTYPE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\DIR.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\EKBD.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\FILEUTIL.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\GRDETECT.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\GRPHC.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\KBDCODE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\SOUND.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="SRC\COMMON\CCOMMON.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\CSCRN.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\CUSONG.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\CWAGRPH.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\CWEGRPH.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\CWGRPHC.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\DIR.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\EKBD.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\FILEUTIL.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\GRDETECT.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\SOUND.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\STAMPDAT.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\TUTIL1.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

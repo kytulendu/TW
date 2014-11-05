@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TWFONT", "TWFONT.vcxproj", 
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TWPRINT", "TWPRINT.vcxproj", "{61F70C1D-ABB5-4C69-BA3F-B82CC4DC9EDC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "COMMON", "COMMON.vcxproj", "{B04EEFA1-C48B-4F27-8D92-73254941855C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -27,6 +29,10 @@ Global
 		{61F70C1D-ABB5-4C69-BA3F-B82CC4DC9EDC}.Debug|Win32.Build.0 = Debug|Win32
 		{61F70C1D-ABB5-4C69-BA3F-B82CC4DC9EDC}.Release|Win32.ActiveCfg = Release|Win32
 		{61F70C1D-ABB5-4C69-BA3F-B82CC4DC9EDC}.Release|Win32.Build.0 = Release|Win32
+		{B04EEFA1-C48B-4F27-8D92-73254941855C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B04EEFA1-C48B-4F27-8D92-73254941855C}.Debug|Win32.Build.0 = Debug|Win32
+		{B04EEFA1-C48B-4F27-8D92-73254941855C}.Release|Win32.ActiveCfg = Release|Win32
+		{B04EEFA1-C48B-4F27-8D92-73254941855C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

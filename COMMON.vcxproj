@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{61F70C1D-ABB5-4C69-BA3F-B82CC4DC9EDC}</ProjectGuid>
+    <ProjectGuid>{B04EEFA1-C48B-4F27-8D92-73254941855C}</ProjectGuid>
     <RootNamespace>TW</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -71,69 +71,56 @@
     <None Include="ITALIC.P9" />
     <None Include="ITALICS.P24" />
     <None Include="ITALICS.P9" />
+    <None Include="LICENSE" />
     <None Include="NORMAL.FON" />
     <None Include="NORMAL.P24" />
     <None Include="NORMAL.P9" />
     <None Include="NORMALS.P24" />
     <None Include="NORMALS.P9" />
-    <None Include="SRC\SCUP\MAKEFILE.MAK" />
-    <None Include="SRC\SCUP\SCUP.TLR" />
-    <None Include="TWPRINT.CFG" />
+    <None Include="README.md" />
+    <None Include="SRC\CLEAN.BAT" />
+    <None Include="SRC\COMMON\ACOMMON.ASM" />
+    <None Include="SRC\COMMON\ADISP.ASM" />
+    <None Include="SRC\COMMON\CWFNTAM.ASM" />
+    <None Include="SRC\COMMON\CWFNTHM.ASM" />
+    <None Include="SRC\COMMON\CWFNTM.ASM" />
+    <None Include="SRC\COMMON\EDISP.ASM" />
+    <None Include="SRC\COMMON\HDISP.ASM" />
+    <None Include="SRC\COMMON\MAKEFILE.MAK" />
+    <None Include="SRC\CONFIG.MAK" />
+    <None Include="SRC\MAKE.BAT" />
+    <None Include="TAX.DOC" />
+    <None Include="TEST.DOC" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SRC\SCUP\24PINS.H" />
-    <ClInclude Include="SRC\SCUP\ATTR.H" />
-    <ClInclude Include="SRC\SCUP\CONST.H" />
-    <ClInclude Include="SRC\SCUP\CPI.H" />
-    <ClInclude Include="SRC\SCUP\CPTHAI.H" />
-    <ClInclude Include="SRC\SCUP\CUPSETUP.H" />
-    <ClInclude Include="SRC\SCUP\CUPTYPE.H" />
-    <ClInclude Include="SRC\SCUP\DOT.H" />
-    <ClInclude Include="SRC\SCUP\ERROR.H" />
-    <ClInclude Include="SRC\SCUP\FUNCMAC.H" />
-    <ClInclude Include="SRC\SCUP\GETSTR.H" />
-    <ClInclude Include="SRC\SCUP\GLOBAL.H" />
-    <ClInclude Include="SRC\SCUP\KBD.H" />
-    <ClInclude Include="SRC\SCUP\PCONFIG.H" />
-    <ClInclude Include="SRC\SCUP\PIC.H" />
-    <ClInclude Include="SRC\SCUP\PMENU.H" />
-    <ClInclude Include="SRC\SCUP\PRINTING.H" />
-    <ClInclude Include="SRC\SCUP\PRINTVAR.H" />
-    <ClInclude Include="SRC\SCUP\PRNCNTRL.H" />
-    <ClInclude Include="SRC\SCUP\PRT.H" />
-    <ClInclude Include="SRC\SCUP\PRTBUF24.H" />
-    <ClInclude Include="SRC\SCUP\PRTG.H" />
-    <ClInclude Include="SRC\SCUP\PRTT.H" />
-    <ClInclude Include="SRC\SCUP\PRTUTIL.H" />
-    <ClInclude Include="SRC\SCUP\SMENU.H" />
-    <ClInclude Include="SRC\SCUP\TABLE.H" />
-    <ClInclude Include="SRC\SCUP\TUTIL1.H" />
+    <ClInclude Include="SRC\COMMON\CCOMMON.H" />
+    <ClInclude Include="SRC\COMMON\CONST.H" />
+    <ClInclude Include="SRC\COMMON\CSCRN.H" />
+    <ClInclude Include="SRC\COMMON\CUSONG.H" />
+    <ClInclude Include="SRC\COMMON\CWGRPHC.H" />
+    <ClInclude Include="SRC\COMMON\CWTYPE.H" />
+    <ClInclude Include="SRC\COMMON\DIR.H" />
+    <ClInclude Include="SRC\COMMON\EKBD.H" />
+    <ClInclude Include="SRC\COMMON\FILEUTIL.H" />
+    <ClInclude Include="SRC\COMMON\GRDETECT.H" />
+    <ClInclude Include="SRC\COMMON\GRPHC.H" />
+    <ClInclude Include="SRC\COMMON\KBDCODE.H" />
+    <ClInclude Include="SRC\COMMON\SOUND.H" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SRC\SCUP\24PINS.C" />
-    <ClCompile Include="SRC\SCUP\ATTR.C" />
-    <ClCompile Include="SRC\SCUP\CPI.C" />
-    <ClCompile Include="SRC\SCUP\CPTHAI.C" />
-    <ClCompile Include="SRC\SCUP\CUPSETUP.C" />
-    <ClCompile Include="SRC\SCUP\DOT.C" />
-    <ClCompile Include="SRC\SCUP\ERROR.C" />
-    <ClCompile Include="SRC\SCUP\GETSTR.C" />
-    <ClCompile Include="SRC\SCUP\GLOBAL.C" />
-    <ClCompile Include="SRC\SCUP\KBD.C" />
-    <ClCompile Include="SRC\SCUP\LDFONT.C" />
-    <ClCompile Include="SRC\SCUP\PCONFIG.C" />
-    <ClCompile Include="SRC\SCUP\PIC.C" />
-    <ClCompile Include="SRC\SCUP\PMENU.C" />
-    <ClCompile Include="SRC\SCUP\PREPROC.C" />
-    <ClCompile Include="SRC\SCUP\PRINTING.C" />
-    <ClCompile Include="SRC\SCUP\PRNCNTRL.C" />
-    <ClCompile Include="SRC\SCUP\PRT.C" />
-    <ClCompile Include="SRC\SCUP\PRTBUF24.C" />
-    <ClCompile Include="SRC\SCUP\PRTG.C" />
-    <ClCompile Include="SRC\SCUP\PRTT.C" />
-    <ClCompile Include="SRC\SCUP\PRTUTIL.C" />
-    <ClCompile Include="SRC\SCUP\SMENU.C" />
-    <ClCompile Include="SRC\SCUP\TUTIL1.C" />
+    <ClCompile Include="SRC\COMMON\CCOMMON.C" />
+    <ClCompile Include="SRC\COMMON\CSCRN.C" />
+    <ClCompile Include="SRC\COMMON\CUSONG.C" />
+    <ClCompile Include="SRC\COMMON\CWAGRPH.C" />
+    <ClCompile Include="SRC\COMMON\CWEGRPH.C" />
+    <ClCompile Include="SRC\COMMON\CWGRPHC.C" />
+    <ClCompile Include="SRC\COMMON\DIR.C" />
+    <ClCompile Include="SRC\COMMON\EKBD.C" />
+    <ClCompile Include="SRC\COMMON\FILEUTIL.C" />
+    <ClCompile Include="SRC\COMMON\GRDETECT.C" />
+    <ClCompile Include="SRC\COMMON\SOUND.C" />
+    <ClCompile Include="SRC\COMMON\STAMPDAT.C" />
+    <ClCompile Include="SRC\COMMON\TUTIL1.C" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

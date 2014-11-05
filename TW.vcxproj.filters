@@ -14,39 +14,21 @@
     <Filter Include="Make Files">
       <UniqueIdentifier>{6fa3afe9-de49-4b77-b893-6f7662f1923a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Make Files\SCUW">
-      <UniqueIdentifier>{6ff3ae13-0fca-4206-a79d-d06f25ab3143}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Make Files\COMMON">
-      <UniqueIdentifier>{75c154b7-e1f4-4ac7-9f38-bb3260087097}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Make Files\SCUW\THAISYLS">
-      <UniqueIdentifier>{7ac908ec-97cc-492f-b165-6cd636b77bd7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Header Files\COMMON">
-      <UniqueIdentifier>{41d8880b-0f38-4eaf-be3f-c0a356387d39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\SCUW">
-      <UniqueIdentifier>{a8b4f8c8-83c7-41bf-80d6-067654624175}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\SCUW\THAISYLS">
-      <UniqueIdentifier>{519d8861-3eac-44ae-ba85-cb0828959a5b}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Source Files\COMMON">
-      <UniqueIdentifier>{d2a179d6-31f2-47af-a86e-5c19587a0981}</UniqueIdentifier>
+    <Filter Include="Header Files\THAISYLS">
+      <UniqueIdentifier>{519d8861-3eac-44ae-ba85-cb0828959a5b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\SCUW">
-      <UniqueIdentifier>{923ffebd-870d-4e45-91a6-c67d155b6e21}</UniqueIdentifier>
+    <Filter Include="Make Files\THAISYLS">
+      <UniqueIdentifier>{7ac908ec-97cc-492f-b165-6cd636b77bd7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\SCUW\THAISYLS">
+    <Filter Include="Source Files\THAISYLS">
       <UniqueIdentifier>{a6e1ee76-dda3-4a33-a96d-bc3ad69da171}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -72,345 +54,234 @@
     <None Include="LICENSE">
       <Filter>Documents</Filter>
     </None>
-    <None Include="SRC\COMMON\ADISP.ASM">
-      <Filter>Source Files\COMMON</Filter>
-    </None>
-    <None Include="SRC\COMMON\CWFNTAM.ASM">
-      <Filter>Source Files\COMMON</Filter>
-    </None>
-    <None Include="SRC\COMMON\CWFNTHM.ASM">
-      <Filter>Source Files\COMMON</Filter>
-    </None>
-    <None Include="SRC\COMMON\CWFNTM.ASM">
-      <Filter>Source Files\COMMON</Filter>
-    </None>
-    <None Include="SRC\COMMON\EDISP.ASM">
-      <Filter>Source Files\COMMON</Filter>
-    </None>
-    <None Include="SRC\COMMON\HDISP.ASM">
-      <Filter>Source Files\COMMON</Filter>
-    </None>
-    <None Include="SRC\COMMON\MAKEFILE.MAK">
-      <Filter>Make Files\COMMON</Filter>
+    <None Include="SRC\SCUW\THAISYLS\MAKEFILE.MAK">
+      <Filter>Make Files\THAISYLS</Filter>
     </None>
     <None Include="SRC\SCUW\MAKEFILE.MAK">
-      <Filter>Make Files\SCUW</Filter>
+      <Filter>Make Files</Filter>
     </None>
     <None Include="SRC\SCUW\SCUW.TLR">
-      <Filter>Make Files\SCUW</Filter>
-    </None>
-    <None Include="SRC\CLEAN.BAT">
-      <Filter>Make Files</Filter>
-    </None>
-    <None Include="SRC\MAKE.BAT">
-      <Filter>Make Files</Filter>
-    </None>
-    <None Include="SRC\SCUW\THAISYLS\MAKEFILE.MAK">
-      <Filter>Make Files\SCUW\THAISYLS</Filter>
-    </None>
-    <None Include="SRC\COMMON\ACOMMON.ASM">
-      <Filter>Source Files\COMMON</Filter>
-    </None>
-    <None Include="SRC\CONFIG.MAK">
       <Filter>Make Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SRC\COMMON\CONST.H">
-      <Filter>Header Files\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\COMMON\CWGRPHC.H">
-      <Filter>Header Files\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\COMMON\CWTYPE.H">
-      <Filter>Header Files\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\COMMON\FILEUTIL.H">
-      <Filter>Header Files\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\COMMON\GRDETECT.H">
-      <Filter>Header Files\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\COMMON\KBDCODE.H">
-      <Filter>Header Files\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\CONST.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\CONVERT.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\TCTYPE.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\THAI.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\VAR.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\COMMON\CSCRN.H">
-      <Filter>Header Files\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\COMMON\CUSONG.H">
-      <Filter>Header Files\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\COMMON\EKBD.H">
-      <Filter>Header Files\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\COMMON\GRPHC.H">
-      <Filter>Header Files\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\COMMON\DIR.H">
-      <Filter>Header Files\COMMON</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\CW.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\BLOCK.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\KBD.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\SCRN.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\CWSETUP.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\DEL.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\EDIT.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\MOVE.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\WRAP.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\TUTIL1.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\FILE.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\GETSTR.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\INS.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\STATUS.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\MOVEMENT.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\MENU.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\ONSCRN.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\SEARCH.H">
-      <Filter>Header Files\SCUW</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\SCUW\THAISYLS\MAINSYLS.H">
-      <Filter>Header Files\SCUW\THAISYLS</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUW\GRPH.H">
-      <Filter>Header Files\SCUW</Filter>
+      <Filter>Header Files\THAISYLS</Filter>
     </ClInclude>
     <ClInclude Include="SRC\SCUW\THAISYLS\GLOBAL.H">
-      <Filter>Header Files\SCUW\THAISYLS</Filter>
+      <Filter>Header Files\THAISYLS</Filter>
     </ClInclude>
     <ClInclude Include="SRC\SCUW\THAISYLS\ROUTINE.H">
-      <Filter>Header Files\SCUW\THAISYLS</Filter>
+      <Filter>Header Files\THAISYLS</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\COMMON\CCOMMON.H">
-      <Filter>Header Files\COMMON</Filter>
+    <ClInclude Include="SRC\SCUW\WRAP.H">
+      <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\COMMON\SOUND.H">
-      <Filter>Header Files\COMMON</Filter>
+    <ClInclude Include="SRC\SCUW\BLOCK.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\CONST.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\CONVERT.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\CW.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\CWSETUP.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\DEL.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\EDIT.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\FILE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\GETSTR.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\GRPH.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\INS.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\KBD.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\MENU.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\MOVE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\MOVEMENT.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\ONSCRN.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\SCRN.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\SEARCH.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\STATUS.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\TCTYPE.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\THAI.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\TUTIL1.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\SCUW\VAR.H">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="SRC\COMMON\CSCRN.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\COMMON\CUSONG.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\COMMON\CWAGRPH.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\COMMON\CWEGRPH.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\COMMON\CWGRPHC.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\COMMON\DIR.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\COMMON\EKBD.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\COMMON\FILEUTIL.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\COMMON\GRDETECT.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\COMMON\SOUND.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\COMMON\STAMPDAT.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\COMMON\TUTIL1.C">
-      <Filter>Source Files\COMMON</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\BLOCK.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\CW.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\CWSETUP.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\DEL.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\EDIT.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\FILE.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\GETSTR.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\GRPH.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\INS.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\KBD.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\MENU.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\MOVE.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\MOVEMENT.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\ONSCRN.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\SCRN.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\SEARCH.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\STATUS.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\TUTIL1.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\WRAP.C">
-      <Filter>Source Files\SCUW</Filter>
-    </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\HOREHEEB.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\HUNAKAD.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\JULCUT.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\KARAN.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\LEADCON.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\MAIMALAI.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\MAIMUAN.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\MAINSYLS.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\NOPCUT.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\ROREREO.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\RORERU.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\SARAA.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\SARAAH.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\SARAAIR.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\SARAIE.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\SARAO.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\SARAR.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\SARAU.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\SARAUE.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\SARAUEE.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\SARAUM.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\THAIENG.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\WOREWAAN.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\FINDCHAR.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\GLOBAL.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\THAISYLS\NSTRCMP.C">
-      <Filter>Source Files\SCUW\THAISYLS</Filter>
+      <Filter>Source Files\THAISYLS</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\COMMON\CCOMMON.C">
-      <Filter>Source Files\COMMON</Filter>
+    <ClCompile Include="SRC\SCUW\BLOCK.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\CW.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\CWSETUP.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\DEL.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\EDIT.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\FILE.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\GETSTR.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\GRPH.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\INS.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\KBD.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\MENU.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\MOVE.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\MOVEMENT.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\ONSCRN.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SCRN.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\SEARCH.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\STATUS.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\TUTIL1.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\SCUW\WRAP.C">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
