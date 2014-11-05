@@ -11,7 +11,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3AE91272-D5A5-4B6C-9120-DDF79A7FEF55}</ProjectGuid>
+    <ProjectGuid>{11B639EC-F19A-417B-94FF-6611B81C292F}</ProjectGuid>
     <RootNamespace>TW</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -67,9 +67,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="ITALIC.FON" />
-    <None Include="LICENSE" />
+    <None Include="ITALIC.P24" />
+    <None Include="ITALIC.P9" />
+    <None Include="ITALICS.P24" />
+    <None Include="ITALICS.P9" />
     <None Include="NORMAL.FON" />
-    <None Include="README.md" />
+    <None Include="NORMAL.P24" />
+    <None Include="NORMAL.P9" />
+    <None Include="NORMALS.P24" />
+    <None Include="NORMALS.P9" />
     <None Include="SRC\CLEAN.BAT" />
     <None Include="SRC\COMMON\ACOMMON.ASM" />
     <None Include="SRC\COMMON\ADISP.ASM" />
@@ -81,12 +87,8 @@
     <None Include="SRC\COMMON\MAKEFILE.MAK" />
     <None Include="SRC\CONFIG.MAK" />
     <None Include="SRC\MAKE.BAT" />
-    <None Include="SRC\SCUW\MAKEFILE.MAK" />
-    <None Include="SRC\SCUW\SCUW.TLR" />
-    <None Include="SRC\SCUW\THAISYLS\MAKEFILE.MAK" />
-    <None Include="TAX.DOC" />
-    <None Include="TEST.DOC" />
-    <None Include="TW.CFG" />
+    <None Include="SRC\SCUF\MAKEFILE.MAK" />
+    <None Include="SRC\SCUF\SCUF.TLR" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\COMMON\CCOMMON.H" />
@@ -102,33 +104,21 @@
     <ClInclude Include="SRC\COMMON\GRPHC.H" />
     <ClInclude Include="SRC\COMMON\KBDCODE.H" />
     <ClInclude Include="SRC\COMMON\SOUND.H" />
-    <ClInclude Include="SRC\SCUW\BLOCK.H" />
-    <ClInclude Include="SRC\SCUW\CONST.H" />
-    <ClInclude Include="SRC\SCUW\CONVERT.H" />
-    <ClInclude Include="SRC\SCUW\CW.H" />
-    <ClInclude Include="SRC\SCUW\CWSETUP.H" />
-    <ClInclude Include="SRC\SCUW\DEL.H" />
-    <ClInclude Include="SRC\SCUW\EDIT.H" />
-    <ClInclude Include="SRC\SCUW\FILE.H" />
-    <ClInclude Include="SRC\SCUW\GETSTR.H" />
-    <ClInclude Include="SRC\SCUW\GRPH.H" />
-    <ClInclude Include="SRC\SCUW\INS.H" />
-    <ClInclude Include="SRC\SCUW\KBD.H" />
-    <ClInclude Include="SRC\SCUW\MENU.H" />
-    <ClInclude Include="SRC\SCUW\MOVE.H" />
-    <ClInclude Include="SRC\SCUW\MOVEMENT.H" />
-    <ClInclude Include="SRC\SCUW\ONSCRN.H" />
-    <ClInclude Include="SRC\SCUW\SCRN.H" />
-    <ClInclude Include="SRC\SCUW\SEARCH.H" />
-    <ClInclude Include="SRC\SCUW\STATUS.H" />
-    <ClInclude Include="SRC\SCUW\TCTYPE.H" />
-    <ClInclude Include="SRC\SCUW\THAI.H" />
-    <ClInclude Include="SRC\SCUW\THAISYLS\GLOBAL.H" />
-    <ClInclude Include="SRC\SCUW\THAISYLS\MAINSYLS.H" />
-    <ClInclude Include="SRC\SCUW\THAISYLS\ROUTINE.H" />
-    <ClInclude Include="SRC\SCUW\TUTIL1.H" />
-    <ClInclude Include="SRC\SCUW\VAR.H" />
-    <ClInclude Include="SRC\SCUW\WRAP.H" />
+    <ClInclude Include="SRC\SCUF\CONST.H" />
+    <ClInclude Include="SRC\SCUF\CONVERT.H" />
+    <ClInclude Include="SRC\SCUF\CUFSETUP.H" />
+    <ClInclude Include="SRC\SCUF\FED.H" />
+    <ClInclude Include="SRC\SCUF\FILE.H" />
+    <ClInclude Include="SRC\SCUF\FONTMSG.H" />
+    <ClInclude Include="SRC\SCUF\GETCH.H" />
+    <ClInclude Include="SRC\SCUF\GETSTR.H" />
+    <ClInclude Include="SRC\SCUF\INT.H" />
+    <ClInclude Include="SRC\SCUF\KBD.H" />
+    <ClInclude Include="SRC\SCUF\KEY.H" />
+    <ClInclude Include="SRC\SCUF\POPUP.H" />
+    <ClInclude Include="SRC\SCUF\TUTIL1.H" />
+    <ClInclude Include="SRC\SCUF\VAR.H" />
+    <ClInclude Include="SRC\SCUF\WRITE.H" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRC\COMMON\CCOMMON.C" />
@@ -144,51 +134,18 @@
     <ClCompile Include="SRC\COMMON\SOUND.C" />
     <ClCompile Include="SRC\COMMON\STAMPDAT.C" />
     <ClCompile Include="SRC\COMMON\TUTIL1.C" />
-    <ClCompile Include="SRC\SCUW\BLOCK.C" />
-    <ClCompile Include="SRC\SCUW\CW.C" />
-    <ClCompile Include="SRC\SCUW\CWSETUP.C" />
-    <ClCompile Include="SRC\SCUW\DEL.C" />
-    <ClCompile Include="SRC\SCUW\EDIT.C" />
-    <ClCompile Include="SRC\SCUW\FILE.C" />
-    <ClCompile Include="SRC\SCUW\GETSTR.C" />
-    <ClCompile Include="SRC\SCUW\GRPH.C" />
-    <ClCompile Include="SRC\SCUW\INS.C" />
-    <ClCompile Include="SRC\SCUW\KBD.C" />
-    <ClCompile Include="SRC\SCUW\MENU.C" />
-    <ClCompile Include="SRC\SCUW\MOVE.C" />
-    <ClCompile Include="SRC\SCUW\MOVEMENT.C" />
-    <ClCompile Include="SRC\SCUW\ONSCRN.C" />
-    <ClCompile Include="SRC\SCUW\SCRN.C" />
-    <ClCompile Include="SRC\SCUW\SEARCH.C" />
-    <ClCompile Include="SRC\SCUW\STATUS.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\FINDCHAR.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\GLOBAL.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\HOREHEEB.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\HUNAKAD.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\JULCUT.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\KARAN.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\LEADCON.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\MAIMALAI.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\MAIMUAN.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\MAINSYLS.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\NOPCUT.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\NSTRCMP.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\ROREREO.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\RORERU.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\SARAA.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\SARAAH.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\SARAAIR.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\SARAIE.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\SARAO.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\SARAR.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\SARAU.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\SARAUE.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\SARAUEE.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\SARAUM.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\THAIENG.C" />
-    <ClCompile Include="SRC\SCUW\THAISYLS\WOREWAAN.C" />
-    <ClCompile Include="SRC\SCUW\TUTIL1.C" />
-    <ClCompile Include="SRC\SCUW\WRAP.C" />
+    <ClCompile Include="SRC\SCUF\CONVERT.C" />
+    <ClCompile Include="SRC\SCUF\CUFSETUP.C" />
+    <ClCompile Include="SRC\SCUF\FED.C" />
+    <ClCompile Include="SRC\SCUF\FILE.C" />
+    <ClCompile Include="SRC\SCUF\FONTMSG.C" />
+    <ClCompile Include="SRC\SCUF\GETCH.C" />
+    <ClCompile Include="SRC\SCUF\GETSTR.C" />
+    <ClCompile Include="SRC\SCUF\INT.C" />
+    <ClCompile Include="SRC\SCUF\KBD.C" />
+    <ClCompile Include="SRC\SCUF\POPUP.C" />
+    <ClCompile Include="SRC\SCUF\TUTIL1.C" />
+    <ClCompile Include="SRC\SCUF\WRITE.C" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
