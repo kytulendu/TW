@@ -1,5 +1,5 @@
 /*
-* ===============================================================================
+* ============================================================================
 * Thai related function.
 * Copyright (C) 2014 Khral Steelforge <https://github.com/kytulendu>.
 *
@@ -21,7 +21,7 @@
 * ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 * DEALINGS IN THE SOFTWARE.
 *
-* ===============================================================================
+* ============================================================================
 */
 
 #include "ccommon.h"
@@ -109,5 +109,5 @@ unsigned char thaikey( unsigned char p_key ) {
 }
 */
 int whatlevel( unsigned char p_char ) {
-	return ( p_char > 0xD0 ) ? leveltable[p_char - 0xD0] : 0;
+	return ( p_char >= 0xD0 ) ? leveltable[p_char - 0xD0] : 0;
 }
