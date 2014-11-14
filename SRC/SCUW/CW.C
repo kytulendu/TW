@@ -139,8 +139,8 @@ int main( int argc, char *argv[] ) {
 #else
 
 	framebox( 21 - CENTER_FACTOR, 5, ( 21 - CENTER_FACTOR ) + 45, 14, REVERSEATTR );
-	dispstrhgc( "THAI  WRITER", ( 24 - CENTER_FACTOR ) + 9, 6, REVERSEATTR );
-	dispstrhgc( "<to do : insert hash here>", ( 24 - CENTER_FACTOR ) + 7, 7, REVERSEATTR );
+	dispstrhgc( "THAI WRITE", ( 24 - CENTER_FACTOR ) + 11, 6, REVERSEATTR );
+	dispstrhgc( "Version 1.0", ( 24 - CENTER_FACTOR ) + 14, 7, REVERSEATTR );
 	dispprintf( ( 24 - CENTER_FACTOR ) + 9, 8, REVERSEATTR, "%11s   %8s", prog_date, prog_time );
 	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 24 - CENTER_FACTOR ) + 7, 9, REVERSEATTR );
 	dispstrhgc( "Khral Steelforge", ( 24 - CENTER_FACTOR ) + 12, 10, REVERSEATTR );
