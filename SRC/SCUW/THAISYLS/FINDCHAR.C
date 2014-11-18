@@ -7,7 +7,7 @@
 *                              Else return string's position + 1
 *                              (real position must minus 1)
 *
-*   Copyright by Subun & Tanat Advanced Computer Inc. 1988
+*   Copyright 1988, Subun & Tanat Advanced Computer Inc.
 *
 *   Date Written : Tuesday, 10 May, 1988 11:25:20 AM
 *   Last Updated : Tuesday, 10 May, 1988 11:22:59 AM

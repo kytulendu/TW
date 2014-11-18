@@ -1,7 +1,7 @@
 /*
-* ===============================================================================
+* ============================================================================
 * This is the new Thai character type checking Method.
-* Copyright by Subun & Tanat Advanced Computer Inc. 1988
+* Copyright 1988, Subun & Tanat Advanced Computer Inc.
 * Used with permission, Sahaviriya System.
 *
 * By using short int (16 bits).
@@ -35,7 +35,7 @@
 * - isfpunc(c)  : check front punctuation.({,(,[,)
 * - isbpunc(c)  : check back punctuation. ( },),],!,?,:,;,%,ß)
 * - ispunc(c)   : check punctuation.
-* ===============================================================================
+* ============================================================================
 */
 
 extern short int _tctype[];

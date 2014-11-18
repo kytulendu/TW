@@ -12,7 +12,8 @@
 *   Date Written :  7 May, 1988
 *   Last Updated : 19 May, 1988
 *
-*   Allright Reserved by Subun & Tanat Advanced Computer Incorp. 1988
+*   Copyright 1988, Subun & Tanat Advanced Computer Inc.
+*   Allright Reserved.
 *   Used With Permission, Sahaviriya System.
 */
 
