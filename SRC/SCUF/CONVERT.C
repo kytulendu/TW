@@ -3,7 +3,7 @@
 * CONVERT.C
 *
 * Updated: Suttipong Kanakakorn Sun  08-27-1989  23:07:23
-*          automatic file all font files
+*          - automatic file all font files.
 * ============================================================================
 */
 
