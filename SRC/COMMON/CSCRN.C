@@ -1,6 +1,7 @@
 /*
 * ============================================================================
 * Common screen utility
+*
 * Suttipong Kanakakorn
 * Sun  08-06-1989  09:35:17
 * ============================================================================
@@ -21,6 +22,9 @@
 #include "cscrn.h"
 
 void _line( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, int p_color*/ ) {
+	/** Draw line using Bresenham's line algorithm.
+	 *  author Zingl Alois
+	 *  code from http://members.chello.at/~easyfilter/bresenham.html */
 	int dx = abs( p_xEnd - p_xStart ), sx = p_xStart < p_xEnd ? 1 : -1;
 	int dy = -abs( p_yEnd - p_yStart ), sy = p_yStart < p_yEnd ? 1 : -1;
 	int err = dx + dy, e2; /* error value e_xy */
