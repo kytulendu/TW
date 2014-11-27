@@ -92,9 +92,6 @@
     <ClInclude Include="SRC\SCUP\FUNCMAC.H">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\SCUP\GETSTR.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\SCUP\GLOBAL.H">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -161,9 +158,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUP\ERROR.C">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUP\GETSTR.C">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUP\GLOBAL.C">

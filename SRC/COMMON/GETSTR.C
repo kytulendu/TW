@@ -8,26 +8,36 @@
 */
 
 #include <string.h>
-
-#include "..\common\cwtype.h"
-#include "..\common\ccommon.h"
-#include "..\common\cscrn.h"
-#include "..\common\ekbd.h"
-#include "..\common\grphc.h"
-#include "..\common\kbdcode.h"
-#include "..\common\sound.h"
+#include <dir.h>
 
 #include "const.h"
-#include "var.h"
-
-#include "kbd.h"
-#include "status.h"
-#include "tutil1.h"
+#include "cwtype.h"
+#include "ccommon.h"
+#include "cscrn.h"
+#include "ekbd.h"
+#include "grphc.h"
+#include "kbdcode.h"
+#include "sound.h"
+/*#include "tutil1.h"*/
 
 #include "getstr.h"
 
-int getstring( char *textst, unsigned int x, unsigned int y,
-	unsigned int maxlen, char attr, strtype mode ) {
+#ifdef  DEFINE_VAR
+#define EXTERN
+#else
+#define EXTERN extern
+#endif
+
+#ifndef DEFINE_VAR
+EXTERN boolean thaimode;    /*  current mode is thai or eng */
+#else
+/* EXTERN will be declared as null already */
+EXTERN boolean thaimode = YES;    /*  current mode is thai or eng */
+#endif
+
+#undef EXTERN /* restore it */
+
+int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, char attr, strtype mode ) {
 	int inkey, key, oldlen, temp;
 	char keepchar;
 
@@ -58,14 +68,19 @@ int getstring( char *textst, unsigned int x, unsigned int y,
 	case CNTRL_S:
 	case LEKEY:
 	case CNTRL_M:
-	case RETKEY: break;
+	case RETKEY:
+		break;
 	default:
 		key = inkey & 0xff;
 		if ( mode == NUMBER ) {
-			if ( ( key < '0' ) || ( key > '9' ) ) break;
+			if ( ( key < '0' ) || ( key > '9' ) ) {
+				break; 
+			}
 		}
 		if ( mode == ONEORTWO ) {
-			if ( ( key != '1' ) && ( key != '2' ) ) break;
+			if ( ( key != '1' ) && ( key != '2' ) ) {
+				break; 
+			}
 		}
 		if ( ( inkey & 0xff ) >= 32 ) {
 			textst[0] = '\0';
@@ -127,10 +142,12 @@ int getstring( char *textst, unsigned int x, unsigned int y,
 				dispstrhgc( textst, x, y, attr );
 			}
 			break;
+
 		case F10KEY:
 			thaimode = !thaimode;
-			writelanguage( );
+			/* writelanguage( ); */
 			break;
+
 		default:
 			inkey = ( inkey & 0xff );
 			if ( mode == NUMBER ) {

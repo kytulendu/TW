@@ -38,13 +38,13 @@
 #include "..\common\grphc.h"
 #include "..\common\grdetect.h"
 #include "..\common\kbdcode.h"
+#include "..\common\getstr.h"
 
 #include "const.h"
 #include "cuptype.h"
 #include "global.h"
 
 #include "cupsetup.h"
-#include "getstr.h"
 #include "kbd.h"
 #include "printing.h"
 #include "prncntrl.h"
@@ -269,7 +269,7 @@ void docommand( int row, int col ) {
 		case 3:
 			savepic( );
 			dispstrhgc( "เปลี่ยนราก (Directory) เป็น :", 10, 12, NORMALATTR );
-			getstring( getcwd( cwd, 37 ), 37, 12, 37, REVERSEATTR );
+			getstring( getcwd( cwd, 37 ), 37, 12, 37, REVERSEATTR, ENGUPCASE );
 			chdir( cwd );
 			retpic( );
 			writemenu( row, col, REVERSEATTR );
@@ -310,13 +310,13 @@ void docommand( int row, int col ) {
 		case 0:
 			savepic( );
 			dispstrhgc( "ต้องการจำนวนบรรทัดต่อหน้าเท่าไร : ", 30, 12, NORMALATTR );
-			if ( getnumber( itoa( userlineperpage, st, 10 ), 59, 12, 3, REVERSEATTR ) == YES ) {
+			if ( getstring( itoa( userlineperpage, st, 10 ), 59, 12, 3, REVERSEATTR, NUMBER ) == YES ) {
 				if ( atoi( st ) > 0 ) {
 					userlineperpage = atoi( st );
 				}
 			}
 			dispstrhgc( "     ความยาวกระดาษเท่าไร (นิ้ว) : ", 30, 12, NORMALATTR );
-			if ( getnumber( itoa( pagelength, st, 10 ), 59, 12, 3, REVERSEATTR ) == YES ) {
+			if ( getstring( itoa( pagelength, st, 10 ), 59, 12, 3, REVERSEATTR, NUMBER ) == YES ) {
 				if ( atoi( st ) > 0 ) {
 					pagelength = atoi( st );
 				}
@@ -329,7 +329,7 @@ void docommand( int row, int col ) {
 		case 1:
 			savepic( );
 			dispstrhgc( "ต้องการ จำนวนตัวอักษรต่อนิ้ว เท่าไร     : ", 28, 12, NORMALATTR );
-			if ( getnumber( itoa( cpi, st, 10 ), 62, 12, 3, REVERSEATTR ) == YES ) {
+			if ( getstring( itoa( cpi, st, 10 ), 62, 12, 3, REVERSEATTR, NUMBER ) == YES ) {
 				cpi = atoi( st );
 				cpi = ( cpi < 20 ) ? cpi : 20;
 				cpi = ( cpi > 0 ) ? cpi : 1;
@@ -351,7 +351,7 @@ void docommand( int row, int col ) {
 		case 2:
 			savepic( );
 			dispstrhgc( "ต้องการตั้งขอบซ้าย(Left Margin)เท่าไร : ", 27, 12, NORMALATTR );
-			if ( getnumber( itoa( leftmargin, st, 10 ), 62, 12, 3, REVERSEATTR ) == YES ) {
+			if ( getstring( itoa( leftmargin, st, 10 ), 62, 12, 3, REVERSEATTR, NUMBER ) == YES ) {
 				leftmargin = ( atoi( st ) > 0 ) ? atoi( st ) : 1;
 				leftmargin = ( leftmargin < rightmargin ) ? leftmargin : 1;
 			}
@@ -361,7 +361,7 @@ void docommand( int row, int col ) {
 		case 3:
 			savepic( );
 			dispstrhgc( "ต้องการตั้งขอบขวา(Right Margin)เท่าไร: ", 27, 12, NORMALATTR );
-			if ( getnumber( itoa( rightmargin, st, 10 ), 62, 12, 3, REVERSEATTR ) == YES ) {
+			if ( getstring( itoa( rightmargin, st, 10 ), 62, 12, 3, REVERSEATTR, NUMBER ) == YES ) {
 				rightmargin = atoi( st );
 			}
 			retpic( );
@@ -370,7 +370,7 @@ void docommand( int row, int col ) {
 		case 4:
 			savepic( );
 			dispstrhgc( "ต้องการเริ่มพิมพ์ที่หน้าเท่าไร : ", 33, 12, NORMALATTR );
-			if ( getnumber( itoa( pagebegin, st, 10 ), 57, 12, 3, REVERSEATTR ) == YES ) {
+			if ( getstring( itoa( pagebegin, st, 10 ), 57, 12, 3, REVERSEATTR, NUMBER ) == YES ) {
 				pagebegin = ( atoi( st )>0 ) ? atoi( st ) : 1;
 				pagebegin = ( pageend<pagebegin ) ? pageend : pagebegin;
 			}
@@ -380,7 +380,7 @@ void docommand( int row, int col ) {
 		case 5:
 			savepic( );
 			dispstrhgc( "ต้องการหยุดพิมพ์ที่หน้า (PageEnd) เท่าไร  :   ", 26, 12, NORMALATTR );
-			if ( getnumber( itoa( pageend, st, 10 ), 64, 12, 3, REVERSEATTR ) == YES ) {
+			if ( getstring( itoa( pageend, st, 10 ), 64, 12, 3, REVERSEATTR, NUMBER ) == YES ) {
 				pageend = atoi( st );
 				pageend = ( pageend<pagebegin ) ? pagebegin : pageend;
 			}
@@ -390,7 +390,7 @@ void docommand( int row, int col ) {
 		case 6:
 			savepic( );
 			dispstrhgc( "ต้องการให้พิมพ์หมายเลขหน้าเริ่มต้น เท่าไร ?  : ", 26, 12, NORMALATTR );
-			if ( getnumber( itoa( pagenumberoffset, st, 10 ), 64, 12, 3, REVERSEATTR ) == YES )
+			if ( getstring( itoa( pagenumberoffset, st, 10 ), 64, 12, 3, REVERSEATTR, NUMBER ) == YES )
 				pagenumberoffset = atoi( st );
 			retpic( );
 			writemenu( row, col, REVERSEATTR );
@@ -398,7 +398,7 @@ void docommand( int row, int col ) {
 		case 7:
 			savepic( );
 			dispstrhgc( "ต้องการพิมพ์กี่ชุด : ", 37, 12, NORMALATTR );
-			if ( getnumber( itoa( copytoprint, st, 10 ), 52, 12, 3, REVERSEATTR ) == YES ) {
+			if ( getstring( itoa( copytoprint, st, 10 ), 52, 12, 3, REVERSEATTR, NUMBER ) == YES ) {
 				copytoprint = ( atoi( st )>0 ) ? atoi( st ) : 1;
 			}
 			retpic( );
@@ -411,19 +411,19 @@ void docommand( int row, int col ) {
 		case 0:
 			savepic( );
 			dispstrhgc( "ใส่ข้อความหัวกระดาษ (Heading) ที่ต้องการ : ", 1, 12, NORMALATTR );
-			getstring( heading, 38, 12, 40, REVERSEATTR );
+			getstring( heading, 38, 12, 40, REVERSEATTR, THAIENG );
 			retpic( );
 			break;
 		case 1:
 			savepic( );
 			dispstrhgc( "ใส่ข้อความท้ายกระดาษ (Footing) ที่ต้องการ : ", 1, 12, NORMALATTR );
-			getstring( footing, 39, 12, 39, REVERSEATTR );
+			getstring( footing, 39, 12, 39, REVERSEATTR, THAIENG );
 			retpic( );
 			break;
 		case 2:
 			savepic( );
 			dispstrhgc( "ใส่ข้อความหน้ากระดาษ(PageTitle)ที่ต้องการ : ", 1, 12, NORMALATTR );
-			getstring( pagetitle, 39, 12, 39, REVERSEATTR );
+			getstring( pagetitle, 39, 12, 39, REVERSEATTR, THAIENG );
 			strcpy( pageformat, setpageformat( pagetitle, maxcol ) );
 			dispstrhgc( pageformat, 2, 13, NORMALATTR );
 			retpic( );

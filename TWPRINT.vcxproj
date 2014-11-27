@@ -91,7 +91,6 @@
     <ClInclude Include="SRC\SCUP\DOT.H" />
     <ClInclude Include="SRC\SCUP\ERROR.H" />
     <ClInclude Include="SRC\SCUP\FUNCMAC.H" />
-    <ClInclude Include="SRC\SCUP\GETSTR.H" />
     <ClInclude Include="SRC\SCUP\GLOBAL.H" />
     <ClInclude Include="SRC\SCUP\KBD.H" />
     <ClInclude Include="SRC\SCUP\PIC.H" />
@@ -116,7 +115,6 @@
     <ClCompile Include="SRC\SCUP\CUPSETUP.C" />
     <ClCompile Include="SRC\SCUP\DOT.C" />
     <ClCompile Include="SRC\SCUP\ERROR.C" />
-    <ClCompile Include="SRC\SCUP\GETSTR.C" />
     <ClCompile Include="SRC\SCUP\GLOBAL.C" />
     <ClCompile Include="SRC\SCUP\KBD.C" />
     <ClCompile Include="SRC\SCUP\PIC.C" />

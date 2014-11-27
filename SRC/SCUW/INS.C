@@ -13,6 +13,7 @@
 #include <string.h>
 #include <ctype.h>
 
+#include "..\common\const.h"
 #include "..\common\cwtype.h"
 #include "..\common\ccommon.h"
 #include "..\common\cscrn.h"
@@ -21,6 +22,7 @@
 #include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
 #include "..\common\sound.h"
+#include "..\common\getstr.h"
 
 #include "convert.h"
 #include "var.h"
@@ -28,7 +30,6 @@
 #include "block.h"
 #include "cw.h"
 #include "edit.h"
-#include "getstr.h"
 #include "kbd.h"
 #include "move.h"
 #include "movement.h"

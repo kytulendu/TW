@@ -80,14 +80,12 @@
     <None Include="SRC\SCUF\SCUF.TLR" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SRC\SCUF\CONST.H" />
     <ClInclude Include="SRC\SCUF\CONVERT.H" />
     <ClInclude Include="SRC\SCUF\CUFSETUP.H" />
     <ClInclude Include="SRC\SCUF\FED.H" />
     <ClInclude Include="SRC\SCUF\FILE.H" />
     <ClInclude Include="SRC\SCUF\FONTMSG.H" />
     <ClInclude Include="SRC\SCUF\GETCH.H" />
-    <ClInclude Include="SRC\SCUF\GETSTR.H" />
     <ClInclude Include="SRC\SCUF\INT.H" />
     <ClInclude Include="SRC\SCUF\KBD.H" />
     <ClInclude Include="SRC\SCUF\KEY.H" />
@@ -103,7 +101,6 @@
     <ClCompile Include="SRC\SCUF\FILE.C" />
     <ClCompile Include="SRC\SCUF\FONTMSG.C" />
     <ClCompile Include="SRC\SCUF\GETCH.C" />
-    <ClCompile Include="SRC\SCUF\GETSTR.C" />
     <ClCompile Include="SRC\SCUF\INT.C" />
     <ClCompile Include="SRC\SCUF\KBD.C" />
     <ClCompile Include="SRC\SCUF\POPUP.C" />

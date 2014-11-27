@@ -29,6 +29,7 @@
 #include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
 #include "..\common\sound.h"
+#include "..\common\getstr.h"
 
 #include "convert.h"
 #include "const.h"
@@ -37,7 +38,6 @@
 #include "cw.h"
 #include "del.h"
 #include "edit.h"
-#include "getstr.h"
 #include "ins.h"
 #include "kbd.h"
 #include "menu.h"

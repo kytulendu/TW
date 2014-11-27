@@ -59,9 +59,6 @@
     <ClInclude Include="SRC\SCUF\WRITE.H">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\SCUF\CONST.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\SCUF\CONVERT.H">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -78,9 +75,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\SCUF\GETCH.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUF\GETSTR.H">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\SCUF\INT.H">
@@ -119,9 +113,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUF\GETCH.C">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUF\GETSTR.C">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUF\INT.C">

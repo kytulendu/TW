@@ -17,8 +17,6 @@
 #define WRAPCODE 0x8d
 #define WRAPBLANK 0xa0
 
-#define HUNAKADMITO 0xdb  /* treat as upper level */
-
 #define ISBLANK(X)  ( (X) == ' ' || (X) == WRAPBLANK )
 
 #endif /* SCUW_CONST_H_INCLUDED */
