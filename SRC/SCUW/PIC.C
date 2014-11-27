@@ -6,8 +6,6 @@
 * ============================================================================
 */
 
-#ifdef WANT_TO_USE_GRAPH
-
 #include <stdlib.h>
 #include <fcntl.h>
 #include <io.h>
@@ -27,8 +25,9 @@
 #include "edit.h"
 #include "getstr.h"
 
-#include "grph.h"
+#include "pic.h"
 
+#ifdef WANT_TO_USE_GRAPH
 char *readgraph( char *filename ) {
 	size_t filelen, namelen;
 	int handle;
