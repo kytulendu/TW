@@ -7,6 +7,7 @@
 */
 
 #include <stdio.h>
+#include <string.h>
 
 #include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
@@ -136,7 +137,7 @@ char *find_lineperinch( void ) {
 	sprintf( x, "%4d", ( unsigned int ) lineperpage * 1000 / pagelength );
 	for ( i = 0; i < 4; i++ ) {
 		if ( x[i] != '0' ) {
-			movmem( &x[i + 1], &x[i + 2], 4 - i );
+			memmove( &x[i + 2], & x[i + 1], 4 - i );
 			x[i + 1] = '.';
 			break;
 		}

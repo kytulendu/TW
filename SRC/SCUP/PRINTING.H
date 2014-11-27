@@ -2,6 +2,9 @@
 #define SCUP_PRINTING_H_INCLUDED
 
 /**  */
+void printing( void );
+
+/**  */
 void marginset( char *t );
 
 /**  */

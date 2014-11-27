@@ -49,9 +49,6 @@
 void initializebufferandfont( void );
 
 /**  */
-void printing( void );
-
-/**  */
 void strfilter( char *s, char cutout );
 
 /**  */
