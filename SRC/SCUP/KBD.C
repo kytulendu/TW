@@ -1,6 +1,10 @@
-/**
-*   keyboard function that different between cuprint.exe and cw.exe
-*   Suttipong Kanakakorn Mon  08-07-1989  00:18:41
+/*
+* ============================================================================
+* KBD.C
+*
+* keyboard function that different between cuprint.exe and cw.exe
+* Suttipong Kanakakorn Mon  08-07-1989  00:18:41
+* ============================================================================
 */
 
 #include <stdio.h>

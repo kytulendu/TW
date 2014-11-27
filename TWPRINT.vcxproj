@@ -94,11 +94,10 @@
     <ClInclude Include="SRC\SCUP\GETSTR.H" />
     <ClInclude Include="SRC\SCUP\GLOBAL.H" />
     <ClInclude Include="SRC\SCUP\KBD.H" />
-    <ClInclude Include="SRC\SCUP\PCONFIG.H" />
     <ClInclude Include="SRC\SCUP\PIC.H" />
     <ClInclude Include="SRC\SCUP\PMENU.H" />
+    <ClInclude Include="SRC\SCUP\PREPROC.H" />
     <ClInclude Include="SRC\SCUP\PRINTING.H" />
-    <ClInclude Include="SRC\SCUP\PRINTVAR.H" />
     <ClInclude Include="SRC\SCUP\PRNCNTRL.H" />
     <ClInclude Include="SRC\SCUP\PRT.H" />
     <ClInclude Include="SRC\SCUP\PRTBUF24.H" />
@@ -120,8 +119,6 @@
     <ClCompile Include="SRC\SCUP\GETSTR.C" />
     <ClCompile Include="SRC\SCUP\GLOBAL.C" />
     <ClCompile Include="SRC\SCUP\KBD.C" />
-    <ClCompile Include="SRC\SCUP\LDFONT.C" />
-    <ClCompile Include="SRC\SCUP\PCONFIG.C" />
     <ClCompile Include="SRC\SCUP\PIC.C" />
     <ClCompile Include="SRC\SCUP\PMENU.C" />
     <ClCompile Include="SRC\SCUP\PREPROC.C" />

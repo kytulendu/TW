@@ -1,15 +1,12 @@
-/**
-*   Modified Suttipong Kanakakorn
-*   Mon  08-14-1989  10:57:02
-*   By CUCC 22 June 90
-*/
+/** Modified : Suttipong Kanakakorn
+*              Mon  08-14-1989  10:57:02
+*   Modified : CUCC
+*              22 June 90 */
 
 #ifndef SCUP_GLOBAL_H_INCLUDED
 #define SCUP_GLOBAL_H_INCLUDED
 
-/**
-*   3-level buffer declaration
-*/
+/** 3-level buffer declaration */
 extern char *font[2]; /* Suttipong Kanakakorn Tue  08-15-1989  01:23:37 */
 extern char *fonts;   /* Suttipong Kanakakorn Tue  08-15-1989  01:23:51 */
 extern char *bupper1;
@@ -24,28 +21,26 @@ extern char *bbelow3;
 extern char *extbar1;
 extern char *extbar2;
 extern char *extbar3;
-extern int  table[];
+extern int table[];
 extern char tablev[];
-extern int  tgtable[];
+extern int tgtable[];
+/*
 extern char mask241[8][3];
 extern char mask242[8][3];
+*/
 extern FILE *fp;
-extern int  fileready;
+extern int fileready;
 extern char blankline[];
 extern char oldfilename[];
 extern char filename[];
 extern char cup_dir[];
 
-/**
-*   Menu data area.
-*/
+/** Menu data area. */
 extern char mcol[];
 extern char smcol[];
 extern char mlenght;
 
-/**
-*   Dotcommand global area.
-*/
+/** Dotcommand global area. */
 extern FILE *mfp;                       /* define mailmerge file ptr */
 extern char *fieldname[];               /* define array of fieldnames */
 extern char *fieldcontent[];            /* define array of strings */
@@ -68,16 +63,15 @@ extern char pageformat[];
 extern char heading[];
 extern char footing[];
 
-/**
-*   Location of pagetitle,heading,footing
+/** Location of pagetitle,heading,footing
 *   0 -> no print       1 -> left  justify
 *   2 -> center justify 3 -> right justify
 *   4 -> right<-> odd pgno  left  <-> even
-*   5 -> right<-> even      left  <->  odd
-*/
+*   5 -> right<-> even      left  <->  odd */
 extern int locpagetitle;
 extern int locheading;
 extern int locfooting;
+
 extern int printer;
 extern int printer24pin;
 extern int printer24pininit;

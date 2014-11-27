@@ -1,15 +1,20 @@
-/**
-*   Program PRINTING.C
-*   Function : actual print data
-*   DEVISE FROM PMENU.C
-*   DEV DATE11-11-88
-*   Update 15-11-88
-*   Update 08-04-89
-*   Update Suttipong Kanakakorn
-*       Mon  08-07-1989  02:23:55
-*           Add function prototype
-*       Tue  08-15-1989  00:29:02
-*           make printer font loading better
+/*
+* ============================================================================
+* PRINTING.C
+*
+* Actual print data
+* Devise from PMENU.C
+*
+* Written 11-11-1988
+* Update 15-11-1988
+* Update 08-04-1989
+*
+* Update Suttipong Kanakakorn
+* Mon  08-07-1989  02:23:55
+*  - Add function prototype
+* Tue  08-15-1989  00:29:02
+*  - make printer font loading better
+* ============================================================================
 */
 
 #include <stdio.h>
@@ -29,6 +34,7 @@
 #include "24pins.h"
 #include "cupsetup.h"
 #include "dot.h"
+#include "preproc.h"
 #include "prt.h"
 #include "prtbuf24.h"
 #include "prncntrl.h"
@@ -38,16 +44,33 @@
 #include "printing.h"
 
 /* local function prototype use internal module only */
-void seekbeginline( void );
+
+/**  */
+void initializebufferandfont( void );
+
+/**  */
+void printing( void );
+
+/**  */
 void strfilter( char *s, char cutout );
-void printtitle( char str[], int loc );
-void pagewait( int i );
+
+/**  */
+void seekbeginline( void );
+
+/**  */
+void printtitle( char *str, int loc );
+
+/**  */
+char *adjust( char *c, int k );
+
+/**  */
+void pagewait( register int i );
+
+/**  */
 void linewait( int *printquit );
-void contostd( char *t );
-void marginset( char *t );
-void preprinterloadline( char s[] );
-char *adjust( char c[], int k );
-void clear_message( void );
+
+/**  */
+void preprinterloadline( char *s );
 
 /* Modified: Suttipong Kanakakorn Tue  08-15-1989  00:28:34 */
 void initializebufferandfont( void ) {
@@ -82,7 +105,9 @@ void initializebufferandfont( void ) {
 /* modify by Suttipong Kanakakorn Tue  08-29-1989  23:53:53 */
 void printing( void ) {
 	extern int blankskip( );
+#ifdef WANT_TO_USE_GRAPH
 	extern int pic_print;
+#endif
 	int i, j;
 	int printquit;
 	char st[5];
@@ -93,9 +118,9 @@ void printing( void ) {
 		initializebufferandfont( );							/* allocate graphic buffer and load font */
 	}
 	scol = 7;
-	dispstrhgc( "กำลังพิมพ์ COPYที่ :     ", 10 - scol, 12, 0 );
-	dispstrhgc( "  หน้าที่ :     ", 30 - scol, 12, 0 );
-	dispstrhgc( "  บรรทัดที่ :     ", 43 - scol, 12, 0 );
+	dispstrhgc( "กำลังพิมพ์ COPYที่ :     ", 10 - scol, 12, NORMALATTR );
+	dispstrhgc( "  หน้าที่ :     ", 30 - scol, 12, NORMALATTR );
+	dispstrhgc( "  บรรทัดที่ :     ", 43 - scol, 12, NORMALATTR );
 	dispstrhgc( "  หยุดชั่วคราว <P> เลิกพิมพ์ <Q>", 58 - scol, 12, BOLDATTR );
 	printquit = NO;
 	PrinterInitialize( );									/* initialize printer */
@@ -104,21 +129,13 @@ void printing( void ) {
 		linespace = find_line_space( );
 		PrinterSetFormLenghtInch( pagelength );
 		seekbeginline( );
-		/*
-		itoa( i, st, 10 );
-		dispstrhgc( "     ", 25 - scol, 12, 0 );
-		dispstrhgc( st, 30 - strlen( st ) - scol, 12, 2 );
-		*/
-		dispprintf( 25 - scol, 12, 2, "%5d", i );
+		dispprintf( 25 - scol, 12, REVERSEATTR, "%5d", i );
 		curpage = pagenumberoffset;
-		/*
-		itoa( curpage, st, 10 );
-		dispstrhgc( "     ", 38 - scol, 12, 0 );
-		dispstrhgc( st, 43 - strlen( st ) - scol, 12, 2 );
-		*/
-		dispprintf( 38 - scol, 12, 0, "%5d", curpage );
+		dispprintf( 38 - scol, 12, NORMALATTR, "%5d", curpage );
 		curline = 0;
+#ifdef WANT_TO_USE_GRAPH
 		pic_print = NO;
+#endif
 		while ( ( fgets( s, 500, fp ) != NULL ) && ( printquit == NO ) ) {
 			strfilter( s, 0x8d );							/* delete 0x8d */
 			strcpy( p, s );
@@ -141,12 +158,7 @@ void printing( void ) {
 					}
 					pagewait( 0 );							/* finish each page */
 					curpage++;
-					/*
-					itoa( curpage, st, 10 );
-					dispstrhgc( "     ", 38 - scol, 12, 0 );
-					dispstrhgc( st, 43 - strlen( st ) - scol, 12, 2 );
-					*/
-					dispprintf( 38 - scol, 12, 0, "%5d", curpage );
+					dispprintf( 38 - scol, 12, NORMALATTR, "%5d", curpage );
 				}
 			} else {										/* Not dot commands */
 				if ( mailmergeflag == YES ) {
@@ -163,18 +175,11 @@ void printing( void ) {
 					printtitle( p, locpagetitle );
 					curline++;								/* begin curline = 1  */
 				}
-				/*
-				itoa( curline, st, 10 );
-				dispstrhgc( "     ", 53 - scol, 12, 0 );
-				dispstrhgc( st, 58 - strlen( st ) - scol, 12, 2 );
-				dispstrhgc( blankline, 2, 13, 0 );
-				*/
-				dispprintf( 53 - scol, 12, 0, "%5d", curline );
+
+				dispprintf( 53 - scol, 12, NORMALATTR, "%5d", curline );
 				dispprintf( 2, 13, NORMALATTR, "%77s", " " );	/* Clear Line */
-				dispprintf( 2, 13, 0, "%-77.77s", s );		/* Disp CurLine */
-				/*
-				dispstrhgc( extbarprinting ? "*" : "-", 1, 1, REVERSEATTR );
-				*/
+				dispprintf( 2, 13, NORMALATTR, "%-77.77s", s );		/* Disp CurLine */
+
 				preprinterloadline( s );
 				curline++;
 				if ( curline > userlineperpage ) {
@@ -207,20 +212,20 @@ void printing( void ) {
 		}
 		pagewait( 1 );										/* finish each copy */
 	}
-	dispprintf( 2, 12, 0, "%77s", " " );					/* clear massage */
+	dispprintf( 2, 12, NORMALATTR, "%77s", " " );			/* clear massage */
 	fclose( mfp );											/* close merge file */
 	mailmergeflag = NO;										/* each field content ready flag Reset  */
 	mergefileexist = NO;									/* .df successful           flag Reset  */
 	fieldnameexist = NO;									/* .rv successful           flag Reset  */
 }
 
-void marginset( char t[] ) {
-	int  cw = 1;											/* 2 for enlarge attr, 1 for another */
+void marginset( char *t ) {
+	int cw = 1;											/* 2 for enlarge attr, 1 for another */
 	char p[500];
 	int left, i, k;
 	k = ( leftmargin == 1 ) ? 0 : leftmargin;				/* user remind start at 1 not 0 */
 	left = k;												/* k is pointer , left is counter */
-	for ( i = 0; i<500; i++ ) p[i] = ' ';					/* set all blank  */
+	for ( i = 0; i < 500; i++ ) { p[i] = ' '; }				/* set all blank  */
 	i = 0;
 	while ( t[i] != '\0' ) {
 		if ( t[i] < 0x20 ) {
@@ -314,7 +319,7 @@ void seekbeginline( void ) {
 }
 
 /* modify by Suttipong Kanakakorn Wed  08-30-1989  00:32:38 */
-void printtitle( char str[], int loc ) {
+void printtitle( char *str, int loc ) {
 	int newloc;
 	char s[500];
 	if ( loc != 0 ) {
@@ -330,12 +335,12 @@ void printtitle( char str[], int loc ) {
 			break;
 		}
 		strcpy( s, adjust( str, newloc ) );					/* adjust location LEFT,RIGHT,MIDDLE */
-		dispprintf( 2, 13, 2, "%-77.77s", s );
+		dispprintf( 2, 13, REVERSEATTR, "%-77.77s", s );
 		preprinterloadline( s );
 	}
 }
 
-char *setpageformat( char form[], int max ) {
+char *setpageformat( char *form, int max ) {
 	char s[500];
 	int i, j;
 	i = 0;
@@ -346,7 +351,7 @@ char *setpageformat( char form[], int max ) {
 			s[j++] = '%';
 			s[j++] = 'd';
 			s[j] = '\0';
-			return( s );
+			return ( s );
 		} else {
 			if ( form[i] == '%' ) {
 				s[j++] = form[i++];
@@ -360,17 +365,17 @@ char *setpageformat( char form[], int max ) {
 					}
 				}
 				s[j] = '\0';
-				return( s );
+				return ( s );
 			} else {
 				s[j++] = form[i++];
 			}
 		}
 	}
 	s[j] = '\0';
-	return( s );
+	return ( s );
 }
 
-char *adjust( char c[], int k ) {
+char *adjust( char *c, int k ) {
 	int maxpaper;
 	int len, i, j;
 	char s[500];
@@ -385,9 +390,9 @@ char *adjust( char c[], int k ) {
 	}
 	s[maxpaper] = '\0';
 	switch ( k ) {
-	case ( 1 ) :											/* left   justify */
+	case 1:											/* left   justify */
 		return( c );
-	case ( 2 ) :											/* center justify */
+	case 2:											/* center justify */
 		j = ( maxpaper - 1 - len ) / 2;
 		i = 0;
 		while ( c[i] != '\0' ) {
@@ -395,16 +400,16 @@ char *adjust( char c[], int k ) {
 		}
 		s[j] = '\0';
 		return( s );
-	case ( 3 ) :											/* right  justify */
+	case 3:											/* right  justify */
 		j = ( maxpaper - 1 - len );
 		i = 0;
 		while ( c[i] != '\0' ) {
 			s[j++] = c[i++];
 		}
 		s[j] = '\0';
-		return( s );
+		return ( s );
 	default:
-		return( c );
+		return ( c );
 	}
 }
 
@@ -419,7 +424,7 @@ void pagewait( register int i ) {
 				dispstrhgc( "สิ้นสุดการพิมพ์แต่ละชุด กดปุ่มใด ๆ ...", 30, 13, 2 );
 			}
 			while ( !keypressed( ) );
-			while ( keypressed( ) )  ebioskey( 0 );			/* clear KBD buffer */
+			while ( keypressed( ) ) { ebioskey( 0 ); }			/* clear KBD buffer */
 			clear_message( );
 		}
 	}
@@ -457,13 +462,13 @@ void linewait( int *printquit ) {
 }
 
 /*
-void findthreeindex( char s[], int *uindex, int *mindex, int *lindex ) {
+void findthreeindex( char *s, int *uindex, int *mindex, int *lindex ) {
 	int i, j, cadjust;
 	cadjust = 1;
 	i = *uindex = *mindex = *lindex = 0;
 	while ( s[i] != '\0' ) {
 		if ( s[i] < ' ' ) {
-		if ( s[i] == ENLARGE ) {     *//* if enlarge col to add = 2 *//*
+			if ( s[i] == ENLARGE ) { // if enlarge col to add = 2 //
 				if ( cadjust == 1 ) {
 					cadjust = 2;
 				} else {
@@ -489,8 +494,10 @@ void findthreeindex( char s[], int *uindex, int *mindex, int *lindex ) {
 }
 */
 
-void preprinterloadline( char s[] ) {
+void preprinterloadline( char *s ) {
+#ifdef WANT_TO_USE_GRAPH
 	extern int pic_print;
+#endif
 	extern int printer24pin;
 	int mindex;
 	if ( graphicprint == YES ) {
@@ -504,8 +511,11 @@ void preprinterloadline( char s[] ) {
 			PrinterLoadLine9pin( s );
 		}
 	} else {
+#ifdef WANT_TO_USE_GRAPH
 		if ( pic_print == NO ) {
+#endif
 			PrinterLoadLineText( s );
+#ifdef WANT_TO_USE_GRAPH
 		} else {
 			if ( printer24pin == YES ) {
 				/* findthreeindex( s, &uindex, &mindex, &lindex ); */
@@ -517,10 +527,11 @@ void preprinterloadline( char s[] ) {
 				PrinterLoadLine9pin( s );
 			}
 		}
+#endif
 	}
 }
 
 /* Written by Suttipong Kanakakorn Wed  08-30-1989  00:40:21 */
 void clear_message( void ) {
-	dispprintf( 2, 13, 0, "%77s", " " );
+	dispprintf( 2, 13, NORMALATTR, "%77s", " " );
 }

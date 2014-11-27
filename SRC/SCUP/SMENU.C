@@ -1,14 +1,9 @@
 /*
-smenu -> select menu
-- popup menu for user to select, programmer must save and restore
-the screen by himslef
-
-- input x, y, number of messege, messege, curmenu
-- output curmenu
-- return ESCKEY or RETKEY
-
-Written: Suttipong Kanakakorn
-Date: Fri  08-18-1989  09:16:37
+* ============================================================================
+* SMENU.C
+*
+* Select menu
+* ============================================================================
 */
 
 #include <stdio.h>
@@ -23,6 +18,15 @@ Date: Fri  08-18-1989  09:16:37
 
 #include "smenu.h"
 
+/** Select menu
+*   popup menu for user to select, programmer must save and restore the screen
+*
+*   - input x, y, number of messege, messege, curmenu
+*   - output curmenu
+*   - return ESCKEY or RETKEY
+*
+*   Written: Suttipong Kanakakorn
+*   Date: Fri  08-18-1989  09:16:37 */
 int smenu( register int x, register int y, int number, char *message[], int *curmenu ) {
 	int i;
 	int c, length;

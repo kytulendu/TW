@@ -1,6 +1,10 @@
-/**
-*   Written: Suttipong Kanakakorn
-*   Fri  08-11-1989  01:56:46
+/*
+* ============================================================================
+* CUPSETU.C
+*
+* Written: Suttipong Kanakakorn
+* Fri  08-11-1989  01:56:46
+* ============================================================================
 */
 
 #include <stdio.h>
@@ -40,7 +44,6 @@ void cupsetup( int argc, char *argv[] ) {
 
 	progname = argv[0];
 
-	/* Sorry for the pointer, but easy to expand argument, Suttipong */
 	while ( ( --argc > 0 ) && ( ( i = ( *++argv )[0] ) == '/' || i == '-' ) ) {
 		strupr( ++argv[0] );
 		while ( i = *( argv[0]++ ) ) {
@@ -97,7 +100,7 @@ void cupsetup( int argc, char *argv[] ) {
 }
 
 void usage( void ) {
-	fputs( "Usage: cuprint [option] [file]\n", stderr );
+	fputs( "Usage: TWPRINT [option] [file]\n", stderr );
 	fputs( "Options\n", stderr );
 	fputs( "\t-h,\t/h  Hercules graphic adapter\n", stderr );
 	fputs( "\t-hl,\t/hl Hercules graphic adapter, left justify\n", stderr );
@@ -158,15 +161,6 @@ each_option_setup option_setup[] = {
 /* number of element of option_setup */
 #define NELEM_OPTION (sizeof(option_setup)/sizeof(option_setup[0]))
 
-/*  read option from file cuprint.cfg
-mode == AUTO try reading from current directoy first, then cw_dir
-if not found use the default value
-mode == CUR_DIR read from current dir
-if not found display error
-mode == CW_DIR  read from cw.exe directory
-if not found display error
-Tue  08-01-1989  12:10:39
-*/
 void readoption( search_file_mode mode ) {
 	FILE *fp;
 	char fname[MAXPATH];
@@ -216,7 +210,6 @@ void readoption( search_file_mode mode ) {
 	set_all_lineperpage( BATCH );
 }
 
-/* save option to file cw.cfg in either current directory or cw_dir */
 void saveoption( search_file_mode mode ) {
 	FILE *fp;
 	char config_file[MAXPATH];
@@ -228,42 +221,36 @@ void saveoption( search_file_mode mode ) {
 		sprintf( config_file, "%s\\CUPRINT.CFG", cup_dir );
 		fp = fopen( config_file, "wt" );
 	}
-	if ( fp == NULL )
+	if ( fp == NULL ) {
 		return;
+	}
 	for ( op = option_setup; op->option_name != NULL; op++ ) {
 		fprintf( fp, "%s %d\n", op->option_name, *( int * ) op->p_option_value );
 	}
-	for ( op++; op->option_name != NULL; op++ )
+	for ( op++; op->option_name != NULL; op++ ) {
 		fprintf( fp, "%s %s\n", op->option_name, ( char * ) op->p_option_value );
+	}
 	fprintf( fp, "\n" );
 	fclose( fp );
 }
 
 int handler( int errval, int ax, int bp, int si ) {
 	if ( ax >= 0 ) {
-		disperror( "error on disk drive! กดปุ่มใดๆเพื่อทำงานต่อ" );
+		disperror( "Error on disk drive! กดปุ่มใดๆเพื่อทำงานต่อ" );
 		ebioskey( 0 );
 	}
 	hardretn( -1 );
 }
 
-/* -------------------------------------------------------------------- */
-/* Function     : cp_loadfont                                           */
-/* Description  : load printer font                                     */
-/* Parameters   : fname - font filename                                 */
-/* Return value :       - pointer to font table                         */
-/* Remark       : This function allocate the font table                 */
-/* Written      : Suttipong Kanakakorn                                  */
-/*                Tue  08-15-1989  00:23:58                             */
-/* -------------------------------------------------------------------- */
 void *cp_loadfont( char *fname, unsigned font_size ) {
 	void *p;
 	int handle;
 	char fn[80];
 
 	p = ( void * ) malloc( font_size );
-	if ( p == NULL )
+	if ( p == NULL ) {
 		execerror( "Insufficient memory\n", "" );
+	}
 	if ( ( handle = open( fname, O_RDONLY | O_BINARY ) ) == -1 ) {
 		sprintf( fn, "%s\\%s", cup_dir, fname );
 		handle = open( fn, O_RDONLY | O_BINARY );

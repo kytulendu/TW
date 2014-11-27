@@ -1,6 +1,11 @@
-/** Thai Character code for Printer
-*   Suttipong Kanakakorn
-*   Sat  10-28-1989  10:41:46 , receive BALI at 0xDA, ED, EE
+/*
+* ============================================================================
+* Thai Character code for Printer
+*
+* Suttipong Kanakakorn
+* Sat  10-28-1989  10:41:46
+*  - receive BALI at 0xDA, ED, EE
+* ============================================================================
 */
 
 #include "cpthai.h"

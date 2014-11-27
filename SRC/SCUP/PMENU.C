@@ -1,22 +1,26 @@
-/** Program PMENU.C
+/*
+* ============================================================================
+* PMENU.C
 *
-*   Written Oct -87
-*   Update  10-6-88
-*   Update  24-9-88
-*   Update  25-12-88
-*   Update  09-04-89
-*   Update  27-04-89
-*   Add print configuration feature.
-*   Function : user menu interactions
-*   Update  Suttipong Kanakakorn
+* Function : user menu interactions
 *
-*   Mon  08-07-1989 00:00:55
-*       break the program smaller and add function prototype,
-*       clear all warning message
-*   Fri  08-11-1989  02:25:09
-*       call cwsetup.c
-*   Sun  09-03-1989  01:29:31
-*       call line per page routine
+* Written Oct-87
+* Update  10-6-88
+* Update  24-9-88
+* Update  25-12-88
+* Update  09-04-89
+* Update  27-04-89
+*  - Add print configuration feature.
+*
+* Update Suttipong Kanakakorn
+* Mon  08-07-1989 00:00:55
+*  - break the program smaller and add function prototype,
+*    clear all warning message
+* Fri  08-11-1989  02:25:09
+*  - call cwsetup.c
+* Sun  09-03-1989  01:29:31
+*  - call line per page routine
+* ============================================================================
 */
 
 #include <stdio.h>
@@ -32,6 +36,7 @@
 #include "..\common\ekbd.h"
 #include "..\common\fileutil.h"
 #include "..\common\grphc.h"
+#include "..\common\grdetect.h"
 #include "..\common\kbdcode.h"
 
 #include "const.h"
@@ -61,9 +66,9 @@ void main( int argc, char *argv[] ) {
 }
 
 void writefilename( void ) {
-	dispstrhgc( "แฟ้มข้อมูล : ", 44, 0, 0 );
-	dispstrhgc( "                         ", 54, 0, 0 );
-	dispstrhgc( filename, 54, 0, 0 );
+	dispstrhgc( "แฟ้มข้อมูล : ", 44, 0, NORMALATTR );
+	dispstrhgc( "                         ", 54, 0, NORMALATTR );
+	dispstrhgc( filename, 54, 0, NORMALATTR );
 }
 
 void writemenu( int row, int col, font_attr attr ) {
@@ -197,10 +202,10 @@ void docommand( int row, int col ) {
 		switch ( row ) {
 		case 0:
 			savepic( );
-			dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการพิมพ์ : ", 25, 12, 0 );
+			dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการพิมพ์ : ", 25, 12, NORMALATTR );
 			fileptr = ( filename[0] == '\0' ) ? "*.*" : filename;
 			strcpy( filename, fileptr );
-			if ( ( getname( filename, 49, 12, 25, 2 ) == YES ) && ( filename[0] != '\0' ) ) {
+			if ( ( getname( filename, 49, 12, 25, REVERSEATTR ) == YES ) && ( filename[0] != '\0' ) ) {
 				if ( havewild( filename ) ) {
 					selectfile( filename );
 					retpic( );
@@ -214,10 +219,8 @@ void docommand( int row, int col ) {
 					filename[0] = '\0';  /* clear filename */
 					strcpy( oldfilename, filename );
 					writefilename( );
-					dispstrhgc( "                                                     ", 25, 12, 0 );
-					dispstrhgc( "•••••••••••••••••••••••••••••••••••••", 20, 12, 2 );
-					dispstrhgc( "–   *** ไม่พบแฟ้มข้อมูล *** กดปุ่มใด ๆ ...  –", 20, 13, 2 );
-					dispstrhgc( "•••••••••••••••••••••••••••••••••••••", 20, 14, 2 );
+					blockmsg( 13 );
+					dispstrhgc( "*** ไม่พบแฟ้มข้อมูล *** กดปุ่มใด ๆ ...", 24, 13, REVERSEATTR );
 					ebioskey( 0 );  /* clear KBD buffer */
 				} else {
 					strcpy( oldfilename, filename );
@@ -235,26 +238,22 @@ void docommand( int row, int col ) {
 				if ( PrinterReadstatus( ) & 0x80 && ( PrinterReadstatus( ) & 0x29 ) == 0 ) {
 					printing( );
 				} else {
-					dispstrhgc( "                                                     ", 25, 12, 0 );
-					dispstrhgc( "•••••••••••••••••••••••••••••••••••••", 20, 12, 2 );
-					dispstrhgc( "– *** เครื่องพิมพ์ไม่พร้อม ***  กดปุ่มใด ๆ ...–", 20, 13, 2 );
-					dispstrhgc( "•••••••••••••••••••••••••••••••••••••", 20, 14, 2 );
+					blockmsg( 13 );
+					dispstrhgc( "*** เครื่องพิมพ์ไม่พร้อม ***  กดปุ่มใด ๆ ...", 26, 13, REVERSEATTR );
 					ebioskey( 0 );  /* clear KBD buffer */
 				}
 				retpic( );
 			} else {
 				savepic( );
-				dispstrhgc( "                                                     ", 25, 12, 0 );
-				dispstrhgc( "•••••••••••••••••••••••••••••••••••••••••", 20, 12, 2 );
-				dispstrhgc( "–  *** กรุณาเปิดแฟ้มข้อมูลก่อน ***  กดปุ่มใด ๆ ...–", 20, 13, 2 );
-				dispstrhgc( "•••••••••••••••••••••••••••••••••••••••••", 20, 14, 2 );
+				blockmsg( 13 );
+				dispstrhgc( "*** กรุณาเปิดแฟ้มข้อมูลก่อน ***  กดปุ่มใด ๆ ...", 18, 13, REVERSEATTR );
 				ebioskey( 0 );  /* clear KBD buffer */
 				retpic( );
 			}
 			break;
 		case 2:
 			savepic( );
-			dispstrhgc( " เปลี่ยนช่องเก็บ (Logged Drive) เป็น   ", 28, 12, 0 );
+			dispstrhgc( " เปลี่ยนช่องเก็บ (Logged Drive) เป็น   ", 28, 12, NORMALATTR );
 			waitkbd( 60, 12 );
 			key = ebioskey( 0 ) & 0xff;
 			if ( ( key >= 'a' ) || ( key <= 'p' ) ) {
@@ -265,15 +264,15 @@ void docommand( int row, int col ) {
 				}
 			}
 			retpic( );
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 3:
 			savepic( );
-			dispstrhgc( "เปลี่ยนราก (Directory) เป็น :", 10, 12, 0 );
-			getstring( getcwd( cwd, 37 ), 37, 12, 37, 2 );
+			dispstrhgc( "เปลี่ยนราก (Directory) เป็น :", 10, 12, NORMALATTR );
+			getstring( getcwd( cwd, 37 ), 37, 12, 37, REVERSEATTR );
 			chdir( cwd );
 			retpic( );
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 4:
 			settext( );
@@ -281,7 +280,7 @@ void docommand( int row, int col ) {
 			system( "" );
 			setgraph( );
 			writeallmenu( );
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 5:
 			savepic( );
@@ -290,8 +289,8 @@ void docommand( int row, int col ) {
 			retpic( );
 			/* add by Suttipong Kanakakorn Sun  09-03-1989  01:29:17 */
 			set_all_lineperpage( INTERACTIVE ); /* set (user)lineperpage */
-			writemenu( row, col, 2 );
-			writemenu( 3, 1, 0 );   /* show new right margin */
+			writemenu( row, col, REVERSEATTR );
+			writemenu( 3, 1, NORMALATTR );   /* show new right margin */
 			break;
 		case 6:
 			if ( stdcode == YES ) {
@@ -299,7 +298,7 @@ void docommand( int row, int col ) {
 			} else {
 				stdcode = YES;
 			}
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 7:
 			quitprog = YES;
@@ -310,14 +309,14 @@ void docommand( int row, int col ) {
 		switch ( row ) {
 		case 0:
 			savepic( );
-			dispstrhgc( "ต้องการจำนวนบรรทัดต่อหน้าเท่าไร : ", 30, 12, 0 );
-			if ( getnumber( itoa( userlineperpage, st, 10 ), 59, 12, 3, 2 ) == YES ) {
+			dispstrhgc( "ต้องการจำนวนบรรทัดต่อหน้าเท่าไร : ", 30, 12, NORMALATTR );
+			if ( getnumber( itoa( userlineperpage, st, 10 ), 59, 12, 3, REVERSEATTR ) == YES ) {
 				if ( atoi( st ) > 0 ) {
 					userlineperpage = atoi( st );
 				}
 			}
-			dispstrhgc( "     ความยาวกระดาษเท่าไร (นิ้ว) : ", 30, 12, 0 );
-			if ( getnumber( itoa( pagelength, st, 10 ), 59, 12, 3, 2 ) == YES ) {
+			dispstrhgc( "     ความยาวกระดาษเท่าไร (นิ้ว) : ", 30, 12, NORMALATTR );
+			if ( getnumber( itoa( pagelength, st, 10 ), 59, 12, 3, REVERSEATTR ) == YES ) {
 				if ( atoi( st ) > 0 ) {
 					pagelength = atoi( st );
 				}
@@ -325,15 +324,15 @@ void docommand( int row, int col ) {
 			retpic( );
 			/* add by Suttipong Kanakakorn Sun  09-03-1989  01:29:17 */
 			set_all_lineperpage( INTERACTIVE ); /* set (user)lineperpage */
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 1:
 			savepic( );
-			dispstrhgc( "ต้องการ จำนวนตัวอักษรต่อนิ้ว เท่าไร     : ", 28, 12, 0 );
-			if ( getnumber( itoa( cpi, st, 10 ), 62, 12, 3, 2 ) == YES ) {
+			dispstrhgc( "ต้องการ จำนวนตัวอักษรต่อนิ้ว เท่าไร     : ", 28, 12, NORMALATTR );
+			if ( getnumber( itoa( cpi, st, 10 ), 62, 12, 3, REVERSEATTR ) == YES ) {
 				cpi = atoi( st );
-				cpi = ( cpi<20 ) ? cpi : 20;
-				cpi = ( cpi>0 ) ? cpi : 1;
+				cpi = ( cpi < 20 ) ? cpi : 20;
+				cpi = ( cpi > 0 ) ? cpi : 1;
 				if ( ( printer == LQ ) || ( printer == N7 ) || ( printer == N5 ) ) {
 					maxcol = 136 * cpi / 10;
 					maxdot = 3264;
@@ -346,64 +345,64 @@ void docommand( int row, int col ) {
 				}
 			}
 			retpic( );
-			writemenu( 3, 1, 0 );
-			writemenu( row, col, 2 );
+			writemenu( 3, 1, NORMALATTR );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 2:
 			savepic( );
-			dispstrhgc( "ต้องการตั้งขอบซ้าย(Left Margin)เท่าไร : ", 27, 12, 0 );
-			if ( getnumber( itoa( leftmargin, st, 10 ), 62, 12, 3, 2 ) == YES ) {
-				leftmargin = ( atoi( st )>0 ) ? atoi( st ) : 1;
-				leftmargin = ( leftmargin<rightmargin ) ? leftmargin : 1;
+			dispstrhgc( "ต้องการตั้งขอบซ้าย(Left Margin)เท่าไร : ", 27, 12, NORMALATTR );
+			if ( getnumber( itoa( leftmargin, st, 10 ), 62, 12, 3, REVERSEATTR ) == YES ) {
+				leftmargin = ( atoi( st ) > 0 ) ? atoi( st ) : 1;
+				leftmargin = ( leftmargin < rightmargin ) ? leftmargin : 1;
 			}
 			retpic( );
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 3:
 			savepic( );
-			dispstrhgc( "ต้องการตั้งขอบขวา(Right Margin)เท่าไร: ", 27, 12, 0 );
-			if ( getnumber( itoa( rightmargin, st, 10 ), 62, 12, 3, 2 ) == YES ) {
+			dispstrhgc( "ต้องการตั้งขอบขวา(Right Margin)เท่าไร: ", 27, 12, NORMALATTR );
+			if ( getnumber( itoa( rightmargin, st, 10 ), 62, 12, 3, REVERSEATTR ) == YES ) {
 				rightmargin = atoi( st );
 			}
 			retpic( );
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 4:
 			savepic( );
-			dispstrhgc( "ต้องการเริ่มพิมพ์ที่หน้าเท่าไร : ", 33, 12, 0 );
-			if ( getnumber( itoa( pagebegin, st, 10 ), 57, 12, 3, 2 ) == YES ) {
+			dispstrhgc( "ต้องการเริ่มพิมพ์ที่หน้าเท่าไร : ", 33, 12, NORMALATTR );
+			if ( getnumber( itoa( pagebegin, st, 10 ), 57, 12, 3, REVERSEATTR ) == YES ) {
 				pagebegin = ( atoi( st )>0 ) ? atoi( st ) : 1;
 				pagebegin = ( pageend<pagebegin ) ? pageend : pagebegin;
 			}
 			retpic( );
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 5:
 			savepic( );
-			dispstrhgc( "ต้องการหยุดพิมพ์ที่หน้า (PageEnd) เท่าไร  :   ", 26, 12, 0 );
-			if ( getnumber( itoa( pageend, st, 10 ), 64, 12, 3, 2 ) == YES ) {
+			dispstrhgc( "ต้องการหยุดพิมพ์ที่หน้า (PageEnd) เท่าไร  :   ", 26, 12, NORMALATTR );
+			if ( getnumber( itoa( pageend, st, 10 ), 64, 12, 3, REVERSEATTR ) == YES ) {
 				pageend = atoi( st );
 				pageend = ( pageend<pagebegin ) ? pagebegin : pageend;
 			}
 			retpic( );
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 6:
 			savepic( );
-			dispstrhgc( "ต้องการให้พิมพ์หมายเลขหน้าเริ่มต้น เท่าไร ?  : ", 26, 12, 0 );
-			if ( getnumber( itoa( pagenumberoffset, st, 10 ), 64, 12, 3, 2 ) == YES )
+			dispstrhgc( "ต้องการให้พิมพ์หมายเลขหน้าเริ่มต้น เท่าไร ?  : ", 26, 12, NORMALATTR );
+			if ( getnumber( itoa( pagenumberoffset, st, 10 ), 64, 12, 3, REVERSEATTR ) == YES )
 				pagenumberoffset = atoi( st );
 			retpic( );
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 7:
 			savepic( );
-			dispstrhgc( "ต้องการพิมพ์กี่ชุด : ", 37, 12, 0 );
-			if ( getnumber( itoa( copytoprint, st, 10 ), 52, 12, 3, 2 ) == YES ) {
+			dispstrhgc( "ต้องการพิมพ์กี่ชุด : ", 37, 12, NORMALATTR );
+			if ( getnumber( itoa( copytoprint, st, 10 ), 52, 12, 3, REVERSEATTR ) == YES ) {
 				copytoprint = ( atoi( st )>0 ) ? atoi( st ) : 1;
 			}
 			retpic( );
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		}
 		break;
@@ -411,22 +410,22 @@ void docommand( int row, int col ) {
 		switch ( row ) {
 		case 0:
 			savepic( );
-			dispstrhgc( "ใส่ข้อความหัวกระดาษ (Heading) ที่ต้องการ : ", 1, 12, 0 );
-			getstring( heading, 38, 12, 40, 2 );
+			dispstrhgc( "ใส่ข้อความหัวกระดาษ (Heading) ที่ต้องการ : ", 1, 12, NORMALATTR );
+			getstring( heading, 38, 12, 40, REVERSEATTR );
 			retpic( );
 			break;
 		case 1:
 			savepic( );
-			dispstrhgc( "ใส่ข้อความท้ายกระดาษ (Footing) ที่ต้องการ : ", 1, 12, 0 );
-			getstring( footing, 39, 12, 39, 2 );
+			dispstrhgc( "ใส่ข้อความท้ายกระดาษ (Footing) ที่ต้องการ : ", 1, 12, NORMALATTR );
+			getstring( footing, 39, 12, 39, REVERSEATTR );
 			retpic( );
 			break;
 		case 2:
 			savepic( );
-			dispstrhgc( "ใส่ข้อความหน้ากระดาษ(PageTitle)ที่ต้องการ : ", 1, 12, 0 );
-			getstring( pagetitle, 39, 12, 39, 2 );
+			dispstrhgc( "ใส่ข้อความหน้ากระดาษ(PageTitle)ที่ต้องการ : ", 1, 12, NORMALATTR );
+			getstring( pagetitle, 39, 12, 39, REVERSEATTR );
 			strcpy( pageformat, setpageformat( pagetitle, maxcol ) );
-			dispstrhgc( pageformat, 2, 13, 0 );
+			dispstrhgc( pageformat, 2, 13, NORMALATTR );
 			retpic( );
 			break;
 		case 3:
@@ -434,10 +433,10 @@ void docommand( int row, int col ) {
 			titlewriteallmenu( );
 			titlemenuselect( );
 			retpic( );
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			/* add by Suttipong Kanakakorn Sun  09-03-1989  01:29:17 */
 			set_all_lineperpage( INTERACTIVE ); /* set (user)lineperpage */
-			/* writemenu(0,1,0); */  /* show new lines per page */
+			/* writemenu( 0, 1, 0 ); */  /* show new lines per page */
 			break;
 		case 4:
 		case 5:
@@ -457,9 +456,8 @@ void docommand( int row, int col ) {
 			if ( i == RETKEY ) {
 				smode = ( me == 1 ) ? CUR_DIR : CW_DIR;
 				savepic( );
-				dispstrhgc( "•••••••••••••••", 30, 11, 2 );
-				dispstrhgc( "–กรุณารอสักครู่.....–", 30, 12, 2 );
-				dispstrhgc( "•••••••••••••••", 30, 13, 2 );
+				framebox( 30, 11, 50, 13, REVERSEATTR );
+				dispstrhgc( "กรุณารอสักครู่.....", 33, 12, REVERSEATTR );
 				( row == 4 ) ? saveoption( smode ) : readoption( smode );
 				retpic( );
 			}
@@ -473,7 +471,7 @@ void docommand( int row, int col ) {
 			retpic( );
 			/* add by Suttipong Kanakakorn Sun  09-03-1989  01:29:17 */
 			set_all_lineperpage( INTERACTIVE ); /* set (user)lineperpage */
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		case 7:
 			if ( pagebreak == YES ) {
@@ -481,7 +479,7 @@ void docommand( int row, int col ) {
 			} else {
 				pagebreak = YES;
 			}
-			writemenu( row, col, 2 );
+			writemenu( row, col, REVERSEATTR );
 			break;
 		}
 		break;
@@ -491,12 +489,9 @@ void docommand( int row, int col ) {
 void writeallmenu( void ) {
 	int i;
 	clsall( );
-	_rectangle( 0, 0, 639, 347 );
+	_rectangle( 0, 0, 639, ( scrmode == VGA ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
 	prakeaw( );
-	/*
-	dispstrhgc("จุฬาลงกรณ์มหาวิทยาลัย",6,0,BOLDATTR);
-	*/
-	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, ITALICATTR );
+	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
 	dispstrhgc( "CU-PRINT", 31, 1, ENLARGEATTR | BOLDATTR | ONELINEATTR );
 	dispprintf( 22, 2, NORMALATTR, "Version 1.41  %s %s", prog_date, prog_time );
 	_line( 0, 24, 639, 24 );
@@ -510,17 +505,17 @@ void writeallmenu( void ) {
 	_rectangle( mcol[0] * 8 - 2, 62, ( mcol[0] + mlenght ) * 8 + 2, 225 );
 	i = 0;
 	while ( i <= rowmax[0] ) {
-		writemenu( i++, 0, 0 );
+		writemenu( i++, 0, NORMALATTR );
 	}
 	_rectangle( mcol[1] * 8 - 2, 62, ( mcol[1] + mlenght ) * 8 + 2, 225 );
 	i = 0;
 	while ( i <= rowmax[1] ) {
-		writemenu( i++, 1, 0 );
+		writemenu( i++, 1, NORMALATTR );
 	}
 	_rectangle( mcol[2] * 8 - 2, 62, ( mcol[2] + mlenght ) * 8 + 2, 225 );
 	i = 0;
 	while ( i <= rowmax[2] ) {
-		writemenu( i++, 2, 0 );
+		writemenu( i++, 2, NORMALATTR );
 	}
 }
 
@@ -532,7 +527,7 @@ void menuselect( void ) {
 		c = ebioskey( 0 );
 		switch ( c ) {
 		case UPKEY:
-			writemenu( row, col, 0 );
+			writemenu( row, col, NORMALATTR );
 			if ( row == 0 ) {
 				row = rowmax[col];
 			} else {
@@ -541,7 +536,7 @@ void menuselect( void ) {
 			writemenu( row, col, REVERSEATTR );
 			break;
 		case DNKEY:
-			writemenu( row, col, 0 );
+			writemenu( row, col, NORMALATTR );
 			if ( row == rowmax[col] ) {
 				row = 0;
 			} else {
@@ -550,7 +545,7 @@ void menuselect( void ) {
 			writemenu( row, col, REVERSEATTR );
 			break;
 		case RIKEY:
-			writemenu( row, col, 0 );
+			writemenu( row, col, NORMALATTR );
 			if ( col == 2 ) {
 				col = 0;
 			} else {
@@ -562,7 +557,7 @@ void menuselect( void ) {
 			writemenu( row, col, REVERSEATTR );
 			break;
 		case LEKEY:
-			writemenu( row, col, 0 );
+			writemenu( row, col, NORMALATTR );
 			if ( col == 0 ) {
 				col = 2;
 			} else {
@@ -585,14 +580,10 @@ void menuselect( void ) {
 
 void prtwriteallmenu( void ) {
 	int i;
-	dispstrhgc( "••••••••••••••••••••••••••••••", 4, 9, 0 );
-	dispstrhgc( "–                              –", 4, 10, 0 );
-	dispstrhgc( "–                              –", 4, 11, 0 );
-	dispstrhgc( "–                              –", 4, 12, 0 );
-	dispstrhgc( "••••••••••••••••••••••••••••••", 4, 13, 0 );
+	framebox( 3, 9, 36, 13, NORMALATTR );
 	i = 0;
 	while ( i <= prtrowmax ) {
-		prtwritemenu( i++, 0 );
+		prtwritemenu( i++, NORMALATTR );
 	}
 }
 
@@ -644,27 +635,27 @@ void prtmenuselect( void ) {
 	int quitprt = NO;
 	int c;
 	int row = 0;
-	prtwritemenu( row, 2 );
+	prtwritemenu( row, REVERSEATTR );
 	do {
 		c = ebioskey( 0 );
 		switch ( c ) {
 		case UPKEY:
-			prtwritemenu( row, 0 );
+			prtwritemenu( row, NORMALATTR );
 			if ( row == 0 ) {
 				row = prtrowmax;
 			} else {
 				row--;
 			}
-			prtwritemenu( row, 2 );
+			prtwritemenu( row, REVERSEATTR );
 			break;
 		case DNKEY:
-			prtwritemenu( row, 0 );
+			prtwritemenu( row, NORMALATTR );
 			if ( row == prtrowmax ) {
 				row = 0;
 			} else {
 				row++;
 			}
-			prtwritemenu( row, 2 );
+			prtwritemenu( row, REVERSEATTR );
 			break;
 		case RETKEY:
 			prtdocommand( row );
@@ -741,8 +732,8 @@ void prtdocommand( int row ) {
 			printer24pin = NO;
 			break;
 		}
-		prtwritemenu( row, 2 );
-		prtwritemenu( 1, 0 );  /* show new paper width */
+		prtwritemenu( row, REVERSEATTR );
+		prtwritemenu( 1, NORMALATTR );  /* show new paper width */
 		break;
 	case 1:
 		if ( smallpaper == NO ) {
@@ -751,7 +742,7 @@ void prtdocommand( int row ) {
 			if ( ( printer == FX ) || ( printer == LX ) );/*no chg*/
 			else { smallpaper = NO; }
 		}
-		prtwritemenu( row, 2 );
+		prtwritemenu( row, REVERSEATTR );
 		break;
 	case 2:
 		if ( prtcodestd == NO ) {
@@ -759,7 +750,7 @@ void prtdocommand( int row ) {
 		} else {
 			prtcodestd = NO;
 		}
-		prtwritemenu( row, 2 );
+		prtwritemenu( row, REVERSEATTR );
 		break;
 	}
 	setprinter( smallpaper, printer24pin );
@@ -767,19 +758,14 @@ void prtdocommand( int row ) {
 
 void modewriteallmenu( void ) {
 	int i;
-	char smcol;
-	smcol = mcol[2] - 4;
-	dispstrhgc( "••••••••••••••••••••••••••••", smcol, 10, 0 );
-	dispstrhgc( "–                            –", smcol, 11, 0 );
-	dispstrhgc( "–                            –", smcol, 12, 0 );
-	dispstrhgc( "••••••••••••••••••••••••••••", smcol, 13, 0 );
+	framebox( 48, 10, 79, 13, NORMALATTR );
 	i = 0;
 	while ( i <= moderowmax ) {
-		modewritemenu( i++, 0 );
+		modewritemenu( i++, NORMALATTR );
 	}
 }
 
-void modewritemenu( int row, int attr ) {
+void modewritemenu( int row, font_attr attr ) {
 	char smcol;
 	smcol = mcol[2] - 3;
 	switch ( row ) {
@@ -804,27 +790,27 @@ void modemenuselect( void ) {
 	int quit = NO;
 	int c;
 	int row = 0;
-	modewritemenu( row, 2 );
+	modewritemenu( row, REVERSEATTR );
 	do {
 		c = ebioskey( 0 );
 		switch ( c ) {
 		case UPKEY:
-			modewritemenu( row, 0 );
+			modewritemenu( row, NORMALATTR );
 			if ( row == 0 ) {
 				row = moderowmax;
 			} else {
 				row--;
 			}
-			modewritemenu( row, 2 );
+			modewritemenu( row, REVERSEATTR );
 			break;
 		case DNKEY:
-			modewritemenu( row, 0 );
+			modewritemenu( row, NORMALATTR );
 			if ( row == moderowmax ) {
 				row = 0;
 			} else {
 				row++;
 			}
-			modewritemenu( row, 2 );
+			modewritemenu( row, REVERSEATTR );
 			break;
 		case RETKEY:
 			modedocommand( row );
@@ -844,7 +830,7 @@ void modedocommand( int row ) {
 		} else {
 			graphicprint = YES;
 		}
-		modewritemenu( row, 2 );
+		modewritemenu( row, REVERSEATTR );
 		break;
 	case 1:
 		if ( nlqmode == YES ) {
@@ -852,27 +838,21 @@ void modedocommand( int row ) {
 		} else {
 			nlqmode = YES;
 		}
-		modewritemenu( row, 2 );
+		modewritemenu( row, REVERSEATTR );
 		break;
 	}
 }
 
 void titlewriteallmenu( void ) {
 	int i;
-	char smcol;
-	smcol = mcol[2] - 4;
-	dispstrhgc( "••••••••••••••••••••••••••••", smcol, 7, 0 );
-	dispstrhgc( "–                            –", smcol, 8, 0 );
-	dispstrhgc( "–                            –", smcol, 9, 0 );
-	dispstrhgc( "–                            –", smcol, 10, 0 );
-	dispstrhgc( "••••••••••••••••••••••••••••", smcol, 11, 0 );
+	framebox( 48, 7, 79, 11, NORMALATTR );
 	i = 0;
 	while ( i <= titlerowmax ) {
-		titlewritemenu( i++, 0 );
+		titlewritemenu( i++, NORMALATTR );
 	}
 }
 
-void titlewritemenu( int row, int attr ) {
+void titlewritemenu( int row, font_attr attr ) {
 	char smcol;
 	smcol = mcol[2] - 3;
 	switch ( row ) {
@@ -949,27 +929,27 @@ void titlemenuselect( void ) {
 	int quit = NO;
 	int c;
 	int row = 0;
-	titlewritemenu( row, 2 );
+	titlewritemenu( row, REVERSEATTR );
 	do {
 		c = ebioskey( 0 );
 		switch ( c ) {
 		case UPKEY:
-			titlewritemenu( row, 0 );
+			titlewritemenu( row, NORMALATTR );
 			if ( row == 0 ) {
 				row = titlerowmax;
 			} else {
 				row--;
 			}
-			titlewritemenu( row, 2 );
+			titlewritemenu( row, REVERSEATTR );
 			break;
 		case DNKEY:
-			titlewritemenu( row, 0 );
+			titlewritemenu( row, NORMALATTR );
 			if ( row == titlerowmax ) {
 				row = 0;
 			} else {
 				row++;
 			}
-			titlewritemenu( row, 2 );
+			titlewritemenu( row, REVERSEATTR );
 			break;
 		case RETKEY:
 			titledocommand( row );
@@ -1006,5 +986,5 @@ void titledocommand( int row ) {
 		break;
 	}
 	/*writemenu(0,1,0);*/
-	titlewritemenu( row, 2 );
+	titlewritemenu( row, REVERSEATTR );
 }

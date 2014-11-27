@@ -1,12 +1,15 @@
-/* --------------------------------------------------------------------- */
-/*  Module        : 24PINS.H                                             */
-/*  Description   : define characteristic used in 24pins.C               */
-/*  Written by    : Mr. Thotsapol Aphikulvanich ID.2818966               */
-/*  Date written  : 23 April 1989                                        */
-/*  Last modified : 3  June  1989                                        */
-/*                  Modified By CUCC                                     */
-/*                : 22 June 1990  Extend Bar Table                       */
-/* --------------------------------------------------------------------- */
+/*
+* ============================================================================
+* Module        : 24PINS.H
+* Description   : define characteristic used in 24pins.C
+* Written by    : Mr. Thotsapol Aphikulvanich ID.2818966
+* Date written  : 23 April 1989
+* Last modified : 3  June  1989
+* Modified By   : CUCC
+* Last modified : 22 June 1990
+*                 - Extend Bar Table.
+* ============================================================================
+*/
 
 #ifndef SCUP_24PINS_H_INCLUDED
 #define SCUP_24PINS_H_INCLUDED
@@ -94,10 +97,10 @@
 
 /* ---- used as buffer before printing to print buffer ---- */
 struct cp_textbuf {
-    unsigned char *uppest;  /* buffer for wannayok    */
-    unsigned char *upper;   /* buffer for upper line  */
-    unsigned char *middle;  /* buffer for middle line */
-    unsigned char *lower;   /* buffer for lower line  */
+	unsigned char *uppest;  /* buffer for wannayok    */
+	unsigned char *upper;   /* buffer for upper line  */
+	unsigned char *middle;  /* buffer for middle line */
+	unsigned char *lower;   /* buffer for lower line  */
 };
 
 /* ---- graphics printing buffer ------ */
@@ -106,18 +109,18 @@ struct cp_textbuf {
 #define CP_LQSCRROW 2
 
 typedef struct {
-    unsigned char font[CP_LQCOL][CP_LQROW];
+	unsigned char font[CP_LQCOL][CP_LQROW];
 } FONT;
 
 typedef struct {
-    unsigned char font[CP_LQCOL][CP_LQSCRROW];
+	unsigned char font[CP_LQCOL][CP_LQSCRROW];
 } FONTSCR;
 
 struct cp_grlqbuf {
-    FONT *upper;
-    FONT *middle;
-    FONT *lower;
-    FONT *extbar;
+	FONT *upper;
+	FONT *middle;
+	FONT *lower;
+	FONT *extbar;
 };
 
 /* ---- define buffer used in 24pins.c module ----- */
@@ -135,48 +138,97 @@ extern FONTSCR *cp_lqscr_comb;
 extern FONTSCR *cp_lqscr_italic_comb;
 
 /* ------ define control byte for character attribute ----- */
-extern  unsigned char cp_control;
+extern unsigned char cp_control;
 
 /* ----- define prototype of function in 24pins.c module ----- */
+
+/** Function      : execerror
+*   Description   : report error and terminate program
+*   Parameters    : s - general error
+*                   t - extended error
+*   Return values : NONE
+*   Remark        : This function causes the program to stop */
 void execerror( char *s, char *t );
+
+/** Function      : cp_clearbuf
+*   Description   : clear 4 lines buffer
+*   Parameters    : NONE
+*   Return values : NONE
+*   Remark        : used global variable cp_buf */
 void cp_clearbuf( void );
+
+/** Function      : cp_split4level
+*   Description   : split thai message into 4 levels
+*   Parameters    : linemsg - message to be printed
+*   Return values : NONE
+*   Remark        : global variable "cp_buf" is result */
 void cp_split4level( unsigned char *linemsg );
-void cp_init_textbuf( void );
-void cp_init_grpbuf( void );
 
 /* ----- NORMAL and ITALIC CODE ----- */
-void cp_combine_fontlq( FONT *combcode, FONT *sara, FONT *wannayok );
-FONT *cp_create_lqcombine( FONT *fntable );
+
+/** Function      : cp_lq_font
+*   Description   : search character in font table
+*   Parameters    : fntable - pointer to the font table
+*                 : ch      - character to be search
+*   Return values : pointer to searching font */
 FONT *cp_lq_font( FONT *fntable, unsigned char ch );
+
+/** Function      : cp_lq_combinecode
+*   Description   : searching combine sara and wannayok
+*   Parameters    : fntable   - pointer to font table
+*                   combtable - pointer to combine table
+*                   sara      - sara ASCII code
+*                   wannayok  - wannayok ASCII code
+*   Return values : pointer to new combine character */
 FONT *cp_lq_combinecode( FONT *fntable, FONT *combtable, unsigned char sara, unsigned char wannayok );
 
 /* --- SUBCRIPT and SUPERSCRIPT --- */
-void cp_combine_fontlqscr( FONTSCR *combcode, FONTSCR *sara, FONTSCR *wannayok );
+
+/**  */
 FONTSCR *cp_create_lqscrcombine( FONTSCR *fntable );
+
+/** Function      : cp_lqscr_font
+*   Description   : search character in font table
+*   Parameters    : fntable - pointer to the font table
+*                 : ch      - character to be search
+*   Return values : pointer to searching font */
 FONTSCR *cp_lqscr_font( FONTSCR *fntable, unsigned char ch );
+
+/** Function      : cp_lqscr_combinecode
+*   Description   : searching combine sara and wannayok
+*   Parameters    : fntable   - pointer to font table
+*                   combtable - pointer to combine table
+*                   sara      - sara ASCII code
+*                   wannayok  - wannayok ASCII code
+*   Return values : pointer to new combine character */
 FONTSCR *cp_lqscr_combinecode( FONTSCR *fntable, FONTSCR *combtable, unsigned char sara, unsigned char wannayok );
 
 /* -- print data to buffer and manage all attribute -- */
-FONT *cp_lqscr_blank( FONT *buf );
 
-FONT *cp_sub_middle_lower( FONT *buf, FONTSCR *middle, FONTSCR * lower );
-FONT *cp_sub_upper_middle( FONT *buf, FONTSCR *upper, FONTSCR *middle );
-
-FONT *cp_super_upper_middle( FONT *buf, FONTSCR *upper, FONTSCR *middle );
-FONT *cp_super_middle_lower( FONT * buf, FONTSCR *middle, FONTSCR *lower );
-
-FONT *cp_underline( FONT *newchar, FONT *oldchar );
-FONT *cp_doubleline( FONT *newchar, FONT *oldchar );
-
-int cp_enlarge( struct cp_grlqbuf buf, int index );
-
-void cp_bold( struct cp_grlqbuf buf, int index );
-
+/** Function      : cp_pr_lqbuf
+*   Description   : printing data to buffer
+*   Parameters    : buffer - pointer to printing buffer
+*                   data   - data to printing
+*                   index  - index of last printing position
+*   Return values : CP_ERROR - when error occurs
+*                   gindex   - last to printing position */
 int cp_pr_lqbuf( struct cp_grlqbuf lqbuf, struct cp_grlqbuf grpchar, int gindex );
+
+/** Function      : cp_printlq(void)
+*   Description   : printing 4 level data to printing buffer
+*   Parameters    : NONE
+*   Return values : CP_ERROR - when error occurs or buffer full
+*                   gindex   - number of printing character
+*   Remark        : use GLOBAL variable "cp_lqbuf" */
 int cp_printlq( void );
-void cp_printing( int cpi, int nchar );
 
 /* --- set control flag --- */
+
+/** Function      : cp_set_reset
+*   Description   : set or reset mask bits of attrib control
+*   Parameters    : ch     - input character
+*                   cntptr - pointer to control
+*   Return values : NONE */
 int cp_set_reset( unsigned char ch, unsigned char *cntptr );
 
 #endif /* SCUP_24PINS_H_INCLUDED */

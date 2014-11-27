@@ -1,7 +1,11 @@
-/**
-*   Updated: Suttipong Kanakakorn
-*   Wed  08-09-1989  00:05:24
-*   add function prototype
+/*
+* ============================================================================
+* PIC.C
+*
+* Updated: Suttipong Kanakakorn
+* Wed  08-09-1989  00:05:24
+*  - add function prototype
+* ============================================================================
 */
 
 #include <io.h>
@@ -20,6 +24,7 @@
 
 #include "pic.h"
 
+#ifdef WANT_TO_USE_GRAPH
 char *print_buffer_pointer;
 int pic_print;
 int pic_offset;
@@ -36,8 +41,7 @@ int past_printer_data;       /* use to save old printer data */
 int dot_per_line;            /* use in update base positon */
 int dot_per_mode;            /* save number of dot in bit image mode */
 
-/*
-int is_command( char st[] ) {
+int is_command( char *st ) {
 	int i;
 	i = 0;
 	if ( st[i] == BLANK ) {
@@ -58,9 +62,8 @@ int is_command( char st[] ) {
 	}
 }
 
-
-void get_argument( char arg[][40], char st[], int *no_arg ) {
-	int                         i, j, k, spflg;
+void get_argument( char arg[][40], char *st, int *no_arg ) {
+	int i, j, k, spflg;
 	i = j = k = 0;
 	memset( arg, 0, 400 );
 	if ( st[i] == BLANK ) {
@@ -87,14 +90,15 @@ void get_argument( char arg[][40], char st[], int *no_arg ) {
 		}
 	}
 	*no_arg = j;
-	/-*for ( i = 0; i < 20; i++ ) {
-	printf( "%c%x ", arg[1][i], arg[1][i] );
-	}*-/
+	/*
+	for ( i = 0; i < 20; i++ ) {
+		printf( "%c%x ", arg[1][i], arg[1][i] );
+	}
+	*/
 }
 
-
 int getpr( void ) {
-	char  buffer;
+	char buffer;
 	if ( _read( prd_handle, &buffer, 1 ) == 0 ) {
 		p_fileready = YES;
 	}
@@ -330,4 +334,4 @@ void read_picture_file( void ) {
 		close( prd_handle );
 	}
 }
-*/
+#endif

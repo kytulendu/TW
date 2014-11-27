@@ -1,30 +1,27 @@
-/* ---------------------------------------------------- */
-/* Program     : PRT.C                                  */
-/* Called from : PMENU.C                                */
-/* Function    : Operate character's occurence on paper */
-/* Last update : 22/3/31                                */
-/* last update : 11/4/31                                */
-/* Last update : 13/5/31                                */
-/* Last update : 02/10/31   add cpi funct.              */
-/* Last update : 10/4/32    modify converse funct       */
-/* Last update : 9/5/32     delete some functions.      */
-/* Last update : Mon  08-07-1989  01:53:29              */
-/* By Suttipong Kanakakorn                              */
-/* Clean all the junk                                   */
-/*               Tue  08-15-1989  00:53:30              */
-/* better approach to load font                         */
-/*               Tue  08-29-1989  18:02:18              */
-/* add many function                                    */
-/* By CUCC                                              */
-/*   Extend Bar                                         */
-/* ---------------------------------------------------- */
+/*
+* ============================================================================
+* PRT.C
+*
+* Called from : PMENU.C
+* Function    : Operate character's occurence on paper
+* Last update : 22/3/31
+* last update : 11/4/31
+* Last update : 13/5/31
+* Last update : 02/10/31   add cpi funct.
+* Last update : 10/4/32    modify converse funct
+* Last update : 9/5/32     delete some functions.
+* Last update : Mon  08-07-1989  01:53:29
+*				By Suttipong Kanakakorn
+*				- Clean all the junk
+*               Tue  08-15-1989  00:53:30
+*				- better approach to load font
+*               Tue  08-29-1989  18:02:18
+*				- add many function
+*				By CUCC
+*				- Extend Bar
+* ============================================================================
+*/
 
-/* constant area */
-#define WIDTH 24
-#define ADJUST(x) (x>=0) ? x : 256+x
-#define ASCII_NO 256
-
-/* heading */
 #include <stdio.h>
 #include <stdlib.h>
 #include <dos.h>
@@ -42,6 +39,11 @@
 
 #include "prt.h"
 
+/* constant area */
+#define WIDTH 24
+#define ADJUST(x) (x>=0) ? x : 256+x
+#define ASCII_NO 256
+
 typedef struct {
 	char byte1;
 	char byte2;
@@ -49,31 +51,67 @@ typedef struct {
 } buffer24pin;
 
 buffer24pin *print24buffer;
-void converse( char s[] );
-void PrinterLoadLine( char pline[] );
-void clearbuffer( void );
-int adj_attr( font_attr *attr, int *ch );
-void pretobuffer( font_attr *attr, int *ch, int *current );
-void blockgraphic( int *pch, int *pcurrent );
-void normal_normal( int *pch, int *pcurrent, int pf, int pu );
-void normal_bold( int *pch, int *pcurrent, int pf, int pu );
-void normal_enlarge( int *pch, int *pcurrent, int pf, int pu );
-void normal_bold_enlarge( int *pch, int *pcurrent, int pf, int pu );
-void subscript_normal( int *pch, int *pcurrent, int pu );
-void subscript_bold( int *pch, int *pcurrent, int pu );
-void subscript_enlarge( int *pch, int *pcurrent, int pu );
-void subscript_bold_enlarge( int *pch, int *pcurrent, int pu );
-void superscript_normal( int *pch, int *pcurrent, int pu );
-void superscript_bold( int *pch, int *pcurrent, int pu );
-void superscript_enlarge( int *pch, int *pcurrent, int pu );
-void superscript_bold_enlarge( int *pch, int *pcurrent, int pu );
-int  islevel( int *pline );
-void converse( char *ps );
-void swapwanayuk( char *ps );
 
-/* --------------------------------- */
-/* ®—¥·∫Ëß√À— Õ—°…√‡™Ëπ ” ª Ø ∞ ‡ªÁπ 2 √À—  */
-/* --------------------------------- */
+/** ®—¥·∫Ëß√À— Õ—°…√‡™Ëπ ” ª Ø ∞ ‡ªÁπ 2 √À—  */
+void converse( char *s );
+
+/** swap wanayuk and upper wovel */
+void swapwanayuk( char *s );
+
+/**  */
+void clearbuffer( void );
+
+/** This module operate on all attribute
+*   Some attributes are tokkle to itself
+*   Some, effect to the others
+*   Example ,superscript attr, sets itself and also resets subscript attribute. */
+int adj_attr( font_attr *attr, int *ch );
+
+/** Checking type of character appearance
+*   e.g. block, boldface, enlarge, normal ect. */
+void pretobuffer( font_attr *attr, int *ch, int *current );
+
+/** Invention of graphic blocks to build tables
+*   this include both single and double lineblock
+*   such as ò ë ô ì ñ í ö ê õ ï è                 */
+void blockgraphic( int *pch, int *pcurrent );
+
+/**  */
+void normal_normal( int *pch, int *pcurrent, int pf, int pu );
+
+/**  */
+void normal_bold( int *pch, int *pcurrent, int pf, int pu );
+
+/**  */
+void normal_enlarge( int *pch, int *pcurrent, int pf, int pu );
+
+/**  */
+void normal_bold_enlarge( int *pch, int *pcurrent, int pf, int pu );
+
+/**  */
+void subscript_normal( int *pch, int *pcurrent, int pu );
+
+/**  */
+void subscript_bold( int *pch, int *pcurrent, int pu );
+
+/**  */
+void subscript_enlarge( int *pch, int *pcurrent, int pu );
+
+/**  */
+void subscript_bold_enlarge( int *pch, int *pcurrent, int pu );
+
+/**  */
+void superscript_normal( int *pch, int *pcurrent, int pu );
+
+/**  */
+void superscript_bold( int *pch, int *pcurrent, int pu );
+
+/**  */
+void superscript_enlarge( int *pch, int *pcurrent, int pu );
+
+/**  */
+void superscript_bold_enlarge( int *pch, int *pcurrent, int pu );
+
 void converse( char *s ) {
 	int i, j, p;
 	char c[500];
@@ -102,9 +140,6 @@ void converse( char *s ) {
 	strcpy( s, c );
 }
 
-/* --------------------------------- */
-/* to swap wanayuk and upper wovel   */
-/* --------------------------------- */
 void swapwanayuk( char *s ) {
 	int i, j, p;
 	char c[500];
@@ -126,9 +161,6 @@ void swapwanayuk( char *s ) {
 	strcpy( s, c );
 }
 
-/* ------------------------ */
-/*  Load 3 fonts of printer */
-/* ------------------------ */
 int PrinterLoadFont9pin( void ) {
 	font[0] = cp_loadfont( "NORMAL.P9", 11264 );
 	font[1] = cp_loadfont( "ITALIC.P9", 11264 );
@@ -136,11 +168,7 @@ int PrinterLoadFont9pin( void ) {
 	return 0;
 }
 
-/* -------------------------------------------- */
-/* Print string 'line' to printer               */
-/* this module is called from external routine. */
-/* -------------------------------------------- */
-void PrinterLoadLine9pin( char line[] ) {
+void PrinterLoadLine9pin( char *line ) {
 	extern int printer24pin;								/* define in pmenu.c */
 	font_attr attr;
 	auto int current;										/* current dot position */
@@ -196,13 +224,6 @@ void clearbuffer( void ) {
 	}
 }
 
-/* ------------------------------------   */
-/* This module operate on all attribute   */
-/* Some attributes are tokkle to itself   */
-/* Some, effect to the others             */
-/* Example ,superscript attr, sets itself */
-/* and also resets subscript attribute .  */
-/* ------------------------------------   */
 int adj_attr( font_attr *attr, int *ch ) {
 	int  s, ns, na, nb, xx, yy;
 	switch ( *ch ) {
@@ -249,10 +270,6 @@ int adj_attr( font_attr *attr, int *ch ) {
 	}
 }
 
-/* --------------------------------------  */
-/* Checking type of character appearance   */
-/* e.g. block,boldface enlarge,normal ect. */
-/* --------------------------------------  */
 void pretobuffer( font_attr *attr, int *ch, int *current ) {
 	int cont, f, u;
 	/* ......gned)*ch > 0x7e)...  when need to include double line block */
@@ -307,11 +324,6 @@ void pretobuffer( font_attr *attr, int *ch, int *current ) {
 	}
 }
 
-/* --------------------------------------------- */
-/* Invention of graphic blocks to build tables   */
-/* this include both single and double lineblock */
-/* such as ò ë ô ì ñ í ö ê õ ï è                 */
-/* --------------------------------------------- */
 void blockgraphic( int *ch, int *current ) {
 	int g, u, m, b, i, pos;
 	int a;
@@ -764,6 +776,7 @@ void superscript_bold( int *ch, int *current, int u ) {
 		break;
 	}
 }
+
 void superscript_enlarge( int *ch, int *current, int u ) {
 	int level;
 	int i;
@@ -824,6 +837,7 @@ void superscript_enlarge( int *ch, int *current, int u ) {
 		break;
 	}
 }
+
 void superscript_bold_enlarge( int *ch, int *current, int u ) {
 	int level;
 	int i;
@@ -1203,12 +1217,6 @@ void subscript_bold_enlarge( int *ch, int *current, int u ) {
 	}
 }
 
-/* ---------------------------------- */
-/* check if print code is what level, */
-/* upper level then return 1          */
-/* middle level "     "    2          */
-/* below  level "     "    3          */
-/* ---------------------------------- */
 int islevel( int *line ) {
 	register int index;
 

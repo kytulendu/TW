@@ -1,8 +1,14 @@
-/** getstring
-*   extract from pmenu.c  similar to getstr.c in prjcuw\scuw
-*   Updated: Add function prototype
-*   By Suttipong Kanakakorn
-*   Mon  08-07-1989  00:26:14
+/*
+* ============================================================================
+* GETSTR.C
+*
+* getstring
+* extract from pmenu.c  similar to getstr.c in prjcuw\scuw
+*
+* Updated: Add function prototype
+* By Suttipong Kanakakorn
+* Mon  08-07-1989  00:26:14
+* ============================================================================
 */
 
 #include <stdio.h>
@@ -22,16 +28,7 @@
 
 #include "getstr.h"
 
-/*****************************************************************************/
-/* get string                                                                */
-/* input                                                                     */
-/*      textst : string want to get                                          */
-/*      x      : vertical position ( 0 - 89 )                                */
-/*      y      : horisontal position ( 0 - 16 )                              */
-/*      maxlen : maximum length of string                                    */
-/*      attr   : attribute of string for displaying                          */
-/*****************************************************************************/
-int getstring( char textst[], int x, int y, int maxlen, font_attr attr ) {
+int getstring( char *textst, int x, int y, int maxlen, font_attr attr ) {
 	int inkey, oldlen, temp;
 	char keepchar;
 	keepchar = '\0';
@@ -89,8 +86,9 @@ int getstring( char textst[], int x, int y, int maxlen, font_attr attr ) {
 			}
 			break;
 		case CNTRL_Y:
-			if ( strlen( textst ) < oldlen )
+			if ( strlen( textst ) < oldlen ) {
 				textst[strlen( textst )] = keepchar;
+			}
 			keepchar = textst[0];
 			textst[0] = '\0';
 			dispblank( x, y, maxlen, attr );
@@ -141,7 +139,7 @@ int getstring( char textst[], int x, int y, int maxlen, font_attr attr ) {
 	} while ( 1 );
 }
 
-int getname( char textst[], int x, int y, int maxlen, font_attr attr ) {
+int getname( char *textst, int x, int y, int maxlen, font_attr attr ) {
 	int inkey, oldlen, temp;
 	char keepchar;
 	keepchar = '\0';
@@ -230,7 +228,7 @@ int getname( char textst[], int x, int y, int maxlen, font_attr attr ) {
 	} while ( 1 );
 }
 
-int getnumber( char textst[], int x, int y, int maxlen, font_attr attr ) {
+int getnumber( char *textst, int x, int y, int maxlen, font_attr attr ) {
 	int inkey, oldlen, temp;
 	char keepchar;
 	keepchar = '\0';
@@ -262,8 +260,9 @@ int getnumber( char textst[], int x, int y, int maxlen, font_attr attr ) {
 		case CNTRL_S:
 			temp = strlen( textst );
 			if ( temp != 0 ) {
-				if ( temp < oldlen )
+				if ( temp < oldlen ) {
 					textst[temp] = keepchar;
+				}
 				keepchar = textst[temp - 1];
 				textst[temp - 1] = '\0';
 				dispblank( x, y, maxlen, attr );

@@ -1,7 +1,12 @@
-/* Written by Suttipong Kanakakorn Tue  08-29-1989  18:25:25 */
+/*
+* ============================================================================
+* PRTUTIL.C
+*
+* Written by Suttipong Kanakakorn Tue  08-29-1989  18:25:25
+* ============================================================================
+*/
 
 #include <stdio.h>
-#include <mem.h>
 
 #include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
@@ -31,7 +36,7 @@ extern int locfooting;
 extern int extbarprinting;
 
 int find_line_space( void ) {
-	register unsigned i, j, k;
+	register unsigned int i, j, k;
 	/*
 	[ i = Feeding resolution ( Dots / Inch )     ]
 	[ j = Minimum number of dots need for 1 line ]
@@ -85,13 +90,13 @@ void set_all_lineperpage( set_linespace_mode mode ) {
 				10, REVERSEATTR );
 			while ( ebioskey( 0 ) != ESCKEY );
 			retpic( );
-			writemenu( 0, 1, 0 ); /* show new userline per page */
+			writemenu( 0, 1, NORMALATTR ); /* show new userline per page */
 		}
 	}
 	lineperpage = find_line_perpage( );
 	if ( mode == INTERACTIVE ) {
 		savepic( );        /*"                             "*/
-		dispprintf( 19, 12, 0,
+		dispprintf( 19, 12, NORMALATTR,
 			"จำนวนบรรทัดต่อกระดาษ 1 นิ้ว คือ : %s บรรทัด/นิ้ว",
 			find_lineperinch( ) );
 		ebioskey( 0 );
@@ -99,8 +104,7 @@ void set_all_lineperpage( set_linespace_mode mode ) {
 	}
 }
 
-/* feed n/216 inche or n/180 inch depend on printer, n can be any integer */
-void line_feed( unsigned n ) {
+void line_feed( unsigned int n ) {
 	register int i, j;
 
 	j = ( printer24pin ) ? 180 : 216;
@@ -113,9 +117,8 @@ void line_feed( unsigned n ) {
 	PrinterLineFeed( n % j );
 }
 
-/* skip n lines */
-void skip_line( unsigned n ) {
-	for ( ; n>0; n-- ) {
+void skip_line( unsigned int n ) {
+	for ( ; n > 0; n-- ) {
 		if ( graphicprint ) {
 			line_feed( ( printer24pin ) ? IPL_GRPH_24 + linespace
 				: IPL_GRPH_9 + linespace );
@@ -130,7 +133,7 @@ char *find_lineperinch( void ) {
 	static char x[7];
 	register i;
 
-	sprintf( x, "%4d", ( unsigned ) lineperpage * 1000 / pagelength );
+	sprintf( x, "%4d", ( unsigned int ) lineperpage * 1000 / pagelength );
 	for ( i = 0; i < 4; i++ ) {
 		if ( x[i] != '0' ) {
 			movmem( &x[i + 1], &x[i + 2], 4 - i );

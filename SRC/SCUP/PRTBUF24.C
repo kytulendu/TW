@@ -1,6 +1,11 @@
-/** print data in cp_lqbuf.
-*   Written by   : Mr. Prasart Topitumatukhun ID. 2716943
-*   Date written : 10 May 1989
+/*
+* ============================================================================
+* PRTBUF24.C
+*
+* print data in cp_lqbuf.
+* Written by   : Mr. Prasart Topitumatukhun ID. 2716943
+* Date written : 10 May 1989
+* ============================================================================
 */
 
 #include <string.h>
@@ -34,13 +39,6 @@ void ClearTempBuffer( int memclear ) {
 	}
 }
 
-/* ------------------------------------------------------------------------
-Function       :  TransformBuffer()
-Description    :  Use to transfrom data structure cp_lqbuf to nine
-one dimension array.
-Input parameter:  cindex = number of character to transform.
-Return value   :  none.
------------------------------------------------------------------------- */
 /*
 void TransformBuffer( int cindex ) {
 	int i, j, k, memclear;
@@ -61,6 +59,9 @@ void TransformBuffer( int cindex ) {
 }
 */
 
+/** Use to transfrom data structure cp_lqbuf to nine one dimension array.
+*   Input parameter:  cindex = number of character to transform.
+*   Return value   :  none. */
 void TransformBuffer( int cindex ) {
 	register int i, j, k;
 	/*int memclear;*/
@@ -96,7 +97,7 @@ void TransformBuffer( int cindex ) {
 	}
 }
 
-int Ltrim24( char buf1[], char buf2[], char buf3[], int left, int right ) {
+int Ltrim24( char *buf1, char *buf2, char *buf3, int left, int right ) {
 	register int i;
 	i = left;
 	while ( ( buf1[i] == 0 ) && ( buf2[i] == 0 ) && ( buf3[i] == 0 ) ) {
@@ -109,7 +110,7 @@ int Ltrim24( char buf1[], char buf2[], char buf3[], int left, int right ) {
 }
 
 
-int Rtrim24( char buf1[], char buf2[], char buf3[], int left, int right ) {
+int Rtrim24( char *buf1, char *buf2, char *buf3, int left, int right ) {
 	register int i;
 	i = right - 1;
 	while ( ( buf1[i] == 0 ) && ( buf2[i] == 0 ) && ( buf3[i] == 0 ) ) {
@@ -121,19 +122,19 @@ int Rtrim24( char buf1[], char buf2[], char buf3[], int left, int right ) {
 	return( i + 1 );
 }
 
-void PrintBuffer24pin( char buf1[], char buf2[], char buf3[], int maxscan ) {
+void PrintBuffer24pin( char *buf1, char *buf2, char *buf3, int maxscan ) {
 	int left, right, length;
 	register int i, j;
 	left = Ltrim24( buf1, buf2, buf3, 0, maxscan );
 	if ( left != maxscan ) {
 		right = Rtrim24( buf1, buf2, buf3, 0, maxscan );
-		for ( i = 0; i<left; i++ ) {
+		for ( i = 0; i < left; i++ ) {
 			putp( ' ' );									/* print in text mode */
 		}
 		length = right - ( left * 18 );
-		if ( length>0 ) {
+		if ( length > 0 ) {
 			PrinterSetGraphicMode24pinTripleDensity( length );
-			for ( i = 0, j = left * 18; i<length; i++, j++ ) {
+			for ( i = 0, j = left * 18; i < length; i++, j++ ) {
 				putp( buf1[j] );
 				putp( buf2[j] );
 				putp( buf3[j] );

@@ -1,6 +1,11 @@
-/* Modified: Suttipong Kanakakorn
-Tue  08-15-1989  00:10:21
-Search for printer font easier
+/*
+* ============================================================================
+* PREPROC.C
+*
+* Modified: Suttipong Kanakakorn
+* Tue  08-15-1989  00:10:21
+*  - Search for printer font easier
+* ============================================================================
 */
 
 #include <alloc.h>
@@ -12,13 +17,8 @@ Search for printer font easier
 #include "24pins.h"
 #include "global.h"
 
-/* -------------------------------------------------------------------- */
-/*      Function        :       cp_init_textbuf                         */
-/*      Description     :       initialize memory for text buffer       */
-/*      Parameters      :       NONE                                    */
-/*      Return values   :       NONE                                    */
-/*      Remark          :       use GLOBAL variable "cp_buf"            */
-/* -------------------------------------------------------------------- */
+#include "preproc.h"
+
 void cp_init_textbuf( ) {
 	cp_buf.uppest = ( unsigned char * ) malloc( CP_MAX_TEXTBUF );
 	if ( cp_buf.uppest == NULL ) {
@@ -40,17 +40,10 @@ void cp_init_textbuf( ) {
 		execerror( "Insufficient memory\n", "" );
 	}
 
-	/* ----- clear attribute of text character ----- */
+	/* clear attribute of text character */
 	cp_control = 0;
 }
 
-/* -------------------------------------------------------------------- */
-/*      Function        :       cp_init_grpbuf                          */
-/*      Description     :       initialize memory for text buffer       */
-/*      Parameters      :       NONE                                    */
-/*      Return values   :       NONE                                    */
-/*      Remark          :       use GLOBAL variable "cp_lqbuf"          */
-/* -------------------------------------------------------------------- */
 void cp_init_grpbuf( ) {
 	cp_lqbuf.upper = ( FONT * ) malloc( CP_LQ_MAXPRBUF );
 	if ( cp_lqbuf.upper == NULL ) {
@@ -73,37 +66,22 @@ void cp_init_grpbuf( ) {
 	}
 }
 
-/* -------------------------------------------------------------------- */
-/*      Function        :       cp_combine_fontlq                       */
-/*      Description     :       Combine upper sara and wannayok         */
-/*      Parameters      :       combcode - pointer to the result code   */
-/*                      :       sara     - pointer to upper sara        */
-/*                              wannayok - pointer to wannayok          */
-/*      Return values   :       NONE                                    */
-/* -------------------------------------------------------------------- */
 void cp_combine_fontlq( FONT *combcode, FONT *sara, FONT *wannayok ) {
-	int     index;
+	int index;
 
-	/* -- copy wannayok to combcode  */
+	/* copy wannayok to combcode */
 	memcpy( combcode, ( ( char * ) wannayok ) + 1, CP_LQ_FONTSIZE );
 
-	/* -- clear byte #2 in every column */
+	/* clear byte #2 in every column */
 	for ( index = 0; index < CP_LQCOL; index++ ) {
 		combcode->font[index][2] = 0;
 	}
-	/* -- COMBINE SARA AND COMBCODE --- */
+	/* COMBINE SARA AND COMBCODE */
 	for ( index = 0; index < CP_LQ_FONTSIZE; index++ ) {
 		combcode->font[0][index] |= sara->font[0][index];
 	}
 }
 
-/* -------------------------------------------------------------------- */
-/*      Function        :       cp_create_lqcombine                     */
-/*      Description     :       create combine code printer table for   */
-/*                              easily use in print_lq function         */
-/*      Parameters      :       NONE                                    */
-/*      Return values   :       pointer to combine code table           */
-/* -------------------------------------------------------------------- */
 FONT *cp_create_lqcombine( FONT *fntable ) {
 	int x, y;												/* index to lq combine code table */
 	int index;												/* index to address in lq combine */
@@ -123,13 +101,6 @@ FONT *cp_create_lqcombine( FONT *fntable ) {
 	return ( fontptr );
 }
 
-/* --------------------------------------------------------------------- */
-/*      Function        :       cp_loadfont_lqscr                        */
-/*      Description     :       load subscript and italic subscript font */
-/*      Parameters      :       fname   - font filename                  */
-/*      Return value    :       fntptr  - pointer to font table          */
-/*      Remark          :       This function allocate the font table    */
-/* --------------------------------------------------------------------- */
 FONTSCR *cp_loadfont_lqscr( char *fname ) {
 	FONTSCR *p;
 	int  fd;
@@ -147,22 +118,14 @@ FONTSCR *cp_loadfont_lqscr( char *fname ) {
 	return ( p );
 }
 
-/* -------------------------------------------------------------------- */
-/*      Function        :       cp_combine_fontlqscr                    */
-/*      Description     :       Combine upper sara and wannayok         */
-/*      Parameters      :       combcode - pointer to the result code   */
-/*                      :       sara     - pointer to upper sara        */
-/*                              wannayok - pointer to wannayok          */
-/*      Return values   :       NONE                                    */
-/* -------------------------------------------------------------------- */
 void cp_combine_fontlqscr( FONTSCR *combcode, FONTSCR *sara, FONTSCR *wannayok ) {
 	int index;
 
-	/* -- clear combcode -- */
+	/* clear combcode */
 	memset( combcode, 0, CP_LQSCR_FONTSIZE );
 
-	/* -- combine sara and wannayok with shifting up wannayok 6 bits
-	and or with sara -- */
+	/* combine sara and wannayok with shifting up wannayok 6 bits
+	and or with sara */
 	for ( index = 0; index < CP_LQCOL; index++ ) {
 		combcode->font[index][0] = 0x0F &
 			( ( wannayok->font[index][1] >> 3 ) |
@@ -172,13 +135,6 @@ void cp_combine_fontlqscr( FONTSCR *combcode, FONTSCR *sara, FONTSCR *wannayok )
 	};
 }
 
-/* -------------------------------------------------------------------- */
-/*      Function        :       cp_create_lqscrcombine                  */
-/*      Description     :       create combine code printer table for   */
-/*                              easily use in print_lq function         */
-/*      Parameters      :       NONE                                    */
-/*      Return values   :       pointer to combine code table           */
-/* -------------------------------------------------------------------- */
 FONTSCR *cp_create_lqscrcombine( FONTSCR *fntable ) {
 	int x, y;												/* index to lq combine code table */
 	static unsigned char *sara = "ястужв";					/* sara set */

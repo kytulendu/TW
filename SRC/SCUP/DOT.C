@@ -1,9 +1,14 @@
-/** Subroutine Dotcommand & Mailmerge.
-*   Written date 09-18-88.
-*   Update  date 09-22-88.
-*   Update  date 04-08-89.
-*   Updated: by Suttipong Kanakakorn Wed  08-09-1989  00:10:44
-*            add function prototype , clear all warning
+/*
+* ============================================================================
+* DOT.C
+* Subroutine Dotcommand & Mailmerge.
+*
+* Written   date 09-18-88.
+* Update    date 09-22-88.
+* Update    date 04-08-89.
+* Updated : by Suttipong Kanakakorn Wed  08-09-1989  00:10:44
+*           - add function prototype , clear all warning
+* ============================================================================
 */
 
 #include <stdio.h>
@@ -24,42 +29,36 @@
 
 #include "dot.h"
 
-void getfieldname( char rvstring[] );
-void getfieldcontent( char string[] );
-int getfield( char s1[], char s2[], int pin );
-void lookup( char field[], char content[] );
+void getfieldname( char *rvstring );
+void getfieldcontent( char *string );
+int getfield( char *s1, char *s2, int pin );
+void lookup( char *field, char *content );
 
 #define MAXNUM        20									/* number of mergefields */
 #define MAXLENGTH     80									/* maxlength of each field content */
 #define MAXNAMELENGTH 20									/* maxlength of each field name */
 
-/**
-*   Global area already defined in pmenu.c
-*/
+/** Global area already defined in pmenu.c */
 extern FILE *mfp, *fopen( );
 extern char *fieldname[MAXNUM];								/* define array of fieldnames */
 extern char *fieldcontent[MAXNUM];							/* define array of strings */
 extern int fieldcount;										/* define number of fields */
 extern int stdcode;											/* define data file code used */
 
-/**
-*   Global area already defined in printvar.h
-*/
+/** Global area already defined in printvar.h */
 
-/**
-*   Routine to identify fieldnames  and
+/** Routine to identify fieldnames  and
 *   allocate corresponding field content
-*   after get .RV command and it's parms.
-*/
+*   after get .RV command and it's parms. */
 /* Suttipong Kanakakorn Tue  11-07-1989  01:13:34
 someone forget to freemem I just avoid alloc it again only */
-void getfieldname( char rvstring[] ) {
+void getfieldname( char *rvstring ) {
 	char s[MAXNAMELENGTH];									/* field name tempolary area */
 	int pin = 0;											/* point through strings */
 	int n = 0;												/* number of fields */
 	int i = 0;
-	while ( rvstring[i] != 0 ) i++;
-	while ( rvstring[i] <= ' ' ) i--;
+	while ( rvstring[i] != 0 ) { i++; }
+	while ( rvstring[i] <= ' ' ) { i--; }
 	rvstring[++i] = '\0';
 	do {
 		pin = getfield( s, rvstring, pin );
@@ -73,11 +72,9 @@ void getfieldname( char rvstring[] ) {
 	fieldcount = n;
 }
 
-/**
-*   Routine to collect fieldcontents
-*   after read merge file.
-*/
-void getfieldcontent( char string[] ) {
+/** Routine to collect fieldcontents
+*   after read merge file. */
+void getfieldcontent( char *string ) {
 	char s[MAXLENGTH];										/* field name tempolary area */
 	int pin = 0;											/* point through strings */
 	int n = 0;												/* number of fields */
@@ -88,7 +85,7 @@ void getfieldcontent( char string[] ) {
 	} while ( pin != NULL && n < fieldcount );
 }
 
-int getfield( char s1[], char s2[], int pin ) {
+int getfield( char *s1, char *s2, int pin ) {
 	int i = 0;
 	while ( s2[pin] == ',' ) { pin++; }						/* skip comma */
 	while ( ( s2[pin] != ',' ) && ( s2[pin] != '\0' ) ) {
@@ -107,13 +104,7 @@ int getfield( char s1[], char s2[], int pin ) {
 	}
 }
 
-/**
-*   Mailmerge Function. [ f(stringin,stringout) ]
-*   To merge mail string (stringin)
-*   when mailmerge field ( &XXXX& ) exist
-*   output to stringout.
-*/
-void mailmerge( char stringin[], char stringout[] ) {
+void mailmerge( char *stringin, char *stringout ) {
 	int i, j, k, m, n;
 	char field[20];
 	char content[40];
@@ -141,8 +132,9 @@ void mailmerge( char stringin[], char stringout[] ) {
 				stringout[m++] = '&';						/* just normal alphasan character */
 				i++;										/* consume one character ('&'). */
 			}
-		} else
+		} else {
 			stringout[m++] = stringin[i++];					/* normal character */
+		}
 	}
 	stringout[m] = '\0';
 }
@@ -161,86 +153,89 @@ void lookup( char field[], char content[] ) {
 	}
 }
 
-/**
-*   Dotcommand Function. [ f(string) ]
-*   To process dotcommand when the input
-*   string appears as char '.' preceding.
-*/
-void dotcommand( char string[] ) {
+void dotcommand( char *string ) {
 	/* ----- changeable global area ----- */
-	extern   char  *setpageformat( );
-	extern   int    mailmergeflag;
-	extern   int    mergefileexist;
-	extern   int    fieldnameexist;
-	extern   int    cpi;
-	extern   int    lineperpage;
-	extern   int    userlineperpage;
-	extern   int    leftmargin;
-	extern   int    rightmargin;
-	extern   char   heading[];
-	extern   char   footing[];
-	extern   char   pagetitle[];
-	extern   char   pageformat[];
-	extern   int    newpage;
-	extern   int    curpage;
-	extern   int    pic_print;
-	extern   int    pic_offset;
+	extern char *setpageformat( );
+	extern int mailmergeflag;
+	extern int mergefileexist;
+	extern int fieldnameexist;
+	extern int cpi;
+	extern int lineperpage;
+	extern int userlineperpage;
+	extern int leftmargin;
+	extern int rightmargin;
+	extern char heading[];
+	extern char footing[];
+	extern char pagetitle[];
+	extern char pageformat[];
+	extern int newpage;
+	extern int curpage;
+#ifdef WANT_TO_USE_GRAPH
+	extern int pic_print;
+	extern int pic_offset;
+#endif
 
 	/* ------ nonchange global area ------ */
-	extern   int    locpagetitle;
-	extern   int    locheading;
-	extern   int    locfooting;
-	extern   int    printer;
-	extern   int    maxcol;
-	extern   int    maxdot;
-	extern   int    maxbuffer;
-	extern   int    curline;
+	extern int locpagetitle;
+	extern int locheading;
+	extern int locfooting;
+	extern int printer;
+	extern int maxcol;
+	extern int maxdot;
+	extern int maxbuffer;
+	extern int curline;
 
 	int command;
-	/* int no_arg;
-	int handle; */
+#ifdef WANT_TO_USE_GRAPH
+	int no_arg;
+	int handle;
+#endif
 	int cdtpgbrk;											/* condition page break */
 	char content[300];
 	char temp[300];
-	/* char arg[10][40]; */
+#ifdef WANT_TO_USE_GRAPH
+	char arg[10][40];
+#endif
 
 	strcpy( temp, &string[3] );								/* text begin at 4th */
 	strcpy( temp, &temp[blankskip( temp )] );				/* parse to nonblank */
 	temp[strlen( temp ) - 1] = '\0';
 	command = ( tolower( string[1] ) << 8 ) + tolower( string[2] ); /* store 2 chars in one integer */
 	switch ( command ) {
-				/*
-		case ( 'l' << 8 ) + 'f':
-			get_argument( arg, string, &no_arg );
-			if ( no_arg == 2 ) {
-				if ( ( handle = open( &arg[1][0], O_RDONLY ) ) >= 0 ) {
-					_read( handle, font[0], 11264 );
-					close( handle );
-				} else {
-					disperror( " หาแฟ้มตัวอักษรไม่พบ กดปุ่มใดๆเพื่อทำงานต่อ " );
-				}
+#ifdef CUSTOM_FONT
+	case ( 'l' << 8 ) + 'f':
+		get_argument( arg, string, &no_arg );			/* get_argument() in PIC.C */
+		if ( no_arg == 2 ) {
+			if ( ( handle = open( &arg[1][0], O_RDONLY ) ) >= 0 ) {
+				_read( handle, font[0], 11264 );
+				close( handle );
 			} else {
-				disperror( " dot command ไม่ถูกต้อง กดปุ่มใดๆเพื่อทำงานต่อ " );
+				disperror( " หาแฟ้มตัวอักษรไม่พบ กดปุ่มใดๆเพื่อทำงานต่อ " );
 			}
-			break; */
-		/*
-		case ( 'g' << 8 ) + 'p':
-		case ( 'g' << 8 ) + 'r':							// graphic print
-			get_argument( arg, string, &no_arg );			// get print parameter
-			if ( no_arg == 3 ) {
-				if ( ( handle = open( &arg[1][0], O_RDONLY ) ) >= 0 ) {
-					close( handle );
-					analyze_picture_file( &arg[1][0] );
-					initialize_read( &arg[1][0] );
-					pic_print = YES;
-					pic_offset = atoi( &arg[2][0] );
-				} else {
-					disperror( " หาแฟ้มรูปภาพไม่พบ กดปุ่มใดๆเพื่อทำงานต่อ " );
-				}
+		} else {
+			disperror( " dot command ไม่ถูกต้อง กดปุ่มใดๆเพื่อทำงานต่อ " );
+		}
+		break;
+#endif
+#ifdef WANT_TO_USE_GRAPH
+	case ( 'g' << 8 ) + 'p':
+	case ( 'g' << 8 ) + 'r':							/* graphic print */
+		get_argument( arg, string, &no_arg );			/* get print parameter */
+		if ( no_arg == 3 ) {
+			if ( ( handle = open( &arg[1][0], O_RDONLY ) ) >= 0 ) {
+				close( handle );
+				analyze_picture_file( &arg[1][0] );
+				initialize_read( &arg[1][0] );
+				pic_print = YES;
+				pic_offset = atoi( &arg[2][0] );
 			} else {
-				disperror( " dot command ไม่ถูกต้อง กดปุ่มใดๆเพื่อทำงานต่อ " );
+				disperror( " หาแฟ้มรูปภาพไม่พบ กดปุ่มใดๆเพื่อทำงานต่อ " );
 			}
-			break; */
+		} else {
+			disperror( " dot command ไม่ถูกต้อง กดปุ่มใดๆเพื่อทำงานต่อ " );
+		}
+		break;
+#endif
 	case ( 'p' << 8 ) + 'a':								/* newpage or eject. */
 		newpage = YES;
 		break;
@@ -335,15 +330,10 @@ void dotcommand( char string[] ) {
 	}
 }
 
-/**
-*   Blankskip Routine.
-*   Skip to non-blank char of string s[].
-*   Return number of blanks found.
-*   Updated: Suttipong Kanakakorn Mon  08-07-1989  03:06:47
-*/
 int blankskip( char *s ) {
 	register int i = 0;
-	while ( *s++ == ' ' )
+	while ( *s++ == ' ' ) {
 		i++;
+	}
 	return( i );
 }
