@@ -1,5 +1,5 @@
-#include "..\tctype.h"
-#include "..\thai.h"
+#include "tctype.h"
+#include "thai.h"
 
 #include "global.h"
 #include "routine.h"

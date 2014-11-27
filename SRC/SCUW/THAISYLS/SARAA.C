@@ -1,4 +1,4 @@
-#include "..\thai.h"
+#include "thai.h"
 
 #include "global.h"
 #include "routine.h"
