@@ -1,9 +1,9 @@
-Thai Writer
-===========
+Thai-Write
+==========
 
 Descriptions
 ------------
-Thai Writer is a word processor that run from Free-DOS,
+Thai-Write is a word processor that run from Free-DOS,
 M$-DOS, DR-DOS, Novell-DOS or any DOS compatible OSs.
 Base on [CU-Writer](http://th.wikipedia.org/wiki/%E0%B8%8B%E0%B8%B5%E0%B8%A2%E0%B8%B9%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C) 1.41 which is a clone of WordStar,
 by Chulalongkorn University.
@@ -16,18 +16,14 @@ Next is port to OpenWATCOM.
 
 System Requirement
 ------------------
-  * IBM PC or Compatible with 8086 or 8088 CPU, 512 KB RAM or better
+System requirement may change in the furure.
+
+  * IBM PC or Compatible, 8086 or 8088 CPU, 512 KB RAM or better
   * DOS 3.3 or better
   * Hercules, EGA, VGA, MCGA or AT&T 400 (Graphic card in AT&T PC 6300/Olivetti M24)
   * Two 5.25" 360Kb floppy disk drive
   * Free hard drive space 700Kb (Optional)
   * 9 pin or 24 pin Dot-Matrix printer (Optional)
-
-License
--------
-CU-Writer 1.41 is in [public domain](http://unlicense.org/),
-so is this software, but some source code is in other license,
-please see source code for detail.
 
 Download
 --------
@@ -40,7 +36,7 @@ This code have been build using Borland C++ 3.1 and OpenWatcom 1.9.
 
 1. To build this source code you need
 
-   - Borland Turbo C 1.5 or Borland Turbo C 2.0/2.01 or Turbo C++ 1.0/1.01 - 3.0
+   - Borland Turbo C 1.5 - 2.01 or Turbo C++ 1.0/1.01 - 3.0
      or Borland C++ 2.0 - 5.02
    - OpenWatcom 1.9 or any version of Turbo Assembler
 
@@ -85,10 +81,11 @@ CU-Writer developers
 
 `สุวพจน์ จันทโรจนวงศ์`
 
-...
+If you know any one who is in CU-Writer project that isn't in this list,
+please in inform me. ;)
 
-Thai Writer developer
----------------------
+Thai Write developer
+--------------------
 Khral MacCharrver / Khral Steelforge aka. Kytulendu Rrit
 
 Credits
@@ -97,3 +94,32 @@ Stone Soup Group for [Fractint](http://www.fractint.org/) 20.0 source code
 that help me to studies how to do graphic in DOS.
 
 Bresenham's line algorithm by [Alois Zingl](http://members.chello.at/~easyfilter/bresenham.html)
+
+License
+-------
+    ThaiWriter, A DOS word processor.
+    Copyright (C) 2014 Khral Steelforge <https://github.com/kytulendu>.
+
+    CU-Writer
+    Copyright (C) 1989-1993 Chulalongkorn University.
+
+    This program is free software; you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation; either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License along
+    with this program; if not, write to the Free Software Foundation, Inc.,
+    51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
+
+Although, CU-Writer 1.41 is in [public domain](http://unlicense.org/)
+as descriped in [Wikipedia]((http://th.wikipedia.org/wiki/%E0%B8%8B%E0%B8%B5%E0%B8%A2%E0%B8%B9%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C)),
+but I'd like to add copyright for Chulalongkorn University anyway.
+
+Thai-Write is released under [GPL v3](http://www.gnu.org/licenses/gpl-2.0.html),
+some source code is in other license, please see source code for detail.
