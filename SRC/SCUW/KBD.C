@@ -2,6 +2,7 @@
 * ============================================================================
 * KBD.C
 *
+* Keyboard function that different from COMMON\KBD.C
 * Update: Suttipong Kanakakorn
 *         Thu  08-03-1989  16:54:04
 *         Sun  08-06-1989  00:19:22
@@ -12,10 +13,13 @@
 
 #include "..\common\cwgrphc.h"
 #include "..\common\cwtype.h"
+#include "..\common\var.h"
 #include "..\common\kbdcode.h"
 #include "..\common\ekbd.h"
 #include "..\common\cscrn.h"
 #include "..\common\grphc.h"
+
+
 #include "const.h"
 #include "var.h"
 
@@ -83,54 +87,6 @@ int changekey( int key ) {
 int readkbd( void ) {
 	unsigned int c;
 	c = ebioskey( 0 );
-/*
-	switch ( c ) {
-	case ALTA: c = 0x80;
-		break;
-	case ALTB: c = 0x81;
-		break;
-	case ALTC: c = 0x88;
-		break;
-	case ALTD: c = 0x87;
-		break;
-	case ALTE: c = 0x85;
-		break;
-	case ALTF: c = 0x9e;
-		break;
-	case ALTH: c = 0x9f;
-		break;
-	case ALTI: c = 0x84;
-		break;
-	case ALTJ: c = 0xdf;
-		break;
-	case ALTN: c = 0xfa;
-		break;
-	case ALTO: c = 0x83;
-		break;
-	case ALTQ: c = 0x8c;
-		break;
-	case ALTR: c = 0x86;
-		break;
-	case ALTS: c = 0x8b;
-		break;
-	case ALTT: c = 0x89;
-		break;
-	case ALTU: c = 0x8e;
-		break;
-	case ALTV: c = 0xfb;
-		break;
-	case ALTY: c = 0x82;
-		break;
-	default: if ( thaimode ) {
-		if ( ( ebioskey( 2 ) & 0x20 ) == 0 ) {
-			return( thaikey( c ) );
-		} else {
-			if ( ( c & 0xff00 ) < 0x4700 ) {
-				return( thaikey( c ) );
-			}
-		}
-	}
-*/
 	if ( thaimode && ( ( c & 0xff00 ) < 0x4700 ) ) {       /* Ignore Keypad */
 		c = thaikey( c );
 	}

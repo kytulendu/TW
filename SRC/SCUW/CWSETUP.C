@@ -24,6 +24,7 @@
 #include "..\common\grdetect.h"
 #include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
+#include "..\common\getstr.h"
 
 #include "convert.h"
 #include "var.h"
@@ -31,7 +32,6 @@
 #include "cw.h"
 #include "edit.h"
 #include "file.h"
-#include "getstr.h"
 #include "tutil1.h"
 
 #include "cwsetup.h"

@@ -15,13 +15,13 @@
 #include "..\common\ekbd.h"
 #include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
+#include "..\common\tutil1.h"
 
 #include "const.h"
 #include "cuptype.h"
 
 #include "pmenu.h"
 #include "prncntrl.h"
-#include "tutil1.h"
 
 #include "prtutil.h"
 

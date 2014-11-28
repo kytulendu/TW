@@ -13,8 +13,7 @@
 #include "..\common\cwgrphc.h"
 #include "..\common\ekbd.h"
 #include "..\common\kbdcode.h"
-
-#include "tutil1.h"
+#include "..\common\tutil1.h"
 
 #include "smenu.h"
 

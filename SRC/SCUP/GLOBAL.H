@@ -93,7 +93,7 @@ extern int newpage;
 
 /* ---------------------------- */
 
-extern int thaimode;
+extern boolean thaimode;
 extern int quitprog;
 extern int rowmax[];
 extern int prtrowmax;

@@ -27,6 +27,7 @@
 
 #define DEFINE_VAR 1
 
+#include "..\common\var.h"
 #include "var.h"
 
 #undef DEFINE_VAR

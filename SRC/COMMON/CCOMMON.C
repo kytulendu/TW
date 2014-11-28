@@ -24,7 +24,9 @@
 * ============================================================================
 */
 
-#include "ccommon.h"
+#include "cwtype.h"
+
+#include "common.h"
 
 /* Thai character code conversion table */
 

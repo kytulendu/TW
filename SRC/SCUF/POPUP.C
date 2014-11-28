@@ -9,13 +9,13 @@
 
 #include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
+#include "..\common\tutil1.h"
 
 #include "fontmsg.h"
 #include "getch.h"
 #include "key.h"
 #include "fed.h"
 #include "int.h"
-#include "tutil1.h"
 
 #include "popup.h"
 

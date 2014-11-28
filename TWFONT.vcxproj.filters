@@ -80,16 +80,10 @@
     <ClInclude Include="SRC\SCUF\INT.H">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\SCUF\KBD.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\SCUF\KEY.H">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\SCUF\POPUP.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SRC\SCUF\TUTIL1.H">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\SCUF\VAR.H">
@@ -118,13 +112,7 @@
     <ClCompile Include="SRC\SCUF\INT.C">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SRC\SCUF\KBD.C">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="SRC\SCUF\POPUP.C">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUF\TUTIL1.C">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUF\WRITE.C">

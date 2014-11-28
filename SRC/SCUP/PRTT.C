@@ -23,7 +23,7 @@
 
 #include "..\common\cwtype.h"
 #include "..\common\grphc.h"
-#include "..\common\ccommon.h"
+#include "..\common\common.h"
 
 #include "global.h"
 #include "cpthai.h"

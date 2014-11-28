@@ -8,23 +8,24 @@
 #include <string.h>
 
 #include "..\common\cwtype.h"
-#include "..\common\ccommon.h"
+#include "..\common\common.h"
+#include "..\common\var.h"
 #include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
 #include "..\common\ekbd.h"
 #include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
 #include "..\common\sound.h"
+#include "..\common\getstr.h"
 
 #include "convert.h"
 #include "var.h"
 
 #include "del.h"
 #include "edit.h"
-#include "getstr.h"
 #include "ins.h"
 #include "move.h"
-#include "tutil1.h"
+#include "tutil2.h"
 
 #include "search.h"
 

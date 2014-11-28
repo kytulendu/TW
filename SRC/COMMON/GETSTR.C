@@ -12,30 +12,17 @@
 
 #include "const.h"
 #include "cwtype.h"
-#include "ccommon.h"
+#include "common.h"
 #include "cscrn.h"
+#include "kbd.h"
 #include "ekbd.h"
 #include "grphc.h"
 #include "kbdcode.h"
 #include "sound.h"
-/*#include "tutil1.h"*/
+#include "tutil1.h"
+#include "var.h"
 
 #include "getstr.h"
-
-#ifdef  DEFINE_VAR
-#define EXTERN
-#else
-#define EXTERN extern
-#endif
-
-#ifndef DEFINE_VAR
-EXTERN boolean thaimode;    /*  current mode is thai or eng */
-#else
-/* EXTERN will be declared as null already */
-EXTERN boolean thaimode = YES;    /*  current mode is thai or eng */
-#endif
-
-#undef EXTERN /* restore it */
 
 int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, char attr, strtype mode ) {
 	int inkey, key, oldlen, temp;

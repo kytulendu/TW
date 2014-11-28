@@ -10,8 +10,6 @@
 #ifndef COMMON_CONST_H_INCLUDED
 #define COMMON_CONST_H_INCLUDED
 
-#define MAXCOL 256
-
 #define BLANK ' '
 
 #define HUNAKADMITO 0xdb  /* treat as upper level */

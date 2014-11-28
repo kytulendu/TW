@@ -10,13 +10,14 @@
 #include <bios.h>
 
 #include "cwtype.h"
+#include "common.h"
 #include "grphc.h"
+#include "var.h"
 
 #include "ekbd.h"
 
-extern boolean thaimode;
-
 #define KBUFSIZE 128
+
 static int ebioskey_buf[KBUFSIZE];
 static int keyb_head = 0;
 static int keyb_tail = 0;

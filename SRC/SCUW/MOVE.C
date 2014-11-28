@@ -16,6 +16,7 @@
 #include "..\common\cwgrphc.h"
 #include "..\common\ekbd.h"
 #include "..\common\kbdcode.h"
+#include "..\common\getstr.h"
 
 #include "convert.h"
 #include "var.h"
@@ -24,7 +25,6 @@
 #include "cw.h"
 #include "del.h"
 #include "edit.h"
-#include "getstr.h"
 #include "kbd.h"
 #include "movement.h"
 #include "search.h"

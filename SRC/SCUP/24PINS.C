@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <string.h>
 
+#include "..\common\cwtype.h"
 #include "..\common\grphc.h"
 #include "..\common\cwgrphc.h"
 

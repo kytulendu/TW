@@ -93,7 +93,6 @@ EXTERN int tab[MAXCOL];  /* tab set */
 
 /* Just declare these variables only */
 
-EXTERN boolean thaimode;    /*  current mode is thai or eng */
 EXTERN boolean insertmode;  /*  toggle insert mode ON/OFF   */
 EXTERN boolean replaceflag;
 EXTERN boolean relmargin;
@@ -123,7 +122,6 @@ EXTERN unsigned int command_tab[];
 #else
 /* EXTERN will be declared as null already */
 
-EXTERN boolean thaimode = YES;    /*  current mode is thai or eng */
 EXTERN boolean insertmode = YES;  /*  toggle insert mode ON/OFF   */
 EXTERN boolean replaceflag = NO;
 EXTERN boolean relmargin = NO;

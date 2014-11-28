@@ -15,7 +15,7 @@
 
 #include "..\common\const.h"
 #include "..\common\cwtype.h"
-#include "..\common\ccommon.h"
+#include "..\common\common.h"
 #include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
 #include "..\common\ekbd.h"
@@ -34,7 +34,7 @@
 #include "move.h"
 #include "movement.h"
 #include "status.h"
-#include "tutil1.h"
+#include "tutil2.h"
 #include "wrap.h"
 
 #include "ins.h"

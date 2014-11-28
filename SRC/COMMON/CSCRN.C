@@ -17,7 +17,7 @@
 #include "ekbd.h"
 #include "grphc.h"
 #include "sound.h"
-#include "ccommon.h"
+#include "common.h"
 
 #include "cscrn.h"
 

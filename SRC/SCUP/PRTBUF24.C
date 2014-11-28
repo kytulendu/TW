@@ -11,6 +11,8 @@
 #include <string.h>
 #include <stdio.h>
 
+#include "..\common\cwtype.h"
+
 #include "cuptype.h"
 #include "24pins.h"
 #include "global.h"

@@ -5,4 +5,3 @@
 search_file_mode find_file( char *filename, char *search_path );
 
 #endif /* SCUF_FILE_H_INCLUDED */
-

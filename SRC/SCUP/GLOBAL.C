@@ -156,7 +156,7 @@ int curline = 0;
 int curpage = 0;
 int newpage = NO;
 
-int thaimode = NO;
+boolean thaimode = NO;
 int quitprog = NO;
 int rowmax[3] = { 7, 7, 7 };
 int prtrowmax = 2;

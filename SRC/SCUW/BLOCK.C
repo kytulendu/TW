@@ -19,7 +19,7 @@
 #include <ctype.h>
 
 #include "..\common\cwtype.h"
-#include "..\common\ccommon.h"
+#include "..\common\common.h"
 #include "..\common\cwgrphc.h"
 #include "..\common\const.h"
 #include "..\common\cscrn.h"
@@ -30,6 +30,7 @@
 #include "..\common\kbdcode.h"
 #include "..\common\sound.h"
 #include "..\common\getstr.h"
+#include "..\common\tutil1.h"
 
 #include "convert.h"
 #include "const.h"
@@ -41,7 +42,8 @@
 #include "ins.h"
 #include "kbd.h"
 #include "menu.h"
-#include "tutil1.h"
+#include "cwsetup.h"
+#include "tutil2.h"
 
 #include "block.h"
 

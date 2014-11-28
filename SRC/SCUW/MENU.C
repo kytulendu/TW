@@ -23,6 +23,7 @@
 #include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
 #include "..\common\sound.h"
+#include "..\common\getstr.h"
 
 #include "convert.h"
 #include "var.h"
@@ -32,7 +33,6 @@
 #include "block.h"
 #include "edit.h"
 #include "file.h"
-#include "getstr.h"
 #include "kbd.h"
 #include "onscrn.h"
 #include "scrn.h"

@@ -108,6 +108,8 @@ typedef PGwind_func *PGwind_ptr;
 EXTERN PGwind_func hputwind, eputwind, aputwind, hgetwind, egetwind, agetwind;
 EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 
+#undef EXTERN /* restore it */
+
 /* ===================================================================== */
 
 /***/

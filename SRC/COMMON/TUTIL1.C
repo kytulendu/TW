@@ -1,17 +1,24 @@
-#include "..\common\cwtype.h"
-#include "..\common\grphc.h"
+#include "cwtype.h"
+#include "grphc.h"
+#include "common.h"
+#include "cscrn.h"
 
-/** find length of thai string
-*   Updated: Suttipong Kanakakorn, use pointer instead of array
-*            Sun  08-06-1989  16:32:15
-*  \param[in]  p_thaistring		thai string.
-*  \return int					length of thai string. */
-int thaistrlen( char *p_thaistring ) {
+#include "tutil1.h"
+
+unsigned int thaistrlen( register unsigned char *p_thaistring ) {
 	register int count = 0;
+	font_attr curfont = 0;
 
 	while ( *p_thaistring ) {
 		if ( whatlevel( *p_thaistring ) == MIDDLE ) {
-			count++;
+			if ( *p_thaistring < 32 ) {		/* if is control code */
+				togglefont( &curfont, *p_thaistring );
+			} else {
+				count++;
+				if ( ( curfont & ENLARGEATTR ) == ENLARGEATTR ) {
+					count++;
+				}
+			}
 		}
 		p_thaistring++;
 	}

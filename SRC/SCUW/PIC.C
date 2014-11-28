@@ -18,12 +18,12 @@
 #include "..\common\ekbd.h"
 #include "..\common\fileutil.h"
 #include "..\common\sound.h"
+#include "..\common\getstr.h"
 
 #include "var.h"
 #include "convert.h"
 
 #include "edit.h"
-#include "getstr.h"
 
 #include "pic.h"
 

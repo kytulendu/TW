@@ -93,7 +93,7 @@
     <None Include="TEST.DOC" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SRC\COMMON\CCOMMON.H" />
+    <ClInclude Include="SRC\COMMON\COMMON.H" />
     <ClInclude Include="SRC\COMMON\CONST.H" />
     <ClInclude Include="SRC\COMMON\CSCRN.H" />
     <ClInclude Include="SRC\COMMON\CUSONG.H" />
@@ -105,8 +105,10 @@
     <ClInclude Include="SRC\COMMON\GETSTR.H" />
     <ClInclude Include="SRC\COMMON\GRDETECT.H" />
     <ClInclude Include="SRC\COMMON\GRPHC.H" />
+    <ClInclude Include="SRC\COMMON\KBD.H" />
     <ClInclude Include="SRC\COMMON\KBDCODE.H" />
     <ClInclude Include="SRC\COMMON\SOUND.H" />
+    <ClInclude Include="SRC\COMMON\TUTIL1.H" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRC\COMMON\CCOMMON.C" />
@@ -120,6 +122,7 @@
     <ClCompile Include="SRC\COMMON\FILEUTIL.C" />
     <ClCompile Include="SRC\COMMON\GETSTR.C" />
     <ClCompile Include="SRC\COMMON\GRDETECT.C" />
+    <ClCompile Include="SRC\COMMON\KBD.C" />
     <ClCompile Include="SRC\COMMON\SOUND.C" />
     <ClCompile Include="SRC\COMMON\STAMPDAT.C" />
     <ClCompile Include="SRC\COMMON\TUTIL1.C" />

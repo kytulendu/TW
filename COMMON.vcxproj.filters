@@ -101,9 +101,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="SRC\COMMON\CCOMMON.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\COMMON\CONST.H">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -141,6 +138,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="SRC\COMMON\GETSTR.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\TUTIL1.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\KBD.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SRC\COMMON\COMMON.H">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -185,6 +191,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\COMMON\GETSTR.C">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SRC\COMMON\KBD.C">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

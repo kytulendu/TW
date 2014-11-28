@@ -21,30 +21,11 @@
 /* =================================================================== */
 /* First part can define and declare with the same attribute           */
 
-
 EXTERN char dfont[20 * 256];
 EXTERN char ditalicfont[1];
 
 EXTERN char *progname;   /* point to argv[0] */
 EXTERN char cuf_dir[MAXDRIVE+MAXDIR];  /* which directory is CW.EXE in */
-
-/* ==================================================================== */
-/* Second part                                                          */
-/* We can't init extern variables , just declare it with extern         */
-/* We'll define it in one place only                                    */
-
-#ifndef DEFINE_VAR
-
-/* Just declare these variables only */
-
-EXTERN boolean thaimode;    /* current mode is thai or eng */
-
-#else
-/* EXTERN will be declared as null already */
-
-EXTERN boolean thaimode = YES;    /* current mode is thai or eng */
-
-#endif
 
 #undef EXTERN /* restore it */
 

@@ -9,7 +9,7 @@
 #include <string.h>
 
 #include "..\common\cwtype.h"
-#include "..\common\ccommon.h"
+#include "..\common\common.h"
 #include "..\common\cwgrphc.h"
 #include "..\common\grphc.h"
 #include "..\common\ekbd.h"

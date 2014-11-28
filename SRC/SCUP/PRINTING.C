@@ -27,7 +27,7 @@
 #include "..\common\cscrn.h"
 #include "..\common\ekbd.h"
 #include "..\common\grphc.h"
-#include "..\common\ccommon.h"
+#include "..\common\common.h"
 
 #include "cuptype.h"
 #include "global.h"

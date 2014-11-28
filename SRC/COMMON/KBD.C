@@ -1,20 +1,17 @@
 /*
 * ============================================================================
 * KBD.C
-*
-* keyboard function that different between cuprint.exe and cw.exe
-* Suttipong Kanakakorn Mon  08-07-1989  00:18:41
 * ============================================================================
 */
 
 #include <stdio.h>
 
-#include "..\common\cwtype.h"
-#include "..\common\cwgrphc.h"
-#include "..\common\ekbd.h"
-#include "..\common\grphc.h"
-
-#include "global.h"
+#include "cwtype.h"
+#include "common.h"
+#include "cwgrphc.h"
+#include "ekbd.h"
+#include "grphc.h"
+#include "var.h"
 
 #include "kbd.h"
 
@@ -33,11 +30,9 @@ void waitkbd( unsigned int x, unsigned int y ) {
 
 int readkbd( void ) {
 	register unsigned int c;
-
 	c = ebioskey( 0 );
-	if ( thaimode ) {
-		return( thaikey( c ) );
-	} else {
-		return( c );
+	if ( thaimode && ( ( c & 0xff00 ) < 0x4700 ) ) {       /* Ignore Keypad */
+		c = thaikey( c );
 	}
+	return( c );
 }

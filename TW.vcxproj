@@ -102,7 +102,7 @@
     <ClInclude Include="SRC\SCUW\THAISYLS\ROUTINE.H" />
     <ClInclude Include="SRC\SCUW\THAISYLS\TCTYPE.H" />
     <ClInclude Include="SRC\SCUW\THAISYLS\THAI.H" />
-    <ClInclude Include="SRC\SCUW\TUTIL1.H" />
+    <ClInclude Include="SRC\SCUW\TUTIL2.H" />
     <ClInclude Include="SRC\SCUW\VAR.H" />
     <ClInclude Include="SRC\SCUW\WRAP.H" />
   </ItemGroup>
@@ -150,7 +150,7 @@
     <ClCompile Include="SRC\SCUW\THAISYLS\SARAUM.C" />
     <ClCompile Include="SRC\SCUW\THAISYLS\THAIENG.C" />
     <ClCompile Include="SRC\SCUW\THAISYLS\WOREWAAN.C" />
-    <ClCompile Include="SRC\SCUW\TUTIL1.C" />
+    <ClCompile Include="SRC\SCUW\TUTIL2.C" />
     <ClCompile Include="SRC\SCUW\WRAP.C" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

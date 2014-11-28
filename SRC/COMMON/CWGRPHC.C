@@ -18,6 +18,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#include "cwtype.h"
+#include "common.h"
 #include "grdetect.h"
 
 #define DEFINE_VAR

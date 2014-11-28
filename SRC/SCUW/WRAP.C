@@ -11,9 +11,10 @@
 #include <string.h>
 
 #include "..\common\cwtype.h"
-#include "..\common\ccommon.h"
+#include "..\common\common.h"
 #include "..\common\cscrn.h"
 #include "..\common\grphc.h"
+#include "..\common\tutil1.h"
 
 #include "var.h"
 
@@ -21,7 +22,6 @@
 #include "ins.h"
 #include "move.h"
 #include "movement.h"
-#include "tutil1.h"
 
 #include "thaisyls\mainsyls.h"
 

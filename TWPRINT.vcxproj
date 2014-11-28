@@ -92,7 +92,6 @@
     <ClInclude Include="SRC\SCUP\ERROR.H" />
     <ClInclude Include="SRC\SCUP\FUNCMAC.H" />
     <ClInclude Include="SRC\SCUP\GLOBAL.H" />
-    <ClInclude Include="SRC\SCUP\KBD.H" />
     <ClInclude Include="SRC\SCUP\PIC.H" />
     <ClInclude Include="SRC\SCUP\PMENU.H" />
     <ClInclude Include="SRC\SCUP\PREPROC.H" />
@@ -105,7 +104,6 @@
     <ClInclude Include="SRC\SCUP\PRTUTIL.H" />
     <ClInclude Include="SRC\SCUP\SMENU.H" />
     <ClInclude Include="SRC\SCUP\TABLE.H" />
-    <ClInclude Include="SRC\SCUP\TUTIL1.H" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRC\SCUP\24PINS.C" />
@@ -116,7 +114,6 @@
     <ClCompile Include="SRC\SCUP\DOT.C" />
     <ClCompile Include="SRC\SCUP\ERROR.C" />
     <ClCompile Include="SRC\SCUP\GLOBAL.C" />
-    <ClCompile Include="SRC\SCUP\KBD.C" />
     <ClCompile Include="SRC\SCUP\PIC.C" />
     <ClCompile Include="SRC\SCUP\PMENU.C" />
     <ClCompile Include="SRC\SCUP\PREPROC.C" />
@@ -128,7 +125,6 @@
     <ClCompile Include="SRC\SCUP\PRTT.C" />
     <ClCompile Include="SRC\SCUP\PRTUTIL.C" />
     <ClCompile Include="SRC\SCUP\SMENU.C" />
-    <ClCompile Include="SRC\SCUP\TUTIL1.C" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

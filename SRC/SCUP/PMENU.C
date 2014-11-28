@@ -39,13 +39,13 @@
 #include "..\common\grdetect.h"
 #include "..\common\kbdcode.h"
 #include "..\common\getstr.h"
+#include "..\common\kbd.h"
 
 #include "const.h"
 #include "cuptype.h"
 #include "global.h"
 
 #include "cupsetup.h"
-#include "kbd.h"
 #include "printing.h"
 #include "prncntrl.h"
 #include "prtutil.h"
@@ -57,12 +57,14 @@
 #define DIRROWMAX 5
 #define MAXNUM 20
 
-void main( int argc, char *argv[] ) {
+int main( int argc, char *argv[] ) {
 	cupsetup( argc, argv );
 	setgraph( );
 	writeallmenu( );
 	menuselect( );
 	settext( );
+
+	return 0;
 }
 
 void writefilename( void ) {

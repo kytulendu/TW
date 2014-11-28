@@ -87,10 +87,8 @@
     <ClInclude Include="SRC\SCUF\FONTMSG.H" />
     <ClInclude Include="SRC\SCUF\GETCH.H" />
     <ClInclude Include="SRC\SCUF\INT.H" />
-    <ClInclude Include="SRC\SCUF\KBD.H" />
     <ClInclude Include="SRC\SCUF\KEY.H" />
     <ClInclude Include="SRC\SCUF\POPUP.H" />
-    <ClInclude Include="SRC\SCUF\TUTIL1.H" />
     <ClInclude Include="SRC\SCUF\VAR.H" />
     <ClInclude Include="SRC\SCUF\WRITE.H" />
   </ItemGroup>
@@ -102,9 +100,7 @@
     <ClCompile Include="SRC\SCUF\FONTMSG.C" />
     <ClCompile Include="SRC\SCUF\GETCH.C" />
     <ClCompile Include="SRC\SCUF\INT.C" />
-    <ClCompile Include="SRC\SCUF\KBD.C" />
     <ClCompile Include="SRC\SCUF\POPUP.C" />
-    <ClCompile Include="SRC\SCUF\TUTIL1.C" />
     <ClCompile Include="SRC\SCUF\WRITE.C" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
