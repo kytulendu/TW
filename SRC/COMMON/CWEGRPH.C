@@ -17,10 +17,9 @@
 #include "cwgrphc.h"
 #include "grdetect.h"
 
+/** Set EGA/VGA/MCGA Graphic Card to graphic mode */
 void esetgraph( void ) {
 	union REGS inregs, outregs;
-
-	graph_seg = 0xA000;
 
 	if ( scrmode == VGA ) {
 		inregs.x.ax = 0x11;			/* 640 x 480 graphic on vga display */
@@ -40,13 +39,17 @@ void esetgraph( void ) {
 	}
 }
 
+/** Set EGA/VGA/MCGA Graphic Card to text mode by call
+*   BIOS routine INT 10h */
 void esettext( void ) {
 	union REGS inregs, outregs;
 
-	inregs.x.ax = 3;
+	inregs.x.ax = 3;					/* 16 color text mode */
 	int86( 0x10, &inregs, &outregs );	/* text mode */
 }
 
-unsigned compute_off( register unsigned int x, register unsigned int y ) {
-	return ( 80 * y + x / 8 );
+/** Find offest of pixel x, y we use the following formula
+*   ( High_byte * y ) + ( x / 8 )  where High_byte = 640 / 8 = 80 */
+unsigned eoffset( register unsigned int x, register unsigned int y ) {
+	return ( ( 80 * y ) + ( x / 8 ) );
 }

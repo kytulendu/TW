@@ -80,12 +80,12 @@
     <None Include="README.md" />
     <None Include="SRC\CLEAN.BAT" />
     <None Include="SRC\COMMON\ACOMMON.ASM" />
-    <None Include="SRC\COMMON\ADISP.ASM" />
+    <None Include="SRC\COMMON\ATT400.ASM" />
     <None Include="SRC\COMMON\CWFNTAM.ASM" />
     <None Include="SRC\COMMON\CWFNTHM.ASM" />
     <None Include="SRC\COMMON\CWFNTM.ASM" />
-    <None Include="SRC\COMMON\EDISP.ASM" />
-    <None Include="SRC\COMMON\HDISP.ASM" />
+    <None Include="SRC\COMMON\EGAVGA.ASM" />
+    <None Include="SRC\COMMON\HERC.ASM" />
     <None Include="SRC\COMMON\MAKEFILE.MAK" />
     <None Include="SRC\CONFIG.MAK" />
     <None Include="SRC\MAKE.BAT" />

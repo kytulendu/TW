@@ -28,7 +28,7 @@ curfont			db   20 dup (0)
 				db   4 dup (0)
 
 	PUBLIC enlargefont
-enlargefont      db   40 dup (0)
+enlargefont     db   40 dup (0)
 
 	PUBLIC offsetfont
 offsetfont		dw   0,20,40,60,80,100,120,140,160,180,200
@@ -108,9 +108,6 @@ chulalogo2		dw   00040h,0004ch,000b0h,0c0dfh
 
 ;--------------------------------------------------------------------;
 
-	PUBLIC _chardot
-_chardot		db   20 dup (0)
-
 	_DATA		ENDS
 
 	_BSS		SEGMENT WORD PUBLIC 'BSS'
@@ -127,17 +124,17 @@ _chardot		db   20 dup (0)
 ; thaikey(unsigned key){
 ;     return (kedmanee_table[key]); ?
 ;}
-    PUBLIC _thaikey
+	PUBLIC _thaikey
 _thaikey PROC FAR
-    PUSH    BP
-    MOV     BP,SP
+	PUSH    BP
+	MOV     BP,SP
 
-    MOV     BX,OFFSET DGROUP:kedmanee_table
-    MOV     AX,[BP+6]                   ; get ascii code & scan code
-    XLAT                                ; look up table for changing ascii code only
+	MOV     BX,OFFSET DGROUP:kedmanee_table
+	MOV     AX,[BP+6]                   ; get ascii code & scan code
+	XLAT                                ; look up table for changing ascii code only
 
-    POP     BP
-    RET
+	POP     BP
+	RET
 
 _thaikey ENDP
 
@@ -149,21 +146,21 @@ _thaikey ENDP
 ;                keyboard scan code of the keypressed                         ;
 ;=============================================================================;
 
-    PUBLIC _asm_keypressed
+	PUBLIC _asm_keypressed
 _asm_keypressed PROC FAR
-    PUSHF
+	PUSHF
 
-    MOV     AH,1
-    INT     16h
-    JZ      notpress
-    JMP     nextpress
+	MOV     AH,1
+	INT     16h
+	JZ      notpress
+	JMP     nextpress
 
 notpress:
-    XOR      AX,AX
+	XOR      AX,AX
 
 nextpress:
-    POPF
-    RET
+	POPF
+	RET
 
 _asm_keypressed ENDP
 

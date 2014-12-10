@@ -57,9 +57,6 @@
     <None Include="SRC\COMMON\ACOMMON.ASM">
       <Filter>Source Files</Filter>
     </None>
-    <None Include="SRC\COMMON\ADISP.ASM">
-      <Filter>Source Files</Filter>
-    </None>
     <None Include="SRC\COMMON\CWFNTAM.ASM">
       <Filter>Source Files</Filter>
     </None>
@@ -67,12 +64,6 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="SRC\COMMON\CWFNTM.ASM">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="SRC\COMMON\EDISP.ASM">
-      <Filter>Source Files</Filter>
-    </None>
-    <None Include="SRC\COMMON\HDISP.ASM">
       <Filter>Source Files</Filter>
     </None>
     <None Include="ITALIC.P9">
@@ -98,6 +89,15 @@
     </None>
     <None Include="NORMALS.P24">
       <Filter>Fonts</Filter>
+    </None>
+    <None Include="SRC\COMMON\ATT400.ASM">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="SRC\COMMON\HERC.ASM">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="SRC\COMMON\EGAVGA.ASM">
+      <Filter>Source Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

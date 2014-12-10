@@ -22,7 +22,6 @@ EXTERN int scrmode;
 EXTERN int scrmode = DETECT; /* not initialize (text) mode */
 #endif
 
-EXTERN unsigned int graph_seg;
 EXTERN unsigned char *screen_buffptr;
 
 /* ===================================================================== */
@@ -91,15 +90,6 @@ EXTERN Clrline_ptr  clrline_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( RWchardot_func )( unsigned int x, unsigned int y );
-typedef RWchardot_func *RWchardot_ptr;
-
-EXTERN RWchardot_func hrdchardot, erdchardot, ardchardot,
-hwrchardot, ewrchardot, awrchardot;
-EXTERN RWchardot_ptr  rdchardot_ptr, wrchardot_ptr;
-
-/* --------------------------------------------------------------------- */
-
 typedef void ( PGwind_func )( unsigned int x1, unsigned int x2,
 	unsigned linecount, unsigned bytecount,
 	char *buffer );
@@ -147,11 +137,5 @@ void clrline( unsigned int x1, unsigned int y1, unsigned int x2 );
 
 /** display Prakeaw ( Chula University logo ) at top-left of screen ( fixed position ) */
 void prakeaw( void );
-
-/***/
-void rdchardot( unsigned int x, unsigned int y );
-
-/***/
-void wrchardot( unsigned int x, unsigned int y );
 
 #endif /* COMMON_CWGRPHC_H_INCLUDED */

@@ -89,8 +89,6 @@ void setgraph( ) {
 		clsgraph_ptr = eclsgraph;
 		clrline_ptr = eclrline;
 		prakeaw_ptr = eprakeaw;
-		rdchardot_ptr = erdchardot;
-		wrchardot_ptr = ewrchardot;
 		putwind_ptr = eputwind;
 		getwind_ptr = egetwind;
 	} else if ( scrmode == HERCMONO ) {
@@ -106,8 +104,6 @@ void setgraph( ) {
 		clsgraph_ptr = hclsgraph;
 		clrline_ptr = hclrline;
 		prakeaw_ptr = hprakeaw;
-		rdchardot_ptr = hrdchardot;
-		wrchardot_ptr = hwrchardot;
 		putwind_ptr = hputwind;
 		getwind_ptr = hgetwind;
 	} else if ( scrmode == ATT400 ) {
@@ -123,8 +119,6 @@ void setgraph( ) {
 		clsgraph_ptr = aclsgraph;
 		clrline_ptr = aclrline;
 		prakeaw_ptr = aprakeaw;
-		rdchardot_ptr = ardchardot;
-		wrchardot_ptr = awrchardot;
 		putwind_ptr = aputwind;
 		getwind_ptr = agetwind;
 	} else {
@@ -160,12 +154,4 @@ void clrline( unsigned int x1, unsigned int y1, unsigned int x2 ) {
 
 void prakeaw( ) {
 	( *prakeaw_ptr )( );
-}
-
-void rdchardot( unsigned int x, unsigned int y ) {
-	( *rdchardot_ptr )( x, y );
-}
-
-void wrchardot( unsigned int x, unsigned int y ) {
-	( *wrchardot_ptr )( x, y );
 }
