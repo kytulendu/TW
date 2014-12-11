@@ -848,8 +848,7 @@ _eclsall PROC FAR
 	PUSH    DI
 	PUSH    ES
 
-	MOV     AX,EGA_Address
-	MOV     ES,AX
+	MOV     ES,EGA_Address
 	XOR     DI,DI
 	MOV     CX,4000h
 	MOV     AX,00
@@ -1150,14 +1149,14 @@ _eprakeaw ENDP
 
 fic_getwind_stack STRUC
 
-					DW    5 DUP (?)     ; five regs saved
-					DD    ?             ; return address
+					dw    5 dup (?)     ; five regs saved
+					dd    ?             ; return address
 
-	x1_9            DW    ?
-	y1_9            DW    ?
-	linecount_9     DW    ?
-	bytecount_9     DW    ?
-	buffptr_9       DD    ?
+	x1_9            dw    ?
+	y1_9            dw    ?
+	linecount_9     dw    ?
+	bytecount_9     dw    ?
+	buffptr_9       dd    ?
 
 fic_getwind_stack ENDS
 
@@ -1216,14 +1215,14 @@ _egetwind ENDP
 ;------------------------------------------------------
 fic_putwind_stack STRUC
 
-					DW    5 DUP (?)     ; five regs saved
-					DD    ?             ; return address
+					dw    5 dup (?)     ; five regs saved
+					dd    ?             ; return address
 
-	x1_10           DW    ?
-	y1_10           DW    ?
-	linecount_10    DW    ?
-	bytecount_10    DW    ?
-	buffptr_10      DD    ?
+	x1_10           dw    ?
+	y1_10           dw    ?
+	linecount_10    dw    ?
+	bytecount_10    dw    ?
+	buffptr_10      dd    ?
 
 fic_putwind_stack ENDS
 

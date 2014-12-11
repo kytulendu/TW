@@ -24,7 +24,7 @@ EXTRN _screen_buffptr:DWORD
 	PUBLIC _herc_align
 _herc_align		dw   5
 
-HGC_Address		equ  0B000h				; Beginning of HGC frame buffer
+HGC_Address		dw   0B000h				; Beginning of HGC frame buffer
 
 ; Hercules port address
 herc_index		equ  03B4h				; 6845 index register
@@ -95,8 +95,7 @@ _hprchar PROC FAR
     PUSH    DI
     PUSH    ES
 
-    MOV     AX,HGC_Address
-    MOV     ES,AX
+    MOV     ES,HGC_Address
 
 ; ASCII value * 20 is offset in font
 ; we will set DS:[BX+SI] point at font
@@ -494,8 +493,7 @@ _hprblank PROC FAR
     PUSH    DI
     PUSH    ES
 
-    MOV     AX,HGC_Address
-    MOV     ES,AX
+    MOV     ES,HGC_Address
 
 ; we will set ES:[DI] point at screen
     MOV     DI,[BP+8]                   ; get row
@@ -545,8 +543,7 @@ _hsetcurpos PROC FAR
     PUSH    DI
     PUSH    ES
 
-    MOV     DI,HGC_Address
-    MOV     ES,DI
+    MOV     ES,HGC_Address
 
 ; we will set ES:[DI] point at screen
     MOV     DI,[BP+8]                   ; get row
@@ -596,62 +593,64 @@ _hsetcurpos ENDP
 ;=============================================================================;
     PUBLIC _hplot
 _hplot PROC FAR
-	  push     bp
-	  mov      bp,sp
-	  push     di
-	  push     es
-;
-	  mov      cl,2       ; divide by 4
-	  mov      ax,[bp+8]  ; get dot y
-	  shr      ax,cl      ; ax = integer(y/4)
-	  mov      bx,ax
-	  mov      cl,5       ; multiplied by 32
-	  shl      bx,cl
-	  sub      bx,ax      ; multiplied by 31
-	  sub      bx,ax      ; multiplied by 30
-	  sub      bx,ax      ; multiplied by 29
-	  sub      bx,ax      ; multiplied by 28
-	  sub      bx,ax      ; multiplied by 27
-	  sub      bx,ax      ; now multiplied by 26
-	  mov      cl,6       ; multiply by 64
-	  shl      ax,cl
-	  add      ax,bx      ; multiplied by 90 ( 64 + 26 )
-	  mov      di,ax
+	PUSH     BP
+	MOV      BP,SP
+	PUSH     DI
+	PUSH     ES
+
+; calculate offset
+	MOV     AX,[BP+8]					; get dot y
+	MOV     CL,2						; divide by 4
+	SHR     AX,CL						; ax = integer(y/4)
+	MOV     BX,AX
+	MOV     CL,5						; multiplied by 32
+	SHL     BX,CL
+	SUB     BX,AX						; multiplied by 31
+	SUB     BX,AX						; multiplied by 30
+	SUB     BX,AX						; multiplied by 29
+	SUB     BX,AX						; multiplied by 28
+	SUB     BX,AX						; multiplied by 27
+	SUB     BX,AX						; multiplied by 26
+	MOV     CL,6						; multiply by 64
+	SHL     AX,CL
+	ADD     AX,BX						; multiplied by 90 ( 64 + 26 )
+	MOV     DI,AX
 ; Find 2000h * (y mod 4).
 ; Possible value is 0,2000h,4000h,6000h only.
 ; So we will not calculate but using comparing for speed.
-	  mov      al,[bp+8]  ; get dot y (low byte only)
-	  and      al,03h     ; al = y mod 4 (see from two last bit only)
-	  or       al,al
-	  jz       plotnext
-	  test     al,01h
-	  jz       testbit1next
-	  add      di,2000h
+	MOV     AL,[BP+8]					; get dot y (low byte only)
+	AND     AL,03h						; al = y mod 4 (see from two last bit only)
+	OR      AL,AL
+	JZ      plotnext
+	TEST    AL,01H
+	JZ      testbit1next
+	ADD     DI,2000h
 testbit1next:
-	  test     al,02h
-	  jz       plotnext
-	  add      di,4000h
+	TEST    AL,02H
+	JZ      plotnext
+	ADD     DI,4000H
 plotnext:
-	  mov      ax,[bp+6]  ; get dot x
-	  mov      cl,3       ; divide by 8
-	  shr      ax,cl      ; AL = integer(x/8)
-	  add      di,ax      ; now DI point at byte wanted
-	  add      di,_herc_align
-	  mov      al,[bp+6]  ; get dot x
-	  and      al,007h    ; now , al = x mod 8
-	  mov      cl,7
-	  sub      cl,al      ; BL = 7 - (x mod 8)
-	  mov      bl,1
-	  shl      bl,cl
-;
-	  mov      ax,HGC_Address
-	  mov      es,ax
-	  or       byte ptr es:[di],bl
-;
-	  pop      es
-	  pop      di
-	  pop      bp
-	  ret
+	MOV     AX,[BP+6]					; get dot x
+	MOV     CL,3						; divide by 8
+	SHR     AX,CL						; AL = integer(x/8)
+	ADD     DI,AX						; now DI point at byte wanted
+	ADD     DI,_herc_align
+	MOV     AL,[BP+6]					; get dot x
+	AND     AL,007h						; now , al = x mod 8
+	MOV     CL,7
+	SUB     CL,AL						; BL = 7 - (x mod 8)
+	MOV     BL,1
+	SHL     BL,CL
+
+; write dot
+	MOV     ES,HGC_Address
+	OR      BYTE PTR ES:[DI],BL
+
+	POP     ES
+	POP     DI
+	POP     BP
+
+	RET
 
 _hplot ENDP
 
@@ -661,71 +660,70 @@ _hplot ENDP
 ;=============================================================================;
 	PUBLIC _hsetgraph
 _hsetgraph PROC FAR
-	PUSH  SI
-	PUSH  DS
-	PUSH  ES
+	PUSH    SI
+	PUSH    DS
+	PUSH    ES
 
 ; NOTE: Be sure that the Configuration Port (03BF) is set to your
 ; requirements (03BF = 1 for HALF, 03BF = 3 for FULL) before
 ; attempting to set graphics mode.
-	MOV   AL,1
-	MOV   DX,herc_config
-	OUT   DX,AL
+	MOV     AL,1
+	MOV     DX,herc_config
+	OUT     DX,AL
 
 ; set graphic mode
-	MOV   AL,graph
-	MOV   DX,herc_cntrl
-	OUT   DX,AL
+	MOV     AL,graph
+	MOV     DX,herc_cntrl
+	OUT     DX,AL
 
 ; initialize the 6845
-	MOV   AX,DGROUP
-	MOV   SI,OFFSET DGROUP:graphic_table	; address of graphic parameters
-	MOV   DX,herc_index
-	MOV   CX,12							; 12 parameters to be output
-	XOR   AH,AH							; starting from register 0
+	MOV     AX,DGROUP
+	MOV     SI,OFFSET DGROUP:graphic_table	; address of graphic parameters
+	MOV     DX,herc_index
+	MOV     CX,12						; 12 parameters to be output
+	XOR     AH,AH						; starting from register 0
 
 parms:
-	MOV   AL,AH							; first output register number
-	OUT   DX,AL
+	MOV     AL,AH						; first output register number
+	OUT     DX,AL
 
-    INC   DX							; get data register address
+    INC     DX							; get data register address
     LODSB								; get next byte from param. table
-    OUT   DX,AL							; output parameter data
+    OUT     DX,AL						; output parameter data
 
-    INC   AH							; increment register number
-    DEC   DX							; restore index register address
-    LOOP  parms							; go do another one
+    INC     AH							; increment register number
+    DEC     DX							; restore index register address
+    LOOP    parms						; go do another one
 
 ;
-	MOV   AL,00Ah
-	MOV   DX,herc_cntrl
-	OUT   DX,AL
+	MOV     AL,00Ah
+	MOV     DX,herc_cntrl
+	OUT     DX,AL
 
 ; clear the buffer
-    MOV   CX,4000h						; get number of words to clear
-    MOV   AX,HGC_Address				; get address off video buffer
-    CLD									; set auto increment
-    MOV   ES,AX							; set segment for string move
-    XOR   DI,DI							; start at offset 0
-    MOV   AX,0							; get blank value
-    REP   STOSW							; repeat store string
+	MOV     ES,HGC_Address				; address of video buffer
+	XOR     DI,DI						; start at offset 0
+	MOV     CX,4000h					; number of words to clear
+	MOV     AX,0						; blank value
+	CLD									; set auto increment
+	REP     STOSW						; repeat store string
 
 ; turn screen on with page 0 active
-	;MOV   DX,herc_cntrl				; get control register address
-	;POP   AX							; get the mode byte
-	;ADD   AL,scrn_on					; set the screen-on bit
-	;OUT   DX,AL
+	;MOV     DX,herc_cntrl				; get control register address
+	;POP     AX							; get the mode byte
+	;ADD     AL,scrn_on					; set the screen-on bit
+	;OUT     DX,AL
 
 ; Add By Suttipong Kanakakorn (Noom)
 ; Set 0:465 to 0Ah as set to port 3b8h
 ; Very valuable for Many programs Such as DesqView, Turbo Debugger
-	XOR   SI,SI
-	MOV   DS,SI
-	MOV   BYTE PTR DS:[465h],00Ah
+	XOR     SI,SI
+	MOV     DS,SI
+	MOV     BYTE PTR DS:[465h],00Ah
 
-	POP   ES
-	POP   DS
-	POP   SI
+	POP     ES
+	POP     DS
+	POP     SI
 	RET
 
 _hsetgraph ENDP
@@ -736,52 +734,51 @@ _hsetgraph ENDP
 ;=============================================================================;
 	PUBLIC _hsettext
 _hsettext PROC FAR
-	PUSH  SI
-	PUSH  DS
-	PUSH  ES
+	PUSH    SI
+	PUSH    DS
+	PUSH    ES
 
 ; set text mode
-	MOV   AL,text
-	MOV   DX,herc_cntrl
-	OUT   DX,AL
+	MOV     AL,text
+	MOV     DX,herc_cntrl
+	OUT     DX,AL
 
 ; initialize the 6845
-	MOV   AX,DGROUP
-	MOV   SI,OFFSET DGROUP:text_table	; address of text parameters
-	MOV   DX,herc_index
-	MOV   CX,12							; 12 parameters to be output
-	XOR   AH,AH							; starting from register 0
+	MOV     AX,DGROUP
+	MOV     SI,OFFSET DGROUP:text_table	; address of text parameters
+	MOV     DX,herc_index
+	MOV     CX,12						; 12 parameters to be output
+	XOR     AH,AH						; starting from register 0
 
 parms1:
-	MOV   AL,AH							; first output register number
-	OUT   DX,AL
+	MOV     AL,AH						; first output register number
+	OUT     DX,AL
 
-    INC   DX							; get data register address
+    INC     DX							; get data register address
     LODSB								; get next byte from param. table
-    OUT   DX,AL							; output parameter data
+    OUT     DX,AL						; output parameter data
 
-    INC   AH							; increment register number
-    DEC   DX							; restore index register address
-    LOOP  parms1						; go do another one
+    INC     AH							; increment register number
+    DEC     DX							; restore index register address
+    LOOP    parms1						; go do another one
 
 ; clear the buffer
-    MOV   CX,2000						; get number of words to clear
-    MOV   AX,HGC_Address				; get address off video buffer
-    CLD									; set auto increment
-    MOV   ES,AX							; set segment for string move
-    XOR   DI,DI							; start at offset 0
-    MOV   AX,720h						; get blank value
-    REP   STOSW							; repeat store string
+	MOV     ES,HGC_Address				; address of video buffer
+	XOR     DI,DI						; start at offset 0
+	MOV     CX,2000h					; number of words to clear
+	MOV     AX,720h						; blank value
+	CLD									; set auto increment
+	REP     STOSW						; repeat store string
 
 ; turn screen on with page 0 active
-	;MOV   DX,herc_cntrl				; get control register address
-	;POP   AX							; get the mode byte
-	;ADD   AL,scrn_on					; set the screen-on bit
-	;OUT   DX,AL
+	;MOV     DX,herc_cntrl				; get control register address
+	;POP     AX							; get the mode byte
+	;ADD     AL,scrn_on					; set the screen-on bit
+	;OUT     DX,AL
 
-	POP   ES
-	POP   DS
-	POP   SI
+	POP     ES
+	POP     DS
+	POP     SI
 	RET
 
 _hsettext ENDP
@@ -799,9 +796,7 @@ _hsavepic PROC FAR
 
     LES     DI,_screen_buffptr
 
-    MOV     AX,HGC_Address
-
-    MOV     DS,AX
+    MOV     DS,HGC_Address
     XOR     SI,SI
 
     CLD
@@ -828,8 +823,7 @@ _hretpic PROC FAR
     PUSH    DS
     PUSH    ES
 
-    MOV     AX,HGC_Address
-    MOV     ES,AX
+    MOV     ES,HGC_Address
     XOR     DI,DI
 
     LDS     SI,_screen_buffptr
@@ -857,13 +851,12 @@ _hclsall PROC  FAR
     PUSH    DI
     PUSH    ES
 
-    MOV     AX,HGC_Address
-    MOV     ES,AX
-    XOR     DI,DI
-    MOV     CX,4000h
-    MOV     AX,00
-    CLD
-    REP     STOSW
+	MOV     ES,HGC_Address				; address of video buffer
+	XOR     DI,DI						; start at offset 0
+	MOV     CX,4000h					; number of words to clear
+	MOV     AX,0						; blank value
+	CLD									; set auto increment
+	REP     STOSW						; repeat store string
 
     POP     ES
     POP     DI
@@ -884,8 +877,7 @@ _hclsgraph PROC FAR
     PUSH    DI
     PUSH    ES
 
-    MOV     AX,HGC_Address
-    MOV     ES,AX
+    MOV     ES,HGC_Address
 
 ; we will set ES:[DI] point at screen
     MOV     DI,[BP+8]                   ; get y1
@@ -964,8 +956,7 @@ _hclrline PROC FAR
     PUSH    DI
     PUSH    ES
 
-    MOV     AX,HGC_Address
-    MOV     ES,AX
+    MOV     ES,HGC_Address
 
 ; we will set ES:[DI] point at screen
     MOV     DI,[BP+8]                   ; get y1
@@ -1032,8 +1023,7 @@ _hprakeaw PROC FAR
     PUSH    DI
     PUSH    ES
 
-    MOV     SI,HGC_Address
-    MOV     ES,SI
+    MOV     ES,HGC_Address
 
     MOV     SI,OFFSET DS:chulalogo1
     MOV     DI,_herc_align
@@ -1152,14 +1142,14 @@ _hprakeaw ENDP
 ;------------------------------------------------------
 fic_getwind_stack STRUC
 
-                    DW    5 DUP (?)     ; five regs saved
-                    DD    ?             ; return address
+                    dw    5 dup (?)     ; five regs saved
+                    dd    ?             ; return address
 
-    x1_9            DW    ?
-    y1_9            DW    ?
-    linecount_9     DW    ?
-    bytecount_9     DW    ?
-    buffptr_9       DD    ?
+    x1_9            dw    ?
+    y1_9            dw    ?
+    linecount_9     dw    ?
+    bytecount_9     dw    ?
+    buffptr_9       dd    ?
 
 fic_getwind_stack ENDS
 
@@ -1179,9 +1169,7 @@ _hgetwind PROC FAR
     ADD     AX,[BP].x1_9
     ADD     AX,_herc_align
 
-    MOV     BX,AX
-    MOV     AX,HGC_Address
-    MOV     DS,AX
+    MOV     DS,HGC_Address
     LES     DI,[BP].buffptr_9
 
     CLD
@@ -1189,10 +1177,10 @@ _hgetwind PROC FAR
 scanline_loop9:
     DEC     [BP].linecount_9
     JS      end_getwind9
-    MOV     SI,BX
+    MOV     SI,AX
     MOV     CX,[BP].bytecount_9
     REP     MOVSB
-    shift_down BX
+    shift_down AX
     JMP     scanline_loop9
 
 end_getwind9:
@@ -1214,14 +1202,14 @@ _hgetwind ENDP
 ;------------------------------------------------------
 fic_putwind_stack STRUC
 
-                    DW    5 DUP (?)     ; five regs saved
-                    DD    ?             ; return address
+					dw    5 dup (?)     ; five regs saved
+					dd    ?             ; return address
 
-x1_10               DW    ?
-y1_10               DW    ?
-linecount_10        DW    ?
-bytecount_10        DW    ?
-buffptr_10          DD    ?
+	x1_10			dw    ?
+	y1_10			dw    ?
+	linecount_10	dw    ?
+	bytecount_10	dw    ?
+	buffptr_10		dd    ?
 
 fic_putwind_stack ENDS
 
@@ -1241,9 +1229,7 @@ _hputwind PROC FAR
     ADD     AX,[BP].x1_10
     ADD     AX,_herc_align
 
-    MOV     BX,AX
-    MOV     AX,HGC_Address
-    MOV     ES,AX
+    MOV     ES,HGC_Address
     LDS     SI,[BP].buffptr_10
 
     CLD
@@ -1251,10 +1237,10 @@ _hputwind PROC FAR
 scanline_loop10:
     DEC     [BP].linecount_10
     JS      end_putwind10
-    MOV     DI,BX
+    MOV     DI,AX
     MOV     CX,[BP].bytecount_10
     REP     MOVSB
-    shift_down BX
+    shift_down AX
     JMP     scanline_loop10
 
 end_putwind10:

@@ -845,8 +845,7 @@ _aclsall PROC FAR
 	PUSH    DI
 	PUSH    ES
 
-	MOV     AX,ATT_Address
-	MOV     ES,AX
+	MOV     ES,ATT_Address
 	XOR     DI,DI
 	MOV     CX,4000h
 	MOV     AX,00
