@@ -171,9 +171,9 @@ void readoption( search_file_mode mode ) {
 
 	set_all_lineperpage( BATCH );
 
-	sprintf( fname, "%s\\CUPRINT.CFG", cup_dir );
+	sprintf( fname, "%s\\TWPRINT.CFG", cup_dir );
 	if ( mode == CUR_DIR || mode == AUTO_FIND ) {
-		fp = fopen( "CUPRINT.CFG", "rt" );
+		fp = fopen( "TWPRINT.CFG", "rt" );
 	} else {
 		fp = fopen( fname, "rt" );
 	}
@@ -216,9 +216,9 @@ void saveoption( search_file_mode mode ) {
 	each_option_setup *op;
 
 	if ( mode == CUR_DIR || mode == AUTO_FIND ) {
-		fp = fopen( "CUPRINT.CFG", "wt" );
+		fp = fopen( "TWPRINT.CFG", "wt" );
 	} else {
-		sprintf( config_file, "%s\\CUPRINT.CFG", cup_dir );
+		sprintf( config_file, "%s\\TWPRINT.CFG", cup_dir );
 		fp = fopen( config_file, "wt" );
 	}
 	if ( fp == NULL ) {
