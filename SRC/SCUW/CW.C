@@ -84,7 +84,7 @@ void initscrn( void ) {
 	int countcol;
 	setgraph( );              /* set to graphic mode */
 	clsall( );
-	_rectangle( 0, 0, 639, ( scrmode == VGA ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
+	_rectangle( 0, 0, 639, ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
 	prakeaw( );
 	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
 	dispstrhgc( "– ESC<->MENU", 66, 1, BOLDATTR );

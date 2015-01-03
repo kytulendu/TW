@@ -491,7 +491,7 @@ void docommand( int row, int col ) {
 void writeallmenu( void ) {
 	int i;
 	clsall( );
-	_rectangle( 0, 0, 639, ( scrmode == VGA ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
+	_rectangle( 0, 0, 639, ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
 	prakeaw( );
 	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
 	dispstrhgc( "CU-PRINT", 31, 1, ENLARGEATTR | BOLDATTR | ONELINEATTR );

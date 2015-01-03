@@ -13,7 +13,7 @@
 void asetgraph( void ) {
 	union REGS inregs, outregs;
 
-	inregs.x.ax = 0x40; /* 640x400 2 color AT&T 6300 */
+	inregs.x.ax = 0x40;					/* 640x400 2 color AT&T 6300 */
 	int86( 0x10, &inregs, &outregs );
 
 	/*
@@ -25,8 +25,8 @@ void asetgraph( void ) {
 void asettext( void ) {
 	union REGS inregs, outregs;
 
-	inregs.x.ax = 3;
-	int86( 0x10, &inregs, &outregs );	/* text mode */
+	inregs.x.ax = 3;					/* 80x25 16 color text mode */
+	int86( 0x10, &inregs, &outregs );
 }
 
 unsigned int aoffset( register unsigned int x, register unsigned int y ) {

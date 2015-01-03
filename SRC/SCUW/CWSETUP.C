@@ -25,6 +25,7 @@
 #include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
 #include "..\common\getstr.h"
+#include "..\common\tutil1.h"
 
 #include "convert.h"
 #include "var.h"
@@ -32,7 +33,6 @@
 #include "cw.h"
 #include "edit.h"
 #include "file.h"
-#include "tutil1.h"
 
 #include "cwsetup.h"
 
@@ -174,7 +174,7 @@ void cwsetup( int argc, char *argv[] ) {
 	wind.row = 4;		/* set window of edit area */
 	wind.col = 1;
 	wind.length = 78;
-	wind.width = ( scrmode == VGA ) ? 19 : ( scrmode == ATT400 ) ? 15 : 13;
+	wind.width = ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 19 : ( scrmode == ATT400 ) ? 15 : 13;
 	offbreak( );		/* Turn off Ctrl-C checking */
 }
 

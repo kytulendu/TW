@@ -71,12 +71,11 @@ void setgraph( ) {
 
 	if ( scrmode == CGA ) {
 		scrmode = ATT400;
-	} else if ( scrmode == MCGA ) {
-		scrmode = VGA;
 	}
 
+	/* MCGA here because current VGA/EGA driver use 640x480 monochrome graphic mode */
 	if ( ( scrmode == EGAMONO ) || ( scrmode == EGA64 ) ||
-		( scrmode == VGA ) || ( scrmode == EGA ) ) {
+		( scrmode == VGA ) || ( scrmode == EGA ) || ( scrmode == MCGA ) ) {
 		prchar_ptr = eprchar;
 		prblank_ptr = eprblank;
 		setcurpos_ptr = esetcurpos;

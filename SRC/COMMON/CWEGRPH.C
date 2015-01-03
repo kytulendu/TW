@@ -22,11 +22,13 @@ void esetgraph( void ) {
 	union REGS inregs, outregs;
 
 	if ( scrmode == VGA ) {
-		inregs.x.ax = 0x11;			/* 640 x 480 graphic on vga display */
+		inregs.x.ax = 0x12;			/* 640 x 480 16 color graphic mode on VGA display */
+	} else if ( scrmode == MCGA ) {
+		inregs.x.ax = 0x11;			/* 640 x 350 monochrome graphic mode on EGA display */
 	} else if ( scrmode == EGA64 || scrmode == EGA ) {
-		inregs.x.ax = 0x10;			/* 640 x 350 graphic on ega display */
-	} else {
-		inregs.x.ax = 0x0F;			/* 640 x 350 mono-graphic on mono display */
+		inregs.x.ax = 0x10;			/* 640 x 350 4 or 16 color graphic mode on EGA display */
+	} else {						/* scrmode == EGAMONO */
+		inregs.x.ax = 0x0F;			/* 640 x 350 monochrome graphic mode on EGA monochrome display */
 	}
 
 	int86( 0x10, &inregs, &outregs );
@@ -44,8 +46,8 @@ void esetgraph( void ) {
 void esettext( void ) {
 	union REGS inregs, outregs;
 
-	inregs.x.ax = 3;					/* 16 color text mode */
-	int86( 0x10, &inregs, &outregs );	/* text mode */
+	inregs.x.ax = 3;					/* 80x25 16 color text mode */
+	int86( 0x10, &inregs, &outregs );
 }
 
 /** Find offest of pixel x, y we use the following formula
