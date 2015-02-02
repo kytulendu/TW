@@ -560,14 +560,14 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 							key = ebioskey( 0 ) & 0xff;
 							if ( ( key == 'y' ) || ( key == 'Y' ) ) {
 								writeblk( filename, sentinel->next, 0, sentinel->previous, MAXCOL );
-								abandonfile( );
+								destroynode( );
 							}
 							if ( ( key == 'n' ) || ( key == 'N' ) ) {
-								abandonfile( );
+								destroynode( );
 							}
 						} while ( ( key != 'n' ) && ( key != 'N' ) && ( key != 'y' ) && ( key != 'Y' ) );
 					} else {
-						abandonfile( );
+						destroynode( );
 					}
 					changeflag = NO;
 					filename[0] = '\0';
@@ -618,14 +618,14 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 							key = ebioskey( 0 ) & 0xff;
 							if ( ( key == 'y' ) || ( key == 'Y' ) ) {
 								writeblk( filename, sentinel->next, 0, sentinel->previous, MAXCOL );
-								abandonfile( );
+								destroynode( );
 							}
 							if ( ( key == 'n' ) || ( key == 'N' ) ) {
-								abandonfile( );
+								destroynode( );
 							}
 						} while ( ( key != 'n' ) && ( key != 'N' ) && ( key != 'y' ) && ( key != 'Y' ) );
 					} else {
-						abandonfile( );
+						destroynode( );
 					}
 					changeflag = NO;
 					filename[0] = '\0';
@@ -644,8 +644,9 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 					strcpy( filename, "*.*" );
 					i = getname( filename, 26, 6, 22, NORMALATTR );
 					if ( ( i == YES ) && ( filename[0] != '\0' ) ) {
-						if ( havewild( filename ) )
+						if ( havewild( filename ) ) {
 							selectfile( filename );
+						}
 						if ( filename[0] != '\0' ) {
 							if ( read_file( filename ) != ERROR ) {
 								loadtoline( curline->text );
@@ -653,9 +654,12 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 							} else {
 								filename[0] = '\0';
 							}
+						} else {
+							destroynode( );
 						}
 					} else {
 						filename[0] = '\0';
+						destroynode( );
 					}
 					resscrn( scrnndx,
 						xlev1[lev1 - 1] - 1,

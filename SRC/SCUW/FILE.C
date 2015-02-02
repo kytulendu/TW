@@ -50,7 +50,7 @@ int read_file( char *file_name ) {
 	}
 }
 
-void abandonfile( void ) {
+void destroynode( void ) {
 	struct line_node *currentline, *templine;
 	blockmsg( 10 );
 	dispstrhgc( "กำลังทำการยกเลิกแฟ้มข้อมูลเดิมอยู่ กรุณารอสักครู่...", 26 - CENTER_FACTOR, 10, REVERSEATTR );
