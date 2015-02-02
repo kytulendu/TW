@@ -49,22 +49,3 @@ int read_file( char *file_name ) {
 		return( ERROR );
 	}
 }
-
-void destroynode( void ) {
-	struct line_node *currentline, *templine;
-	blockmsg( 10 );
-	dispstrhgc( "กำลังทำการยกเลิกแฟ้มข้อมูลเดิมอยู่ กรุณารอสักครู่...", 26 - CENTER_FACTOR, 10, REVERSEATTR );
-	currentline = sentinel->next;
-	while ( currentline != sentinel ) {
-		templine = currentline;
-		currentline = currentline->next;
-		free( templine->text );
-#ifdef WANT_TO_USE_GRAPH
-		if ( templine->graph != NULL ) {
-			free( templine->graph );
-		}
-#endif
-		free( templine );
-	}
-	free( sentinel );
-}
