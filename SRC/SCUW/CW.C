@@ -51,14 +51,6 @@
 
 #include "cw.h"
 
-void dispkey( register unsigned int p_key ) {
-	dispstrhgc( "   ", wind.col, 2, NORMALATTR );
-	if ( ( p_key & 0xff ) < 32 ) {
-		prchar( '^', 0, wind.col, REVERSEATTR );
-		prchar( ( p_key & 0xff ) + 0x40, 0, wind.col + 1, REVERSEATTR );
-	}
-}
-
 void setupnode( void ) {
 	sentinel = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 	sentinel->next = sentinel;
@@ -84,10 +76,11 @@ void initscrn( void ) {
 	int countcol;
 	setgraph( );              /* set to graphic mode */
 	clsall( );
-	_rectangle( 0, 0, 639, ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
+	_rectangle( 0, 0, ( scrmode == HERCMONO ) ? 719 : 639,
+		( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
 	prakeaw( );
 	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
-	dispstrhgc( "– ESC<->MENU", 66, 1, BOLDATTR );
+	dispstrhgc( "– ESC<->MENU", ( scrmode == HERCMONO ) ? 76 : 66, 1, BOLDATTR );
 	for ( countcol = 1; countcol <= 10; countcol++ ) {
 		headmenu( countcol, NORMALATTR );
 	}
@@ -424,7 +417,8 @@ int main( int argc, char *argv[] ) {
 						doonscrn( 'x', x, y );
 						break;
 
-					case CNTRL_Q: quick( &x, &y );
+					case CNTRL_Q:
+						quick( &x, &y );
 						break;
 
 					case 0x8111:

@@ -86,7 +86,6 @@
     <ClInclude Include="SRC\SCUW\DEL.H" />
     <ClInclude Include="SRC\SCUW\EDIT.H" />
     <ClInclude Include="SRC\SCUW\FILE.H" />
-    <ClInclude Include="SRC\SCUW\GETSTR.H" />
     <ClInclude Include="SRC\SCUW\INS.H" />
     <ClInclude Include="SRC\SCUW\KBD.H" />
     <ClInclude Include="SRC\SCUW\MENU.H" />

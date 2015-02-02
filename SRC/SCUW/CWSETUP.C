@@ -36,8 +36,6 @@
 
 #include "cwsetup.h"
 
-extern int herc_align; /* from hdisp.asm */
-
 static char cup_option[16]; /* assume that only 16 char max for argument */
 
 typedef struct {
@@ -111,9 +109,6 @@ void cwsetup( int argc, char *argv[] ) {
 			case 'A':
 				scrmode = ATT400;
 				break;
-			case 'L':		/* /L for Hercules, left-justified  */
-				herc_align = 0;
-				break;
 			case 'N':
 				create_bak = NO;
 				break;
@@ -173,7 +168,7 @@ void cwsetup( int argc, char *argv[] ) {
 
 	wind.row = 4;		/* set window of edit area */
 	wind.col = 1;
-	wind.length = 78;
+	wind.length = ( scrmode == HERCMONO ) ? 88 : 78;
 	wind.width = ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 19 : ( scrmode == ATT400 ) ? 15 : 13;
 	offbreak( );		/* Turn off Ctrl-C checking */
 }

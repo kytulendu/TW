@@ -81,37 +81,24 @@ int( *writech )( int x, int y, char ch );
 *   init_cursor
 */
 void setup_screen( void ) {
-	extern int herc_align;
-
 	registerfarbgidriver( EGAVGA_driver_far );
 	registerfarbgidriver( Herc_driver_far );
 
 	setgraph( );
 	if ( scrmode == HERCMONO ) {
 		writech = hgcwritech;
-		if ( herc_align ) {
-			align = 40;
-		}/* else {
-		 align = 0 (init already)
-		 }*/
 	} else {
 		writech = ewritech;
-		herc_align = 0;
 	}
 
 	init_graph_and_cursor( );
 
 	clsall( );
-	/*
-	_rectangle( 0 + align, 0, 639 + align, 347 );
-	*/
-	_rectangle( 0, 0, 639, 347 );
+	_rectangle( 0, 0, ( scrmode == HERCMONO ) ? 719 : 639,
+		( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
 	prakeaw( );
 	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
-	/*
-	_line( 0 + align, 24, 639 + align, 24 );
-	*/
-	_line( 0, 24, 639, 24 );
+	_line( 0, 24, ( scrmode == HERCMONO ) ? 719 : 639, 24 );
 }
 
 /*

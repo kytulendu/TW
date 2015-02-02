@@ -22,7 +22,7 @@
 #include "dir.h"
 
 /* private prototype function */
-int createdir( char mask[] );
+int createdir( char *mask );
 void showfile( int col, int row, char attr );
 void showpagedir( void );
 void freedir( void );
@@ -48,7 +48,7 @@ static struct dirnode *headdir, *dirpage;
 static int dircol;
 static int dirrow;
 
-int createdir( char mask[] ) {
+int createdir( char *mask ) {
 	struct dirnode *tempdir;
 	struct ffblk ffblock;
 	int done, i;
@@ -231,7 +231,7 @@ void dirleft( void ) {
 	setdirpos( tempdir );
 }
 
-int selectfile( char mask[] ) {
+int selectfile( char *mask ) {
 	struct dirnode *tempdir;
 	int count, c, i, j;
 	if ( createdir( mask ) == NO ) {

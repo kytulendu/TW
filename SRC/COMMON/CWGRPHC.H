@@ -111,7 +111,7 @@ void prblank( unsigned int x, unsigned int y );
 /***/
 void setcurpos( unsigned int x, unsigned int y, int p_thaimode );
 
-/***/
+/** put a pixel in to x,y position*/
 void plot( unsigned int x, unsigned int y );
 
 /** set graphic mode */
@@ -126,7 +126,7 @@ void savepic( void );
 /***/
 void retpic( void );
 
-/** clear screen*/
+/** clear screen */
 void clsall( void );
 
 /***/

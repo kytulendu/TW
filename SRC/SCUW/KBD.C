@@ -137,3 +137,11 @@ int alt_char_map( int c ) {
 	}
 	return ( k );
 }
+
+void dispkey( register unsigned int p_key ) {
+	dispstrhgc( "   ", wind.col, 2, NORMALATTR );
+	if ( ( p_key & 0xff ) < 32 ) {
+		prchar( '^', 0, wind.col, REVERSEATTR );
+		prchar( ( p_key & 0xff ) + 0x40, 0, wind.col + 1, REVERSEATTR );
+	}
+}

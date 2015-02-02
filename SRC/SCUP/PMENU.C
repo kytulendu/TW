@@ -491,12 +491,13 @@ void docommand( int row, int col ) {
 void writeallmenu( void ) {
 	int i;
 	clsall( );
-	_rectangle( 0, 0, 639, ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
+	_rectangle( 0, 0, ( scrmode == HERCMONO ) ? 719 : 639,
+		( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
 	prakeaw( );
 	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
 	dispstrhgc( "CU-PRINT", 31, 1, ENLARGEATTR | BOLDATTR | ONELINEATTR );
 	dispprintf( 22, 2, NORMALATTR, "Version 1.41  %s %s", prog_date, prog_time );
-	_line( 0, 24, 639, 24 );
+	_line( 0, 24, ( scrmode == HERCMONO ) ? 719 : 639, 24 );
 	dispstrhgc( "โปรแกรมจัดพิมพ์เอกสารภาษาไทย/อังกฤษ", 25, 15, ONELINEATTR | BOLDATTR );
 	mcol[0] = 3;
 	mcol[1] = mcol[0] + mlenght + 1;

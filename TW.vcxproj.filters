@@ -101,9 +101,6 @@
     <ClInclude Include="SRC\SCUW\FILE.H">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\SCUW\GETSTR.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\SCUW\INS.H">
       <Filter>Header Files</Filter>
     </ClInclude>

@@ -30,9 +30,8 @@ void variable_blink( unsigned int x, unsigned int y ) {
 
 void hgcwritech( int x, int y, char ch ) {
 	int i, j;
-	extern int herc_align;
 
-	char far *pos = ( char far * )( ( 0xb0000000L ) + x + y * 90 + herc_align );
+	char far *pos = ( char far * )( ( 0xb0000000L ) + x + y * 90 );
 	char *chr = all_font + ch*BYTE*Y;
 	for ( i = 0; i < Y / 4; i++ ) {
 		for ( j = 0; j < BYTE; j++ ) {

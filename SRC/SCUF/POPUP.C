@@ -19,7 +19,6 @@
 
 #include "popup.h"
 
-extern int herc_align;
 extern int center_x, center_y;
 
 int menu_top, menu_left, menu_right, menu_bottom;
@@ -85,16 +84,16 @@ int popup_message( char *item[] ) {
 	/*
 	line( menu_left, menu_top + 20 + 2, menu_right, menu_top + 20 + 2 );
 	*/
-	line( menu_left - herc_align * 8, menu_top + 20 + 2,
-		menu_right - herc_align * 8, menu_top + 20 + 2 );
+	line( menu_left * 8, menu_top + 20 + 2,
+		menu_right * 8, menu_top + 20 + 2 );
 	for ( i = 1; i < amount; i++ ) {
 		dispstrhgc( item[i], 40 - width / 2, 8 - height / 2 + i, NORMALATTR );
 	}
 	/*
 	line( menu_left, menu_top + 20 + 2, menu_right, menu_top + 20 + 2 );
 	*/
-	line( menu_left - herc_align * 8, menu_top + 20 + 2,
-		menu_right - herc_align * 8, menu_top + 20 + 2 );
+	line( menu_left * 8, menu_top + 20 + 2,
+		menu_right * 8, menu_top + 20 + 2 );
 	cursorkey( &key );
 	putimage( menu_left, menu_top, buff, COPY_PUT );
 	free( buff );
@@ -131,8 +130,8 @@ int popup_menu( char *item[], char**buff ) {
 	/*
 	line(menu_left,menu_top+20+2,menu_right,menu_top+20+2);
 	*/
-	line( menu_left - herc_align * 8, menu_top + 20 + 2,
-		menu_right - herc_align * 8, menu_top + 20 + 2 );
+	line( menu_left * 8, menu_top + 20 + 2,
+		menu_right * 8, menu_top + 20 + 2 );
 
 
 	dispstrhgc( item[1], 40 - width / 2, 8 - height / 2 + 1, REVERSEATTR );

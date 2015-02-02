@@ -15,4 +15,8 @@ int readkbd( void );
 *   remap alternate character, return (-1) if fail. */
 int alt_char_map( int c );
 
+/** Display key combination when press control at top left of screen.
+*  \param[in]  p_key		Key code.*/
+void dispkey( register unsigned int p_key );
+
 #endif /* SCUW_KBD_H_INCLUDED */

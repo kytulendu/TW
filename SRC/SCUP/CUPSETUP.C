@@ -37,8 +37,6 @@
 char dfont[ALL_FONT_SIZE];
 char ditalicfont[ALL_FONT_SIZE];
 
-extern int herc_align; /* from hdisp.asm */
-
 void cupsetup( int argc, char *argv[] ) {
 	register int i;
 
@@ -68,9 +66,6 @@ void cupsetup( int argc, char *argv[] ) {
 				break;
 			case 'A':
 				scrmode = ATT400;
-				break;
-			case 'L':/* /HL for Hercules, left-justified  */
-				herc_align = 0;
 				break;
 			case 'N':
 			case 'W':

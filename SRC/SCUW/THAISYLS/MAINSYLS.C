@@ -28,7 +28,7 @@
 /* Function name must be capital letter for asm call */
 
 unsigned char *FINDCUT( unsigned char *lm, unsigned char *eot, unsigned char *rm ) {
-	register unsigned char  *CutPt;
+	register unsigned char *CutPt;
 
 	LeftLimit = lm;
 	EndOfText = eot;

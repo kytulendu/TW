@@ -41,7 +41,6 @@ int handler( int errval, int ax, int bp, int si );
 
 void cufsetup( int argc, char *argv[] ) {
 	register int i;
-	extern int herc_align;
 	extern align;
 
 	progname = argv[0];
@@ -70,11 +69,6 @@ void cufsetup( int argc, char *argv[] ) {
 				break;
 			case 'A':
 				scrmode = ATT400;
-				break;
-				/* /HL for Hercules, left-justified  */
-			case 'L':
-				herc_align = 0;
-				align = 0;
 				break;
 			case 'N':
 			case 'W':
