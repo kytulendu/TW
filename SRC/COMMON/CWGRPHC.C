@@ -68,14 +68,17 @@ void setgraph( ) {
 		scrmode = HERCMONO;
 	}
 #endif
-
 	if ( scrmode == CGA ) {
 		scrmode = ATT400;
 	}
 
-	/* MCGA here because current VGA/EGA driver use 640x480 monochrome graphic mode */
-	if ( ( scrmode == EGAMONO ) || ( scrmode == EGA64 ) ||
-		( scrmode == VGA ) || ( scrmode == EGA ) || ( scrmode == MCGA ) ) {
+	switch ( scrmode ) {
+	case EGA:
+	case EGAMONO:
+	case EGA64:
+	/* MCGA here because current VGA use 640x480 monochrome graphic mode */
+	case MCGA:
+	case VGA:
 		prchar_ptr = eprchar;
 		prblank_ptr = eprblank;
 		setcurpos_ptr = esetcurpos;
@@ -90,7 +93,9 @@ void setgraph( ) {
 		prakeaw_ptr = eprakeaw;
 		putwind_ptr = eputwind;
 		getwind_ptr = egetwind;
-	} else if ( scrmode == HERCMONO ) {
+		break;
+
+	case HERCMONO:
 		prchar_ptr = hprchar;
 		prblank_ptr = hprblank;
 		setcurpos_ptr = hsetcurpos;
@@ -105,7 +110,9 @@ void setgraph( ) {
 		prakeaw_ptr = hprakeaw;
 		putwind_ptr = hputwind;
 		getwind_ptr = hgetwind;
-	} else if ( scrmode == ATT400 ) {
+		break;
+
+	case ATT400:
 		prchar_ptr = aprchar;
 		prblank_ptr = aprblank;
 		setcurpos_ptr = asetcurpos;
@@ -120,8 +127,10 @@ void setgraph( ) {
 		prakeaw_ptr = aprakeaw;
 		putwind_ptr = aputwind;
 		getwind_ptr = agetwind;
-	} else {
-		fputs( "This software run on Hercules/EGA/VGA/MCGA/AT&T display card only", stderr );
+		break;
+
+	default:
+		fputs( "This software run on Hercules/EGA/VGA/MCGA/AT&T display card only.", stderr );
 		exit( 1 );
 	}
 	( *setgraph_ptr )( );
