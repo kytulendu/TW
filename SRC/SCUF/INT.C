@@ -25,9 +25,9 @@ extern int draw_mode;
 
 int cur_char;
 
-union {
+union ActivePtr {
 	char far *ptr;
-	struct {
+	struct x {
 		unsigned Ofs;
 		unsigned Seg;
 	} x;

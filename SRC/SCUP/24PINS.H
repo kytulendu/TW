@@ -108,11 +108,11 @@ struct cp_textbuf {
 #define CP_LQROW    3
 #define CP_LQSCRROW 2
 
-typedef struct {
+typedef struct FONT {
 	unsigned char font[CP_LQCOL][CP_LQROW];
 } FONT;
 
-typedef struct {
+typedef struct FONTSCR {
 	unsigned char font[CP_LQCOL][CP_LQSCRROW];
 } FONTSCR;
 

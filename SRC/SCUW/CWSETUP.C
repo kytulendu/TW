@@ -38,7 +38,7 @@
 
 static char cup_option[16]; /* assume that only 16 char max for argument */
 
-typedef struct {
+typedef struct each_option_setup {
 	char *option_name;
 	int *p_option_value;
 	int p_option_default;

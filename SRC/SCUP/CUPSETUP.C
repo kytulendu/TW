@@ -116,7 +116,7 @@ void set_directory( void ) {
 	cup_dir[strlen( cup_dir ) - 1] = '\0'; /* clear \ */
 }
 
-typedef struct {
+typedef struct each_option_setup {
 	char *option_name;
 	void *p_option_value;
 } each_option_setup;

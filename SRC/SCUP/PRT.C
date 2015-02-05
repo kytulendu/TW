@@ -44,7 +44,7 @@
 #define ADJUST(x) (x>=0) ? x : 256+x
 #define ASCII_NO 256
 
-typedef struct {
+typedef struct buffer24pin {
 	char byte1;
 	char byte2;
 	char byte3;
