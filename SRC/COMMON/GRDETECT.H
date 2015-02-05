@@ -34,6 +34,9 @@ void egavga_class( graphics_hardware *mode_ptr );
 /** check if the equipped adaptor is MCGA */
 int is_mcga( void );
 
+/** check if the equipped adaptor is AT&T 6300 / Olivetti M24 */
+int is_att400( void );
+
 /** check if there is any transition on 0x3BF port */
 int check_vretrace( void );
 

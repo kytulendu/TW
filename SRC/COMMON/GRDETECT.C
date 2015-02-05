@@ -54,14 +54,19 @@ void graph_detecthardware( graphics_hardware *mode_ptr ) {
 		}
 		if ( is_mcga( ) ) {
 			*mode_ptr = MCGA;
-		} else {
-			*mode_ptr = CGA;
+		} else {								/* CGA or ATT400 */
+			/* AT&T 6300 / Olivetti M24 test */
+			if ( is_att400( ) ) {
+				*mode_ptr = ATT400;
+			} else {
+				*mode_ptr = CGA;
+			}
 		}
 		return;
 	}
 }
 
-int is_egavga( ) {
+int is_egavga( void ) {
 	union REGS reg_pack;
 
 	reg_pack.x.ax = 0x1200;				/* Read EGA/VGA configuration */
@@ -111,13 +116,13 @@ void egavga_class( graphics_hardware *mode_ptr ) {
 	return;
 }
 
-int is_mcga( ) {
+int is_mcga( void ) {
 	union REGS reg_pack;
 
 	reg_pack.x.ax = 0x1A00;				/* Read video information */
 	int86( 0x10, &reg_pack, &reg_pack );
 
-	if ( reg_pack.h.al != 0x1A ) {		/* Call is invalid */
+	if ( reg_pack.h.al != 0x1A ) {		/* Not MCGA or VGA */
 		return ( 0 );
 	}
 	if ( ( reg_pack.h.bl == 7 ) || ( reg_pack.h.bl == 8 ) ||
@@ -128,7 +133,29 @@ int is_mcga( ) {
 	}
 }
 
-int check_vretrace( ) {
+int is_att400( void ) {
+	union REGS reg_pack;
+
+	/* Use AT&T 6300 specific BIOS int */
+	/** Int 1A/AH=FEh
+	*		AT&T 6300 - READ TIME AND DATE
+	*		AH = FEh
+	*	Return:
+	*		BX = day count (0 = Jan 1, 1984)
+	*		CH = hour
+	*		CL = minute
+	*		DH = second
+	*		DL = hundredths */
+	reg_pack.x.ax = 0xFE00;
+	int86( 0x1a, &reg_pack, &reg_pack );
+	if ( reg_pack.x.cx != 0 ) {			/* if any bits are set, we have AT&T 6300 */
+		return ( 1 );
+	} else {
+		return ( 0 );
+	}
+}
+
+int check_vretrace( void ) {
 	register unsigned int change;
 	register unsigned int old_value;
 	unsigned int count;

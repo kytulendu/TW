@@ -2,7 +2,7 @@
 ; ATT400.ASM                                                                 ;
 ;                                                                            ;
 ; 3 JAN 1989                                                                 ;
-; AT&T 6300 Graphic Card Driver                                              ;
+; AT&T 6300 / Olivetti M24 Graphic Card Driver                               ;
 ;****************************************************************************;
 
 INCLUDE   cwfntam.asm

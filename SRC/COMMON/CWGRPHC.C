@@ -68,9 +68,6 @@ void setgraph( ) {
 		scrmode = HERCMONO;
 	}
 #endif
-	if ( scrmode == CGA ) {
-		scrmode = ATT400;
-	}
 
 	switch ( scrmode ) {
 	case EGA:
