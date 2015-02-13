@@ -84,7 +84,7 @@ unsigned long diskfree( int driveno );
 /**  */
 int chkspace( char *fname );
 
-/** char file_name[];
+/** char *file_name;
 *    struct line_node *linebegin, *lineend;
 *    unsigned int colbegin, colend; physical column  */
 void writeblk( char *file_name, struct line_node *linebegin, unsigned int colbegin, struct line_node *lineend, unsigned int colend );

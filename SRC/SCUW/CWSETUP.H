@@ -4,10 +4,13 @@
 /** Print usage information. */
 void usage( void );
 
+/** Initialize tab value from right margin. */
+void inittabvalue( void );
+
 /**  */
 void cwsetup( int argc, char *argv[] );
 
-/**  */
+/** Set CW directory. */
 void set_directory( void );
 
 /** Read option from file cw.cfg
@@ -35,7 +38,7 @@ void setoption( void );
 /** Set options to default setting. */
 void set_option_to_default( void );
 
-/**  */
+/** Initialize starting value. */
 void initvalue( unsigned int *x, unsigned int *y );
 
 /** Initialize screen.*/

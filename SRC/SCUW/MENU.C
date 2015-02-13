@@ -872,6 +872,7 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 			case 0x9100:
 				last_menu_on = 1;
 				setoption( );
+				inittabvalue( );
 				last_menu_on = 0;
 				showpageall( );
 				resscrn( scrnndx,

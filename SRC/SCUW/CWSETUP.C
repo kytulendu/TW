@@ -78,6 +78,17 @@ void usage( void ) {
 	exit( 1 );
 }
 
+void inittabvalue( void ) {
+	register int i;
+
+	for ( i = 0; i < MAXCOL; ++i ) {
+		tab[i] = NO;
+	}
+	for ( i = 5; i < ( rightmar - 6 ); i += 5 ) {
+		tab[i] = YES;
+	}
+}
+
 void cwsetup( int argc, char *argv[] ) {
 	unsigned int dummy;
 	register int i;
@@ -153,12 +164,7 @@ void cwsetup( int argc, char *argv[] ) {
 
 	harderr( handler );
 	initvalue( &dummy, &dummy );
-	for ( i = 0; i < MAXCOL; ++i ) {
-		tab[i] = NO;
-	}
-	for ( i = 5; i < ( rightmar - 6 ); i += 5 ) {
-		tab[i] = YES;
-	}
+	inittabvalue( );
 	for ( i = 0; i < 10; i++ ) {
 		macro[i][0] = '\0';
 	}
