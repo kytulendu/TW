@@ -91,20 +91,6 @@ void destroynode( void ) {
 	free( sentinel );
 }
 
-void initscrn( void ) {
-	int countcol;
-	setgraph( );              /* set to graphic mode */
-	clsall( );
-	_rectangle( 0, 0, ( scrmode == HERCMONO ) ? 719 : 639,
-		( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
-	prakeaw( );
-	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
-	dispstrhgc( "– ESC<->MENU", ( scrmode == HERCMONO ) ? 76 : 66, 1, BOLDATTR );
-	for ( countcol = 1; countcol <= 10; countcol++ ) {
-		headmenu( countcol, NORMALATTR );
-	}
-}
-
 unsigned menu_to_key( register unsigned int p_curmenu ) {
 	register int i;
 	for ( i = 0; ( command_tab[i] != p_curmenu ) && ( command_tab[i] != 0 ); i += 2 );
@@ -170,6 +156,7 @@ int main( int argc, char *argv[] ) {
 	ebioskey( 0 );
 	cls( );
 
+	/* Main program loop */
 	do {
 		dispstrhgc( "   ", wind.col, 2, NORMALATTR );
 		i = pulled_down_menu( &curmenu, &x, &y );

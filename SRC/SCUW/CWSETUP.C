@@ -166,10 +166,16 @@ void cwsetup( int argc, char *argv[] ) {
 
 	initscrn( );
 
-	wind.row = 4;		/* set window of edit area */
+	/** set window of edit area by video mode
+	*   CGA                  78 column, 6 line.
+	*   VGA, MCGA            78 column, 19 line.
+	*   EGA, EGA64, EGAMONO  78 column, 13 line.
+	*   HERCMONO             88 column, 13 line.
+	*   ATT400               78 column, 15 line.*/
+	wind.row = 4;
 	wind.col = 1;
 	wind.length = ( scrmode == HERCMONO ) ? 88 : 78;
-	wind.width = ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 19 : ( scrmode == ATT400 ) ? 15 : 13;
+	wind.width = ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 19 : ( scrmode == ATT400 ) ? 15 : ( scrmode == CGA ) ? 6 : 13;
 	offbreak( );		/* Turn off Ctrl-C checking */
 }
 
@@ -328,6 +334,21 @@ void initvalue( unsigned *x, unsigned *y ) {
 	blkbegin.column = 0;
 	blkend.column = 0;
 	dispblock = YES;
+}
+
+void initscrn( void ) {
+	int countcol;
+	setgraph( );              /* set to graphic mode */
+	clsall( );
+	_rectangle( 0, 0, ( scrmode == HERCMONO ) ? 719 : 639,
+		( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 : ( scrmode == ATT400 ) ? 399 :
+		( scrmode == CGA ) ? 199 : 347 );
+	prakeaw( );
+	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
+	dispstrhgc( "– ESC<->MENU", ( scrmode == HERCMONO ) ? 76 : 66, 1, BOLDATTR );
+	for ( countcol = 1; countcol <= 10; countcol++ ) {
+		headmenu( countcol, NORMALATTR );
+	}
 }
 
 void print_file( void ) {

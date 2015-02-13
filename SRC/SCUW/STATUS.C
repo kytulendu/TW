@@ -113,6 +113,7 @@ void writedriveno( void ) {
 	dispstrhgc( "ä´Ã¿ì  :", 50 - SHRINK_FACTOR, 0, NORMALATTR );
 	prchar( 'A' + getdisk( ), BOLDATTR, 55 - SHRINK_FACTOR, NORMALATTR );
 }
+
 void writestatus( unsigned int x ) {
 	writepageline( );
 	writecolno( x );

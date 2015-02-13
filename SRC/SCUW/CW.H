@@ -12,9 +12,6 @@ void setupnode( void );
 /** Destroy node created by setupnode();. */
 void destroynode( void );
 
-/** Initialize screen.*/
-void initscrn( void );
-
 /** Menu selection to keyboard shortcut command.*/
 unsigned menu_to_key( register unsigned int p_curmenu );
 

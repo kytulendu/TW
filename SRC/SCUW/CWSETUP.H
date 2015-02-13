@@ -38,6 +38,9 @@ void set_option_to_default( void );
 /**  */
 void initvalue( unsigned int *x, unsigned int *y );
 
+/** Initialize screen.*/
+void initscrn( void );
+
 /** Run printer. */
 void print_file( void );
 

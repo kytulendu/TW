@@ -30,8 +30,7 @@ void graph_detecthardware( graphics_hardware *mode_ptr ) {
 			return;
 		}
 		/* CGA/MDA/Hercules test */
-		if ( check_vretrace( ) == 0 )			/* No Vertical retrace change*/
-		{
+		if ( check_vretrace( ) == 0 ) {			/* No Vertical retrace change*/
 			mem_ptr = ( unsigned char far * ) 0xB8000L;	/* point to screen */
 			byte_keep = *mem_ptr;
 			( *mem_ptr ) ^= 0xFF;
