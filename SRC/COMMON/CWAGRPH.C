@@ -15,11 +15,6 @@ void asetgraph( void ) {
 
 	inregs.x.ax = 0x40;					/* 640x400 2 color AT&T 6300 */
 	int86( 0x10, &inregs, &outregs );
-
-	/*
-	outportb( 0x03C4, 0x02 );
-	outportb( 0x03C5, 0x0F );
-	*/
 }
 
 void asettext( void ) {

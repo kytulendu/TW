@@ -21,7 +21,6 @@
 #include "..\common\cwtype.h"
 #include "..\common\cwgrphc.h"
 #include "..\common\cscrn.h"
-#include "..\common\grphc.h"
 
 #include "convert.h"
 #include "cufsetup.h"

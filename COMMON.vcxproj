@@ -104,7 +104,6 @@
     <ClInclude Include="SRC\COMMON\FILEUTIL.H" />
     <ClInclude Include="SRC\COMMON\GETSTR.H" />
     <ClInclude Include="SRC\COMMON\GRDETECT.H" />
-    <ClInclude Include="SRC\COMMON\GRPHC.H" />
     <ClInclude Include="SRC\COMMON\KBD.H" />
     <ClInclude Include="SRC\COMMON\KBDCODE.H" />
     <ClInclude Include="SRC\COMMON\SOUND.H" />

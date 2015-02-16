@@ -22,7 +22,6 @@
 #include <dos.h>
 
 #include "..\common\cwtype.h"
-#include "..\common\grphc.h"
 #include "..\common\common.h"
 
 #include "global.h"

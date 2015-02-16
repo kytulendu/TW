@@ -12,12 +12,16 @@ unsigned char stdtoku( unsigned char p_stdcode );
 unsigned char kutostd( unsigned char p_kucode );
 
 /** Change ascii value of key from english to Thai.
+*   From ACOMMON.ASM
 *  \param[in]  p_key		KU code character.
 *  \return unsigned char	Kedmanee keyboard code. */
-/*unsigned char thaikey( unsigned char p_key );*/
+int thaikey( register unsigned int p_key );
+
+/** From ACOMMON.ASM */
+int asm_keypressed( void );
 
 /** Determining at what level a given character is.
-*  \param[in]  p_key		KU code character.
+*  \param[in]  p_char		Character.
 *  \return int				Level of character.
 *	0 : Ordinary (middle) level
 *	1 : Lower level (สระอุ, สระอู)

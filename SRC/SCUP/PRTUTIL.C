@@ -13,7 +13,6 @@
 #include "..\common\cscrn.h"
 #include "..\common\cwgrphc.h"
 #include "..\common\ekbd.h"
-#include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
 #include "..\common\tutil1.h"
 

@@ -22,7 +22,6 @@
 #include "..\common\ekbd.h"
 #include "..\common\fileutil.h"
 #include "..\common\grdetect.h"
-#include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
 #include "..\common\getstr.h"
 #include "..\common\tutil1.h"

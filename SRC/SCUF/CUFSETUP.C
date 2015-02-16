@@ -31,7 +31,6 @@
 #include "..\common\ekbd.h"
 #include "..\common\fileutil.h"
 #include "..\common\grdetect.h"
-#include "..\common\grphc.h"
 
 #include "cufsetup.h"
 

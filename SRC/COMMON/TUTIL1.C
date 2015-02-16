@@ -1,5 +1,4 @@
 #include "cwtype.h"
-#include "grphc.h"
 #include "common.h"
 #include "cscrn.h"
 

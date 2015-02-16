@@ -10,7 +10,6 @@
 #include "common.h"
 #include "cwgrphc.h"
 #include "ekbd.h"
-#include "grphc.h"
 #include "var.h"
 
 #include "kbd.h"

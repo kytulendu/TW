@@ -15,7 +15,6 @@
 #include "cwtype.h"
 #include "cwgrphc.h"
 #include "ekbd.h"
-#include "grphc.h"
 #include "sound.h"
 #include "common.h"
 

@@ -26,7 +26,6 @@
 #include "..\common\dir.h"
 #include "..\common\ekbd.h"
 #include "..\common\fileutil.h"
-#include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
 #include "..\common\sound.h"
 #include "..\common\getstr.h"

@@ -16,7 +16,6 @@
 #include "cscrn.h"
 #include "kbd.h"
 #include "ekbd.h"
-#include "grphc.h"
 #include "kbdcode.h"
 #include "sound.h"
 #include "tutil1.h"

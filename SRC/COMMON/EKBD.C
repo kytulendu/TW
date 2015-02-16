@@ -11,7 +11,6 @@
 
 #include "cwtype.h"
 #include "common.h"
-#include "grphc.h"
 #include "var.h"
 
 #include "ekbd.h"

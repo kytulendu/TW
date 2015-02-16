@@ -19,7 +19,6 @@
 #include <string.h>
 
 #include "..\common\cwtype.h"
-#include "..\common\grphc.h"
 #include "..\common\cwgrphc.h"
 
 #include "global.h"

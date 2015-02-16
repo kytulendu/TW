@@ -16,8 +16,8 @@ INCLUDE cwfnthm.asm
 
 	_DATA		SEGMENT WORD PUBLIC 'DATA'
 
-EXTRN curfont:BYTE, enlargefont:BYTE, offsetfont:WORD
-EXTRN chulalogo1:WORD, chulalogo2:WORD
+EXTRN _curfont:BYTE, _enlargefont:BYTE, _offsetfont:WORD
+EXTRN _chulalogo1:WORD, _chulalogo2:WORD
 EXTRN _dfont:BYTE, _ditalicfont:BYTE
 EXTRN _screen_buffptr:DWORD
 
@@ -31,7 +31,7 @@ herc_cntrl		equ  03B8h				; Display mode control port
 herc_config		equ  03BFh				; Display configuration port
 
 ; Hercules control/configuration register settings
-scrn_on        	equ	 08h				;
+scrn_on        	equ	 08h				; Show screen
 graph			equ  02h				; Graphic mode
 text			equ  20h				; Text mode
 
@@ -99,7 +99,7 @@ _hprchar PROC FAR
 	MOV     SI,[BP+6]                   ; get character
 	AND     SI,00FFh                    ; clear high byte
 	ADD     SI,SI                       ; add for word offset
-	ADD     SI,OFFSET DGROUP:offsetfont
+	ADD     SI,OFFSET DGROUP:_offsetfont
 	MOV     SI,DS:[SI]                  ; get offset from table
 	MOV     AL,[BP+8]                   ; get attribute
 	OR      AL,AL                       ; Has it have attribute ?
@@ -118,7 +118,7 @@ normalfont:
 	MOV     BX,OFFSET DGROUP:_dfont
 
 findnextattr:
-	MOV     DI,OFFSET DGROUP:curfont
+	MOV     DI,OFFSET DGROUP:_curfont
 	TEST    AL,008h                     ; superscript ?
 	JZ      testsub
 	MOV     WORD PTR DS:[DI+16],0       ; clear old font
@@ -153,7 +153,7 @@ transferfont:
 	MOV     DS:[DI+16],AX
 	MOV     AX,DS:[BX+SI+18]
 	MOV     DS:[DI+18],AX
-	MOV     BX,OFFSET DGROUP:curfont    ; base table is in BX
+	MOV     BX,OFFSET DGROUP:_curfont    ; base table is in BX
 	XOR     SI,SI                       ; DS:[BX+SI] now point at font
 	MOV     AL,[BP+8]                   ; get attribute
 	TEST    AL,004h                     ; bold ?
@@ -212,7 +212,7 @@ changerev:
 chkenlarge:
 	TEST    BYTE PTR [BP+8],040h        ; enlarge ?
 	JZ      nochangefont
-	MOV     DI,OFFSET enlargefont
+	MOV     DI,OFFSET _enlargefont
 	MOV     CX,20
 
 twentybyte:
@@ -261,7 +261,7 @@ nomoretest:
 	INC     SI
 	ADD     DI,2
 	LOOP    twentybyte
-	MOV     BX,OFFSET DGROUP:enlargefont
+	MOV     BX,OFFSET DGROUP:_enlargefont
 	XOR     SI,SI
 
 nochangefont:
@@ -583,6 +583,7 @@ _hsetcurpos ENDP
 ;          2000h*(Y mod 4) + 90*integer(Y/4) + integer(X/8)                   ;
 ;     find bit position in byte from formula                                  ;
 ;          7 - (x mod 8)                                                      ;
+
 ;     USAGE : plot(unsigned x,unsigned y)                                     ;
 ;=============================================================================;
 	PUBLIC _hplot
@@ -670,7 +671,6 @@ _hsetgraph PROC FAR
 	OUT     DX,AL
 
 ; initialize the 6845
-	MOV     AX,DGROUP
 	MOV     SI,OFFSET DGROUP:graphic_table	; address of graphic parameters
 	MOV     DX,herc_index
 	MOV     CX,12						; 12 parameters to be output
@@ -688,11 +688,6 @@ parms:
 	DEC     DX							; restore index register address
 	LOOP    parms						; go do another one
 
-;
-	MOV     AL,00Ah
-	MOV     DX,herc_cntrl
-	OUT     DX,AL
-
 ; clear the buffer
 	MOV     ES,HGC_Address				; address of video buffer
 	XOR     DI,DI						; start at offset 0
@@ -702,10 +697,10 @@ parms:
 	REP     STOSW						; repeat store string
 
 ; turn screen on with page 0 active
-	;MOV     DX,herc_cntrl				; get control register address
-	;POP     AX							; get the mode byte
-	;ADD     AL,scrn_on					; set the screen-on bit
-	;OUT     DX,AL
+	MOV     DX,herc_cntrl				; get control register address
+	MOV     AX,graph					; get the mode byte
+	ADD     AL,scrn_on					; set the screen-on bit
+	OUT     DX,AL
 
 ; Add By Suttipong Kanakakorn (Noom)
 ; Set 0:465 to 0Ah as set to port 3b8h
@@ -747,7 +742,6 @@ _hsettext PROC FAR
 	OUT     DX,AL
 
 ; initialize the 6845
-	MOV     AX,DGROUP
 	MOV     SI,OFFSET DGROUP:text_table	; address of text parameters
 	MOV     DX,herc_index
 	MOV     CX,12						; 12 parameters to be output
@@ -772,12 +766,6 @@ parms1:
 	MOV     AX,720h						; blank value
 	CLD									; set auto increment
 	REP     STOSW						; repeat store string
-
-; turn screen on with page 0 active
-	;MOV     DX,herc_cntrl				; get control register address
-	;POP     AX							; get the mode byte
-	;ADD     AL,scrn_on					; set the screen-on bit
-	;OUT     DX,AL
 
 	POP     ES
 	POP     DS
@@ -1026,7 +1014,7 @@ _hprakeaw PROC FAR
 
 	MOV     ES,HGC_Address
 
-	MOV     SI,OFFSET DS:chulalogo1
+	MOV     SI,OFFSET DS:_chulalogo1
 	MOV     DI,1
 
 	MOV     AX,DS:[SI]
@@ -1075,7 +1063,7 @@ _hprakeaw PROC FAR
 	MOV     AX,DS:[SI+38]
 	MOV     ES:[DI+450+2000h],AX
 
-	MOV     SI,OFFSET DS:chulalogo2
+	MOV     SI,OFFSET DS:_chulalogo2
 	MOV     DI,3
 
 	MOV     AX,DS:[SI]

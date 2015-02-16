@@ -128,9 +128,6 @@
     <ClInclude Include="SRC\COMMON\GRDETECT.H">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\COMMON\GRPHC.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\COMMON\KBDCODE.H">
       <Filter>Header Files</Filter>
     </ClInclude>

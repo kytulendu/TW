@@ -17,8 +17,7 @@
 #include "..\common\kbdcode.h"
 #include "..\common\ekbd.h"
 #include "..\common\cscrn.h"
-#include "..\common\grphc.h"
-
+#include "..\common\common.h"
 
 #include "const.h"
 #include "var.h"

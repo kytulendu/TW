@@ -19,7 +19,6 @@
 #include "..\common\cusong.h"
 #include "..\common\ekbd.h"
 #include "..\common\grdetect.h"
-#include "..\common\grphc.h"
 #include "..\common\kbdcode.h"
 #include "..\common\sound.h"
 

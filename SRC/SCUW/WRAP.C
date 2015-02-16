@@ -13,7 +13,6 @@
 #include "..\common\cwtype.h"
 #include "..\common\common.h"
 #include "..\common\cscrn.h"
-#include "..\common\grphc.h"
 #include "..\common\tutil1.h"
 
 #include "var.h"

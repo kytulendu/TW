@@ -31,7 +31,7 @@
 /* Thai character code conversion table */
 
 /* KU to TIS-620 */
-unsigned char ku_to_std[] = {
+const unsigned char ku_to_std[] = {
 	0x098, 0x099, 0x09a, 0x09b, 0x096, 0x095, 0x093, 0x092,
 	0x090, 0x091, 0x08f, 0x020, 0x020, 0x020, 0x020, 0x020,
 	0x0f0, 0x0f1, 0x0f2, 0x0f3, 0x0f4, 0x0f5, 0x0f6, 0x0f7,
@@ -51,7 +51,7 @@ unsigned char ku_to_std[] = {
 };
 
 /* TIS - 620 to KU */
-unsigned char std_to_ku[] = {
+const unsigned char std_to_ku[] = {
 	0x0e6, 0x0e7, 0x0e8, 0x0e9, 0x0ea, 0x0eb, 0x0ec, 0x0ed,
 	0x0ee, 0x0ef, 0x0f0, 0x0f1, 0x0f2, 0x0f3, 0x0f4, 0x08a,
 	0x088, 0x089, 0x087, 0x086, 0x080, 0x085, 0x084, 0x081,
@@ -71,8 +71,7 @@ unsigned char std_to_ku[] = {
 };
 
 /* Kedmanee keyboard table */
-/*
-unsigned char kedmanee_table[] = {
+const unsigned char kedmanee_table[] = {
 	0x00, 0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07,
 	0x08, 0x09, 0x0a, 0x0b, 0x0c, 0x0d, 0x0e, 0x0f,
 	0x10, 0x11, 0x12, 0x13, 0x14, 0x15, 0x16, 0x17,
@@ -89,14 +88,77 @@ unsigned char kedmanee_table[] = {
 	0xe9, 0xc3, 0xe8, 0xd2, 0xca, 0xb7, 0xd7, 0xb9,
 	0xc2, 0xe6, 0xbe, 0xcb, 0xd0, 0xd5, 0xcd, 0xe4,
 	0xbb, 0xd1, 0xbc, 0xb0, 0x7c, 0x2c, 0x25, 0x7f,
-};*/
+};
 
 /* Look-Up Table for level of a character */
-int leveltable[] = {
+const int leveltable[] = {
 	0, 2, 0, 0, 2, 2, 2, 2, 1, 1, 1, 2, 0, 0, 0, 0,
 	0, 0, 0, 0, 0, 0, 0, 3, 3, 3, 3, 3, 3, 3, 3, 0,
 	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
+
+/** Logo image in binary.
+*    R | L
+*   0xx xxh
+*
+*       Left             Right
+*   xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx 1
+*   xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx 2
+*   xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx 3
+*                  ...
+*   xxxxxxxxxxxxxxxx xxxxxxxxxxxxxxxx 20 */
+
+/* Left */
+const int chulalogo1[] = {
+	0x0200, 0x3200, 0x0d00, 0xfb03,
+	0x1d00, 0xe500, 0x9b03, 0x320c,
+	0xe400, 0xdf01, 0xb507, 0x1f0e,
+	0x0c00, 0x3f00, 0xe001, 0x0027,
+	0xff5f, 0x0027, 0xe051, 0x3f00
+};
+
+/* Right */
+const int chulalogo2[] = {
+	0x0040, 0x004c, 0x00b0, 0xc0df,
+	0x00b8, 0x00a7, 0xc0d9, 0x304c,
+	0x0027, 0x80fb, 0xe0ad, 0x70f8,
+	0x0030, 0x00fc, 0x8007, 0xe400,
+	0xfaff, 0xe400, 0x8a07, 0x00fc
+};
+
+/* Word offset */
+const int offsetfont[] = {
+	0, 20, 40, 60, 80, 100, 120, 140, 160, 180, 200,
+	220, 240, 260, 280, 300, 320, 340, 360, 380, 400,
+	420, 440, 460, 480, 500, 520, 540, 560, 580, 600,
+	620, 640, 660, 680, 700, 720, 740, 760, 780, 800,
+	820, 840, 860, 880, 900, 920, 940, 960, 980, 1000,
+	1020, 1040, 1060, 1080, 1100, 1120, 1140, 1160, 1180, 1200,
+	1220, 1240, 1260, 1280, 1300, 1320, 1340, 1360, 1380, 1400,
+	1420, 1440, 1460, 1480, 1500, 1520, 1540, 1560, 1580, 1600,
+	1620, 1640, 1660, 1680, 1700, 1720, 1740, 1760, 1780, 1800,
+	1820, 1840, 1860, 1880, 1900, 1920, 1940, 1960, 1980, 2000,
+	2020, 2040, 2060, 2080, 2100, 2120, 2140, 2160, 2180, 2200,
+	2220, 2240, 2260, 2280, 2300, 2320, 2340, 2360, 2380, 2400,
+	2420, 2440, 2460, 2480, 2500, 2520, 2540, 2560, 2580, 2600,
+	2620, 2640, 2660, 2680, 2700, 2720, 2740, 2760, 2780, 2800,
+	2820, 2840, 2860, 2880, 2900, 2920, 2940, 2960, 2980, 3000,
+	3020, 3040, 3060, 3080, 3100, 3120, 3140, 3160, 3180, 3200,
+	3220, 3240, 3260, 3280, 3300, 3320, 3340, 3360, 3380, 3400,
+	3420, 3440, 3460, 3480, 3500, 3520, 3540, 3560, 3580, 3600,
+	3620, 3640, 3660, 3680, 3700, 3720, 3740, 3760, 3780, 3800,
+	3820, 3840, 3860, 3880, 3900, 3920, 3940, 3960, 3980, 4000,
+	4020, 4040, 4060, 4080, 4100, 4120, 4140, 4160, 4180, 4200,
+	4220, 4240, 4260, 4280, 4300, 4320, 4340, 4360, 4380, 4400,
+	4420, 4440, 4460, 4480, 4500, 4520, 4540, 4560, 4580, 4600,
+	4620, 4640, 4660, 4680, 4700, 4720, 4740, 4760, 4780, 4800,
+	4820, 4840, 4860, 4880, 4900, 4920, 4940, 4960, 4980, 5000,
+	5020, 5040, 5060, 5080, 5100
+};
+
+/* Initialize font buffer */
+char curfont[20] = { 0 };
+char enlargefont[40] = { 0 };
 
 unsigned char stdtoku( unsigned char p_stdcode ) {
 	return ( ( p_stdcode >= 0x80 ) ? std_to_ku[p_stdcode - 0x80] : p_stdcode );
@@ -105,11 +167,7 @@ unsigned char stdtoku( unsigned char p_stdcode ) {
 unsigned char kutostd( unsigned char p_kucode ) {
 	return ( ( p_kucode >= 0x80 ) ? ku_to_std[p_kucode - 0x80] : p_kucode );
 }
-/*
-unsigned char thaikey( unsigned char p_key ) {
-	return ( kedmanee_table[p_key] );
-}
-*/
+
 int whatlevel( unsigned char p_char ) {
 	return ( p_char >= 0xD0 ) ? leveltable[p_char - 0xD0] : 0;
 }

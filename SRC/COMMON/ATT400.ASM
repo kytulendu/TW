@@ -12,8 +12,8 @@ INCLUDE   cwfntam.asm
 	_DATA		SEGMENT WORD PUBLIC 'DATA'
 
 EXTRN _dfont:byte, _ditalicfont:byte
-EXTRN curfont:byte, enlargefont:byte, offsetfont:word
-EXTRN chulalogo1:word, chulalogo2:word
+EXTRN _curfont:byte, _enlargefont:byte, _offsetfont:word
+EXTRN _chulalogo1:word, _chulalogo2:word
 EXTRN _screen_buffptr:dword
 
 ATT_Address		dw   0B800h           ; Beginning of AT&T400 frame buffer
@@ -55,7 +55,7 @@ _aprchar PROC FAR
 	MOV     SI,[BP+12]                  ; get character
 	AND     SI,00FFh                    ; clear high byte
 	ADD     SI,SI                       ; add for word offset
-	ADD     SI,OFFSET DGROUP:offsetfont
+	ADD     SI,OFFSET DGROUP:_offsetfont
 	MOV     SI,DS:[SI]                  ; get offset from table
 	MOV     AL,[BP+14]                  ; get attribute
 	OR      AL,AL                       ; Has it have attribute ?
@@ -74,7 +74,7 @@ normalfont:
 	MOV     BX,OFFSET DGROUP:_dfont
 
 findnextattr:
-	MOV     DI,OFFSET DGROUP:curfont
+	MOV     DI,OFFSET DGROUP:_curfont
 	TEST    AL,008h                     ; superscript ?
 	JZ      testsub
 	MOV     WORD PTR DS:[DI+16],0       ; clear old font
@@ -109,10 +109,10 @@ transferfont:
 	MOV     DS:[DI+16],AX
 	MOV     AX,DS:[BX+SI+18]
 	MOV     DS:[DI+18],AX
-	MOV     BX,OFFSET DGROUP:curfont    ; base table is in BX
+	MOV     BX,OFFSET DGROUP:_curfont    ; base table is in BX
 	XOR     SI,SI                       ; DS:[BX+SI] now point at font
 	MOV     AL,[BP+14]                  ; get attribute
-	TEST    AL,004H                     ; bold ?
+	TEST    AL,004h                     ; bold ?
 	JZ      chkunderline
 	MOV     CX,20
 
@@ -125,12 +125,12 @@ loopbold:
 	XOR     SI,SI
 
 chkunderline:
-	TEST    AL,001H                     ; single underline ?
+	TEST    AL,001h                     ; single underline ?
 	JZ      chkdoubleunderline
 	MOV     BYTE PTR DS:[BX+17],0FFh
 
 chkdoubleunderline:
-	TEST    AL,080H                     ; double underline ?
+	TEST    AL,080h                     ; double underline ?
 	JZ      chkreverse
 	MOV     BYTE PTR DS:[BX+16],0FFh
 	MOV     BYTE PTR DS:[BX+18],0FFh
@@ -168,7 +168,7 @@ changerev:
 chkenlarge:
 	TEST    BYTE PTR [BP+14],040h       ; enlarge ?
 	JZ      nochangefont
-	MOV     DI,OFFSET enlargefont
+	MOV     DI,OFFSET _enlargefont
 	MOV     CX,20
 
 twentybyte:
@@ -217,11 +217,10 @@ nomoretest:
 	INC     SI
 	ADD     DI,2
 	LOOP    twentybyte
-	MOV     BX,OFFSET DGROUP:enlargefont
+	MOV     BX,OFFSET DGROUP:_enlargefont
 	XOR     SI,SI
 
 nochangefont:
-
 ; we will set ES:[DI] point at screen
 ; we will write character now (using standard code)
 	MOV     AL,[BP+12]                  ; get character
@@ -237,13 +236,13 @@ cont1:
 cont2:
 	CMP     AL,0D7h
 	JBE     abvlevel
-	CMP     AL,0Dah
+	CMP     AL,0DAh
 	JBE     below_level
-	CMP     AL,0e6h
+	CMP     AL,0E6h
 	JA      cont3
 	JMP     middle_level
 cont3:
-	CMP     al,0eeh
+	CMP     AL,0EEh
 	JBE     abvlevel
 	JMP     middle_level
 
@@ -268,6 +267,7 @@ below_level:
 	MOV     BX,DI
 	MOV     DI,AX
 	ADD     DI,[BP+16]                  ; add column
+
 	MOV     ES,ATT_Address
 
 	TEST    BYTE PTR [BP+14],040h       ; enlarge ?
@@ -478,6 +478,7 @@ cont5:
 	MOV     BX,DI
 	MOV     DI,AX
 	ADD     DI,[BP+16]                  ; add column
+
 	MOV     ES,ATT_Address
 
 	TEST    BYTE PTR [BP+14],040h       ; enlarge ?
@@ -514,23 +515,24 @@ noenlargetop:
 
 above_middle:
 	MOV     AX,[BP+18]
-	MOV     CL,20                        ; 20 lines per row
+	MOV     CL,20                       ; 20 lines per row
 	MUL     CL
-	ADD     AX,4+4                       ; down 4 lines
+	ADD     AX,4+4                      ; down 4 lines
 	PUSH    AX
 	XOR     AX,AX
 	PUSH    AX
-	MOV     DI,BX                        ; save in register variable
+	MOV     DI,BX                       ; save in register variable
 
 	CALL    _aoffset                    ; get offset in AX
 
 	MOV     SP,BP
 	MOV     BX,DI
 	MOV     DI,AX
-	ADD     DI,[BP+16]                   ; add column
+	ADD     DI,[BP+16]                  ; add column
+
 	MOV     ES,ATT_Address
 
-	TEST    BYTE PTR [BP+14],040h        ; enlarge ?
+	TEST    BYTE PTR [BP+14],040h       ; enlarge ?
 	JZ      noenlargeabove
 
 	MOV     AX,DS:[BX+SI+8]
@@ -671,7 +673,9 @@ thaimode:
 	PUSH    AX
 	XOR     AX,AX
 	PUSH    AX
+
 	CALL    _aoffset                    ; get offset in AX
+
 	MOV     SP,BP
 	MOV     DI,AX
 	ADD     DI,[BP+10]                  ; add column
@@ -683,7 +687,7 @@ thaimode:
 	shift_down DI
 	XOR     BYTE PTR ES:[DI],0FFh
 	shift_down DI
-	XOR     byte PTR ES:[DI],0FFh
+	XOR     BYTE PTR ES:[DI],0FFh
 	shift_down DI
 	XOR     BYTE PTR ES:[DI],0FFh
 	shift_down DI
@@ -755,7 +759,7 @@ _aplot PROC FAR
 	MOV     DI,AX
 	MOV     ES,ATT_Address
 
-	AND     CL,7
+	AND     CL,7                        ; compute which bit ( x mod 8 ) to modify
 	MOV     AL,80h
 	SHR     AL,CL
 
@@ -767,6 +771,7 @@ _aplot PROC FAR
 	RET
 
 _aplot ENDP
+
 ;=============================================================================;
 ; _asavepic -  save picture from screen memory page 1 to page 0               ;
 ;=============================================================================;
@@ -778,7 +783,6 @@ _asavepic PROC FAR
 	PUSH    ES
 
 	LES     DI,_screen_buffptr
-
 	MOV     DS,ATT_Address
 	XOR     SI,SI
 
@@ -987,7 +991,7 @@ _aprakeaw PROC FAR
 
 	MOV     ES,ATT_Address
 
-	MOV     SI,OFFSET DS:chulalogo1
+	MOV     SI,OFFSET DS:_chulalogo1
 	MOV     DI,1
 	shift_down DI
 	shift_down DI
@@ -1056,7 +1060,7 @@ _aprakeaw PROC FAR
 	MOV     AX,DS:[SI+38]
 	MOV     ES:[DI],AX
 
-	MOV     SI,OFFSET DS:chulalogo2
+	MOV     SI,OFFSET DS:_chulalogo2
 	MOV     DI,3
 	shift_down DI
 	shift_down DI
@@ -1154,7 +1158,6 @@ fic_getwind_stack STRUC
 fic_getwind_stack ENDS
 
 	PUBLIC _agetwind
-
 _agetwind PROC FAR
 	PUSH    BP
 	PUSH    DS
@@ -1221,7 +1224,6 @@ fic_putwind_stack STRUC
 fic_putwind_stack ENDS
 
 	PUBLIC _aputwind
-
 _aputwind PROC FAR
 	PUSH    BP
 	PUSH    DS

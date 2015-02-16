@@ -10,7 +10,6 @@
 
 #include "..\common\cwtype.h"
 #include "..\common\common.h"
-#include "..\common\grphc.h"
 #include "..\common\cscrn.h"
 
 #include "tutil2.h"

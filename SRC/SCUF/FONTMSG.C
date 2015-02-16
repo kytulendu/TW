@@ -19,7 +19,6 @@
 #include "..\common\cwgrphc.h"
 #include "..\common\cscrn.h"
 #include "..\common\dir.h"
-#include "..\common\grphc.h"
 #include "..\common\ekbd.h"
 #include "..\common\getstr.h"
 #include "..\common\tutil1.h"

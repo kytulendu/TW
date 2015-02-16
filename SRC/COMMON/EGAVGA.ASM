@@ -12,8 +12,8 @@ INCLUDE cwfntm.asm
 	_DATA		SEGMENT WORD PUBLIC 'DATA'
 
 EXTRN _dfont:byte, _ditalicfont:byte
-EXTRN curfont:BYTE, enlargefont:BYTE, offsetfont:WORD
-EXTRN chulalogo1:WORD, chulalogo2:WORD
+EXTRN _curfont:BYTE, _enlargefont:BYTE, _offsetfont:WORD
+EXTRN _chulalogo1:WORD, _chulalogo2:WORD
 EXTRN _screen_buffptr:dword
 
 EGA_Address     dw   0A000h           ; Beginning of EGA/VGA/MCGA frame buffer
@@ -55,14 +55,13 @@ _eprchar PROC FAR
 	MOV     SI,[BP+12]                  ; get character
 	AND     SI,00FFh                    ; clear high byte
 	ADD     SI,SI                       ; add for word offset
-	ADD     SI,OFFSET DGROUP:offsetfont
+	ADD     SI,OFFSET DGROUP:_offsetfont
 	MOV     SI,DS:[SI]                  ; get offset from table
 	MOV     AL,[BP+14]                  ; get attribute
 	OR      AL,AL                       ; Has it have attribute ?
 	JNZ     haveattribute
 	MOV     BX,OFFSET DGROUP:_dfont
 	JMP     nochangefont
-
 
 ; if it's attribute -> change font
 haveattribute:
@@ -75,7 +74,7 @@ normalfont:
 	MOV     BX,OFFSET DGROUP:_dfont
 
 findnextattr:
-	MOV     DI,OFFSET DGROUP:curfont
+	MOV     DI,OFFSET DGROUP:_curfont
 	TEST    AL,008h                     ; superscript ?
 	JZ      testsub
 	MOV     WORD PTR DS:[DI+16],0       ; clear old font
@@ -110,7 +109,7 @@ transferfont:
 	MOV     DS:[DI+16],AX
 	MOV     AX,DS:[BX+SI+18]
 	MOV     DS:[DI+18],AX
-	MOV     BX,OFFSET DGROUP:curfont    ; base table is in BX
+	MOV     BX,OFFSET DGROUP:_curfont    ; base table is in BX
 	XOR     SI,SI                       ; DS:[BX+SI] now point at font
 	MOV     AL,[BP+14]                  ; get attribute
 	TEST    AL,004h                     ; bold ?
@@ -169,8 +168,9 @@ changerev:
 chkenlarge:
 	TEST    BYTE PTR [BP+14],040h       ; enlarge ?
 	JZ      nochangefont
-	MOV     DI,OFFSET enlargefont
+	MOV     DI,OFFSET _enlargefont
 	MOV     CX,20
+
 twentybyte:
 	MOV     DX,0
 	TEST    BYTE PTR DS:[BX+SI],080h
@@ -217,7 +217,7 @@ nomoretest:
 	INC     SI
 	ADD     DI,2
 	LOOP    twentybyte
-	MOV     BX,OFFSET DGROUP:enlargefont
+	MOV     BX,OFFSET DGROUP:_enlargefont
 	XOR     SI,SI
 
 nochangefont:
@@ -248,6 +248,7 @@ cont3:
 
 abvlevel:
 	JMP     above_level
+
 ; write below level character
 ; we will write last-four font only
 below_level:
@@ -303,6 +304,7 @@ noenlargebelow:
 ; we will write 12 byte only by ignore first-four & last-four font
 noenlarge1:
 	JMP     noenlarge
+
 middle_level:
 	MOV     AX,[BP+18]
 	MOV     CL,20                       ; 20 lines per row
@@ -993,7 +995,7 @@ _eprakeaw PROC FAR
 
 	MOV     ES,EGA_Address
 
-	MOV     SI,OFFSET DS:chulalogo1
+	MOV     SI,OFFSET DS:_chulalogo1
 	MOV     DI,1
 	shift_down DI
 	shift_down DI
@@ -1062,7 +1064,7 @@ _eprakeaw PROC FAR
 	MOV     AX,DS:[SI+38]
 	MOV     ES:[DI],AX
 
-	MOV     SI,OFFSET DS:chulalogo2
+	MOV     SI,OFFSET DS:_chulalogo2
 	MOV     DI,3
 	shift_down DI
 	shift_down DI
