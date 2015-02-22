@@ -19,9 +19,9 @@ void waitkbd( unsigned int x, unsigned int y ) {
 
 	setcurpos( x, y, thaimode );
 	while ( !keypressed( ) ) {
-		for ( i = 0; !keypressed( ) && i < 1200; i++ );
+		for ( i = 0; !keypressed( ) && i < 6000; i++ );
 		setcurpos( x, y, thaimode );
-		for ( i = 0; !keypressed( ) && i < 1200; i++ );
+		for ( i = 0; !keypressed( ) && i < 6000; i++ );
 		setcurpos( x, y, thaimode );
 	}
 	setcurpos( x, y, thaimode );

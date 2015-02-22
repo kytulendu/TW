@@ -75,6 +75,7 @@
     <None Include="SRC\SCUW\THAISYLS\MAKEFILE.MAK" />
     <None Include="TAX.DOC" />
     <None Include="TEST.DOC" />
+    <None Include="TODO.md" />
     <None Include="TW.CFG" />
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +113,6 @@
     <ClCompile Include="SRC\SCUW\DEL.C" />
     <ClCompile Include="SRC\SCUW\EDIT.C" />
     <ClCompile Include="SRC\SCUW\FILE.C" />
-    <ClCompile Include="SRC\SCUW\GETSTR.C" />
     <ClCompile Include="SRC\SCUW\INS.C" />
     <ClCompile Include="SRC\SCUW\KBD.C" />
     <ClCompile Include="SRC\SCUW\MENU.C" />

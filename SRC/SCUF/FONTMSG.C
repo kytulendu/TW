@@ -91,8 +91,9 @@ int error_message( char *prompt ) {
 int _waitkbd( int x, int y );
 
 int _waitkbd( int x, int y ) {
+	register unsigned int i;
 	while ( !keypressed( ) ) {
-		delay( 5 );
+		for ( i = 0; !keypressed( ) && i < 6000; i++ );
 		setcurpos( x, y, 0 );
 	}
 	return getch( );

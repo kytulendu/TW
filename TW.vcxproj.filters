@@ -63,6 +63,9 @@
     <None Include="SRC\SCUW\SCUW.TLR">
       <Filter>Make Files</Filter>
     </None>
+    <None Include="TODO.md">
+      <Filter>Documents</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\SCUW\THAISYLS\MAINSYLS.H">
@@ -239,9 +242,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\FILE.C">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUW\GETSTR.C">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUW\INS.C">
