@@ -8,6 +8,7 @@
 #include <string.h>
 
 #include "..\common\cwtype.h"
+#include "..\common\tutil1.h"
 
 #include "var.h"
 
@@ -15,7 +16,6 @@
 #include "edit.h"
 #include "move.h"
 #include "movement.h"
-#include "tutil1.h"
 
 #include "del.h"
 

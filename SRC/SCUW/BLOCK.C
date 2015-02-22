@@ -349,16 +349,16 @@ struct line_node *rdfiletospace( char *file_name ) {
 				text_str[i - 1] = '\0';
 				i--;
 			}
+#ifdef WANT_TO_USE_GRAPH
 			if ( ( text_str[0] == '.' ) &&
 				( text_str[1] == 'G' ) &&
 				( text_str[2] == 'R' ) ) {
-#ifdef WANT_TO_USE_GRAPH
 				space->graph = NULL;
 				space->graph = readgraph( text_str + 4 );
-#endif
 				free( space->text );
 				space->text = NULL;
 			} else {
+#endif
 				if ( ( i > 0 ) && ( text_str[i - 1] == WRAPCODE ) ) {
 					text_str[i - 1] = '\0';
 					space->wrap = YES;
@@ -376,7 +376,9 @@ struct line_node *rdfiletospace( char *file_name ) {
 					}
 				}
 				strcpy( space->text, text_str );
+#ifdef WANT_TO_USE_GRAPH
 			}
+#endif
 			currentline = space;
 			while ( fgets( text_str, MAXCOL * 5, fip ) != NULL ) {
 				if ( currentline->text == NULL ) {
@@ -604,7 +606,7 @@ void writeblk( char *file_name, struct line_node *linebegin,
 	unsigned int colbegin, struct line_node *lineend, unsigned int colend ) {
 	FILE *fip;
 	struct line_node *currentline;
-	int key, i, j, firstround, count;	/* fileerror = NO; */
+	int key, i, j, firstround, count;
 	char *templine, fontcode[9];
 	font_attr font;
 	char drv[MAXDRIVE], dir[MAXDIR], name[MAXFILE], ext[MAXEXT];
@@ -722,16 +724,12 @@ void writeblk( char *file_name, struct line_node *linebegin,
 		}
 		putc( 0x1a, fip );
 		fclose( fip );
-	}/* else {
-	   fileerror = YES;
-	} */
-	/*
-	if ( fileerror == YES ) {
+	} else {
 		errorsound( );
 		blockmsg( 10 );
 		dispstrhgc( "จัดเก็บแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ", 24 - CENTER_FACTOR, 10, REVERSEATTR );
 		while ( ebioskey( 0 ) != ESCKEY );
-	} */
+	}
 }
 
 void writeblock( void ) {
@@ -779,7 +777,7 @@ void blkcmd( register unsigned int key, unsigned int *x ) {
 		toggleblk( );
 		break;
 	case 'p' - 'a' + 1:
-		print_file( ); /****** in menu.c *****/
+		print_file( );
 		break;
 	case 'r' - 'a' + 1:
 		readblk( x );

@@ -583,7 +583,6 @@ _hsetcurpos ENDP
 ;          2000h*(Y mod 4) + 90*integer(Y/4) + integer(X/8)                   ;
 ;     find bit position in byte from formula                                  ;
 ;          7 - (x mod 8)                                                      ;
-
 ;     USAGE : plot(unsigned x,unsigned y)                                     ;
 ;=============================================================================;
 	PUBLIC _hplot

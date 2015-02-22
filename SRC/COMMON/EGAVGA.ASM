@@ -459,6 +459,7 @@ above_level:
 	JB      above_middle
 	CMP     AL,0EDh
 	JAE     above_middle
+
 	MOV     AX,[BP+18]
 	MOV     CL,20                       ; 20 lines per row
 	MUL     CL

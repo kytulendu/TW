@@ -256,7 +256,8 @@ int selectmenu( unsigned int x, unsigned int y, unsigned int number,
 		out = YES;
 		c = ebioskey( 0 );
 		switch ( c ) {
-		case UPKEY: dispstrhgc( message[( *curmenu ) + special_base - 1], x, y + ( *curmenu ) - 1, NORMALATTR );
+		case UPKEY:
+			dispstrhgc( message[( *curmenu ) + special_base - 1], x, y + ( *curmenu ) - 1, NORMALATTR );
 			if ( *curmenu != 1 ) {
 				( *curmenu )--;
 			} else if ( !special_char ) {
@@ -269,7 +270,8 @@ int selectmenu( unsigned int x, unsigned int y, unsigned int number,
 			}
 			dispstrhgc( message[( *curmenu ) + special_base - 1], x, y + ( *curmenu ) - 1, REVERSEATTR );
 			break;
-		case DNKEY: dispstrhgc( message[( *curmenu ) + special_base - 1], x, y + ( *curmenu ) - 1, NORMALATTR );
+		case DNKEY:
+			dispstrhgc( message[( *curmenu ) + special_base - 1], x, y + ( *curmenu ) - 1, NORMALATTR );
 			if ( *curmenu != number ) {
 				( *curmenu )++;
 			} else if ( !special_char ) {
@@ -297,34 +299,44 @@ int selectmenu( unsigned int x, unsigned int y, unsigned int number,
 			}
 			switch ( c ) {
 			case 19:
-			case 'S': *curmenu = 0x1300;
+			case 'S':
+				*curmenu = 0x1300;
 				break;
 			case 16:
-			case 'P': *curmenu = 0x1400;
+			case 'P':
+				*curmenu = 0x1400;
 				break;
 			case 2:
-			case 'B': *curmenu = 0x6100;
+			case 'B':
+				*curmenu = 0x6100;
 				break;
 			case 11:
-			case 'K': *curmenu = 0x6200;
+			case 'K':
+				*curmenu = 0x6200;
 				break;
 			case 3:
-			case 'C': *curmenu = 0x6300;
+			case 'C':
+				*curmenu = 0x6300;
 				break;
 			case 25:
-			case 'Y': *curmenu = 0x6400;
+			case 'Y': 
+				*curmenu = 0x6400;
 				break;
 			case 22:
-			case 'V': *curmenu = 0x6500;
+			case 'V':
+				*curmenu = 0x6500;
 				break;
 			case 18:
-			case 'R': *curmenu = 0x6600;
+			case 'R': 
+				*curmenu = 0x6600;
 				break;
 			case 23:
-			case 'W': *curmenu = 0x6700;
+			case 'W': 
+				*curmenu = 0x6700;
 				break;
 			case 8:
-			case 'H': *curmenu = 0x6800;
+			case 'H':
+				*curmenu = 0x6800;
 				break;
 			default: out = NO;
 				break;
@@ -340,27 +352,35 @@ int selectmenu( unsigned int x, unsigned int y, unsigned int number,
 			}
 			switch ( c ) {
 			case 12:
-			case 'L': *curmenu = 0x7100;
+			case 'L': 
+				*curmenu = 0x7100;
 				break;
 			case 18:
-			case 'R': *curmenu = 0x7200;
+			case 'R':
+				*curmenu = 0x7200;
 				break;
 			case 9:
-			case 'I': *curmenu = 0x7300;
+			case 'I':
+				*curmenu = 0x7300;
 				break;
 			case 14:
-			case 'N': *curmenu = 0x7400;
+			case 'N': 
+				*curmenu = 0x7400;
 				break;
 			case 3:
-			case 'C': *curmenu = 0x7500;
+			case 'C': 
+				*curmenu = 0x7500;
 				break;
 			case 16:
-			case 'P': *curmenu = 0x7600;
+			case 'P': 
+				*curmenu = 0x7600;
 				break;
 			case 24:
-			case 'X': *curmenu = 0x7700;
+			case 'X': 
+				*curmenu = 0x7700;
 				break;
-			default: out = NO;
+			default:
+				out = NO;
 				break;
 			};
 			if ( out == YES ) {
@@ -374,16 +394,20 @@ int selectmenu( unsigned int x, unsigned int y, unsigned int number,
 			}
 			switch ( c ) {
 			case 25:
-			case 'Y': *curmenu = 0x3500;
+			case 'Y': 
+				*curmenu = 0x3500;
 				break;
 			case 16:
-			case 'F': *curmenu = 0x5100;
+			case 'F':
+				*curmenu = 0x5100;
 				break;
 			case 1:
-			case 'A': *curmenu = 0x5200;
+			case 'A': 
+				*curmenu = 0x5200;
 				break;
 			case 12:
-			case 'L': *curmenu = 0x8500;
+			case 'L': 
+				*curmenu = 0x8500;
 				break;
 			default: out = NO;
 				break;

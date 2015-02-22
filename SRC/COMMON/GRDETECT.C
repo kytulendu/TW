@@ -136,6 +136,7 @@ int is_att400( void ) {
 	union REGS reg_pack;
 
 	/* Use AT&T 6300 specific BIOS int */
+	/* Idea from https://github.com/MobyGamer/TOPBENCH */
 	/** Int 1A/AH=FEh
 	*		AT&T 6300 - READ TIME AND DATE
 	*		AH = FEh

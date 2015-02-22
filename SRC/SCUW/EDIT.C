@@ -526,8 +526,9 @@ void refreshline( unsigned x, unsigned y ) {
 	}
 	prblank( wind.col + wind.length - 2, y );
 	if ( workline.middle[i] == '\0' ) {
-		for ( ; x < len; x++ )
+		for ( ; x < len; x++ ) {
 			prblank( wind.col + x, y );
+		}
 		if ( curline->wrap == NO ) {
 			prchar( '<', 0, wind.col + wind.length - 1, y );
 		} else {
