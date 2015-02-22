@@ -96,17 +96,8 @@ unsigned menu_to_key( register unsigned int p_curmenu ) {
 	return( command_tab[i + 1] );
 }
 
-int main( int argc, char *argv[] ) {
+void splashscreen( void ) {
 	extern char prog_date[], prog_time[];
-	unsigned int x = 0, y = 0;		/* (x,y) position -> (0,0) at upper left on screen */
-	unsigned int curmenu = 0x1100;
-	int i;
-
-	cwsetup( argc, argv );
-
-	writestatus( 0 );
-	writetab( );
-
 #ifdef EDA_VERSION
 
 	framebox( 21 - CENTER_FACTOR, 5, ( 21 - CENTER_FACTOR ) + 45, 11, REVERSEATTR );
@@ -154,6 +145,19 @@ int main( int argc, char *argv[] ) {
 	}
 	ebioskey( 0 );
 	cls( );
+}
+
+int main( int argc, char *argv[] ) {
+	unsigned int x = 0, y = 0;		/* (x,y) position -> (0,0) at upper left on screen */
+	unsigned int curmenu = 0x1100;
+	int i;
+
+	cwsetup( argc, argv );
+
+	writestatus( 0 );
+	writetab( );
+
+	splashscreen( );
 
 	/* Main program loop */
 	do {
@@ -308,6 +312,11 @@ int main( int argc, char *argv[] ) {
 						writeattr( );
 						break;
 
+					case F2KEY:
+						fontused = fontused | ITALICATTR;
+						writeattr( );
+						break;
+
 					case F3KEY:
 						fontused = fontused | ONELINEATTR;
 						fontused = fontused & 0x7f;
@@ -343,11 +352,6 @@ int main( int argc, char *argv[] ) {
 						if ( ( fontused & SUPERATTR ) == SUPERATTR ) {
 							fontused = fontused ^ SUPERATTR;
 						}
-						writeattr( );
-						break;
-
-					case F2KEY:
-						fontused = fontused | ITALICATTR;
 						writeattr( );
 						break;
 
@@ -572,7 +576,8 @@ int main( int argc, char *argv[] ) {
 						break;
 #endif
 
-					case ALTX: quitprog = YES;
+					case ALTX:
+						quitprog = YES;
 						keymain = ESCKEY;
 						break;
 

@@ -15,4 +15,7 @@ void destroynode( void );
 /** Menu selection to keyboard shortcut command.*/
 unsigned menu_to_key( register unsigned int p_curmenu );
 
+/** Show splash screen.*/
+void splashscreen( void );
+
 #endif /* SCUW_CW_H_INCLUDED */

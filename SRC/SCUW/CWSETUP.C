@@ -32,6 +32,7 @@
 #include "cw.h"
 #include "edit.h"
 #include "file.h"
+#include "menu.h"
 
 #include "cwsetup.h"
 
@@ -65,7 +66,6 @@ void usage( void ) {
 	fputs( "Usage: TW.EXE [option] [file]\n", stderr );
 	fputs( "Options:\n", stderr );
 	fputs( "\t-h,  /h  Hercules Graphic Card.\n", stderr );
-	fputs( "\t-hl, /hl Hercules Graphic Card, left justify.\n", stderr );
 	fputs( "\t-v,  /v  VGA.\n", stderr );
 	fputs( "\t-e,  /e  EGA with EGA display.\n", stderr );
 	fputs( "\t-em, /em EGA with Monochrome display.\n", stderr );
@@ -74,6 +74,7 @@ void usage( void ) {
 	fputs( "\t-n,  /n  No backup file created.\n", stderr );
 	fputs( "\t-w,  /w  No word wrap.\n", stderr );
 	fputs( "\t-p,  /p  No page break.\n", stderr );
+	fputs( "\t-s,  /s  No splash screen song.\n", stderr );
 	exit( 1 );
 }
 
@@ -129,7 +130,7 @@ void cwsetup( int argc, char *argv[] ) {
 				pagebreak = NO;
 				break;
 			case 'S':
-				cu_song = YES;
+				cu_song = NO;
 				break;
 			default:  usage( );
 			}
