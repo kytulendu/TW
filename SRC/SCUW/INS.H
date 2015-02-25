@@ -48,7 +48,7 @@ void blankmaro( int y );
 /**  */
 void dispmacro( int i );
 
-/**  */
+/** Edit macro word. */
 void editmacro( void );
 
 #endif /* SCUW_INS_H_INCLUDED */

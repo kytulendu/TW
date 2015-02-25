@@ -359,8 +359,9 @@ void adjustcol( unsigned int *x ) {
 		}
 	}
 	if ( *x > 0 ) {
-		if ( workline.below[*x + firstcol + 1] == ENLARGEATTR )
+		if ( workline.below[*x + firstcol + 1] == ENLARGEATTR ) {
 			( *x )--;
+		}
 	} else {
 		if ( ( workline.below[*x + firstcol + 1] == ENLARGEATTR ) &&
 			( firstcol != 0 ) ) {
@@ -430,7 +431,7 @@ void storeline( struct line_node *curline ) {
 	count = 0;
 	col = 1;
 	oldfont = 0;
-	while ( ( workline.middle[col] != '\0' ) && ( col <= MAXCOL ) ) {
+	while ( ( col <= MAXCOL ) && ( workline.middle[col] != '\0' ) ) {
 		if ( workline.attr[col] != oldfont ) {
 			if ( oldfont != 0 ) {
 				findstrcode( fontcode, oldfont );

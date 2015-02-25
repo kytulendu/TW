@@ -39,9 +39,8 @@ void justify_right( void ) {
 		k = j;
 		count = rightmar - i;
 		while ( count > 0 ) {
-			while ( ( workline.middle[k] != ' ' ) &&
-				( workline.middle[k] != WRAPBLANK ) &&
-				( k < i ) ) {
+			while ( ( k < i ) && ( workline.middle[k] != ' ' ) &&
+				( workline.middle[k] != WRAPBLANK ) ) {
 				k++;
 			}
 			if ( k < i ) {

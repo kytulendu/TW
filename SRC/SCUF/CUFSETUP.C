@@ -91,7 +91,7 @@ void usage( void ) {
 	fputs( "\t-v,  /v  vga\n", stderr );
 	fputs( "\t-e,  /e  ega with ega display\n", stderr );
 	fputs( "\t-m,  /m  ega with monochrome display\n", stderr );
-	exit( 1 );
+	exit( EXIT_FAILURE );
 }
 
 void set_directory( void ) {

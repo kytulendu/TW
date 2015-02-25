@@ -75,7 +75,7 @@ void usage( void ) {
 	fputs( "\t-w,  /w  No word wrap.\n", stderr );
 	fputs( "\t-p,  /p  No page break.\n", stderr );
 	fputs( "\t-s,  /s  No splash screen song.\n", stderr );
-	exit( 1 );
+	exit( EXIT_FAILURE );
 }
 
 void inittabvalue( void ) {
@@ -132,7 +132,8 @@ void cwsetup( int argc, char *argv[] ) {
 			case 'S':
 				cu_song = NO;
 				break;
-			default:  usage( );
+			default:
+				usage( );
 			}
 		}
 	}
@@ -182,6 +183,7 @@ void cwsetup( int argc, char *argv[] ) {
 	wind.col = 1;
 	wind.length = ( scrmode == HERCMONO ) ? 88 : 78;
 	wind.width = ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 19 : ( scrmode == ATT400 ) ? 15 : ( scrmode == CGA ) ? 6 : 13;
+
 	offbreak( );		/* Turn off Ctrl-C checking */
 }
 

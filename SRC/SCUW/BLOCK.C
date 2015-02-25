@@ -441,6 +441,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 		while ( ebioskey( 0 ) != ESCKEY );
 		return( NULL );
 	}
+
 no_mem_avail:
 	fclose( fip );
 	errorsound( );
@@ -546,8 +547,7 @@ unsigned long getfilesize( void ) {
 			dispprintf( 1, 3, REVERSEATTR, "Line no = %u", lineno );
 			ebioskey( 0 );
 			settext( );
-			exit( 1 );
-			break; /* can't be executed */
+			exit( EXIT_FAILURE );
 		}
 		keepline = templine;
 	}

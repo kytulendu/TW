@@ -75,13 +75,13 @@ unsigned spacesize( struct line_node *space );
 /** Read block from file to insert to current cursor position. */
 int readblk( unsigned int *x );
 
-/**  */
+/** Get file size. */
 unsigned long getfilesize( void );
 
-/**  */
+/** Get disk free space. */
 unsigned long diskfree( int driveno );
 
-/**  */
+/** Check for size of given file and free disk space. */
 int chkspace( char *fname );
 
 /** char *file_name;
@@ -89,7 +89,7 @@ int chkspace( char *fname );
 *    unsigned int colbegin, colend; physical column  */
 void writeblk( char *file_name, struct line_node *linebegin, unsigned int colbegin, struct line_node *lineend, unsigned int colend );
 
-/**  */
+/** Write block to file. */
 void writeblock( void );
 
 /**  */

@@ -143,7 +143,7 @@ void lookup( char field[], char content[] ) {
 	int i = 0;
 	int j = 0;
 	int k = 0;
-	while ( ( strcmp( field, fieldname[i] ) != 0 ) && ( i < fieldcount ) ) {
+	while ( ( i < fieldcount ) && ( strcmp( field, fieldname[i] ) != 0 ) ) {
 		i++;
 	}
 	if ( i != fieldcount ) {								/* found */

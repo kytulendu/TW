@@ -59,7 +59,7 @@ void execerror( char *s, char *t ) {
 		fprintf( stderr, "%s", t );
 	}*/
 	settext( );
-	exit( 1 );
+	exit( EXIT_FAILURE );
 }
 
 void cp_clearbuf( ) {

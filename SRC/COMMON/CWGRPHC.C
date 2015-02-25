@@ -56,7 +56,7 @@ void setgraph( ) {
 #endif
 	if ( ( screen_buffptr = malloc( ( unsigned int ) 32768L ) ) == NULL ) {
 		fputs( "Not enough memory\n", stderr );
-		exit( 1 );
+		exit( EXIT_FAILURE );
 	}
 
 	if ( scrmode == DETECT ) {
@@ -128,7 +128,7 @@ void setgraph( ) {
 
 	default:
 		fputs( "This software run on Hercules/EGA/VGA/MCGA/AT&T display card only.", stderr );
-		exit( 1 );
+		exit( EXIT_FAILURE );
 	}
 	( *setgraph_ptr )( );
 }

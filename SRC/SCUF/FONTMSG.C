@@ -48,7 +48,7 @@ int put_box( int x1, int y1, int x2, int y2 ) {
 	if ( ( buff = ( char* ) malloc( imagesize( x1, y1, x2, y2 ) ) ) == NULL ) {
 		settext( );
 		puts( "Error: Not enough memory." );
-		exit( 1 );
+		exit( EXIT_FAILURE );
 	}
 	getimage( x1, y1, x2, y2, buff );
 	putimage( x1, y1, buff, XOR_PUT );

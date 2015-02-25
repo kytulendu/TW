@@ -19,16 +19,16 @@ void topfile( unsigned int *x );
 /** Go to end of file. */
 void endfile( unsigned int *x );
 
-/**  */
+/** Goto previous word.  */
 void backword( unsigned int *x );
 
-/**  */
+/** Goto next word. */
 void nextword( unsigned int *x, unsigned int y );
 
-/**  */
+/** Goto page specified. */
 void gotopage( void );
 
-/**  */
+/** Goto line specified. */
 void gotoline( void );
 
 /**  */

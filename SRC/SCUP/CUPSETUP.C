@@ -104,7 +104,7 @@ void usage( void ) {
 	fputs( "\t-em,\t/em ega with monochrome display\n", stderr );
 	fputs( "\t-m,\t/m  mcga\n", stderr );
 	fputs( "\t-a,\t/a  at&t400\n", stderr );
-	exit( 1 );
+	exit( EXIT_FAILURE );
 }
 
 void set_directory( void ) {

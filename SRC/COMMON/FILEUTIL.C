@@ -63,6 +63,6 @@ void readscrfont( void *font_buffer, char *fontname, char *search_path ) {
 		close( handle );
 	} else {
 		fprintf( stderr, "FONT FILE (%s) NOT FOUND !\n", fontname );
-		exit( 1 );
+		exit( EXIT_FAILURE );
 	}
 }

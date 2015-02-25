@@ -700,13 +700,13 @@ void setup_memo( void ) {
 	if ( first ) {
 		if ( ( all_font = ( char * ) malloc( 256 * BYTE*Y ) ) == NULL ) {
 			error_message( "Not enough memory!" );
-			exit( 0 );
+			exit( EXIT_FAILURE );
 		}
 		first = 0;
 	} else {
 		if ( ( all_font = ( char* ) realloc( all_font, 256 * BYTE*Y ) ) == NULL ) {
 			error_message( "Not enough memory!" );
-			exit( 0 );
+			exit( EXIT_FAILURE );
 		}
 	}
 	memset( all_font, 0, 256 * BYTE*Y );
@@ -803,21 +803,21 @@ void file_menu( void ) {
 				case 1:
 					if ( save_font( ) ) {
 						terminate( );
-						exit( 0 );
+						exit( EXIT_SUCCESS );
 					} else {
 						remove_menu( &buff );
 						continue;
 					}
 				case 0:
 					terminate( );
-					exit( 0 );
+					exit( EXIT_SUCCESS );
 				case -1:
 					remove_menu( &buff );
 					return;
 				}
 			} else {
 				terminate( );
-				exit( 0 );
+				exit( EXIT_SUCCESS );
 			}
 		}
 

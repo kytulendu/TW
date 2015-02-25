@@ -75,11 +75,13 @@ void centerline( unsigned y ) {
 	if ( ( rightmar - leftmar ) > ( j - i ) ) {
 		k = leftmar + ( ( rightmar - leftmar ) - ( j - i ) ) / 2;
 		if ( k < i ) {
-			for ( count = i - k; count > 0; count-- )
+			for ( count = i - k; count > 0; count-- ) {
 				delete_char( 0 );
+			}
 		} else {
-			for ( count = k - i; count > 0; count-- )
+			for ( count = k - i; count > 0; count-- ) {
 				insertblank( 1, ' ' );
+			}
 		}
 		refreshline( 0, y );
 	}
@@ -197,7 +199,7 @@ void movetotab( unsigned int *x, unsigned int y ) {
 	} else {
 		i = leftmar - 1;
 	}
-	for ( ; ( tab[i] != YES ) && ( i < ( rightmar - 1 ) ); i++ );
+	for ( ; ( i < ( rightmar - 1 ) && ( tab[i] != YES ) ); i++ );
 	if ( i < ( rightmar - 1 ) ) {
 		count = i - ( *x + firstcol );
 		while ( count-- != 0 ) {
