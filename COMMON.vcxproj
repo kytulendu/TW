@@ -71,13 +71,11 @@
     <None Include="ITALIC.P9" />
     <None Include="ITALICS.P24" />
     <None Include="ITALICS.P9" />
-    <None Include="LICENSE" />
     <None Include="NORMAL.FON" />
     <None Include="NORMAL.P24" />
     <None Include="NORMAL.P9" />
     <None Include="NORMALS.P24" />
     <None Include="NORMALS.P9" />
-    <None Include="README.md" />
     <None Include="SRC\CLEAN.BAT" />
     <None Include="SRC\COMMON\ACOMMON.ASM" />
     <None Include="SRC\COMMON\ATT400.ASM" />
@@ -89,8 +87,6 @@
     <None Include="SRC\COMMON\MAKEFILE.MAK" />
     <None Include="SRC\CONFIG.MAK" />
     <None Include="SRC\MAKE.BAT" />
-    <None Include="TAX.DOC" />
-    <None Include="TEST.DOC" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\COMMON\COMMON.H" />

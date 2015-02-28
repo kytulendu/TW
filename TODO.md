@@ -1,11 +1,12 @@
 TODO
 ====
 
-Fix
----
+Fix/Improvement
+---------------
 - Bugs fix
 - Remove unused stuff
-- Fix display super-script and sub-script bug
+- Fix display super-script and sub-script will cut out top or bottom of character
+- Move handler function to COMMON
 
 Future
 ------
@@ -15,38 +16,43 @@ Hardware support
 ----------------
 - EMS/XMS
 - Mouse support for select menu and select text
-- HP LASER Compatible, OKI LASER PRINTER, CANON BJ-10, Electric type writer OLYMPIA
-  HP PCL5e, EPSON ESC/P, ESC/P2
-- CGA 640x200 pixel monochrome
+- CGA 640x200 pixel monochrome (it may have too low vertical resolution)
 - IBM8514 640x480 256 colors
+
+Printer
+-------
+- Support generic HP PCL5e, EPSON ESC/P, ESC/P2 printer
+- HP LASER Compatible
+- HP DeskJet 600/660C
+- OKI LASER PRINTER
+- CANON BJ-10
+- Electric typewriter OLYMPIA
 
 Feature
 -------
 - Re-made menu to like WS7 or modern software
+- Thai-English menu
+- New Thai word separator algorithm, by dictionary or by rule, CTTEX, load dictionary to EMS/XMS
+- Hyphenation, Thesaurus (English only), spell checker/word suggestion, Thai/English, use Hunspell or implement it my self
+- New word wrap algorithm, TeX
+- Typographic alignment : Center, left, right, flush left ragged right and justified
 - Help
 - Print a character over other character
-- Thai Word seperator by dictionary or by rule, use CTTEX, load dictionary to EMS/XMS
-- Hyphenation, Thesaurus, spell checker and word sugguestion, Thai/English, use Hunspell or imprement it my self
 - Block select clear formating
-- Thai-English menu
-- Other feature of Word RAMA and later version of CW and CWW
-- Center, left, right text while type
-- Insert soft-space for split words
 - Multi Thai character encoding, RW KU code, Thai EBDIC, etc.
 - Use Shift+Arrow key to select word (blocks)
 - Invert character
-- Double hight character
+- Double-hight character
 - Insert date-time (CTRL-U-D)
 - Not count line that is dot command
-- Not detect Thai word order (CTRL-U-T)
+- Not detect Thai word order when typing (CTRL-U-T)
 - Instant new page when use .PA
-- Undo
-- Right justify
+- Undo like modern editor
 - Auto-indent
-- Soft enter and Hard enter?
-- Convert to use with MacThai and WinThai
-- Picture print
+- Convert to use with MacThai and WinThai (insert soft hypen between words)
+- Picture support, print
 - Print while editing
+- Other feature of Word RAMA and later version of CW and CWW
 
 Define list
 ===========
@@ -57,7 +63,7 @@ NOSOUND
 NOALIGN
 CUSTOM_FONT   must use with WANT_TO_USE_GRAPH
 
-CUCC คือ ใคร
+Who is CUCC?
 
 PCL Soft Font (.sfp)
 LJ2DESK (.djp)
@@ -65,6 +71,3 @@ LJ2DESK (.djp)
 info of graphic cards
 http://www.seasip.demon.co.uk/index.html
 
-dispprintf( 0, 0, NORMALATTR, "%ld KB", farcoreleft( ) );
-
-handler

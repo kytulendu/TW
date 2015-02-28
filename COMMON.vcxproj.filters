@@ -5,9 +5,6 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Documents">
-      <UniqueIdentifier>{df3c1deb-ea8f-46d5-9928-c45dc853fcde}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Make Files">
       <UniqueIdentifier>{6fa3afe9-de49-4b77-b893-6f7662f1923a}</UniqueIdentifier>
     </Filter>
@@ -29,18 +26,6 @@
     </None>
     <None Include="NORMAL.FON">
       <Filter>Fonts</Filter>
-    </None>
-    <None Include="README.md">
-      <Filter>Documents</Filter>
-    </None>
-    <None Include="TAX.DOC">
-      <Filter>Documents</Filter>
-    </None>
-    <None Include="TEST.DOC">
-      <Filter>Documents</Filter>
-    </None>
-    <None Include="LICENSE">
-      <Filter>Documents</Filter>
     </None>
     <None Include="SRC\COMMON\MAKEFILE.MAK">
       <Filter>Make Files\COMMON</Filter>
