@@ -122,20 +122,27 @@ void init_graph_and_cursor( void ) {
 	if (scrmode == EGAMONO) {
 	esetgraph();
 	} *//* use 2 plains only (TC use 4 plains) */
+
 	setfillstyle( SOLID_FILL, WHITE );
+
 	moveto( 0, 0 ); lineto( 2 + WIDTH_X, 0 ); lineto( WIDTH_X + 2, WIDTH_Y + 2 );
 	lineto( 0, WIDTH_Y + 2 ); lineto( 0, 0 );
 	square_image = ( char * ) malloc( imagesize( 0, 0, WIDTH_X + 2, WIDTH_Y + 2 ) );
 	getimage( 0, 0, WIDTH_X + 2, WIDTH_Y + 2, square_image );
+
 	floodfill( 1, 1, -1 );
 	white_square_image = ( char * ) malloc( imagesize( 0, 0, WIDTH_X + 2, WIDTH_Y + 2 ) );
 	getimage( 0, 0, WIDTH_X + 2, WIDTH_Y + 2, white_square_image );
-	setcolor( 0 );
+
+	setcolor( BLACK );
+
 	moveto( 0, 0 ); lineto( 2 + WIDTH_X, 0 ); lineto( WIDTH_X + 2, WIDTH_Y + 2 );
 	lineto( 0, WIDTH_Y + 2 ); lineto( 0, 0 );
 	dot_image = ( char * ) malloc( imagesize( 0, 0, WIDTH_X + 2, WIDTH_Y + 2 ) );
 	getimage( 0, 0, WIDTH_X + 2, WIDTH_Y + 2, dot_image );
-	setcolor( 1 );
+
+	setcolor( YELLOW );
+
 	clearviewport( );
 	init_clock( );
 	atexit( flush_clock );
@@ -449,7 +456,7 @@ void draw_frame( int x1, int y1, int x2, int y2 ) {
 }
 
 void make_char_block_image( void ) {
-	setcolor( 1 );
+	setcolor( YELLOW );
 	moveto( 4 + align, 30 ); lineto( X + 3 + align, 30 ); lineto( X + 3 + align, Y + 29 );
 	lineto( 4 + align, Y + 29 ); lineto( 4 + align, 30 );
 	char_block_image = ( char* ) realloc( char_block_image,
