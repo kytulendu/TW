@@ -24,9 +24,6 @@ void readoption( search_file_mode mode );
 /** save option to file cw.cfg in either current directory or cw_dir. */
 void saveoption( search_file_mode mode );
 
-/**  */
-int handler( int errval, int ax, int bp, int si );
-
 /** Function     : cp_loadfont
 *   Description  : load printer font
 *   Parameters   : fname - font filename

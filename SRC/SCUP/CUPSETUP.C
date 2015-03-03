@@ -229,14 +229,6 @@ void saveoption( search_file_mode mode ) {
 	fclose( fp );
 }
 
-int handler( int errval, int ax, int bp, int si ) {
-	if ( ax >= 0 ) {
-		disperror( "Error on disk drive! กดปุ่มใดๆเพื่อทำงานต่อ" );
-		ebioskey( 0 );
-	}
-	hardretn( -1 );
-}
-
 void *cp_loadfont( char *fname, unsigned font_size ) {
 	void *p;
 	int handle;

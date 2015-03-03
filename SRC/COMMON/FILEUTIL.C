@@ -14,6 +14,11 @@
 #include <stdlib.h>
 
 #include "cwtype.h"
+#include "cwgrphc.h"
+
+#include "cscrn.h"
+#include "ekbd.h"
+#include "sound.h"
 
 boolean file_exist( char *filename ) {
 	int fd;
@@ -65,4 +70,18 @@ void readscrfont( void *font_buffer, char *fontname, char *search_path ) {
 		fprintf( stderr, "FONT FILE (%s) NOT FOUND !\n", fontname );
 		exit( EXIT_FAILURE );
 	}
+}
+
+int handler( int errval, int ax, int bp, int si ) {
+	char *scrn;
+
+	errorsound( );
+	if ( ax >= 0 ) {
+		scrn = savescrn( 18 - center_factor, 9, 71 - center_factor, 11 );
+		blockmsg( 10 );
+		dispprintf( 25 - center_factor, 10, 2, "Disk error on drive %c ! กดปุ่มใดๆเพื่อทำงานต่อ", 'A' + ( ax & 0x00FF ) );
+		ebioskey( 0 );
+		resscrn( scrn, 18 - center_factor, 9, 71 - center_factor, 11 );
+	}
+	hardretn( -1 );
 }

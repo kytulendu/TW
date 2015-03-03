@@ -81,7 +81,6 @@
   <ItemGroup>
     <ClInclude Include="SRC\SCUW\BLOCK.H" />
     <ClInclude Include="SRC\SCUW\CONST.H" />
-    <ClInclude Include="SRC\SCUW\CONVERT.H" />
     <ClInclude Include="SRC\SCUW\CW.H" />
     <ClInclude Include="SRC\SCUW\CWSETUP.H" />
     <ClInclude Include="SRC\SCUW\DEL.H" />

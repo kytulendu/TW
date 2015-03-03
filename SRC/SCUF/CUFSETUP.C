@@ -36,7 +36,6 @@
 
 void set_directory( void );
 void usage( void );
-int handler( int errval, int ax, int bp, int si );
 
 void cufsetup( int argc, char *argv[] ) {
 	register int i;
@@ -101,22 +100,4 @@ void set_directory( void ) {
 	fnsplit( progname, drive, dir, name, ext );
 	sprintf( cuf_dir, "%s%s", drive, dir );
 	cuf_dir[strlen( cuf_dir ) - 1] = '\0'; /* clear \ */
-}
-
-int handler( int errval, int ax, int bp, int si ) {
-	/* char drive; */
-
-	/* errorsound( ); */
-	if ( ax >= 0 ) {
-		/* drive = 'A' + ( ax & 0x00FF ); */
-		savepic( );
-		blockmsg( 10 );
-		dispprintf( 20, 10, 2,
-			"Disk error on drive %c ! กดปุ่มใดๆเพื่อทำงานต่อ",
-			'A' + ( ax & 0x00FF ) );
-		/* prchar( drive, REVERSEATTR, 45 - CENTER_FACTOR, 10 ); */
-		ebioskey( 0 );
-		retpic( );
-	}
-	hardretn( -1 );
 }

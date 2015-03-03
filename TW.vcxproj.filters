@@ -86,9 +86,6 @@
     <ClInclude Include="SRC\SCUW\CONST.H">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\SCUW\CONVERT.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\SCUW\CW.H">
       <Filter>Header Files</Filter>
     </ClInclude>

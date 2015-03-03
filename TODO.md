@@ -6,7 +6,6 @@ Fix/Improvement
 - Bugs fix
 - Remove unused stuff
 - Fix display super-script and sub-script will cut out top or bottom of character
-- Move handler function to COMMON
 
 Future
 ------
@@ -37,21 +36,27 @@ Feature
 - New word wrap algorithm, TeX
 - Typographic alignment : Center, left, right, flush left ragged right and justified
 - Help
-- Print a character over other character
+- Column block, can change it size
 - Block select clear formating
-- Multi Thai character encoding, RW KU code, Thai EBDIC, etc.
 - Use Shift+Arrow key to select word (blocks)
+- Convert to use with MacThai and WinThai (insert soft hypen between words)
+- Multi Thai character encoding/converter, RW KU code, Thai EBDIC, etc.
+- Change Thai encoding CW KU / CW TIS-620 by use <Ctrl><\>
 - Invert character
 - Double-hight character
-- Insert date-time (CTRL-U-D)
+- Insert date-time <Ctrk><U><D>
 - Not count line that is dot command
-- Not detect Thai word order when typing (CTRL-U-T)
+- Not detect Thai word order when typing <Ctrk><U><T>
 - Instant new page when use .PA
 - Undo like modern editor
 - Auto-indent
-- Convert to use with MacThai and WinThai (insert soft hypen between words)
+- Print a character over other character
 - Picture support, print
 - Print while editing
+- Editing more than 2 files
+- Clipboard
+- <Alt><F2> - <Alt><F8> for change font or insert/remove font style
+- <Alt><F1> system status, remaining memory, etc.
 - Other feature of Word RAMA and later version of CW and CWW
 
 Define list
