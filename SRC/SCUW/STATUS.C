@@ -11,7 +11,6 @@
 #include "..\common\cwgrphc.h"
 #include "..\common\var.h"
 
-#include "convert.h"
 #include "var.h"
 
 void relmarstatus( void ) {
@@ -103,15 +102,15 @@ void writeattr( void ) {
 }
 
 void writefilename( void ) {
-	dispstrhgc( "แฟ้มข้อมูล :                     ", 58 - SHRINK_FACTOR, 0, NORMALATTR );
+	dispstrhgc( "แฟ้มข้อมูล :                     ", 58 - shrink_factor, 0, NORMALATTR );
 	if ( filename[0] != '\0' ) {
-		dispstrhgc( filename, 68 - SHRINK_FACTOR, 0, BOLDATTR );
+		dispstrhgc( filename, 68 - shrink_factor, 0, BOLDATTR );
 	}
 }
 
 void writedriveno( void ) {
-	dispstrhgc( "ไดรฟ์  :", 50 - SHRINK_FACTOR, 0, NORMALATTR );
-	prchar( 'A' + getdisk( ), BOLDATTR, 55 - SHRINK_FACTOR, NORMALATTR );
+	dispstrhgc( "ไดรฟ์  :", 50 - shrink_factor, 0, NORMALATTR );
+	prchar( 'A' + getdisk( ), BOLDATTR, 55 - shrink_factor, NORMALATTR );
 }
 
 void writestatus( unsigned int x ) {

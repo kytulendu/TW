@@ -21,7 +21,6 @@
 #include "..\common\getstr.h"
 
 #include "var.h"
-#include "convert.h"
 
 #include "edit.h"
 
@@ -81,7 +80,7 @@ void notavailable( void ) {
 	savepic( );
 	blockmsg( 10 );
 	dispstrhgc( "คำสั่งนี้อยู่ระหว่างการพัฒนา ! กดปุ่มใดๆเพื่อทำงานต่อ"
-		, 25 - CENTER_FACTOR, 10, REVERSEATTR );
+		, 25 - center_factor, 10, REVERSEATTR );
 	ebioskey( 0 );
 	retpic( );
 }
@@ -94,8 +93,8 @@ void insertgraph( ) {
 
 	storeline( curline );
 
-	framebox( 18 - CENTER_FACTOR, 4, ( 18 - CENTER_FACTOR ) + 53, 6, REVERSEATTR );
-	dispstrhgc( "ใส่ชื่อแฟ้มรูปภาพที่ต้องการอ่าน :", 21 - CENTER_FACTOR, 5, REVERSEATTR );
+	framebox( 18 - center_factor, 4, ( 18 - center_factor ) + 53, 6, REVERSEATTR );
+	dispstrhgc( "ใส่ชื่อแฟ้มรูปภาพที่ต้องการอ่าน :", 21 - center_factor, 5, REVERSEATTR );
 
 	graphname[0] = '*';
 	graphname[1] = '.';

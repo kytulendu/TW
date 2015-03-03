@@ -26,7 +26,6 @@
 #include "..\common\getstr.h"
 #include "..\common\tutil1.h"
 
-#include "convert.h"
 #include "var.h"
 
 #include "cw.h"
@@ -259,9 +258,9 @@ void saveoption( search_file_mode p_mode ) {
 
 void dispoption( int i ) {
 	dispstrhgc( option_setup[i].option_name,
-		65 - CENTER_FACTOR - thaistrlen( option_setup[i].option_name ),
+		65 - center_factor - thaistrlen( option_setup[i].option_name ),
 		i + 6, NORMALATTR );
-	dispprintf( 65 - CENTER_FACTOR, i + 6, NORMALATTR, " :%d",
+	dispprintf( 65 - center_factor, i + 6, NORMALATTR, " :%d",
 		*option_setup[i].p_option_value );
 }
 
@@ -275,14 +274,14 @@ void setoption( void ) {
 	if ( wordwrap == 0 ) { wordwrap = 2; }
 	if ( create_bak == 0 ) { create_bak = 2; }
 	if ( cu_song == 0 ) { cu_song = 2; }
-	framebox( 14 - CENTER_FACTOR, 5, 14 - CENTER_FACTOR + 67, 5 + 1 + NELEM_OPTION, NORMALATTR );
+	framebox( 14 - center_factor, 5, 14 - center_factor + 67, 5 + 1 + NELEM_OPTION, NORMALATTR );
 	for ( i = 0; i < NELEM_OPTION; i++ ) {
 		dispoption( i );
 	}
 	i = 0;
 	do {
 		itoa( *option_setup[i].p_option_value, st, 10 );
-		c = getstring( st, 65 + 2 - CENTER_FACTOR, 6 + i, option_setup[i].maxlen,
+		c = getstring( st, 65 + 2 - center_factor, 6 + i, option_setup[i].maxlen,
 			NORMALATTR, option_setup[i].stype );
 		*option_setup[i].p_option_value = atoi( st );
 

@@ -26,7 +26,6 @@
 #include "..\common\tutil1.h"
 #include "..\common\grdetect.h"
 
-#include "convert.h"
 #include "var.h"
 
 #include "cw.h"
@@ -578,7 +577,7 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 					if ( changeflag ) {
 						blockmsg( 10 );
 						dispstrhgc( "แฟ้มข้อมูลเดิมยังไม่ได้จัดเก็บ ต้องการจัดเก็บหรือไม่ (Y/N)?"
-							, 22 - CENTER_FACTOR, 10, REVERSEATTR );
+							, 22 - center_factor, 10, REVERSEATTR );
 						do {
 							key = ebioskey( 0 ) & 0xff;
 							if ( ( key == 'y' ) || ( key == 'Y' ) ) {
@@ -611,7 +610,7 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 							errorsound( );
 							blockmsg( 10 );
 							dispstrhgc( "แฟ้มข้อมูลนี้มีอยู่แล้ว กดปุ่ม <ESC> เพื่อทำงานต่อ"
-								, 27 - CENTER_FACTOR, 10, REVERSEATTR );
+								, 27 - center_factor, 10, REVERSEATTR );
 							while ( ebioskey( 0 ) != ESCKEY );
 							filename[0] = '\0';
 						} else {
@@ -635,7 +634,7 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 					if ( changeflag ) {
 						blockmsg( 10 );
 						dispstrhgc( "แฟ้มข้อมูลเดิมยังไม่ได้จัดเก็บ ต้องการจัดเก็บหรือไม่ (Y/N)?"
-							, 22 - CENTER_FACTOR, 10, REVERSEATTR );
+							, 22 - center_factor, 10, REVERSEATTR );
 						key = 0;
 						do {
 							key = ebioskey( 0 ) & 0xff;
@@ -863,14 +862,14 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 				break;
 			case 0x8400:
 				savepic( );
-				framebox( 20 - CENTER_FACTOR, 5, ( 20 - CENTER_FACTOR ) + 50, 16, REVERSEATTR );
-				dispstrhgc( "สร้างตารางโดยการกดปุ่ม Scroll Lock , แล้วกด Shift", ( 20 - CENTER_FACTOR ) + 3, 6, REVERSEATTR );
-				dispstrhgc( "ร่วมกับปุ่มต่างๆทางด้านขวาเพื่อสร้างตารางดังต่อไปนี้", ( 20 - CENTER_FACTOR ) + 3, 7, REVERSEATTR );
-				dispstrhgc( "minus(•) = •    plus(+) = ", ( 20 - CENTER_FACTOR ) + 3, 9, REVERSEATTR );
-				dispstrhgc( "Home(7)  =        8    = ‘      PgDn(9)  = ", ( 20 - CENTER_FACTOR ) + 3, 11, REVERSEATTR );
-				dispstrhgc( "   4     = “       5    = –         6     = ’", ( 20 - CENTER_FACTOR ) + 3, 13, REVERSEATTR );
-				dispstrhgc( "End(1)   =        2    =       PgDn(3)  = ", ( 20 - CENTER_FACTOR ) + 3, 15, REVERSEATTR );
-				dispstrhgc( "กด <ESC> เพื่อทำงานต่อ", ( 20 - CENTER_FACTOR ) + 3, 16, REVERSEATTR );
+				framebox( 20 - center_factor, 5, ( 20 - center_factor ) + 50, 16, REVERSEATTR );
+				dispstrhgc( "สร้างตารางโดยการกดปุ่ม Scroll Lock , แล้วกด Shift", ( 20 - center_factor ) + 3, 6, REVERSEATTR );
+				dispstrhgc( "ร่วมกับปุ่มต่างๆทางด้านขวาเพื่อสร้างตารางดังต่อไปนี้", ( 20 - center_factor ) + 3, 7, REVERSEATTR );
+				dispstrhgc( "minus(•) = •    plus(+) = ", ( 20 - center_factor ) + 3, 9, REVERSEATTR );
+				dispstrhgc( "Home(7)  =        8    = ‘      PgDn(9)  = ", ( 20 - center_factor ) + 3, 11, REVERSEATTR );
+				dispstrhgc( "   4     = “       5    = –         6     = ’", ( 20 - center_factor ) + 3, 13, REVERSEATTR );
+				dispstrhgc( "End(1)   =        2    =       PgDn(3)  = ", ( 20 - center_factor ) + 3, 15, REVERSEATTR );
+				dispstrhgc( "กด <ESC> เพื่อทำงานต่อ", ( 20 - center_factor ) + 3, 16, REVERSEATTR );
 				while ( ebioskey( 0 ) != ESCKEY );
 				retpic( );
 				resscrn( scrnndx,
@@ -880,12 +879,12 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 					ylev1[lev1 - 1] + nolev1[lev1 - 1] );
 				break;
 			case 0x8700:
-				scrnndx2 = savescrn( 16 - CENTER_FACTOR, 5, 51 - CENTER_FACTOR, 7 );
-				framebox( 16 - CENTER_FACTOR, 5, 51 - CENTER_FACTOR, 7, 0 );
-				dispprintf( 18 - CENTER_FACTOR, 6, NORMALATTR,
+				scrnndx2 = savescrn( 16 - center_factor, 5, 51 - center_factor, 7 );
+				framebox( 16 - center_factor, 5, 51 - center_factor, 7, 0 );
+				dispprintf( 18 - center_factor, 6, NORMALATTR,
 					"หน่วยความจำเหลืออยู่ %ld ตัวอักษร", farcoreleft( ) );
 				bioskey( 0 );
-				resscrn( scrnndx2, 16 - CENTER_FACTOR, 5, 51 - CENTER_FACTOR, 7 );
+				resscrn( scrnndx2, 16 - center_factor, 5, 51 - center_factor, 7 );
 				resscrn( scrnndx,
 					xlev1[lev1 - 1] - 1,
 					ylev1[lev1 - 1] - 1,
@@ -932,10 +931,10 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 					savepic( );
 					blockmsg( 7 );
 					if ( *curmenu == 0x9200 ) {
-						dispstrhgc( "กำลังอ่านตัวเลือก รอสักครู่...", 35 - CENTER_FACTOR, 7, REVERSEATTR );
+						dispstrhgc( "กำลังอ่านตัวเลือก รอสักครู่...", 35 - center_factor, 7, REVERSEATTR );
 						readoption( smode );
 					} else {
-						dispstrhgc( "กำลังเก็บตัวเลือก รอสักครู่...", 35 - CENTER_FACTOR, 7, REVERSEATTR );
+						dispstrhgc( "กำลังเก็บตัวเลือก รอสักครู่...", 35 - center_factor, 7, REVERSEATTR );
 						saveoption( smode );
 					}
 					retpic( );

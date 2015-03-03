@@ -31,7 +31,6 @@
 #include "..\common\getstr.h"
 #include "..\common\tutil1.h"
 
-#include "convert.h"
 #include "const.h"
 #include "var.h"
 
@@ -323,7 +322,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 	static unsigned char text_str[MAXCOL * 5];
 	if ( ( fip = fopen( file_name, "rt" ) ) != NULL ) {
 		blockmsg( 11 );
-		dispstrhgc( "กำลังอ่านข้อมูลจากแผ่นจานแม่เหล็กอยู่ กรุณารอสักครู่...", 25 - CENTER_FACTOR, 11, REVERSEATTR );
+		dispstrhgc( "กำลังอ่านข้อมูลจากแผ่นจานแม่เหล็กอยู่ กรุณารอสักครู่...", 25 - center_factor, 11, REVERSEATTR );
 		space = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 
 		if ( space == NULL ) {
@@ -437,7 +436,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 	} else {
 		errorsound( );
 		blockmsg( 10 );
-		dispstrhgc( "ไม่พบแฟ้มข้อมูลนี้ ! กด <ESC> เพื่อทำงานต่อ", 27 - CENTER_FACTOR, 10, REVERSEATTR );
+		dispstrhgc( "ไม่พบแฟ้มข้อมูลนี้ ! กด <ESC> เพื่อทำงานต่อ", 27 - center_factor, 10, REVERSEATTR );
 		while ( ebioskey( 0 ) != ESCKEY );
 		return( NULL );
 	}
@@ -446,9 +445,9 @@ no_mem_avail:
 	fclose( fip );
 	errorsound( );
 	blockmsg( 11 );
-	dispstrhgc( "หน่วยความจำไม่พอ ! กด <ESC> เพื่อทำงานต่อ", 26 - CENTER_FACTOR, 11, REVERSEATTR );
+	dispstrhgc( "หน่วยความจำไม่พอ ! กด <ESC> เพื่อทำงานต่อ", 26 - center_factor, 11, REVERSEATTR );
 	while ( ebioskey( 0 ) != ESCKEY );
-	dispstrhgc( "กำลังคืนหน่วยความจำให้ระบบ กรุณารอสักครู่ ...", 26 - CENTER_FACTOR, 11, REVERSEATTR );
+	dispstrhgc( "กำลังคืนหน่วยความจำให้ระบบ กรุณารอสักครู่ ...", 26 - center_factor, 11, REVERSEATTR );
 	if ( space != NULL ) {
 		currentline = space->next;
 		while ( currentline != space ) {
@@ -494,10 +493,10 @@ int readblk( unsigned int *x ) {
 	int i;
 	storeline( curline );
 	pagecomplete = NO;
-	framebox( 18 - CENTER_FACTOR, 4, 18 - CENTER_FACTOR + 53, 6, REVERSEATTR );
-	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการอ่าน :", 18 - CENTER_FACTOR + 4, 5, REVERSEATTR );
+	framebox( 18 - center_factor, 4, 18 - center_factor + 53, 6, REVERSEATTR );
+	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการอ่าน :", 18 - center_factor + 4, 5, REVERSEATTR );
 	strcpy( file_name, "*.*" );
-	i = getname( file_name, 46 - CENTER_FACTOR, 5, 22, REVERSEATTR );
+	i = getname( file_name, 46 - center_factor, 5, 22, REVERSEATTR );
 	if ( ( i == YES ) && ( file_name[0] != '\0' ) ) {
 		if ( havewild( file_name ) ) {
 			selectfile( file_name );
@@ -574,10 +573,10 @@ int chkspace( char *fname ) {
 
 	flag = fnsplit( fname, drv, dir, name, ext );	/* Analyse Fname */
 	filesize = getfilesize( );
-	framebox( 17 - CENTER_FACTOR, 8, 17 - CENTER_FACTOR + 55, 12, REVERSEATTR );
-	dispstrhgc( "ขนาดแฟ้มข้อมูล =                   ไบต์", 32 - CENTER_FACTOR, 9, REVERSEATTR );
-	dispstrhgc( "เนื้อที่ว่างบนแผ่นจานแม่เหล็ก =                   ไบต์", 22 - CENTER_FACTOR, 10, REVERSEATTR );
-	dispprintf( 48 - CENTER_FACTOR, 9, REVERSEATTR, "%#10lu", filesize );
+	framebox( 17 - center_factor, 8, 17 - center_factor + 55, 12, REVERSEATTR );
+	dispstrhgc( "ขนาดแฟ้มข้อมูล =                   ไบต์", 32 - center_factor, 9, REVERSEATTR );
+	dispstrhgc( "เนื้อที่ว่างบนแผ่นจานแม่เหล็ก =                   ไบต์", 22 - center_factor, 10, REVERSEATTR );
+	dispprintf( 48 - center_factor, 9, REVERSEATTR, "%#10lu", filesize );
 
 	if ( flag & DRIVE ) {	/* Has it Drive */
 		i = drv[0] - 'A' + 1;
@@ -591,9 +590,9 @@ int chkspace( char *fname ) {
 		diskspace += ( unsigned long ) fdat.ff_fsize;	/* By old file size */
 	}
 
-	dispprintf( 48 - CENTER_FACTOR, 10, REVERSEATTR, "%10lu", diskspace );
+	dispprintf( 48 - center_factor, 10, REVERSEATTR, "%10lu", diskspace );
 	if ( diskspace < filesize ) {
-		dispstrhgc( "เนื้อที่บนแผ่นจานแม่เหล็กไม่พอ ! กดปุ่ม ESC เพื่อทำงานต่อ...", 22 - CENTER_FACTOR, 11, REVERSEATTR );
+		dispstrhgc( "เนื้อที่บนแผ่นจานแม่เหล็กไม่พอ ! กดปุ่ม ESC เพื่อทำงานต่อ...", 22 - center_factor, 11, REVERSEATTR );
 		errorsound( );
 		while ( ebioskey( 0 ) != ESCKEY );
 		return( 0 );
@@ -618,18 +617,18 @@ void writeblk( char *file_name, struct line_node *linebegin,
 	pagecomplete = NO;
 	storeline( curline );
 
-	framebox( 17 - CENTER_FACTOR, 4, 17 - CENTER_FACTOR + 55, 6, REVERSEATTR );
-	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการจัดเก็บ :", 17 - CENTER_FACTOR + 4, 5, REVERSEATTR );
-	i = getname( file_name, 47 - CENTER_FACTOR, 5, 22, 2 );
+	framebox( 17 - center_factor, 4, 17 - center_factor + 55, 6, REVERSEATTR );
+	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการจัดเก็บ :", 17 - center_factor + 4, 5, REVERSEATTR );
+	i = getname( file_name, 47 - center_factor, 5, 22, 2 );
 	if ( ( i != YES ) || ( file_name[0] == '\0' ) ) {
 		return;
 	}
 
-	framebox( 17 - CENTER_FACTOR, 8, 17 - CENTER_FACTOR + 55, 12, REVERSEATTR );
+	framebox( 17 - center_factor, 8, 17 - center_factor + 55, 12, REVERSEATTR );
 	fnsplit( file_name, drv, dir, name, ext );
 
 	if ( file_exist( file_name ) ) {
-		dispstrhgc( "แฟ้มข้อมูลเดิมมีอยู่แล้ว ต้องการเขียนทับหรือไม่ ? (Y/N)", 23 - CENTER_FACTOR, 10, REVERSEATTR );
+		dispstrhgc( "แฟ้มข้อมูลเดิมมีอยู่แล้ว ต้องการเขียนทับหรือไม่ ? (Y/N)", 23 - center_factor, 10, REVERSEATTR );
 		do {
 			key = toupper( ebioskey( 0 ) & 0xff );
 		} while ( ( key != 'N' ) && ( key != 'Y' ) );
@@ -660,7 +659,7 @@ void writeblk( char *file_name, struct line_node *linebegin,
 	}
 
 	if ( ( fip = fopen( file_name, "wt" ) ) != NULL ) {
-		dispstrhgc( "กำลังจัดเก็บแฟ้มข้อมูลอยู่ กรุณารอสักครู่...", 22 - CENTER_FACTOR, 11, REVERSEATTR );
+		dispstrhgc( "กำลังจัดเก็บแฟ้มข้อมูลอยู่ กรุณารอสักครู่...", 22 - center_factor, 11, REVERSEATTR );
 		currentline = linebegin;
 #ifdef WANT_TO_USE_GRAPH
 		if ( currentline->graph != NULL ) {
@@ -727,7 +726,7 @@ void writeblk( char *file_name, struct line_node *linebegin,
 	} else {
 		errorsound( );
 		blockmsg( 10 );
-		dispstrhgc( "จัดเก็บแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ", 24 - CENTER_FACTOR, 10, REVERSEATTR );
+		dispstrhgc( "จัดเก็บแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ", 24 - center_factor, 10, REVERSEATTR );
 		while ( ebioskey( 0 ) != ESCKEY );
 	}
 }

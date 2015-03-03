@@ -22,7 +22,6 @@
 #include "..\common\sound.h"
 #include "..\common\getstr.h"
 
-#include "convert.h"
 #include "var.h"
 
 #include "cw.h"
@@ -99,9 +98,9 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 	switch ( key ) {
 	case 'l' - 'a' + 1:
 		itoa( leftmar, st, 10 );
-		framebox( 25 - CENTER_FACTOR, 4, 25 - CENTER_FACTOR + 39, 6, REVERSEATTR );
-		dispstrhgc( "ต้องการตั้งกั้นซ้ายที่คอลัมน์ที่เท่าไหร่ ?", 25 - CENTER_FACTOR + 4, 5, REVERSEATTR );
-		if ( getstring( st, 58 - CENTER_FACTOR, 5, 3, REVERSEATTR, NUMBER ) ) {
+		framebox( 25 - center_factor, 4, 25 - center_factor + 39, 6, REVERSEATTR );
+		dispstrhgc( "ต้องการตั้งกั้นซ้ายที่คอลัมน์ที่เท่าไหร่ ?", 25 - center_factor + 4, 5, REVERSEATTR );
+		if ( getstring( st, 58 - center_factor, 5, 3, REVERSEATTR, NUMBER ) ) {
 			j = atoi( st );
 			if ( ( j < rightmar ) && ( j > 0 ) ) {
 				leftmar = j;
@@ -113,7 +112,7 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 				}
 				strcat( invmsg, " กดปุ่มใดๆเพื่อทำงานต่อ ..." );
 				blockmsg( 10 );
-				dispstrhgc( invmsg, 25 - CENTER_FACTOR, 10, REVERSEATTR );
+				dispstrhgc( invmsg, 25 - center_factor, 10, REVERSEATTR );
 				errorsound( );
 				ebioskey( 0 );
 			}
@@ -121,9 +120,9 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		break;
 	case 'r' - 'a' + 1:
 		itoa( rightmar, st, 10 );
-		framebox( 25 - CENTER_FACTOR, 4, 25 - CENTER_FACTOR + 39, 6, REVERSEATTR );
-		dispstrhgc( "ต้องการตั้งกั้นขวาที่คอลัมน์ที่เท่าไหร่ ?", 25 - CENTER_FACTOR + 4, 5, REVERSEATTR );
-		if ( getstring( st, 58 - CENTER_FACTOR, 5, 3, REVERSEATTR, NUMBER ) ) {
+		framebox( 25 - center_factor, 4, 25 - center_factor + 39, 6, REVERSEATTR );
+		dispstrhgc( "ต้องการตั้งกั้นขวาที่คอลัมน์ที่เท่าไหร่ ?", 25 - center_factor + 4, 5, REVERSEATTR );
+		if ( getstring( st, 58 - center_factor, 5, 3, REVERSEATTR, NUMBER ) ) {
 			j = atoi( st );
 			if ( ( j > leftmar ) && ( j <= MAXRMAR ) ) {
 				rightmar = j;
@@ -135,7 +134,7 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 				}
 				strcat( invmsg, " กดปุ่มใดๆเพื่อทำงานต่อ ..." );
 				blockmsg( 10 );
-				dispstrhgc( invmsg, 25 - CENTER_FACTOR, 10, REVERSEATTR );
+				dispstrhgc( invmsg, 25 - center_factor, 10, REVERSEATTR );
 				errorsound( );
 				ebioskey( 0 );
 			}
@@ -143,9 +142,9 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		break;
 	case 'i' - 'a' + 1:
 		itoa( x + 1, st, 10 );
-		framebox( 25 - CENTER_FACTOR, 4, 25 - CENTER_FACTOR + 39, 6, REVERSEATTR );
-		dispstrhgc( "ต้องการตั้ง TAB ที่คอลัมน์ที่เท่าไหร่ ?", 25 - CENTER_FACTOR + 4, 5, REVERSEATTR );
-		if ( getstring( st, 58 - CENTER_FACTOR, 5, 3, REVERSEATTR, NUMBER ) ) {
+		framebox( 25 - center_factor, 4, 25 - center_factor + 39, 6, REVERSEATTR );
+		dispstrhgc( "ต้องการตั้ง TAB ที่คอลัมน์ที่เท่าไหร่ ?", 25 - center_factor + 4, 5, REVERSEATTR );
+		if ( getstring( st, 58 - center_factor, 5, 3, REVERSEATTR, NUMBER ) ) {
 			j = atoi( st );
 			if ( ( j <= MAXCOL ) && ( j > 0 ) ) {
 				tab[j - 1] = YES;
@@ -154,9 +153,9 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		break;
 	case 'n' - 'a' + 1:
 		strcpy( st, "ALL" );
-		framebox( 25 - CENTER_FACTOR, 4, 25 - CENTER_FACTOR + 39, 6, REVERSEATTR );
-		dispstrhgc( "ต้องการลบ TAB ที่คอลัมน์ที่เท่าไหร่ ?", 25 - CENTER_FACTOR + 4, 5, REVERSEATTR );
-		if ( getstring( st, 58 - CENTER_FACTOR, 5, 3, REVERSEATTR, NUMBER ) ) {
+		framebox( 25 - center_factor, 4, 25 - center_factor + 39, 6, REVERSEATTR );
+		dispstrhgc( "ต้องการลบ TAB ที่คอลัมน์ที่เท่าไหร่ ?", 25 - center_factor + 4, 5, REVERSEATTR );
+		if ( getstring( st, 58 - center_factor, 5, 3, REVERSEATTR, NUMBER ) ) {
 			if ( strcmp( st, "ALL" ) == 0 ) {
 				for ( j = 0; j < MAXCOL; ++j ) {
 					tab[j] = NO;
@@ -171,9 +170,9 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		break;
 	case 'p' - 'a' + 1:
 		itoa( lineperpage, st, 10 );
-		framebox( 25 - CENTER_FACTOR, 4, 25 - CENTER_FACTOR + 41, 6, REVERSEATTR );
-		dispstrhgc( "ต้องการตั้งจำนวนบรรทัดต่อหน้าเท่าไหร่ ?", 25 - CENTER_FACTOR + 4, 5, REVERSEATTR );
-		if ( getstring( st, 61 - CENTER_FACTOR, 5, 3, REVERSEATTR, NUMBER ) ) {
+		framebox( 25 - center_factor, 4, 25 - center_factor + 41, 6, REVERSEATTR );
+		dispstrhgc( "ต้องการตั้งจำนวนบรรทัดต่อหน้าเท่าไหร่ ?", 25 - center_factor + 4, 5, REVERSEATTR );
+		if ( getstring( st, 61 - center_factor, 5, 3, REVERSEATTR, NUMBER ) ) {
 			if ( atoi( st ) > 0 ) {
 				lineperpage = atoi( st );
 				writepageline( );

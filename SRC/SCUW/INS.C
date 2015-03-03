@@ -23,7 +23,6 @@
 #include "..\common\sound.h"
 #include "..\common\getstr.h"
 
-#include "convert.h"
 #include "var.h"
 
 #include "block.h"
@@ -88,8 +87,8 @@ void shiftscrn( unsigned count, unsigned *x ) {
 
 void linetoolong( void ) {
 	errorsound( );
-	framebox( 22 - CENTER_FACTOR, 6, 22 - CENTER_FACTOR + 44, 8, REVERSEATTR );
-	dispstrhgc( "บรรทัดยาวเกินไป ! กด <ESC> เพื่อทำงานต่อ", 22 - CENTER_FACTOR + 5, 7, REVERSEATTR );
+	framebox( 22 - center_factor, 6, 22 - center_factor + 44, 8, REVERSEATTR );
+	dispstrhgc( "บรรทัดยาวเกินไป ! กด <ESC> เพื่อทำงานต่อ", 22 - center_factor + 5, 7, REVERSEATTR );
 	while ( ebioskey( 0 ) != ESCKEY );
 	pagecomplete = NO;
 }
@@ -549,7 +548,7 @@ void insertmacro( char *macro, unsigned int *x, unsigned int *y ) {
 }
 
 void blankmaro( int y ) {
-	dispprintf( 19 - CENTER_FACTOR, y, REVERSEATTR, " – CTRL-F   =%37s– ", " " );
+	dispprintf( 19 - center_factor, y, REVERSEATTR, " – CTRL-F   =%37s– ", " " );
 }
 
 /* Modify by Suttpong Sat  08-05-1989  03:07:24 */
@@ -560,21 +559,21 @@ void dispmacro( register int i ) {
 	};
 
 	blankmaro( 5 + i );
-	dispstrhgc( numstr[i], 28 - CENTER_FACTOR, 5 + i, REVERSEATTR );
-	dispstrhgc( &macro[i][0], 33 - CENTER_FACTOR, 5 + i, REVERSEATTR );
+	dispstrhgc( numstr[i], 28 - center_factor, 5 + i, REVERSEATTR );
+	dispstrhgc( &macro[i][0], 33 - center_factor, 5 + i, REVERSEATTR );
 }
 
 void editmacro( void ) {
 	register int i, c;
 	pagecomplete = NO;
-	framebox( 19 - CENTER_FACTOR, 4, ( 19 - CENTER_FACTOR ) + 51, 15, REVERSEATTR );
+	framebox( 19 - center_factor, 4, ( 19 - center_factor ) + 51, 15, REVERSEATTR );
 	for ( i = 0; i < 10; i++ ) {
 		dispmacro( i );
 	}
-	dispstrhgc( "กด <ESC> เพื่อเลิกการแก้ไขคำย่อ", ( 19 - CENTER_FACTOR ) + 3, 15, REVERSEATTR );
+	dispstrhgc( "กด <ESC> เพื่อเลิกการแก้ไขคำย่อ", ( 19 - center_factor ) + 3, 15, REVERSEATTR );
 	i = 0;
 	do {
-		c = getstring( &macro[i][0], 33 - CENTER_FACTOR, 5 + i, 35, NORMALATTR, THAIENG );
+		c = getstring( &macro[i][0], 33 - center_factor, 5 + i, 35, NORMALATTR, THAIENG );
 		switch ( c ) {
 		case UPKEY:
 			dispmacro( i );
