@@ -150,7 +150,7 @@ void framebox( unsigned int p_xStart, unsigned int p_yStart, unsigned int p_xEnd
 }
 
 void blockmsg( int p_y ) {
-	framebox( 13, p_y - 1, 13 + 53, p_y + 1, REVERSEATTR );
+	framebox( 13 , p_y - 1, ( 13 + 61 ) - shrink_factor, p_y + 1, REVERSEATTR );
 }
 
 void showerrno( void ) {

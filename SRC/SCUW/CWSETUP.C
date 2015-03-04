@@ -173,7 +173,7 @@ void cwsetup( int argc, char *argv[] ) {
 	initscrn( );
 
 	/** set window of edit area by video mode
-	*   CGA                  78 column, 6 line.
+	*   CGA                  78 column, 5 line.
 	*   VGA, MCGA            78 column, 19 line.
 	*   EGA, EGA64, EGAMONO  78 column, 13 line.
 	*   HERCMONO             88 column, 13 line.
@@ -181,7 +181,7 @@ void cwsetup( int argc, char *argv[] ) {
 	wind.row = 4;
 	wind.col = 1;
 	wind.length = ( scrmode == HERCMONO ) ? 88 : 78;
-	wind.width = ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 19 : ( scrmode == ATT400 ) ? 15 : ( scrmode == CGA ) ? 6 : 13;
+	wind.width = ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 19 : ( scrmode == ATT400 ) ? 15 : ( scrmode == CGA ) ? 5 : 13;
 
 	offbreak( );		/* Turn off Ctrl-C checking */
 }

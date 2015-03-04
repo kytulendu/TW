@@ -65,7 +65,7 @@ void togglefont( font_attr *p_curfont, font_code p_code );
 *  \param[in]  p_attr		attribute of blank. */
 void framebox( unsigned int p_xStart, unsigned int p_yStart, unsigned int p_xEnd, unsigned int p_yEnd, unsigned int p_attr );
 
-/** Draw message box on screen.
+/** Draw message box on screen, Max 55 characters.
 *  \param[in]  p_y		vertical position. */
 void blockmsg( int p_y );
 

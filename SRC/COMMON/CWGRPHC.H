@@ -18,12 +18,12 @@
 
 #ifndef DEFINE_VAR
 EXTERN int scrmode;
-EXTERN int shrink_factor;		/* Columns decreased (for 90 column to 80 column) */
-EXTERN int center_factor;		/* Shifting left factor (for 90 column to 80 column) */
+EXTERN int shrink_factor;		/* Columns decreased. 90 column : 0, 80 column : 10 ) */
+EXTERN int center_factor;		/* Shifting left factor. 90 column : 0, 80 column : 5) */
 #else
 EXTERN int scrmode = DETECT;	/* not initialize (text) mode */
-EXTERN int shrink_factor = 0;	/* Columns decreased (for 90 column to 80 column) */
-EXTERN int center_factor = 0;	/* Shifting left factor (for 90 column to 80 column) */
+EXTERN int shrink_factor = 0;	/* Columns decreased. 90 column : 0, 80 column : 10 ) */
+EXTERN int center_factor = 0;	/* Shifting left factor. 90 column : 0, 80 column : 5) */
 #endif
 
 EXTERN unsigned char *screen_buffptr;

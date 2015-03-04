@@ -13,8 +13,6 @@
 #include <io.h>
 #include <dos.h>
 
-
-
 #include "var.h"
 #include "block.h"
 
