@@ -16,11 +16,11 @@
 #include <string.h>
 
 #include "..\common\cwtype.h"
+#include "..\common\fileutil.h"
 
 #include "var.h"
 
 #include "fed.h"
-#include "file.h"
 #include "key.h"
 #include "fontmsg.h"
 

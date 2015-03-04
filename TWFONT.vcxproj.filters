@@ -68,9 +68,6 @@
     <ClInclude Include="SRC\SCUF\FED.H">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SRC\SCUF\FILE.H">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="SRC\SCUF\FONTMSG.H">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -98,9 +95,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUF\FED.C">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SRC\SCUF\FILE.C">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SRC\SCUF\FONTMSG.C">

@@ -83,7 +83,6 @@
     <ClInclude Include="SRC\SCUF\CONVERT.H" />
     <ClInclude Include="SRC\SCUF\CUFSETUP.H" />
     <ClInclude Include="SRC\SCUF\FED.H" />
-    <ClInclude Include="SRC\SCUF\FILE.H" />
     <ClInclude Include="SRC\SCUF\FONTMSG.H" />
     <ClInclude Include="SRC\SCUF\GETCH.H" />
     <ClInclude Include="SRC\SCUF\INT.H" />
@@ -96,7 +95,6 @@
     <ClCompile Include="SRC\SCUF\CONVERT.C" />
     <ClCompile Include="SRC\SCUF\CUFSETUP.C" />
     <ClCompile Include="SRC\SCUF\FED.C" />
-    <ClCompile Include="SRC\SCUF\FILE.C" />
     <ClCompile Include="SRC\SCUF\FONTMSG.C" />
     <ClCompile Include="SRC\SCUF\GETCH.C" />
     <ClCompile Include="SRC\SCUF\INT.C" />

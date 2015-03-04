@@ -68,10 +68,6 @@ void cufsetup( int argc, char *argv[] ) {
 			case 'A':
 				scrmode = ATT400;
 				break;
-			case 'N':
-			case 'W':
-			case 'P':
-				break;
 			default:
 				usage( );
 		}
@@ -86,7 +82,6 @@ void usage( void ) {
 	fputs( "Usage: TWFONT.EXE [option]\n", stderr );
 	fputs( "Options:\n", stderr );
 	fputs( "\t-h,  /h  Hercules graphic adapter\n", stderr );
-	fputs( "\t-hl, /hl Hercules graphic adapter, left justify\n", stderr );
 	fputs( "\t-v,  /v  vga\n", stderr );
 	fputs( "\t-e,  /e  ega with ega display\n", stderr );
 	fputs( "\t-m,  /m  ega with monochrome display\n", stderr );

@@ -30,7 +30,7 @@ boolean file_exist( char *filename ) {
 		return YES;
 	}
 }
-/*
+
 search_file_mode find_file( char *filename, char *search_path ) {
 	struct ffblk ffblk;
 	char p[MAXPATH];
@@ -44,7 +44,7 @@ search_file_mode find_file( char *filename, char *search_path ) {
 	}
 	return NOT_FOUND;
 }
-*/
+
 int havewild( char *filname ) {
 	while ( *filname ) {
 		if ( ( *filname == '*' ) || ( *filname == '?' ) ) {
