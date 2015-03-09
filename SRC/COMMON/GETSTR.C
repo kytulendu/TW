@@ -12,6 +12,7 @@
 
 #include "const.h"
 #include "cwtype.h"
+#include "cwgrphc.h"
 #include "common.h"
 #include "cscrn.h"
 #include "kbd.h"
@@ -203,8 +204,8 @@ int getname( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, 
 		fnmerge( textst2, drv, dir, name, ext );
 		if ( strcmp( textst, textst2 ) != 0 ) {
 			errorsound( );
-			blockmsg( 10 );
-			dispstrhgc( "ชื่อแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ", 27, 10, REVERSEATTR );
+			blockmsg( 5 );
+			dispstrhgc( "ชื่อแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ", ( 14 + center_factor ) + 13, 5, REVERSEATTR );
 			while ( ebioskey( 0 ) != ESCKEY );
 			return( ESCKEY );
 		}

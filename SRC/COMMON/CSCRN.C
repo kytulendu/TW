@@ -150,23 +150,23 @@ void framebox( unsigned int p_xStart, unsigned int p_yStart, unsigned int p_xEnd
 }
 
 void blockmsg( int p_y ) {
-	framebox( 13 , p_y - 1, ( 13 + 61 ) - shrink_factor, p_y + 1, REVERSEATTR );
+	framebox( 11 , p_y - 1, ( 11 + 60 ) + shrink_factor, p_y + 1, REVERSEATTR );
 }
 
 void showerrno( void ) {
 	errorsound( );
-	blockmsg( 10 );
+	blockmsg( 5 );
 	switch ( errno ) {
-	case ENOENT:  dispstrhgc( "หาแฟ้มข้อมูลไม่พบ ! กดปุ่มใดๆเพื่อทำงานต่อ..."
-		, 21, 10, REVERSEATTR );
+	case ENOENT:
+		dispstrhgc( "หาแฟ้มข้อมูลไม่พบ ! กดปุ่มใดๆเพื่อทำงานต่อ...", ( 14 + center_factor ) + 8, 5, REVERSEATTR );
 		break;
-	case ENOMEM:  dispstrhgc( "หน่วยความจำไม่พอ ! กดปุ่มใดๆเพื่อทำงานต่อ..."
-		, 23, 10, REVERSEATTR );
+	case ENOMEM:
+		dispstrhgc( "หน่วยความจำไม่พอ ! กดปุ่มใดๆเพื่อทำงานต่อ...", ( 14 + center_factor ) + 8, 6, REVERSEATTR );
 		break;
-	default:  framebox( 13, 9, 66, 12, REVERSEATTR );
-		dispstrhgc( "เกิดความผิดพลาดภายในระบบ !"
-			, 23, 10, REVERSEATTR );
-		dispstrhgc( sys_errlist[errno], 23, 11, REVERSEATTR );
+	default:
+		framebox( 13 + center_factor, 4, ( 13 + center_factor ) + 54, 7, REVERSEATTR );
+		dispstrhgc( "เกิดความผิดพลาดภายในระบบ !", ( 14 + center_factor ) + 15, 5, REVERSEATTR );
+		dispstrhgc( sys_errlist[errno], ( 14 + center_factor ) + 15, 6, REVERSEATTR );
 	}
 	ebioskey( 0 );
 }
@@ -177,8 +177,8 @@ char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int  p_yEnd ) {
 	if ( scrnindex == NULL ) {
 		savepic( );
 		errorsound( );
-		blockmsg( 10 );
-		dispstrhgc( "หน่วยความจำไม่พอ ! กดปุ่มใดๆเพื่อทำงานต่อ...", 23, 10, REVERSEATTR );
+		blockmsg( 5 );
+		dispstrhgc( "หน่วยความจำไม่พอ ! กดปุ่มใดๆเพื่อทำงานต่อ...", ( 14 + center_factor ) + 8, 6, REVERSEATTR );
 		ebioskey( 0 );
 		return( NULL );
 	}

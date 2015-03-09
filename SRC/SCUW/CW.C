@@ -71,8 +71,8 @@ void setupnode( void ) {
 
 void destroynode( void ) {
 	struct line_node *currentline, *templine;
-	blockmsg( 10 );
-	dispstrhgc( "กำลังทำการยกเลิกแฟ้มข้อมูลเดิมอยู่ กรุณารอสักครู่...", 26 - center_factor, 10, REVERSEATTR );
+	blockmsg( 5 );
+	dispstrhgc( "กำลังทำการยกเลิกแฟ้มข้อมูลเดิมอยู่ กรุณารอสักครู่...", 26 + center_factor, 5, REVERSEATTR );
 	currentline = sentinel->next;
 	while ( currentline != sentinel ) {
 		templine = currentline;
@@ -98,42 +98,42 @@ void splashscreen( void ) {
 	extern char prog_date[], prog_time[];
 #ifdef EDA_VERSION
 
-	framebox( 21 - center_factor, 5, ( 21 - center_factor ) + 45, 11, REVERSEATTR );
-	dispstrhgc( "CU  WRITER", 35 - center_factor, 6, REVERSEATTR );
-	dispstrhgc( "Version 1.2", 38 - center_factor, 7, REVERSEATTR );
-	dispstrhgc( "EDA version", 38 - center_factor, 8, REVERSEATTR );
-	dispstrhgc( "อภินันทนาการจาก จุฬาลงกรณ์มหาวิทยาลัย", 28 - center_factor, 9, REVERSEATTR );
-	dispstrhgc( "มอบแด่ กระทรวงต่างประเทศ", 33 - center_factor, 10, REVERSEATTR );
+	framebox( 21 + center_factor, 5, ( 21 + center_factor ) + 45, 11, REVERSEATTR );
+	dispstrhgc( "CU  WRITER", 35 + center_factor, 6, REVERSEATTR );
+	dispstrhgc( "Version 1.2", 38 + center_factor, 7, REVERSEATTR );
+	dispstrhgc( "EDA version", 38 + center_factor, 8, REVERSEATTR );
+	dispstrhgc( "อภินันทนาการจาก จุฬาลงกรณ์มหาวิทยาลัย", 28 + center_factor, 9, REVERSEATTR );
+	dispstrhgc( "มอบแด่ กระทรวงต่างประเทศ", 33 + center_factor, 10, REVERSEATTR );
 
 #else
 #ifdef CW_VERSION
 
-	framebox( 21 - center_factor, 5, ( 21 - center_factor ) + 45, 13, REVERSEATTR );
+	framebox( 21 + center_factor, 5, ( 21 + center_factor ) + 45, 13, REVERSEATTR );
 	/*
-	framebox( 21 - center_factor, 5, ( 21 - center_factor ) + 45, 14, REVERSEATTR );
+	framebox( 21 + center_factor, 5, ( 21 + center_factor ) + 45, 14, REVERSEATTR );
 	*/
-	dispstrhgc( "CU  WRITER", 34 - center_factor, 6, REVERSEATTR );
-	dispstrhgc( "Version 1.41", 37 - center_factor, 7, REVERSEATTR );
-	dispprintf( 33 - center_factor, 8, REVERSEATTR, "%11s  %8s", prog_date, prog_time );
-	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", 30 - center_factor, 9, REVERSEATTR );
-	dispstrhgc( "พัฒนาโดย สถาบันบริการคอมพิวเตอร์ ร่วมกับ", 27 - center_factor, 10, REVERSEATTR );
-	dispstrhgc( "ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์", 25 - center_factor, 11, REVERSEATTR );
+	dispstrhgc( "CU  WRITER", 34 + center_factor, 6, REVERSEATTR );
+	dispstrhgc( "Version 1.41", 37 + center_factor, 7, REVERSEATTR );
+	dispprintf( 33 + center_factor, 8, REVERSEATTR, "%11s  %8s", prog_date, prog_time );
+	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", 30 + center_factor, 9, REVERSEATTR );
+	dispstrhgc( "พัฒนาโดย สถาบันบริการคอมพิวเตอร์ ร่วมกับ", 27 + center_factor, 10, REVERSEATTR );
+	dispstrhgc( "ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์", 25 + center_factor, 11, REVERSEATTR );
 	/*
-	dispstrhgc("และ ชมรมคอมพิวเตอร์ อบจ.", 33 - center_factor, 12, REVERSEATTR );
-	dispstrhgc("จุฬาลงกรณ์มหาวิทยาลัย", 33 - center_factor, 13, REVERSEATTR );
+	dispstrhgc("และ ชมรมคอมพิวเตอร์ อบจ.", 33 + center_factor, 12, REVERSEATTR );
+	dispstrhgc("จุฬาลงกรณ์มหาวิทยาลัย", 33 + center_factor, 13, REVERSEATTR );
 	*/
-	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 35 - center_factor, 12, REVERSEATTR );
+	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 35 + center_factor, 12, REVERSEATTR );
 
 #else
 
-	framebox( 21 - center_factor, 5, ( 21 - center_factor ) + 45, 14, REVERSEATTR );
-	dispstrhgc( "THAI WRITE", ( 24 - center_factor ) + 11, 6, REVERSEATTR );
-	dispstrhgc( "Version 1.0", ( 24 - center_factor ) + 14, 7, REVERSEATTR );
-	dispprintf( ( 24 - center_factor ) + 9, 8, REVERSEATTR, "%11s   %8s", prog_date, prog_time );
-	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 24 - center_factor ) + 7, 9, REVERSEATTR );
-	dispstrhgc( "Khral Steelforge", ( 24 - center_factor ) + 12, 10, REVERSEATTR );
-	dispstrhgc( "The Forge Warband, Iron Legion", ( 24 - center_factor ) + 5, 11, REVERSEATTR );
-	dispstrhgc( "พัฒนาจาก เวิร์ดจุฬา โดย มหาวิทยาลัยจุฬาลงกรณ์", ( 24 - center_factor ) + 1, 13, REVERSEATTR );
+	framebox( 17 + center_factor, 5, ( 17 + center_factor ) + 46, 14, REVERSEATTR );
+	dispstrhgc( "THAI WRITE", ( 21 + center_factor ) + 11, 6, REVERSEATTR );
+	dispstrhgc( "Version 1.0", ( 21 + center_factor ) + 14, 7, REVERSEATTR );
+	dispprintf( ( 21 + center_factor ) + 9, 8, REVERSEATTR, "%11s   %8s", prog_date, prog_time );
+	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 21 + center_factor ) + 7, 9, REVERSEATTR );
+	dispstrhgc( "Khral Steelforge", ( 21 + center_factor ) + 12, 10, REVERSEATTR );
+	dispstrhgc( "The Forge Warband, Iron Legion", ( 21 + center_factor ) + 5, 11, REVERSEATTR );
+	dispstrhgc( "พัฒนาจาก เวิร์ดจุฬา โดย มหาวิทยาลัยจุฬาลงกรณ์", ( 21 + center_factor ) + 1, 13, REVERSEATTR );
 
 #endif
 #endif
@@ -627,8 +627,8 @@ int main( int argc, char *argv[] ) {
 	} while ( !quitprog );
 
 	if ( changeflag ) {
-		blockmsg( 10 );
-		dispstrhgc( "ยังไม่ได้จัดเก็บแฟ้มข้อมูล ต้องการจัดเก็บหรือไม่ (Y/N)?", 24 - center_factor, 10, REVERSEATTR );
+		blockmsg( 5 );
+		dispstrhgc( "ยังไม่ได้จัดเก็บแฟ้มข้อมูล ต้องการจัดเก็บหรือไม่ (Y/N)?", ( 16 + center_factor ) + 7, 5, REVERSEATTR );
 		keymain = 0;
 		while ( ( keymain != 'n' ) && ( keymain != 'N' )
 			&& ( keymain != 'y' ) && ( keymain != 'Y' ) ) {

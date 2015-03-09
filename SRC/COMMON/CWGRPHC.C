@@ -76,9 +76,6 @@ void setgraph( ) {
 	/* MCGA here because current VGA use 640x480 monochrome graphic mode */
 	case MCGA:
 	case VGA:
-		shrink_factor = 10;
-		center_factor = 5;
-
 		prchar_ptr = eprchar;
 		prblank_ptr = eprblank;
 		setcurpos_ptr = esetcurpos;
@@ -96,6 +93,9 @@ void setgraph( ) {
 		break;
 
 	case HERCMONO:
+		shrink_factor = 10;
+		center_factor = 5;
+
 		prchar_ptr = hprchar;
 		prblank_ptr = hprblank;
 		setcurpos_ptr = hsetcurpos;
@@ -113,9 +113,6 @@ void setgraph( ) {
 		break;
 
 	case ATT400:
-		shrink_factor = 10;
-		center_factor = 5;
-
 		prchar_ptr = aprchar;
 		prblank_ptr = aprblank;
 		setcurpos_ptr = asetcurpos;

@@ -122,8 +122,9 @@ void page_down( void ) {
 			count--;
 			lineno++;
 		}
-		if ( count != 0 )     /* end of file ? */
+		if ( count != 0 ) {     /* end of file ? */
 			curpage = curline;
+		}
 		pagecomplete = NO;
 		loadtoline( curline->text );
 	}

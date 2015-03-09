@@ -575,9 +575,8 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 			case 0x1100:
 				if ( filename[0] != '\0' ) {
 					if ( changeflag ) {
-						blockmsg( 10 );
-						dispstrhgc( "แฟ้มข้อมูลเดิมยังไม่ได้จัดเก็บ ต้องการจัดเก็บหรือไม่ (Y/N)?"
-							, 22 - center_factor, 10, REVERSEATTR );
+						blockmsg( 5 );
+						dispstrhgc( "แฟ้มข้อมูลเดิมยังไม่ได้จัดเก็บ ต้องการจัดเก็บหรือไม่ (Y/N)?", ( 16 + center_factor ) + 5, 5, REVERSEATTR );
 						do {
 							key = ebioskey( 0 ) & 0xff;
 							if ( ( key == 'y' ) || ( key == 'Y' ) ) {
@@ -601,16 +600,15 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 					cls( );
 					placekey( RETKEY );
 				} else {
-					dispstrhgc( " ใส่ชื่อแฟ้มข้อมูลที่ต้องการสร้างใหม่ :                        ", 0, 5, NORMALATTR );
-					_rectangle( 0, 103, 424, 124 );
-					i = getname( filename, 29, 5, 22, NORMALATTR );
+					blockmsg( 5 );
+					dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการสร้างใหม่ :", ( 16 + center_factor ) + 5, 5, REVERSEATTR );
+					i = getname( filename, ( 16 + center_factor ) + 33, 5, 22, REVERSEATTR );
 					if ( ( i == YES ) && ( filename[0] != '\0' ) ) {
 						if ( ( fp = fopen( filename, "rt" ) ) != NULL ) {
 							fclose( fp );
 							errorsound( );
-							blockmsg( 10 );
-							dispstrhgc( "แฟ้มข้อมูลนี้มีอยู่แล้ว กดปุ่ม <ESC> เพื่อทำงานต่อ"
-								, 27 - center_factor, 10, REVERSEATTR );
+							blockmsg( 5 );
+							dispstrhgc( "แฟ้มข้อมูลนี้มีอยู่แล้ว กดปุ่ม <ESC> เพื่อทำงานต่อ", ( 16 + center_factor ) + 10, 5, REVERSEATTR );
 							while ( ebioskey( 0 ) != ESCKEY );
 							filename[0] = '\0';
 						} else {
@@ -632,9 +630,8 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 			case 0x1200:
 				if ( filename[0] != '\0' ) {
 					if ( changeflag ) {
-						blockmsg( 10 );
-						dispstrhgc( "แฟ้มข้อมูลเดิมยังไม่ได้จัดเก็บ ต้องการจัดเก็บหรือไม่ (Y/N)?"
-							, 22 - center_factor, 10, REVERSEATTR );
+						blockmsg( 5 );
+						dispstrhgc( "แฟ้มข้อมูลเดิมยังไม่ได้จัดเก็บ ต้องการจัดเก็บหรือไม่ (Y/N)?", ( 16 + center_factor ) + 5, 5, REVERSEATTR );
 						key = 0;
 						do {
 							key = ebioskey( 0 ) & 0xff;
@@ -660,7 +657,7 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 					placekey( RETKEY );
 				} else {
 					initvalue( x, y );
-					dispstrhgc( " ใส่ชื่อแฟ้มข้อมูลที่ต้องการแก้ไข :                        ", 0, 6, NORMALATTR );
+					dispstrhgc( " ใส่ชื่อแฟ้มข้อมูลที่ต้องการแก้ไข :", 0, 6, NORMALATTR );
 					_rectangle( 0, 123, 400, 144 );
 					setupnode( );
 					strcpy( filename, "*.*" );
@@ -862,14 +859,14 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 				break;
 			case 0x8400:
 				savepic( );
-				framebox( 20 - center_factor, 5, ( 20 - center_factor ) + 50, 16, REVERSEATTR );
-				dispstrhgc( "สร้างตารางโดยการกดปุ่ม Scroll Lock , แล้วกด Shift", ( 20 - center_factor ) + 3, 6, REVERSEATTR );
-				dispstrhgc( "ร่วมกับปุ่มต่างๆทางด้านขวาเพื่อสร้างตารางดังต่อไปนี้", ( 20 - center_factor ) + 3, 7, REVERSEATTR );
-				dispstrhgc( "minus(•) = •    plus(+) = ", ( 20 - center_factor ) + 3, 9, REVERSEATTR );
-				dispstrhgc( "Home(7)  =        8    = ‘      PgDn(9)  = ", ( 20 - center_factor ) + 3, 11, REVERSEATTR );
-				dispstrhgc( "   4     = “       5    = –         6     = ’", ( 20 - center_factor ) + 3, 13, REVERSEATTR );
-				dispstrhgc( "End(1)   =        2    =       PgDn(3)  = ", ( 20 - center_factor ) + 3, 15, REVERSEATTR );
-				dispstrhgc( "กด <ESC> เพื่อทำงานต่อ", ( 20 - center_factor ) + 3, 16, REVERSEATTR );
+				framebox( 20 + center_factor, 5, ( 20 + center_factor ) + 50, 16, REVERSEATTR );
+				dispstrhgc( "สร้างตารางโดยการกดปุ่ม Scroll Lock , แล้วกด Shift", ( 20 + center_factor ) + 3, 6, REVERSEATTR );
+				dispstrhgc( "ร่วมกับปุ่มต่างๆทางด้านขวาเพื่อสร้างตารางดังต่อไปนี้", ( 20 + center_factor ) + 3, 7, REVERSEATTR );
+				dispstrhgc( "minus(•) = •    plus(+) = ", ( 20 + center_factor ) + 3, 9, REVERSEATTR );
+				dispstrhgc( "Home(7)  =        8    = ‘      PgDn(9)  = ", ( 20 + center_factor ) + 3, 11, REVERSEATTR );
+				dispstrhgc( "   4     = “       5    = –         6     = ’", ( 20 + center_factor ) + 3, 13, REVERSEATTR );
+				dispstrhgc( "End(1)   =        2    =       PgDn(3)  = ", ( 20 + center_factor ) + 3, 15, REVERSEATTR );
+				dispstrhgc( "กด <ESC> เพื่อทำงานต่อ", ( 20 + center_factor ) + 3, 16, REVERSEATTR );
 				while ( ebioskey( 0 ) != ESCKEY );
 				retpic( );
 				resscrn( scrnndx,
@@ -879,12 +876,11 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 					ylev1[lev1 - 1] + nolev1[lev1 - 1] );
 				break;
 			case 0x8700:
-				scrnndx2 = savescrn( 16 - center_factor, 5, 51 - center_factor, 7 );
-				framebox( 16 - center_factor, 5, 51 - center_factor, 7, 0 );
-				dispprintf( 18 - center_factor, 6, NORMALATTR,
-					"หน่วยความจำเหลืออยู่ %ld ตัวอักษร", farcoreleft( ) );
+				scrnndx2 = savescrn( 16 + center_factor, 5, 51 + center_factor, 7 );
+				framebox( 16 + center_factor, 5, 51 + center_factor, 7, 0 );
+				dispprintf( 18 + center_factor, 6, NORMALATTR, "หน่วยความจำเหลืออยู่ %ld ตัวอักษร", farcoreleft( ) );
 				bioskey( 0 );
-				resscrn( scrnndx2, 16 - center_factor, 5, 51 - center_factor, 7 );
+				resscrn( scrnndx2, 16 + center_factor, 5, 51 + center_factor, 7 );
 				resscrn( scrnndx,
 					xlev1[lev1 - 1] - 1,
 					ylev1[lev1 - 1] - 1,
@@ -931,10 +927,10 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 					savepic( );
 					blockmsg( 7 );
 					if ( *curmenu == 0x9200 ) {
-						dispstrhgc( "กำลังอ่านตัวเลือก รอสักครู่...", 35 - center_factor, 7, REVERSEATTR );
+						dispstrhgc( "กำลังอ่านตัวเลือก รอสักครู่...", 35 + center_factor, 7, REVERSEATTR );
 						readoption( smode );
 					} else {
-						dispstrhgc( "กำลังเก็บตัวเลือก รอสักครู่...", 35 - center_factor, 7, REVERSEATTR );
+						dispstrhgc( "กำลังเก็บตัวเลือก รอสักครู่...", 35 + center_factor, 7, REVERSEATTR );
 						saveoption( smode );
 					}
 					retpic( );

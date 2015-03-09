@@ -14,7 +14,7 @@
 
 #include "cwtype.h"
 #include "cscrn.h"
-#include "cwtype.h"
+#include "cwgrphc.h"
 #include "ekbd.h"
 #include "kbdcode.h"
 #include "sound.h"
@@ -61,8 +61,8 @@ int createdir( char *mask ) {
 		tempdir->next = ( struct dirnode * ) malloc( sizeof( struct dirnode ) );
 		if ( tempdir->next == NULL ) {
 			errorsound( );
-			blockmsg( 10 );
-			dispstrhgc( "หน่วยความจำไม่พอ ! กด <ESC> เพื่อทำงานต่อ", 22, 10, 2 );
+			blockmsg( 5 );
+			dispstrhgc( "หน่วยความจำไม่พอ ! กด <ESC> เพื่อทำงานต่อ", ( 14 + center_factor ) + 8, 5, 2 );
 			while ( ebioskey( 0 ) != ESCKEY );
 			freedir( );
 			return( NO );

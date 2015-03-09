@@ -98,21 +98,21 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 	switch ( key ) {
 	case 'l' - 'a' + 1:
 		itoa( leftmar, st, 10 );
-		framebox( 25 - center_factor, 4, 25 - center_factor + 39, 6, REVERSEATTR );
-		dispstrhgc( "ต้องการตั้งกั้นซ้ายที่คอลัมน์ที่เท่าไหร่ ?", 25 - center_factor + 4, 5, REVERSEATTR );
-		if ( getstring( st, 58 - center_factor, 5, 3, REVERSEATTR, NUMBER ) ) {
+		blockmsg( 5 );
+		dispstrhgc( "ต้องการตั้งกั้นซ้ายที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
+		if ( getstring( st, ( 14 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
 			j = atoi( st );
 			if ( ( j < rightmar ) && ( j > 0 ) ) {
 				leftmar = j;
 			} else {                                   /* Invalid Left Margin */
 				if ( j < 1 ) {
-					strcpy( invmsg, "กั้นซ้ายน้อยกว่า 1 !" );
+					strcpy( invmsg, "กั้นซ้ายน้อยกว่า 1 !   " );
 				} else {
 					strcpy( invmsg, "กั้นซ้ายมากกว่ากั้นขวา !" );
 				}
-				strcat( invmsg, " กดปุ่มใดๆเพื่อทำงานต่อ ..." );
-				blockmsg( 10 );
-				dispstrhgc( invmsg, 25 - center_factor, 10, REVERSEATTR );
+				strcat( invmsg, " กดปุ่มใดๆ เพื่อทำงานต่อ ..." );
+				blockmsg( 5 );
+				dispstrhgc( invmsg, ( 14 + center_factor ) + 6, 5, REVERSEATTR );
 				errorsound( );
 				ebioskey( 0 );
 			}
@@ -120,21 +120,21 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		break;
 	case 'r' - 'a' + 1:
 		itoa( rightmar, st, 10 );
-		framebox( 25 - center_factor, 4, 25 - center_factor + 39, 6, REVERSEATTR );
-		dispstrhgc( "ต้องการตั้งกั้นขวาที่คอลัมน์ที่เท่าไหร่ ?", 25 - center_factor + 4, 5, REVERSEATTR );
-		if ( getstring( st, 58 - center_factor, 5, 3, REVERSEATTR, NUMBER ) ) {
+		blockmsg( 5 );
+		dispstrhgc( "ต้องการตั้งกั้นขวาที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
+		if ( getstring( st, ( 14 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
 			j = atoi( st );
 			if ( ( j > leftmar ) && ( j <= MAXRMAR ) ) {
 				rightmar = j;
 			} else {            			 /* Invalid Right Margin */
 				if ( j <= leftmar ) {
-					strcpy( invmsg, "กั้นขวาน้อยกว่ากั้นซ้าย !" );
+					strcpy( invmsg, "กั้นขวาน้อยกว่ากั้นซ้าย !  " );
 				} else {
 					sprintf( invmsg, "กั้นขวาสูงสุดไม่เกิน %d !", MAXRMAR );
 				}
-				strcat( invmsg, " กดปุ่มใดๆเพื่อทำงานต่อ ..." );
-				blockmsg( 10 );
-				dispstrhgc( invmsg, 25 - center_factor, 10, REVERSEATTR );
+				strcat( invmsg, " กดปุ่มใดๆ เพื่อทำงานต่อ ..." );
+				blockmsg( 5 );
+				dispstrhgc( invmsg, ( 14 + center_factor ) + 5, 5, REVERSEATTR );
 				errorsound( );
 				ebioskey( 0 );
 			}
@@ -142,9 +142,9 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		break;
 	case 'i' - 'a' + 1:
 		itoa( x + 1, st, 10 );
-		framebox( 25 - center_factor, 4, 25 - center_factor + 39, 6, REVERSEATTR );
-		dispstrhgc( "ต้องการตั้ง TAB ที่คอลัมน์ที่เท่าไหร่ ?", 25 - center_factor + 4, 5, REVERSEATTR );
-		if ( getstring( st, 58 - center_factor, 5, 3, REVERSEATTR, NUMBER ) ) {
+		blockmsg( 5 );
+		dispstrhgc( "ต้องการตั้ง TAB ที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
+		if ( getstring( st, ( 16 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
 			j = atoi( st );
 			if ( ( j <= MAXCOL ) && ( j > 0 ) ) {
 				tab[j - 1] = YES;
@@ -153,9 +153,9 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		break;
 	case 'n' - 'a' + 1:
 		strcpy( st, "ALL" );
-		framebox( 25 - center_factor, 4, 25 - center_factor + 39, 6, REVERSEATTR );
-		dispstrhgc( "ต้องการลบ TAB ที่คอลัมน์ที่เท่าไหร่ ?", 25 - center_factor + 4, 5, REVERSEATTR );
-		if ( getstring( st, 58 - center_factor, 5, 3, REVERSEATTR, NUMBER ) ) {
+		blockmsg( 5 );
+		dispstrhgc( "ต้องการลบ TAB ที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
+		if ( getstring( st, ( 16 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
 			if ( strcmp( st, "ALL" ) == 0 ) {
 				for ( j = 0; j < MAXCOL; ++j ) {
 					tab[j] = NO;
@@ -170,9 +170,9 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		break;
 	case 'p' - 'a' + 1:
 		itoa( lineperpage, st, 10 );
-		framebox( 25 - center_factor, 4, 25 - center_factor + 41, 6, REVERSEATTR );
-		dispstrhgc( "ต้องการตั้งจำนวนบรรทัดต่อหน้าเท่าไหร่ ?", 25 - center_factor + 4, 5, REVERSEATTR );
-		if ( getstring( st, 61 - center_factor, 5, 3, REVERSEATTR, NUMBER ) ) {
+		blockmsg( 5 );
+		dispstrhgc( "ต้องการตั้งจำนวนบรรทัดต่อหน้าเท่าไหร่ ?", ( 14 + center_factor ) + 11, 5, REVERSEATTR );
+		if ( getstring( st, ( 16 + center_factor ) + 43, 5, 3, REVERSEATTR, NUMBER ) ) {
 			if ( atoi( st ) > 0 ) {
 				lineperpage = atoi( st );
 				writepageline( );

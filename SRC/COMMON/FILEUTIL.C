@@ -77,11 +77,11 @@ int handler( int errval, int ax, int bp, int si ) {
 
 	errorsound( );
 	if ( ax >= 0 ) {
-		scrn = savescrn( 18 - center_factor, 9, 71 - center_factor, 11 );
+		scrn = savescrn( 18 + center_factor, 9, 71 + center_factor, 11 );
 		blockmsg( 10 );
-		dispprintf( 25 - center_factor, 10, 2, "Disk error on drive %c ! กดปุ่มใดๆเพื่อทำงานต่อ", 'A' + ( ax & 0x00FF ) );
+		dispprintf( 25 + center_factor, 10, 2, "Disk error on drive %c ! กดปุ่มใดๆเพื่อทำงานต่อ", 'A' + ( ax & 0x00FF ) );
 		ebioskey( 0 );
-		resscrn( scrn, 18 - center_factor, 9, 71 - center_factor, 11 );
+		resscrn( scrn, 18 + center_factor, 9, 71 + center_factor, 11 );
 	}
 	hardretn( -1 );
 }

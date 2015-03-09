@@ -78,9 +78,9 @@ void paintlinegraph( char *graph, unsigned int y ) {
 
 void notavailable( void ) {
 	savepic( );
-	blockmsg( 10 );
-	dispstrhgc( "คำสั่งนี้อยู่ระหว่างการพัฒนา ! กดปุ่มใดๆเพื่อทำงานต่อ"
-		, 25 - center_factor, 10, REVERSEATTR );
+	blockmsg( 5 );
+	dispstrhgc( "คำสั่งนี้อยู่ระหว่างการพัฒนา ! กดปุ่มใดๆ เพื่อทำงานต่อ", ( 14 + center_factor ) + 4, 5, REVERSEATTR );
+
 	ebioskey( 0 );
 	retpic( );
 }
@@ -93,14 +93,11 @@ void insertgraph( ) {
 
 	storeline( curline );
 
-	framebox( 18 - center_factor, 4, ( 18 - center_factor ) + 53, 6, REVERSEATTR );
-	dispstrhgc( "ใส่ชื่อแฟ้มรูปภาพที่ต้องการอ่าน :", 21 - center_factor, 5, REVERSEATTR );
+	blockmsg( 5 );
+	dispstrhgc( "ใส่ชื่อแฟ้มรูปภาพที่ต้องการอ่าน :", ( 14 + center_factor ) + 3, 6, REVERSEATTR );
 
-	graphname[0] = '*';
-	graphname[1] = '.';
-	graphname[2] = '*';
-	graphname[3] = '\0';
-	i = getname( graphname, 41, 5, 22, REVERSEATTR );
+	strcpy( graphname, "*.*" );
+	i = getname( graphname,  ( 14 + center_factor ) + 28, 5, 22, REVERSEATTR );
 	if ( ( i == YES ) && ( graphname[0] != '\0' ) ) {
 		if ( havewild( graphname ) ) {
 			selectfile( graphname );

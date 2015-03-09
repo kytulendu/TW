@@ -258,10 +258,8 @@ void saveoption( search_file_mode p_mode ) {
 
 void dispoption( int i ) {
 	dispstrhgc( option_setup[i].option_name,
-		65 - center_factor - thaistrlen( option_setup[i].option_name ),
-		i + 6, NORMALATTR );
-	dispprintf( 65 - center_factor, i + 6, NORMALATTR, " :%d",
-		*option_setup[i].p_option_value );
+		65 - thaistrlen( option_setup[i].option_name ), i + 6, NORMALATTR );
+	dispprintf( 65, i + 6, NORMALATTR, " :%d", *option_setup[i].p_option_value );
 }
 
 void setoption( void ) {
@@ -274,14 +272,14 @@ void setoption( void ) {
 	if ( wordwrap == 0 ) { wordwrap = 2; }
 	if ( create_bak == 0 ) { create_bak = 2; }
 	if ( cu_song == 0 ) { cu_song = 2; }
-	framebox( 14 - center_factor, 5, 14 - center_factor + 67, 5 + 1 + NELEM_OPTION, NORMALATTR );
+	framebox( 14, 5, 14 + 60, 5 + 1 + NELEM_OPTION, NORMALATTR );
 	for ( i = 0; i < NELEM_OPTION; i++ ) {
 		dispoption( i );
 	}
 	i = 0;
 	do {
 		itoa( *option_setup[i].p_option_value, st, 10 );
-		c = getstring( st, 65 + 2 - center_factor, 6 + i, option_setup[i].maxlen,
+		c = getstring( st, 65 + 2, 6 + i, option_setup[i].maxlen,
 			NORMALATTR, option_setup[i].stype );
 		*option_setup[i].p_option_value = atoi( st );
 
@@ -374,7 +372,7 @@ void print_file( void ) {
 		dispprintf( 4 + 2, 7, NORMALATTR,
 			"ดังนั้นผลการพิมพ์จะไม่ตรงกับข้อมูลในหน่วยความจำ" );
 		dispprintf( 4 + ( 2 + 37 + thaistrlen( filename ) + 2 - 17 ) / 2, 9, NORMALATTR,
-			"กดปุ่มใดๆเพื่อทำงานต่อ" );
+			"กดปุ่มใด ๆ เพื่อทำงานต่อ" );
 		ebioskey( 0 );
 	}
 	settext( );

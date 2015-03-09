@@ -175,9 +175,9 @@ void gotopage( void ) {
 	char st[4];
 	int linetogo;
 	st[0] = '\0';
-	framebox( 30 - center_factor, 4, 30 - center_factor + 29, 6, REVERSEATTR );
-	dispstrhgc( "ต้องการไปที่หน้าที่เท่าไร ? ", 30 - center_factor + 3, 5, REVERSEATTR );
-	if ( getstring( st, 54 - center_factor, 5, 3, REVERSEATTR, NUMBER ) ) {
+	blockmsg( 5 );
+	dispstrhgc( "ต้องการไปที่หน้าที่เท่าไร ?", ( 14 + center_factor ) + 17, 5, REVERSEATTR );
+	if ( getstring( st, ( 16 + center_factor ) + 37, 5, 3, REVERSEATTR, NUMBER ) ) {
 		linetogo = ( atoi( st ) * lineperpage ) - lineperpage + 1;
 		if ( linetogo >= 1 ) {
 			goline( linetogo );
@@ -190,9 +190,9 @@ void gotoline( void ) {
 	char st[5];
 	register int linetogo;
 	st[0] = '\0';
-	framebox( 22 - center_factor, 4, 22 - center_factor + 49, 6, REVERSEATTR );
-	dispstrhgc( " – ต้องการไปที่บรรทัดที่เท่าไร ? (นับจากต้นแฟ้มข้อมูล)", 22 - center_factor, 5, REVERSEATTR );
-	if ( getstring( st, 65 - center_factor, 5, 4, REVERSEATTR, NUMBER ) ) {
+	blockmsg( 5 );
+	dispstrhgc( "ต้องการไปที่บรรทัดที่เท่าไร ? (นับจากต้นแฟ้มข้อมูล)", ( 14 + center_factor ) + 7, 6, REVERSEATTR );
+	if ( getstring( st, ( 16 + center_factor ) + 47, 5, 3, REVERSEATTR, NUMBER ) ) {
 		linetogo = atoi( st );
 		if ( linetogo >= 1 ) {
 			goline( linetogo );

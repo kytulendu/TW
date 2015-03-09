@@ -102,15 +102,15 @@ void writeattr( void ) {
 }
 
 void writefilename( void ) {
-	dispstrhgc( "แฟ้มข้อมูล :                     ", 58 - shrink_factor, 0, NORMALATTR );
+	dispstrhgc( "แฟ้มข้อมูล :                     ", 48, 0, NORMALATTR );
 	if ( filename[0] != '\0' ) {
-		dispstrhgc( filename, 68 - shrink_factor, 0, BOLDATTR );
+		dispstrhgc( filename, 58, 0, BOLDATTR );
 	}
 }
 
 void writedriveno( void ) {
-	dispstrhgc( "ไดรฟ์  :", 50 - shrink_factor, 0, NORMALATTR );
-	prchar( 'A' + getdisk( ), BOLDATTR, 55 - shrink_factor, NORMALATTR );
+	dispstrhgc( "ไดรฟ์  :", 40, 0, NORMALATTR );
+	prchar( 'A' + getdisk( ), BOLDATTR, 45, NORMALATTR );
 }
 
 void writestatus( unsigned int x ) {
