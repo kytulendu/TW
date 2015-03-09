@@ -16,8 +16,13 @@
 ###Hardware support
 - EMS/XMS
 - Mouse support for select menu and select text
-- CGA 640x200 pixel monochrome (it may have too low vertical resolution)
-- IBM8514 640x480 256 colors
+- Colors graphic
+- CGA 640x200, pixel, monochrome (it may have too low vertical resolution)
+- Wyse 700, 1280x800 pixel, monochrome
+- IBM8514, 640x480 pixel, 256 colors
+- Plantronics ColorPlus, 640x200 pixel, 4 colors
+- SVGA
+- VESA
 
 ###Printer
 - Support generic HP PCL5e, EPSON ESC/P, ESC/P2 printer
