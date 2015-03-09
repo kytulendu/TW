@@ -1,9 +1,11 @@
-Thai-Write
+Thai Write
 ==========
+
+![Thai Write](http://i.imgur.com/FdUmE8p.png)
 
 Descriptions
 ------------
-Thai-Write is a word processor that run from Free-DOS,
+Thai Write is a word processor that run from Free-DOS,
 M$-DOS, DR-DOS, Novell-DOS or any DOS compatible OSs.
 Base on [CU-Writer](http://th.wikipedia.org/wiki/%E0%B8%8B%E0%B8%B5%E0%B8%A2%E0%B8%B9%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C) 1.41 which is a clone of WordStar,
 by Chulalongkorn University.
@@ -97,7 +99,7 @@ Bresenham's line algorithm by [Alois Zingl](http://members.chello.at/~easyfilter
 
 License
 -------
-    ThaiWriter, A DOS word processor.
+    Thai Write, A DOS word processor.
     Copyright (C) 2014 Khral Steelforge <https://github.com/kytulendu>.
 
     CU-Writer

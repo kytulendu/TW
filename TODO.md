@@ -6,6 +6,7 @@ Fix/Improvement
 - Bugs fix
 - Remove unused stuff
 - Fix display super-script and sub-script will cut out top or bottom of character
+- Fix when line too long, type in that line, the edit window will display at line 1 instread of line 5
 
 Future
 ------
@@ -58,6 +59,7 @@ Feature
 - <Alt><F2> - <Alt><F8> for change font or insert/remove font style
 - <Alt><F1> system status, remaining memory, etc.
 - Other feature of Word RAMA and later version of CW and CWW
+- Better about dialog (may use picture)
 
 Define list
 ===========
@@ -75,4 +77,3 @@ LJ2DESK (.djp)
 
 info of graphic cards
 http://www.seasip.demon.co.uk/index.html
-
