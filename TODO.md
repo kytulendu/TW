@@ -1,26 +1,25 @@
-TODO
-====
+#TODO
 
-Fix/Improvement
----------------
+##Version 1.0
+
+###Fix/Improvement
 - Bugs fix
 - Remove unused stuff
 - Fix display super-script and sub-script will cut out top or bottom of character
 - Fix when line too long, type in that line, the edit window will display at line 1 instread of line 5
 
-Future
-------
+## Version 2.0
 - OpenWatcom port
 
-Hardware support
-----------------
+## Version 2.1
+
+###Hardware support
 - EMS/XMS
 - Mouse support for select menu and select text
 - CGA 640x200 pixel monochrome (it may have too low vertical resolution)
 - IBM8514 640x480 256 colors
 
-Printer
--------
+###Printer
 - Support generic HP PCL5e, EPSON ESC/P, ESC/P2 printer
 - HP LASER Compatible
 - HP DeskJet 600/660C
@@ -28,8 +27,7 @@ Printer
 - CANON BJ-10
 - Electric typewriter OLYMPIA
 
-Feature
--------
+###Feature
 - Re-made menu to like WS7 or modern software
 - Thai-English menu
 - New Thai word separator algorithm, by dictionary or by rule, CTTEX, load dictionary to EMS/XMS
@@ -60,20 +58,3 @@ Feature
 - <Alt><F1> system status, remaining memory, etc.
 - Other feature of Word RAMA and later version of CW and CWW
 - Better about dialog (may use picture)
-
-Define list
-===========
-WANT_TO_USE_GRAPH
-EDA_VERSION
-CW_VERSION
-NOSOUND
-NOALIGN
-CUSTOM_FONT   must use with WANT_TO_USE_GRAPH
-
-Who is CUCC?
-
-PCL Soft Font (.sfp)
-LJ2DESK (.djp)
-
-info of graphic cards
-http://www.seasip.demon.co.uk/index.html
