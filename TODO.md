@@ -5,13 +5,14 @@
 ###Fix/Improvement
 - Bugs fix
 - Remove unused stuff
-- Fix display super-script and sub-script will cut out top or bottom of character
-- Fix when line too long, type in that line, the edit window will display at line 1 instread of line 5
 
 ## Version 2.0
 - OpenWatcom port
 
 ## Version 2.1
+
+###Fix/Improvement
+- Fix display super-script and sub-script will cut out top or bottom of character
 
 ###Hardware support
 - EMS/XMS
