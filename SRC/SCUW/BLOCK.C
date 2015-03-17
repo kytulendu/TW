@@ -322,7 +322,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 	static unsigned char text_str[MAXCOL * 5];
 	if ( ( fip = fopen( file_name, "rt" ) ) != NULL ) {
 		blockmsg( 5 );
-		dispstrhgc( "ชื่อแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ", ( 14 + center_factor ) + 8, 5, REVERSEATTR );
+		dispstrhgc( "กำลังอ่านข้อมูลจากแผ่นจานแม่เหล็กอยู่ กรุณารอสักครู่...", ( 14 + center_factor ) + 6, 5, REVERSEATTR );
 		space = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 
 		if ( space == NULL ) {
