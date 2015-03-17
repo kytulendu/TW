@@ -156,8 +156,15 @@ int optionnoask( void ) {
 
 char *searchline( char *textline, int startpos ) { /* startpos origin 0 */
 	int i;
-	static char buffer[MAXCOL * 5];
+	unsigned char *buffer;
 	char *point, *buffaddr, *textaddr;
+
+	buffer = ( unsigned char * ) malloc( MAXCOL * sizeof( unsigned char ) );
+	if ( buffer == NULL ) {
+		errorsound( );
+		return( NULL );							/* Not enough memory */
+	}
+
 	while ( ( startpos > 0 ) && ( *textline != '\0' ) ) {
 		if ( ( *textline < 32 ) && ( *textline != '\0' ) ) {
 			textline++;
@@ -180,8 +187,10 @@ char *searchline( char *textline, int startpos ) { /* startpos origin 0 */
 		while ( buffaddr++ != point ) {
 			textaddr++;
 		}
+		free( buffer );
 		return( textaddr );
 	} else {
+		free( buffer );
 		return( NULL );
 	}
 }

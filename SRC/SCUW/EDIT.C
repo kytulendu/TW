@@ -13,6 +13,7 @@
 #include "..\common\cwgrphc.h"
 #include "..\common\ekbd.h"
 #include "..\common\cscrn.h"
+#include "..\common\sound.h"
 
 #include "var.h"
 
@@ -429,12 +430,19 @@ void loadtoline( char *address ) {
 
 void storeline( struct line_node *curline ) {
 	unsigned int count, col;
-	static char oneline[MAXCOL * 5];
+	unsigned char *oneline;
 	char oldfont, fontcode[9];
-	char *keep_ptr;
+	unsigned char *keep_ptr;
 	count = 0;
 	col = 1;
 	oldfont = 0;
+
+	oneline = ( unsigned char * ) malloc( MAXCOL * sizeof( unsigned char ) );
+	if ( oneline == NULL ) {
+		errorsound( );
+		return;								/* Not enough memory */
+	}
+
 	while ( ( col <= MAXCOL ) && ( workline.middle[col] != '\0' ) ) {
 		if ( workline.attr[col] != oldfont ) {
 			if ( oldfont != 0 ) {
@@ -485,6 +493,8 @@ void storeline( struct line_node *curline ) {
 		dispstrhgc( "Internal error in storeline", 1, 1, REVERSEATTR );
 		getch( );
 	}
+
+	free( oneline );
 }
 
 void refreshline( unsigned int x, unsigned int y ) {

@@ -625,7 +625,13 @@ void writeblk( char *file_name, struct line_node *linebegin,
 	char name_bak[MAXPATH];
 
 	static char bakext[] = ".BAK";
-	static char text_str[MAXCOL * 5];
+	unsigned char *text_str;
+
+	text_str = ( unsigned char * ) malloc( MAXCOL * sizeof( unsigned char ) );
+	if ( text_str == NULL ) {
+		errorsound( );
+		return;									/* Not enough memory */
+	}
 
 	pagecomplete = NO;
 	storeline( curline );
@@ -634,6 +640,7 @@ void writeblk( char *file_name, struct line_node *linebegin,
 	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการจัดเก็บ :", ( 14 + center_factor ) + 3, 5, REVERSEATTR );
 	i = getname( file_name, ( 14 + center_factor ) + 29, 5, 22, REVERSEATTR );
 	if ( ( i != YES ) || ( file_name[0] == '\0' ) ) {
+		free( text_str );
 		return;
 	}
 
@@ -653,20 +660,24 @@ void writeblk( char *file_name, struct line_node *linebegin,
 				if ( chkspace( file_name ) ) {	/* Enough Space ? */
 					rename( file_name, name_bak );
 				} else {
+					free( text_str );
 					return;						/* File too large */
 				}
 			} else {							/* Ignore .BAK */
 				if ( chkspace( file_name ) ) {	/* Enough Space ? */
 					unlink( file_name );
 				} else {
+					free( text_str );
 					return;
 				}
 			}
 		} else {								/* Don't save edited file */
+			free( text_str );
 			return;
 		}
 	} else {									/* Save new File */
 		if ( !chkspace( file_name ) ) {			/* Not enough space */
+			free( text_str );
 			return;
 		}
 	}
@@ -735,12 +746,14 @@ void writeblk( char *file_name, struct line_node *linebegin,
 			putc( WRAPCODE, fip );
 		}
 		putc( 0x1a, fip );
+		free( text_str );
 		fclose( fip );
 	} else {
 		errorsound( );
 		blockmsg( 5 );
 		dispstrhgc( "จัดเก็บแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ", ( 14 + center_factor ) + 6, 7, REVERSEATTR );
 		while ( ebioskey( 0 ) != ESCKEY );
+		free( text_str );
 	}
 }
 
