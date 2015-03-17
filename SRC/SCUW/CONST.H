@@ -10,7 +10,7 @@
 #ifndef SCUW_CONST_H_INCLUDED
 #define SCUW_CONST_H_INCLUDED
 
-#define MAXCOL 266
+#define MAXCOL 1024
 #define MAXRMAR 256
 #define ERROR 1
 
