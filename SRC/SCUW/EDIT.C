@@ -66,7 +66,7 @@ unsigned int findlineno( struct line_node *line ) {
 	return( linenumber );
 }
 
-struct line_node *linepointer( unsigned linenum ) {
+struct line_node *linepointer( unsigned int linenum ) {
 	struct line_node *line;
 	line = sentinel->next;
 	while ( linenum-- > 1 ) {
@@ -75,7 +75,7 @@ struct line_node *linepointer( unsigned linenum ) {
 	return( line );
 }
 
-void displine( struct line_node *line, unsigned y, unsigned linenum ) {
+void displine( struct line_node *line, unsigned int y, unsigned int linenum ) {
 	register unsigned int x = 0;
 	int count = firstcol;
 	font_attr tempfont, curfont = 0;
@@ -150,7 +150,7 @@ void displine( struct line_node *line, unsigned y, unsigned linenum ) {
 #endif
 }
 
-void disppagebreak( unsigned y ) {
+void disppagebreak( unsigned int y ) {
 	register unsigned int i = 0, j;
 	y += wind.row;
 	j = wind.col + wind.length - 1;
@@ -392,7 +392,8 @@ void loadtoline( char *address ) {
 			togglefont( &curfont, *address );
 		} else {
 			switch ( whatlevel( *address ) ) {
-			case MIDDLE: index++;
+			case MIDDLE:
+				index++;
 				if ( ( oldfont & ENLARGEATTR ) == ENLARGEATTR ) {
 					workline.attr[index] = oldfont;
 					workline.middle[index] = workline.middle[index - 1];
@@ -402,11 +403,14 @@ void loadtoline( char *address ) {
 				workline.middle[index] = ( *address );
 				workline.attr[index] = curfont;
 				break;
-			case UPPER: workline.upper[index] = ( *address );
+			case UPPER:
+				workline.upper[index] = ( *address );
 				break;
-			case TOPEST: workline.topest[index] = ( *address );
+			case TOPEST:
+				workline.topest[index] = ( *address );
 				break;
-			case BELOW: workline.below[index] = ( *address );
+			case BELOW:
+				workline.below[index] = ( *address );
 				break;
 			}
 			oldfont = curfont;
@@ -483,7 +487,7 @@ void storeline( struct line_node *curline ) {
 	}
 }
 
-void refreshline( unsigned x, unsigned y ) {
+void refreshline( unsigned int x, unsigned int y ) {
 	register int i, len;
 	char attr;
 	len = wind.length - 2;

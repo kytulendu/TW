@@ -37,7 +37,7 @@
 
 #include "ins.h"
 
-void insertblank( register unsigned j, char code ) {
+void insertblank( register unsigned int j, char code ) {
 	register int i;
 	i = strlen( workline.middle );
 	while ( i >= j ) {
@@ -75,7 +75,7 @@ void insert_line( struct line_node *currentline, struct line_node *newline ) {
 	currentline->next = newline;
 }
 
-void shiftscrn( unsigned count, unsigned *x ) {
+void shiftscrn( unsigned int count, unsigned int *x ) {
 	storeline( curline );
 	while ( ( count != 0 ) && ( ( firstcol + wind.length ) <= MAXCOL ) ) {
 		firstcol++;
@@ -93,7 +93,7 @@ void linetoolong( void ) {
 	pagecomplete = NO;
 }
 
-void inscntrl( char cntrl, unsigned x, unsigned y ) {
+void inscntrl( char cntrl, unsigned int x, unsigned int y ) {
 	register unsigned int i = MAXCOL;
 	register unsigned int j = x + firstcol + 1;
 	while ( i >= j ) {
@@ -114,7 +114,7 @@ void inscntrl( char cntrl, unsigned x, unsigned y ) {
 	refreshline( 0, y );             /* to show new attribute of character  */
 }
 
-void printcntrl( register unsigned x, register unsigned y ) {
+void printcntrl( register unsigned int x, register unsigned int y ) {
 	register int key;
 
 	dispkey( CNTRL_P );
