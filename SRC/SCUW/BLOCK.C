@@ -319,14 +319,20 @@ struct line_node *rdfiletospace( char *file_name ) {
 	FILE *fip, *fopen( );
 	register int i;
 	struct line_node *space, *newline, *currentline, *freeline;
-	static unsigned char text_str[MAXCOL * 5];
+	unsigned char *text_str;
+
 	if ( ( fip = fopen( file_name, "rt" ) ) != NULL ) {
 		blockmsg( 5 );
 		dispstrhgc( "กำลังอ่านข้อมูลจากแผ่นจานแม่เหล็กอยู่ กรุณารอสักครู่...", ( 14 + center_factor ) + 6, 5, REVERSEATTR );
-		space = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 
+		text_str = ( unsigned char * ) malloc( MAXCOL * sizeof( unsigned char ) );
+		if ( text_str == NULL ) {
+			goto no_mem_avail;
+		}
+
+		space = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 		if ( space == NULL ) {
-			goto no_mem_avail; 
+			goto no_mem_avail;
 		}
 
 		space->next = space;
@@ -342,7 +348,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 		}
 
 		*( space->text ) = '\0';
-		if ( fgets( text_str, MAXCOL * 5, fip ) != NULL ) {
+		if ( fgets( text_str, MAXCOL, fip ) != NULL ) {
 			i = strlen( text_str );
 			if ( ( i > 0 ) && ( text_str[i - 1] == '\n' ) ) {
 				text_str[i - 1] = '\0';
@@ -379,7 +385,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 			}
 #endif
 			currentline = space;
-			while ( fgets( text_str, MAXCOL * 5, fip ) != NULL ) {
+			while ( fgets( text_str, MAXCOL, fip ) != NULL ) {
 				if ( currentline->text == NULL ) {
 					newline = currentline;
 				} else {
@@ -432,6 +438,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 			}
 		}
 		fclose( fip );
+		free( text_str );
 		return( space );
 	} else {
 		errorsound( );
@@ -473,6 +480,11 @@ no_mem_avail:
 #endif
 		free( space );
 	}
+
+	if ( text_str != NULL ) {
+		free( text_str );
+	}
+
 	return( NULL );
 }
 
