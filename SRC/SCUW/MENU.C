@@ -601,8 +601,8 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 					placekey( RETKEY );
 				} else {
 					blockmsg( 5 );
-					dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการสร้างใหม่ :", ( 16 + center_factor ) + 5, 5, REVERSEATTR );
-					i = getname( filename, ( 16 + center_factor ) + 33, 5, 22, REVERSEATTR );
+					dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการสร้างใหม่ :", ( 16 + center_factor ) + 3, 5, REVERSEATTR );
+					i = getname( filename, ( 16 + center_factor ) + 31, 5, 22, REVERSEATTR );
 					if ( ( i == YES ) && ( filename[0] != '\0' ) ) {
 						if ( ( fp = fopen( filename, "rt" ) ) != NULL ) {
 							fclose( fp );
