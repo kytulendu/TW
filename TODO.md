@@ -6,10 +6,14 @@
 - Bugs fix
 - Remove unused stuff
 
+##Version 1.1
+- Finished version
+
 ## Version 2.0
 - OpenWatcom port
+- Refactoring/re-architech
 
-## Version 2.1
+## Version 2.x
 
 ###Fix/Improvement
 - Fix display super-script and sub-script will cut out top or bottom of character
@@ -18,10 +22,8 @@
 - EMS/XMS
 - Mouse support for select menu and select text
 - Colors graphic
-- CGA 640x200, pixel, monochrome (it may have too low vertical resolution)
 - Wyse 700, 1280x800 pixel, monochrome
 - IBM8514, 640x480 pixel, 256 colors
-- Plantronics ColorPlus, 640x200 pixel, 4 colors
 - SVGA
 - VESA
 
