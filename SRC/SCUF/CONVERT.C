@@ -131,9 +131,9 @@ int save_font( ) {
 	return ( ( *save_func[loaded - 1] )( ) );
 }
 
-int cleanup_load_routine( );
+void cleanup_load_routine( );
 
-int cleanup_load_routine( ) {
+void cleanup_load_routine( ) {
 	pos_x = pos_y = 0;
 	clearworkarea( );
 	make_char_block_image( );
@@ -232,7 +232,7 @@ int load_24( ) {
 	return ~0;
 }
 
-int con_24_to_fed( char *oldfon, char *newfon ) {
+void con_24_to_fed( char *oldfon, char *newfon ) {
 	static int ch, i, bit;
 	char *newch = newfon + 31 * 3 * 24;
 	static char *new;
@@ -299,7 +299,7 @@ int save_24( ) {
 	return ~0;
 }
 
-int con_fed_to_24( char *buff, char *new ) {
+void con_fed_to_24( char *buff, char *new ) {
 	int ch, i, bit;
 	char *old, *oldch = buff + 31 * 3 * 24;
 
@@ -364,7 +364,7 @@ int save_prn( ) {
 	return ~0;
 }
 
-int fed_to_prn_ch( char *buff, char *res ) {
+void fed_to_prn_ch( char *buff, char *res ) {
 	int i, j;
 
 	for ( i = 0; i < 8; i++ ) {
@@ -383,7 +383,7 @@ int fed_to_prn_ch( char *buff, char *res ) {
 	}
 }
 
-int conv_fed_to_22x16( char *buff, char *result ) {
+void conv_fed_to_22x16( char *buff, char *result ) {
 	int i;
 
 	for ( i = 0; i <= 255; i++ ) {
@@ -421,7 +421,7 @@ int load_prn( ) {
 	return ~0;
 }
 
-int prn_to_fed_ch( char *buff, char *res ) {
+void prn_to_fed_ch( char *buff, char *res ) {
 	int i, j;
 
 	for ( j = 0; j < 8; j++ ) {
@@ -440,7 +440,7 @@ int prn_to_fed_ch( char *buff, char *res ) {
 	}
 }
 
-int conv_22x16_to_fed( char *buff, char *result ) {
+void conv_22x16_to_fed( char *buff, char *result ) {
 	int i;
 
 	for ( i = 0; i <= 255; i++ ) {
@@ -512,7 +512,7 @@ int load_sup_sub( ) {
 	return ~0;
 }
 
-int con_sup_to_fed_chr( char *oldch, char *newch ) {
+void con_sup_to_fed_chr( char *oldch, char *newch ) {
 	int i, j;
 	for ( i = 0; i < 18; i++ ) {
 		for ( j = 4; j < 15; j++ ) {
@@ -523,7 +523,7 @@ int con_sup_to_fed_chr( char *oldch, char *newch ) {
 	}
 }
 
-int con_sup_to_fed( char *oldfon, char *newfon ) {
+void con_sup_to_fed( char *oldfon, char *newfon ) {
 	int ch;
 	for ( ch = 32 - 32; ch < 256 - 32; ch++ ) {
 		con_sup_to_fed_chr( oldfon + ch * 18 * 2, newfon + ( 32 + ch ) * 3 * 12 );
@@ -554,7 +554,7 @@ int save_sup_sub( ) {
 	return ~0;
 }
 
-int con_fed_to_sup_chr( char *oldch, char *newch ) {
+void con_fed_to_sup_chr( char *oldch, char *newch ) {
 	int i, j;
 	for ( i = 0; i < 18; i++ ) {
 		for ( j = 4; j < 16; j++ ) {
@@ -565,7 +565,7 @@ int con_fed_to_sup_chr( char *oldch, char *newch ) {
 	}
 }
 
-int con_fed_to_sup( char *oldfon, char *newfon ) {
+void con_fed_to_sup( char *oldfon, char *newfon ) {
 	int ch;
 	for ( ch = 32 - 32; ch < 256 - 32; ch++ ) {
 		con_fed_to_sup_chr( oldfon + ( ch + 32 ) * 12 * 3, newfon + ch * 2 * 18 );

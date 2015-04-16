@@ -25,7 +25,7 @@
 #include "getstr.h"
 
 int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, char attr, strtype mode ) {
-	int inkey, key, oldlen, temp;
+	size_t inkey, key, oldlen, temp;
 	char keepchar;
 
 	keepchar = '\0';

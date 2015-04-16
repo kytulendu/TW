@@ -106,16 +106,16 @@ EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 
 /* ===================================================================== */
 
-/***/
+/** put a character with attribute in to x,y position */
 void prchar( unsigned char p_char, unsigned int p_attr, unsigned int x, unsigned int y );
 
-/***/
+/** put a blank character in to x,y position */
 void prblank( unsigned int x, unsigned int y );
 
-/***/
+/**  */
 void setcurpos( unsigned int x, unsigned int y, int p_thaimode );
 
-/** put a pixel in to x,y position*/
+/** put a pixel in to x,y position */
 void plot( unsigned int x, unsigned int y );
 
 /** set graphic mode */
