@@ -22,12 +22,11 @@
 #include "sound.h"
 
 boolean file_exist( char *filename ) {
-	int fd;
-
-	if ( ( fd = open( filename, O_RDONLY || O_BINARY ) ) == -1 ) {
+	FILE* fd = fopen( filename, "rb" );
+	if ( !fd ) {
 		return NO;
 	} else {
-		close( fd );
+		fclose( fd );
 		return YES;
 	}
 }
@@ -57,16 +56,16 @@ int havewild( char *filname ) {
 }
 
 void readscrfont( void *font_buffer, char *fontname, char *search_path ) {
-	register int handle;
+	FILE* fp = fopen( fontname, "rb" );
 	char fn[MAXPATH];
 
-	if ( ( handle = open( fontname, O_RDONLY || O_BINARY ) ) == -1 ) {
+	if ( !fp ) {
 		sprintf( fn, "%s\\%s", search_path, fontname );
-		handle = open( fn, O_RDONLY || O_BINARY );
+		fp = fopen( fn, "rb" );
 	}
-	if ( handle != -1 ) {
-		read( handle, font_buffer, 20 * 256 );
-		close( handle );
+	if ( fp ) {
+		fread( font_buffer, sizeof( font_buffer ), 20 * 256, fp );
+		fclose( fp );
 	} else {
 		fprintf( stderr, "FONT FILE (%s) NOT FOUND !\n", fontname );
 		exit( EXIT_FAILURE );
