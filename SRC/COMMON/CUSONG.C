@@ -4,6 +4,8 @@
 * ============================================================================
 */
 
+#include <stdio.h>
+
 #include "cwtype.h"
 #include "ekbd.h"
 #include "sound.h"
@@ -43,7 +45,7 @@ static int cusong_data[] = {
 };
 
 void cusong( void ) {
-	register int i;
+	register size_t i;
 	for ( i = 0; !keypressed( ) && i < sizeof( cusong_data ) / sizeof( int ); i += 2 ) {
 		soundnoise( cusong_data[i], cusong_data[i + 1] );
 	}

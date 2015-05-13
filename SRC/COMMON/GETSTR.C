@@ -24,8 +24,9 @@
 
 #include "getstr.h"
 
-int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, char attr, strtype mode ) {
-	size_t inkey, key, oldlen, temp;
+int getstring( char *textst, int x, int y, size_t maxlen, char attr, strtype mode ) {
+	int inkey, key;
+	size_t oldlen, temp;
 	char keepchar;
 
 	keepchar = '\0';
@@ -191,7 +192,7 @@ int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen
 	} while ( 1 );
 }
 
-int getname( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, char attr ) {
+int getname( char *textst, int x, int y, size_t maxlen, char attr ) {
 	int i;
 
 	char drv[MAXDRIVE + 1], dir[MAXDIR + 1], name[MAXFILE + 1], ext[MAXEXT + 1];

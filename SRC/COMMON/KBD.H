@@ -1,10 +1,10 @@
 #ifndef SCUP_KBD_H_INCLUDED
 #define SCUP_KBD_H_INCLUDED
 
-/**  */
-void waitkbd( unsigned int x, unsigned int y );
+/** wait for key press  */
+void waitkbd( int x, int y );
 
-/**  */
+/** read key press */
 int readkbd( void );
 
 #endif /* SCUP_KBD_H_INCLUDED */

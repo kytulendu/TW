@@ -74,7 +74,7 @@ HERC_TEXT  SEGMENT   BYTE PUBLIC 'CODE'
 ; _hprchar -  print character at specified cursor position                    ;
 ;         ( don't forward cursor position )                                   ;
 ;                                                                             ;
-;     USAGE : hprchar(unsigned c, unsigned attr, unsigned x, unsigned y)      ;
+;     USAGE : hprchar( char c, int attr, int x, int y )                       ;
 ;             Attribute : bit 0 -> single underline                           ;
 ;                         bit 1 -> reverse                                    ;
 ;                         bit 2 -> bold                                       ;
@@ -480,7 +480,7 @@ _hprchar  ENDP
 ; _hprblank -  print blank character at specified cursor position             ;
 ;         ( don't forward cursor position )                                   ;
 ;                                                                             ;
-;     USAGE : hprblank(unsigned x, unsigned y)                                ;
+;     USAGE : hprblank( int x, int y )                                        ;
 ;=============================================================================;
 	PUBLIC _hprblank
 _hprblank PROC FAR
@@ -529,7 +529,7 @@ _hprblank ENDP
 ;=============================================================================;
 ; _hsetcurpos -  xor cursor at specified cursor position                      ;
 ;                                                                             ;
-;     USAGE : hsetcurpos(unsigned x, unsigned y, int thaimode)                ;
+;     USAGE : hsetcurpos( int x, int y, int thaimode )                        ;
 ;=============================================================================;
 	PUBLIC _hsetcurpos
 _hsetcurpos PROC FAR
@@ -583,7 +583,7 @@ _hsetcurpos ENDP
 ;          2000h*(Y mod 4) + 90*integer(Y/4) + integer(X/8)                   ;
 ;     find bit position in byte from formula                                  ;
 ;          7 - (x mod 8)                                                      ;
-;     USAGE : plot(unsigned x,unsigned y)                                     ;
+;     USAGE : plot( int x, int y )                                            ;
 ;=============================================================================;
 	PUBLIC _hplot
 _hplot PROC FAR
@@ -858,7 +858,7 @@ _hclsall ENDP
 ;=============================================================================;
 ; _hclsgraph -  clear graphic screen for window specified                     ;
 ;                                                                             ;
-;     USAGE : hclsgraph(int x1, int y1, int x2, int y2)                       ;
+;     USAGE : hclsgraph( int x1, int y1, int x2, int y2 )                     ;
 ;=============================================================================;
 	PUBLIC _hclsgraph
 _hclsgraph PROC FAR
@@ -936,7 +936,7 @@ _hclsgraph ENDP
 ;=============================================================================;
 ; _hclrline -  clear line y1 from x1 to x2                                    ;
 ;                                                                             ;
-;     USAGE : hclrline(int x1, int y1, int x2)                                ;
+;     USAGE : hclrline( int x1, int y1, int x2 )                              ;
 ;=============================================================================;
 	PUBLIC _hclrline
 _hclrline PROC FAR
@@ -1120,7 +1120,7 @@ _hprakeaw PROC FAR
 _hprakeaw ENDP
 
 ;------------------------------------------------------
-; fic_getwind(x1, y1, linecount, bytecount, buffptr)
+; fic_getwind( x1, y1, linecount, bytecount, buffptr )
 ;
 ;      copy window area at x1, y1 (left-top)
 ;    size = linecount * bytecount
@@ -1179,7 +1179,7 @@ end_getwind9:
 _hgetwind ENDP
 
 ;------------------------------------------------------
-; fic_putwind(x1, y1, linecount, bytecount, buffptr)
+; fic_putwind( x1, y1, linecount, bytecount, buffptr )
 ;
 ;      copy window area at x1, y1 (left-top)
 ;    size = linecount * bytecount

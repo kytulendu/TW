@@ -18,7 +18,7 @@ EXTRN _kedmanee_table:BYTE
 ;=============================================================================;
 ; _thaikey -  Change ascii value of key from english to thai                  ;
 ;                                                                             ;
-;     USAGE : thaikey(unsigned key)                                           ;
+;     USAGE : thaikey( int key )                                              ;
 ;=============================================================================;
 	PUBLIC _thaikey
 _thaikey PROC FAR

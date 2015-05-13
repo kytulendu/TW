@@ -32,7 +32,7 @@ EXTRN _eoffset:far
 ; prchar                                                                      ;
 ;     print character at specified cursor position                            ;
 ;          ( don't forward cursor position )                                  ;
-;     USAGE : prchar(unsigned c,unsigned attr,unsigned x,unsigned y)          ;
+;     USAGE : prchar( char c, int attr, int x, int y)                         ;
 ;             Attribute : bit 0 -> single underline                           ;
 ;                         bit 1 -> reverse                                    ;
 ;                         bit 2 -> bold                                       ;
@@ -571,7 +571,7 @@ _eprchar ENDP
 ; prblank                                                                     ;
 ;     print blank character at specified cursor position                      ;
 ;          ( don't forward cursor position )                                  ;
-;     USAGE : prblank(unsigned x,unsigned y)                                  ;
+;     USAGE : prblank( int x, int y )                                         ;
 ;=============================================================================;
 	PUBLIC _eprblank
 _eprblank PROC FAR
@@ -647,7 +647,7 @@ _eprblank ENDP
 ;=============================================================================;
 ; setcurpos                                                                   ;
 ;    xor cursor at specified cursor position                                  ;
-;    USAGE : setcurpos(unsigned x,unsigned y,int thaimode)                    ;
+;    USAGE : setcurpos( int x, int y, int thaimode )                          ;
 ;=============================================================================;
 	PUBLIC _esetcurpos
 _esetcurpos PROC FAR
@@ -738,7 +738,7 @@ _esetcurpos ENDP
 ;          2000h*(Y mod 4) + 90*integer(Y/4) + integer(X/8)                   ;
 ;     find bit position in byte from formula                                  ;
 ;          7 - (x mod 8)                                                      ;
-;     USAGE : plot(unsigned x,unsigned y)                                     ;
+;     USAGE : plot( int x, int y)                                             ;
 ;=============================================================================;
 	PUBLIC _eplot
 _eplot PROC FAR
@@ -867,7 +867,7 @@ _eclsall ENDP
 ;=============================================================================;
 ; clsgraph                                                                    ;
 ;     clear graphic screen for window specified                               ;
-; USAGE : clsgraph(int x1,int y1,int x2,int y2)                               ;
+; USAGE : clsgraph( int x1, int y1, int x2, int y2)                           ;
 ;=============================================================================;
 	PUBLIC _eclsgraph
 _eclsgraph PROC FAR
@@ -930,7 +930,7 @@ _eclsgraph  ENDP
 ;=============================================================================;
 ; clrline                                                                     ;
 ;     clear line y1 from x1 to x2                                             ;
-; USAGE : clrline(int x1,int y1,int x2)                                       ;
+; USAGE : clrline( int x1, int y1, int x2)                                    ;
 ;=============================================================================;
 	PUBLIC _eclrline
 _eclrline PROC FAR
@@ -1143,7 +1143,7 @@ _eprakeaw PROC FAR
 _eprakeaw ENDP
 
 ;------------------------------------------------------
-; fic_getwind(x1, y1, linecount, bytecount, buffptr)
+; fic_getwind( x1, y1, linecount, bytecount, buffptr )
 ;
 ;      copy window area at x1, y1 (left-top)
 ;    size = linecount * bytecount
@@ -1210,7 +1210,7 @@ end_getwind9:
 _egetwind ENDP
 
 ;------------------------------------------------------
-; fic_putwind(x1, y1, linecount, bytecount, buffptr)
+; fic_putwind( x1, y1, linecount, bytecount, buffptr )
 ;
 ;      copy window area at x1, y1 (left-top)
 ;    size = linecount * bytecount

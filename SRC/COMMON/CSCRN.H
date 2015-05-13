@@ -31,7 +31,7 @@ void _rectangle( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, p_color*/
 *  \param[in]  p_x			vertical position ( 0 - 89 ).
 *  \param[in]  p_y			horizontal position ( 0 - 16 ).
 *  \param[in]  p_attr		attribute of string. */
-void dispstrhgc( char *p_string, unsigned int p_x, unsigned int p_y, font_attr p_attr );
+void dispstrhgc( char *p_string, int p_x, int p_y, font_attr p_attr );
 
 /** display string with printf capability.
 *   Written: Suttipong Kanakakorn
@@ -41,14 +41,14 @@ void dispstrhgc( char *p_string, unsigned int p_x, unsigned int p_y, font_attr p
 *  \param[in]  p_attr		attribute of string.
 *  \param[in]  p_string		string to be displayed.
 *  \param[in]  p_format		format of string. */
-void dispprintf( unsigned int p_x, unsigned int p_y, font_attr p_attr, char *p_format, ... );
+void dispprintf( int p_x, int p_y, font_attr p_attr, char *p_format, ... );
 
 /** display string on hercules graphic card.
 *  \param[in]  p_x			vertical position ( 0 - 89 ).
 *  \param[in]  p_y			horizontal position ( 0 - 16 ).
 *  \param[in]  p_count		number of blank to be displayed.
 *  \param[in]  p_attr		attribute of blank. */
-void dispblank( unsigned int p_x, unsigned int p_y, unsigned int p_count, font_attr p_attr );
+void dispblank( int p_x, int p_y, size_t p_count, font_attr p_attr );
 
 /** Set bit in attribute byte on/off from ascii control code given.
 *  \param[in]  p_curfont		current font.
@@ -63,7 +63,7 @@ void togglefont( font_attr *p_curfont, font_code p_code );
 *  \param[in]  p_xEnd		vertical position of end point.
 *  \param[in]  p_yEnd		horizontal position of end point.
 *  \param[in]  p_attr		attribute of blank. */
-void framebox( unsigned int p_xStart, unsigned int p_yStart, unsigned int p_xEnd, unsigned int p_yEnd, unsigned int p_attr );
+void framebox( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd, int p_attr );
 
 /** Draw message box on screen, Max 55 characters.
 *  \param[in]  p_y		vertical position. */

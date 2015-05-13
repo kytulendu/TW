@@ -26,19 +26,19 @@
 
 #include "cwgrphc.h"
 
-void prchar( unsigned char p_char, unsigned int p_attr, unsigned int x, unsigned int y ) {
+void prchar( char p_char, int p_attr, int x, int y ) {
 	( *prchar_ptr )( p_char, p_attr, x, y );
 }
 
-void prblank( unsigned int x, unsigned int y ) {
+void prblank( int x, int y ) {
 	( *prblank_ptr )( x, y );
 }
 
-void setcurpos( unsigned int x, unsigned int y, int p_thaimode ) {
+void setcurpos( int x, int y, int p_thaimode ) {
 	( *setcurpos_ptr )( x, y, p_thaimode );
 }
 
-void plot( unsigned int x, unsigned int y ) {
+void plot( int x, int y ) {
 	( *plot_ptr )( x, y );
 }
 
@@ -55,7 +55,7 @@ void setgraph( ) {
 	scrmode = DETECT;
 #endif
 	if ( ( screen_buffptr = malloc( ( unsigned int ) 32768L ) ) == NULL ) {
-		fputs( "Not enough memory\n", stderr );
+		fputs( "Not enough memory.\n", stderr );
 		exit( EXIT_FAILURE );
 	}
 
@@ -130,7 +130,7 @@ void setgraph( ) {
 		break;
 
 	default:
-		fputs( "This software run on Hercules/EGA/VGA/MCGA/AT&T display card only.", stderr );
+		fputs( "This software run on Hercules/EGA/VGA/MCGA/AT&T display card only.\n", stderr );
 		exit( EXIT_FAILURE );
 	}
 	( *setgraph_ptr )( );
@@ -152,11 +152,11 @@ void clsall( ) {
 	( *clsall_ptr )( );
 }
 
-void clsgraph( unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2 ) {
+void clsgraph( int x1, int y1, int x2, int y2 ) {
 	( *clsgraph_ptr )( x1, y1, x2, y2 );
 }
 
-void clrline( unsigned int x1, unsigned int y1, unsigned int x2 ) {
+void clrline( int x1, int y1, int x2 ) {
 	( *clrline_ptr )( x1, y1, x2 );
 }
 

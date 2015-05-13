@@ -52,6 +52,6 @@ void esettext( void ) {
 
 /** Find offest of pixel x, y we use the following formula
 *   ( High_byte * y ) + ( x / 8 )  where High_byte = 640 / 8 = 80 */
-unsigned int eoffset( register unsigned int x, register unsigned int y ) {
+int eoffset( register int x, register int y ) {
 	return ( ( 80 * y ) + ( x / 8 ) );
 }
