@@ -54,7 +54,7 @@ void setgraph( ) {
 #ifdef EDA_VERSION
 	scrmode = DETECT;
 #endif
-	if ( ( screen_buffptr = malloc( ( unsigned int ) 32768L ) ) == NULL ) {
+	if ( ( screen_buffptr = malloc( ( size_t ) 32768L ) ) == NULL ) {
 		fputs( "Not enough memory\n", stderr );
 		exit( EXIT_FAILURE );
 	}
