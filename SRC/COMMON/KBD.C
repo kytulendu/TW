@@ -14,8 +14,8 @@
 
 #include "kbd.h"
 
-void waitkbd( int x, int y ) {
-	register int i;
+void waitkbd( unsigned int x, unsigned int y ) {
+	register unsigned int i;
 
 	setcurpos( x, y, thaimode );
 	while ( !keypressed( ) ) {
@@ -28,7 +28,7 @@ void waitkbd( int x, int y ) {
 }
 
 int readkbd( void ) {
-	register int c;
+	register unsigned int c;
 	c = ebioskey( 0 );
 	if ( thaimode && ( ( c & 0xff00 ) < 0x4700 ) ) {       /* Ignore Keypad */
 		c = thaikey( c );

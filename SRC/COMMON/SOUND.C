@@ -14,14 +14,14 @@
 
 #ifdef NOSOUND
 
-void soundnoise( int p_freq, int p_duration ) { }
+void soundnoise( unsigned int p_freq, unsigned int p_duration ) { }
 void errorsound( void ) { }
 
 #else
 
 void biosdelay( long millisecs );
 
-void soundnoise( int p_freq, int p_duration ) {
+void soundnoise( unsigned int p_freq, unsigned int p_duration ) {
 	sound( p_freq );
 	biosdelay( ( long ) p_duration );
 	nosound( );

@@ -1,13 +1,11 @@
-#include <stdlib.h>
-
 #include "cwtype.h"
 #include "common.h"
 #include "cscrn.h"
 
 #include "tutil1.h"
 
-size_t thaistrlen( register char *p_thaistring ) {
-	register size_t count = 0;
+unsigned int thaistrlen( register unsigned char *p_thaistring ) {
+	register int count = 0;
 	font_attr curfont = 0;
 
 	while ( *p_thaistring ) {

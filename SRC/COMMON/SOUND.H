@@ -26,7 +26,7 @@
 /** Play sound.
 *  \param[in]  p_freq		frequency of sound.
 *  \param[in]  p_duration	duration of sound. */
-void soundnoise( int p_freq, int p_duration );
+void soundnoise( unsigned int p_freq, unsigned int p_duration );
 
 /** Play error sound */
 void errorsound( void );

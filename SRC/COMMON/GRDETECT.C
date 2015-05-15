@@ -157,7 +157,7 @@ int is_att400( void ) {
 
 int check_vretrace( void ) {
 	register unsigned int change;
-	register unsigned char old_value;
+	register unsigned int old_value;
 	unsigned int count;
 
 	old_value = inportb( 0x3BA ) & 0x80;

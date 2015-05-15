@@ -32,7 +32,7 @@ EXTRN _aoffset:far
 ; _aprchar -  print character at specified cursor position                    ;
 ;         ( don't forward cursor position )                                   ;
 ;                                                                             ;
-;     USAGE : aprchar( char c, int attr, int x, int y )                       ;
+;     USAGE : aprchar(unsigned c, unsigned attr, unsigned x, unsigned y)      ;
 ;             Attribute : bit 0 -> single underline                           ;
 ;                         bit 1 -> reverse                                    ;
 ;                         bit 2 -> bold                                       ;
@@ -574,7 +574,7 @@ _aprchar ENDP
 ; _aprblank -  print blank character at specified cursor position             ;
 ;         ( don't forward cursor position )                                   ;
 ;                                                                             ;
-;     USAGE : aprblank( int x, int y )                                        ;
+;     USAGE : aprblank(unsigned x, unsigned y)                                ;
 ;=============================================================================;
    PUBLIC _aprblank
 _aprblank PROC FAR
@@ -650,7 +650,7 @@ _aprblank ENDP
 ;=============================================================================;
 ; _asetcurpos -  xor cursor at specified cursor position                      ;
 ;                                                                             ;
-;     USAGE : asetcurpos( int x,  int y, int thaimode )                       ;
+;     USAGE : asetcurpos(unsigned x, unsigned y, int thaimode)                ;
 ;=============================================================================;
 	PUBLIC _asetcurpos
 _asetcurpos PROC FAR
@@ -739,7 +739,7 @@ _asetcurpos ENDP
 ;         2000h * (Y mod 4) + 80 * integer(Y / 4) + integer(X / 8)            ;
 ;         find bit position in byte from formula 7 - (x mod 8)                ;
 ;                                                                             ;
-;     USAGE : aplot( int x, int y )                                           ;
+;     USAGE : aplot(unsigned x, unsigned y)                                   ;
 ;=============================================================================;
 	PUBLIC _aplot
 _aplot PROC FAR
@@ -865,7 +865,7 @@ _aclsall ENDP
 ;=============================================================================;
 ; _aclsgraph -  clear graphic screen for window specified                     ;
 ;                                                                             ;
-;     USAGE : aclsgraph( int x1, int y1, int x2, int y2 )                     ;
+;     USAGE : aclsgraph(int x1, int y1, int x2, int y2)                       ;
 ;=============================================================================;
 	PUBLIC _aclsgraph
 _aclsgraph PROC FAR
@@ -928,7 +928,7 @@ _aclsgraph  ENDP
 ;=============================================================================;
 ; _aclrline -  clear line y1 from x1 to x2                                    ;
 ;                                                                             ;
-;     USAGE : aclrline( int x1, int y1, int x2 )                              ;
+;     USAGE : aclrline(int x1, int y1, int x2)                                ;
 ;=============================================================================;
 	PUBLIC _aclrline
 _aclrline PROC FAR
@@ -1137,7 +1137,7 @@ _aprakeaw PROC FAR
 _aprakeaw ENDP
 
 ;------------------------------------------------------
-;  fic_getwind( x1, y1, linecount, bytecount, buffptr )
+;  fic_getwind(x1, y1, linecount, bytecount, buffptr)
 ;
 ;      copy window area at x1, y1 (left-top)
 ;    size = linecount * bytecount
@@ -1204,7 +1204,7 @@ end_getwind9:
 _agetwind ENDP
 
 ;------------------------------------------------------
-;  fic_putwind( x1, y1, linecount, bytecount, buffptr )
+;  fic_putwind(x1, y1, linecount, bytecount, buffptr)
 ;
 ;      copy window area at x1, y1 (left-top)
 ;    size = linecount * bytecount

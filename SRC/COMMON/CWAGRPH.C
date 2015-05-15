@@ -24,6 +24,6 @@ void asettext( void ) {
 	int86( 0x10, &inregs, &outregs );
 }
 
-int aoffset( register int x, register int y ) {
+unsigned int aoffset( register unsigned int x, register unsigned int y ) {
 	return ( 0x2000 * ( y % 4 ) + 80 * ( y / 4 ) + x / 8 );
 }

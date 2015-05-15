@@ -52,7 +52,7 @@ void _rectangle( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, p_color*/
 	_line( p_xEnd, p_yStart, p_xEnd, p_yEnd/*, p_color*/ );
 }
 
-void dispstrhgc( char *p_string, int p_x, int p_y, font_attr p_attr ) {
+void dispstrhgc( char *p_string, unsigned int p_x, unsigned int p_y, font_attr p_attr ) {
 	while ( ( *p_string != '\0' ) && ( p_x < 90 ) ) {
 		if ( *p_string < 32 ) {
 			togglefont( &p_attr, *p_string );
@@ -79,7 +79,7 @@ void dispstrhgc( char *p_string, int p_x, int p_y, font_attr p_attr ) {
 	}
 }
 
-void dispprintf( int p_x, int p_y, font_attr p_attr, char *p_format, ... ) {
+void dispprintf( unsigned int p_x, unsigned int p_y, font_attr p_attr, char *p_format, ... ) {
 	va_list argptr;
 	char tstring[240];
 
@@ -89,7 +89,7 @@ void dispprintf( int p_x, int p_y, font_attr p_attr, char *p_format, ... ) {
 	dispstrhgc( tstring, p_x, p_y, p_attr );
 }
 
-void dispblank( int p_x, int p_y, size_t p_count, font_attr p_attr ) {
+void dispblank( unsigned int p_x, unsigned int p_y, unsigned int p_count, font_attr p_attr ) {
 	p_count++;
 	while ( p_count-- ) {
 		prchar( ' ', p_attr, p_x++, p_y );
@@ -120,8 +120,8 @@ void togglefont( font_attr *p_curfont, font_code p_code ) {
 	}
 }
 
-void framebox( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd, int p_attr ) {
-	register int i, j;
+void framebox( unsigned int p_xStart, unsigned int p_yStart, unsigned int p_xEnd, unsigned int p_yEnd, unsigned int p_attr ) {
+	register unsigned int i, j;
 
 	i = p_xStart;
 	prchar( ' ', p_attr, i++, p_yStart );

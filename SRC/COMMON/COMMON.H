@@ -3,19 +3,19 @@
 
 /** Change TIS-620 code character to KU code character.
 *  \param[in]  p_stdcode		TIS-620 code character.
-*  \return char		KU code character. */
-char stdtoku( char p_stdcode );
+*  \return unsigned char		KU code character. */
+unsigned char stdtoku( unsigned char p_stdcode );
 
 /** Change KU code character to TIS-620 code character.
 *  \param[in]  p_stdcode		KU code character.
-*  \return char		TIS-620 code character. */
-char kutostd( char p_kucode );
+*  \return unsigned char		TIS-620 code character. */
+unsigned char kutostd( unsigned char p_kucode );
 
 /** Change ascii value of key from english to Thai.
 *   From ACOMMON.ASM
 *  \param[in]  p_key		KU code character.
-*  \return char				Kedmanee keyboard code. */
-int thaikey( register int p_key );
+*  \return unsigned char	Kedmanee keyboard code. */
+int thaikey( register unsigned int p_key );
 
 /** From ACOMMON.ASM */
 int asm_keypressed( void );
@@ -27,6 +27,6 @@ int asm_keypressed( void );
 *	1 : Lower level (สระอุ, สระอู)
 *	2 : Upper level (สระอิ, สระอี)
 *	3 : Top level (วรรณยุกต์) */
-int whatlevel( char p_char );
+int whatlevel( unsigned char p_char );
 
 #endif /* COMMON_COMMON_H_INCLUDED */
