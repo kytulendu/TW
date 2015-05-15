@@ -27,7 +27,8 @@
 #include "wrap.h"
 
 void justify_right( void ) {
-	register int count, i, j, k, already = NO;
+	register size_t count, i, j, k;
+	boolean already = NO;
 	for ( i = strlen( workline.middle ) - 1;
 		( ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ) ) &&
 		( i > 0 );
@@ -54,7 +55,9 @@ void justify_right( void ) {
 				k++;
 			}
 			if ( k >= i ) {
-				if ( already == NO ) return;
+				if ( already == NO ) {
+					return;
+				}
 				k = j;
 			}
 		}

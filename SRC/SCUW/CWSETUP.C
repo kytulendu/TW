@@ -78,7 +78,7 @@ void usage( void ) {
 }
 
 void inittabvalue( void ) {
-	register int i;
+	register size_t i;
 
 	for ( i = 0; i < MAXCOL; ++i ) {
 		tab[i] = NO;
@@ -278,7 +278,7 @@ void setoption( void ) {
 	}
 	i = 0;
 	do {
-		itoa( *option_setup[i].p_option_value, st, 10 );
+		sprintf( st, "%d", *option_setup[i].p_option_value );
 		c = getstring( st, 65 + 2, 6 + i, option_setup[i].maxlen,
 			NORMALATTR, option_setup[i].stype );
 		*option_setup[i].p_option_value = atoi( st );
@@ -383,7 +383,7 @@ void print_file( void ) {
 		strcat( ncup, cup );
 		if ( spawnl( P_WAIT, ncup, ncup, cup_option, filename, NULL ) == -1 ) {
 			printf( "\n\nCannot find file : TWPRINT.EXE\nPress any key\n\007" );
-			getch( );
+			getchar( );
 		}
 	}
 	initscrn( );

@@ -5,6 +5,7 @@
 */
 
 #include <stdlib.h>
+#include <stdio.h>
 
 #include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
@@ -33,7 +34,7 @@ void arabictothai( char *st ) {
 void writepage( void ) {
 	char page[4];
 	dispstrhgc( "หน้า    ", 4, 2, NORMALATTR );
-	itoa( ( ( lineno - 1 ) / lineperpage ) + 1, page, 10 );
+	sprintf( page, "%d", ( ( lineno - 1 ) / lineperpage ) + 1 );
 	arabictothai( page );
 	dispstrhgc( page, 8, 2, NORMALATTR );
 }
@@ -41,7 +42,7 @@ void writepage( void ) {
 void writeline( void ) {
 	char line[5];
 	dispstrhgc( "บรรทัด    ", 11, 2, NORMALATTR );
-	itoa( ( ( lineno - 1 ) % lineperpage ) + 1, line, 10 );
+	sprintf( line, "%d", ( ( lineno - 1 ) % lineperpage ) + 1 );
 	arabictothai( line );
 	dispstrhgc( line, 17, 2, NORMALATTR );
 }
@@ -49,7 +50,7 @@ void writeline( void ) {
 void writelineno( void ) {
 	char st2[6];
 	dispstrhgc( "     บรรทัด       ", 4, 2, NORMALATTR );
-	itoa( lineno, st2, 10 );
+	sprintf( st2, "%d", lineno );
 	arabictothai( st2 );
 	dispstrhgc( st2, 15, 2, NORMALATTR );
 }
@@ -66,7 +67,7 @@ void writepageline( void ) {
 void writecolno( unsigned int x ) {
 	char st2[5];
 	dispstrhgc( "คอลัมน์", 21, 2, NORMALATTR );
-	itoa( x + 1, st2, 10 );
+	sprintf( st2, "%d", x + 1 );
 	dispstrhgc( "    ", 27, 2, NORMALATTR );
 	arabictothai( st2 );
 	dispstrhgc( st2, 27, 2, NORMALATTR );

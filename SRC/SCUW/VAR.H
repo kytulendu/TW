@@ -113,9 +113,9 @@ EXTERN boolean stdcode;     /*  stdcode or KUcode */
 EXTERN boolean pagebreak;   /*  show pagebreak line or not */
 EXTERN boolean wordwrap;    /*  tudcome automatic or not */
 EXTERN boolean create_bak;  /*  create .bak  or not */
-EXTERN int leftmar;     /*  left margin */
-EXTERN int rightmar;    /*  right margin */
-EXTERN int lineperpage; /*  number of lines perpage */
+EXTERN unsigned int leftmar;     /*  left margin */
+EXTERN unsigned int rightmar;    /*  right margin */
+EXTERN unsigned int lineperpage; /*  number of lines perpage */
 
 EXTERN unsigned int command_tab[];
 
@@ -143,9 +143,9 @@ EXTERN boolean stdcode = -1;     /*  stdcode or KUcode */
 EXTERN boolean pagebreak = -1;   /*  show pagebreak line or not */
 EXTERN boolean wordwrap = -1;    /*  tudcome automatic or not */
 EXTERN boolean create_bak = -1;  /*  create .bak  or not */
-EXTERN int leftmar = -1;     /*  left margin */
-EXTERN int rightmar = -1;     /*  right margin */
-EXTERN int lineperpage = -1;  /*  number of lines perpage */
+EXTERN unsigned int leftmar = -1;     /*  left margin */
+EXTERN unsigned int rightmar = -1;     /*  right margin */
+EXTERN unsigned int lineperpage = -1;  /*  number of lines perpage */
 
 EXTERN unsigned int command_tab[] = {
 	0x1400, 0x1401,

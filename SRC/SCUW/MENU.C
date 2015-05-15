@@ -239,7 +239,9 @@ unsigned int key_to_menu( unsigned int key ) {
 
 int selectmenu( unsigned int x, unsigned int y, unsigned int number,
 	char *message[], unsigned int *curmenu ) {
-	int c, length, i, out;
+	int c;
+	size_t length, i;
+	boolean out;
 	int special_base;
 
 	length = thaistrlen( message[0] );
@@ -337,7 +339,8 @@ int selectmenu( unsigned int x, unsigned int y, unsigned int number,
 			case 'H':
 				*curmenu = 0x6800;
 				break;
-			default: out = NO;
+			default:
+				out = NO;
 				break;
 			}
 			if ( out == YES ) {

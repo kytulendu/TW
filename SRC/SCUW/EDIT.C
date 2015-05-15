@@ -5,6 +5,7 @@
 */
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <conio.h>
 #include <string.h>
 
@@ -491,14 +492,14 @@ void storeline( struct line_node *curline ) {
 	} else {
 		curline->text = keep_ptr;
 		dispstrhgc( "Internal error in storeline", 1, 1, REVERSEATTR );
-		getch( );
+		getchar( );
 	}
 
 	free( oneline );
 }
 
 void refreshline( unsigned int x, unsigned int y ) {
-	register int i, len;
+	register size_t i, len;
 	char attr;
 	len = wind.length - 2;
 	y += wind.row;

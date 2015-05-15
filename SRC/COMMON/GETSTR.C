@@ -25,7 +25,8 @@
 #include "getstr.h"
 
 int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, char attr, strtype mode ) {
-	size_t inkey, key, oldlen, temp;
+	int inkey, key;
+	size_t oldlen, temp;
 	char keepchar;
 
 	keepchar = '\0';
@@ -45,8 +46,9 @@ int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen
 	case ENGUPCASE:
 		inkey = ebioskey( 0 );
 		key = inkey & 0xff;
-		if ( ( key >= 'a' ) && ( key <= 'z' ) )
+		if ( ( key >= 'a' ) && ( key <= 'z' ) ) {
 			inkey = key - ( 'a' - 'A' );
+		}
 		break;
 	}
 	switch ( inkey ) {

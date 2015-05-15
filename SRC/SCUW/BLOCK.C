@@ -656,7 +656,7 @@ void writeblk( char *file_name, struct line_node *linebegin,
 		if ( key == 'Y' ) {						/* Save edited file */
 			if ( create_bak ) {					/* Create .BAK */
 				fnmerge( name_bak, drv, dir, name, bakext );
-				unlink( name_bak );				/* Delete Old .BAK */
+				remove( name_bak );				/* Delete Old .BAK */
 				if ( chkspace( file_name ) ) {	/* Enough Space ? */
 					rename( file_name, name_bak );
 				} else {
@@ -665,7 +665,7 @@ void writeblk( char *file_name, struct line_node *linebegin,
 				}
 			} else {							/* Ignore .BAK */
 				if ( chkspace( file_name ) ) {	/* Enough Space ? */
-					unlink( file_name );
+					remove( file_name );
 				} else {
 					free( text_str );
 					return;

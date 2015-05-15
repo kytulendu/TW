@@ -38,7 +38,7 @@
 #include "ins.h"
 
 void insertblank( register unsigned int j, char code ) {
-	register int i;
+	register size_t i;
 	i = strlen( workline.middle );
 	while ( i >= j ) {
 		workline.middle[i + 1] = workline.middle[i];  /* shift right */

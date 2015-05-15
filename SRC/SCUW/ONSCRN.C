@@ -35,7 +35,7 @@
 #include "onscrn.h"
 
 void writetab( void ) {
-	int i = 0;
+	unsigned int i = 0;
 	prblank( wind.col, 3 );
 
 	while ( ( ( i + firstcol + 1 ) < leftmar ) && ( i < wind.length ) ) {
@@ -87,7 +87,7 @@ void centerline( unsigned y ) {
 }
 
 void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
-	register int j;
+	register unsigned int j;
 	char st[4], invmsg[60];
 
 	key &= 0xff;
@@ -97,7 +97,7 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 	key &= 0x1f;
 	switch ( key ) {
 	case 'l' - 'a' + 1:
-		itoa( leftmar, st, 10 );
+		sprintf( st, "%d", leftmar );
 		blockmsg( 5 );
 		dispstrhgc( "ต้องการตั้งกั้นซ้ายที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
 		if ( getstring( st, ( 14 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
@@ -119,7 +119,7 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		}
 		break;
 	case 'r' - 'a' + 1:
-		itoa( rightmar, st, 10 );
+		sprintf( st, "%d", rightmar );
 		blockmsg( 5 );
 		dispstrhgc( "ต้องการตั้งกั้นขวาที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
 		if ( getstring( st, ( 14 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
@@ -141,7 +141,7 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		}
 		break;
 	case 'i' - 'a' + 1:
-		itoa( x + 1, st, 10 );
+		sprintf( st, "%d", x + 1 );
 		blockmsg( 5 );
 		dispstrhgc( "ต้องการตั้ง TAB ที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
 		if ( getstring( st, ( 16 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
@@ -169,7 +169,7 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		}
 		break;
 	case 'p' - 'a' + 1:
-		itoa( lineperpage, st, 10 );
+		sprintf( st, "%d", lineperpage );
 		blockmsg( 5 );
 		dispstrhgc( "ต้องการตั้งจำนวนบรรทัดต่อหน้าเท่าไหร่ ?", ( 14 + center_factor ) + 11, 5, REVERSEATTR );
 		if ( getstring( st, ( 16 + center_factor ) + 43, 5, 3, REVERSEATTR, NUMBER ) ) {
@@ -192,7 +192,7 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 }
 
 void movetotab( unsigned int *x, unsigned int y ) {
-	int i, count;
+	size_t i, count;
 	if ( ( *x + firstcol ) >= ( leftmar - 1 ) ) {
 		i = *x + firstcol + 1;
 	} else {
