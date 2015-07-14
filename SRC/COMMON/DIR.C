@@ -11,6 +11,7 @@
 #include <dir.h>
 #include <stdio.h>
 #include <string.h>
+#include <dos.h>
 
 #include "cwtype.h"
 #include "cscrn.h"
@@ -20,6 +21,21 @@
 #include "sound.h"
 
 #include "dir.h"
+
+#define DIRCOLMAX 5
+#define DIRROWMAX 5
+
+struct dirnode {
+	char filename[13];
+	char attrib;
+	struct dirnode *previous;
+	struct dirnode *next;
+};
+
+static struct dirnode *headdir, *dirpage;
+
+static int dircol;
+static int dirrow;
 
 /* private prototype function */
 int createdir( char *p_fileMask );
@@ -34,29 +50,19 @@ void dirdown( void );
 void dirright( void );
 void dirleft( void );
 
-#define DIRCOLMAX 5
-#define DIRROWMAX 5
-
-struct dirnode {
-	char filename[13];
-	struct dirnode *previous;
-	struct dirnode *next;
-};
-
-static struct dirnode *headdir, *dirpage;
-
-static int dircol;
-static int dirrow;
-
 int createdir( char *p_fileMask ) {
 	struct dirnode *tempdir;
 	struct ffblk ffblock;
 	int done, i;
-	char *source;
+	char *fileName;
+
 	headdir->previous = headdir;
 	headdir->next = headdir;
 	tempdir = headdir;
-	done = findfirst( p_fileMask, &ffblock, 0 );
+
+	/* Find files. */
+	done = findfirst( p_fileMask, &ffblock, FA_NORMAL );
+
 	while ( !done ) {
 		tempdir->next = ( struct dirnode * ) malloc( sizeof( struct dirnode ) );
 		if ( tempdir->next == NULL ) {
@@ -67,19 +73,55 @@ int createdir( char *p_fileMask ) {
 			freedir( );
 			return( NO );
 		}
-		source = ffblock.ff_name;
+
+		fileName = ffblock.ff_name;
+
 		i = 0;
-		while ( *source != '\0' ) {
-			( tempdir->next )->filename[i] = *( source++ );
+		while ( *fileName != '\0' ) {
+			( tempdir->next )->filename[i] = *( fileName++ );
 			i++;
 		}
 		( tempdir->next )->filename[i] = '\0';
+
+		( tempdir->next )->attrib = ffblock.ff_attrib;
+
 		( tempdir->next )->previous = tempdir;
 		tempdir = tempdir->next;
 		tempdir->next = headdir;
 		headdir->previous = tempdir;
+
 		done = findnext( &ffblock );
 	}
+
+	/* Find directory. */
+	done = findfirst( "*.*", &ffblock, FA_DIREC );
+
+	while ( !done ) {
+		/* Check if the file is directory and not working directory ("."). */
+		if ( ( ffblock.ff_attrib == FA_DIREC ) && ( strcmp( ffblock.ff_name, "." ) != 0 ) ) {
+			tempdir->next = ( struct dirnode * ) malloc( sizeof( struct dirnode ) );
+			if ( tempdir->next == NULL ) {
+				errorsound( );
+				blockmsg( 5 );
+				dispstrhgc( "หน่วยความจำไม่พอ ! กด <ESC> เพื่อทำงานต่อ", ( 14 + center_factor ) + 8, 5, 2 );
+				while ( ebioskey( 0 ) != ESCKEY );
+				freedir( );
+				return( NO );
+			}
+
+			fileName = ffblock.ff_name;
+
+			sprintf( ( tempdir->next )->filename, "%s\0", fileName );
+			( tempdir->next )->attrib = ffblock.ff_attrib;
+
+			( tempdir->next )->previous = tempdir;
+			tempdir = tempdir->next;
+			tempdir->next = headdir;
+			headdir->previous = tempdir;
+		}
+		done = findnext( &ffblock );
+	}
+
 	return( YES );
 }
 
@@ -91,7 +133,11 @@ void showfile( int col, int row, char attr ) {
 		tempdir = tempdir->next;
 	}
 	if ( tempdir != headdir ) {
-		dispstrhgc( tempdir->filename, col * 13 + 9, row + 9, attr );
+		if ( tempdir->attrib == FA_DIREC ) {
+			dispprintf( col * 13 + 9, row + 9, attr, "\\%s", tempdir->filename );
+		} else {
+			dispstrhgc( tempdir->filename, col * 13 + 9, row + 9, attr );
+		}
 	}
 }
 
@@ -233,7 +279,8 @@ void dirleft( void ) {
 
 int selectfile( char *p_fileMask ) {
 	struct dirnode *tempdir;
-	int count, c, i, j;
+	int count, key, i, j;
+
 	if ( createdir( p_fileMask ) == NO ) {
 		return( NO );
 	}
@@ -244,8 +291,8 @@ int selectfile( char *p_fileMask ) {
 		showpagedir( );
 		showfile( dircol, dirrow, 0 );
 		do {
-			c = ebioskey( 0 );
-			switch ( c ) {
+			key = ebioskey( 0 );
+			switch ( key ) {
 			case UPKEY:
 				showfile( dircol, dirrow, 2 );
 				if ( dirrow == 0 ) {
@@ -290,24 +337,51 @@ int selectfile( char *p_fileMask ) {
 				freedir( );
 				p_fileMask[0] = '\0';
 				return( NO );
+			case RETKEY:
+				tempdir = dirpage;
+				for ( count = ( DIRCOLMAX * dirrow ) + dircol; ( count != 0 ) && ( tempdir->next != headdir ); count-- ) {
+					tempdir = tempdir->next;
+				}
+
+				if ( tempdir->attrib == FA_DIREC ) {
+					if ( chdir( tempdir->filename ) ) {
+						/* Can't change directory. */
+						chdir( ".." );
+						return( NO );
+					}
+
+					if ( createdir( p_fileMask ) == NO ) {
+						return( NO );
+					}
+
+					if ( headdir->next != headdir ) {
+						dirpage = headdir->next;
+						dircol = 0;
+						dirrow = 0;
+						showpagedir( );
+						showfile( dircol, dirrow, 0 );
+					} else {
+						p_fileMask[0] = '\0';
+						return( NO );
+					}
+					break;
+				} else {
+					j = strlen( p_fileMask );
+					while ( ( j != 0 ) && ( p_fileMask[j] != '\\' ) && ( p_fileMask[j] != ':' ) ) {
+						j--;
+					}
+					if ( j != 0 ) {
+						j++;
+					}
+					for ( i = 0; i < 13; i++ ) {
+						p_fileMask[j++] = tempdir->filename[i];
+					}
+					freedir( );
+					return( YES );
+				}
 			};
-		} while ( c != RETKEY );
-		tempdir = dirpage;
-		for ( count = ( DIRCOLMAX * dirrow ) + dircol; ( count != 0 ) && ( tempdir->next != headdir ); count-- ) {
-			tempdir = tempdir->next;
-		}
-		j = strlen( p_fileMask );
-		while ( ( j != 0 ) && ( p_fileMask[j] != '\\' ) && ( p_fileMask[j] != ':' ) ) {
-			j--;
-		}
-		if ( j != 0 ) {
-			j++;
-		}
-		for ( i = 0; i < 13; i++ ) {
-			p_fileMask[j++] = tempdir->filename[i];
-		}
-		freedir( );
-		return( YES );
+		} while ( 1 );
+
 	} else {
 		p_fileMask[0] = '\0';
 		return( NO );
