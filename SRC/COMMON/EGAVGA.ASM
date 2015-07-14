@@ -12,7 +12,7 @@ INCLUDE cwfntm.asm
 	_DATA		SEGMENT WORD PUBLIC 'DATA'
 
 EXTRN _dfont:byte, _ditalicfont:byte
-EXTRN _curfont:BYTE, _enlargefont:BYTE, _offsetfont:WORD
+EXTRN _curfont:BYTE, _enlargefont:BYTE, _fontoffset:WORD
 EXTRN _chulalogo1:WORD, _chulalogo2:WORD
 EXTRN _screen_buffptr:dword
 
@@ -26,7 +26,7 @@ EGA_Address     dw   0A000h           ; Beginning of EGA/VGA/MCGA frame buffer
 EGAVGA_TEXT		SEGMENT BYTE PUBLIC 'CODE'
 				ASSUME CS:EGAVGA_TEXT, DS:DGROUP
 
-EXTRN _eoffset:far
+EXTRN _ega_offset:far
 
 ;=============================================================================;
 ; prchar                                                                      ;
@@ -42,8 +42,8 @@ EXTRN _eoffset:far
 ;                         bit 6 -> enlarge                                    ;
 ;                         bit 7 -> double underline                           ;
 ;=============================================================================;
-	PUBLIC _eprchar
-_eprchar PROC FAR
+	PUBLIC _ega_prchar
+_ega_prchar PROC FAR
 	PUSH    BP
 	PUSH    SI
 	PUSH    DI
@@ -55,7 +55,7 @@ _eprchar PROC FAR
 	MOV     SI,[BP+12]                  ; get character
 	AND     SI,00FFh                    ; clear high byte
 	ADD     SI,SI                       ; add for word offset
-	ADD     SI,OFFSET DGROUP:_offsetfont
+	ADD     SI,OFFSET DGROUP:_fontoffset
 	MOV     SI,DS:[SI]                  ; get offset from table
 	MOV     AL,[BP+14]                  ; get attribute
 	OR      AL,AL                       ; Has it have attribute ?
@@ -109,7 +109,7 @@ transferfont:
 	MOV     DS:[DI+16],AX
 	MOV     AX,DS:[BX+SI+18]
 	MOV     DS:[DI+18],AX
-	MOV     BX,OFFSET DGROUP:_curfont    ; base table is in BX
+	MOV     BX,OFFSET DGROUP:_curfont   ; base table is in BX
 	XOR     SI,SI                       ; DS:[BX+SI] now point at font
 	MOV     AL,[BP+14]                  ; get attribute
 	TEST    AL,004h                     ; bold ?
@@ -261,7 +261,7 @@ below_level:
 	PUSH    AX
 	MOV     DI,BX                       ; save in register variable
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     BX,DI
@@ -315,7 +315,7 @@ middle_level:
 	PUSH    AX
 	MOV     DI,BX                       ; save in register variable
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     BX,DI
@@ -469,7 +469,7 @@ above_level:
 	PUSH    AX
 	MOV     DI,BX                       ; save in register variable
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     BX,DI
@@ -520,7 +520,7 @@ above_middle:
 	PUSH    AX
 	MOV     DI,BX                       ; save in register variable
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     BX,DI
@@ -565,7 +565,7 @@ out_write:
 	POP     BP
 	RET
 
-_eprchar ENDP
+_ega_prchar ENDP
 
 ;=============================================================================;
 ; prblank                                                                     ;
@@ -573,8 +573,8 @@ _eprchar ENDP
 ;          ( don't forward cursor position )                                  ;
 ;     USAGE : prblank(unsigned x,unsigned y)                                  ;
 ;=============================================================================;
-	PUBLIC _eprblank
-_eprblank PROC FAR
+	PUBLIC _ega_blank
+_ega_blank PROC FAR
 	PUSH    BP
 	PUSH    DI
 	PUSH    ES
@@ -589,7 +589,7 @@ _eprblank PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -642,15 +642,15 @@ _eprblank PROC FAR
 	POP     BP
 	RET
 
-_eprblank ENDP
+_ega_blank ENDP
 
 ;=============================================================================;
 ; setcurpos                                                                   ;
 ;    xor cursor at specified cursor position                                  ;
 ;    USAGE : setcurpos(unsigned x,unsigned y,int thaimode)                    ;
 ;=============================================================================;
-	PUBLIC _esetcurpos
-_esetcurpos PROC FAR
+	PUBLIC _ega_setcurpos
+_ega_setcurpos PROC FAR
 	PUSH    BP
 	PUSH    DI
 	PUSH    ES
@@ -671,7 +671,7 @@ thaimode:
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -712,7 +712,7 @@ englishmode:
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -729,19 +729,19 @@ outsetcurpos:
 	POP     BP
 	RET
 
-_esetcurpos ENDP
+_ega_setcurpos ENDP
 
 ;=============================================================================;
-; plot                                                                        ;
-;     plot dot by find position as follow                                     ;
+; putpixel                                                                    ;
+;     put a pixel to given position                                           ;
 ;     find byte position from formula                                         ;
 ;          2000h*(Y mod 4) + 90*integer(Y/4) + integer(X/8)                   ;
 ;     find bit position in byte from formula                                  ;
 ;          7 - (x mod 8)                                                      ;
 ;     USAGE : plot(unsigned x,unsigned y)                                     ;
 ;=============================================================================;
-	PUBLIC _eplot
-_eplot PROC FAR
+	PUBLIC _ega_putpixel
+_ega_putpixel PROC FAR
 	PUSH    BP
 	PUSH    DI
 	PUSH    ES
@@ -751,7 +751,7 @@ _eplot PROC FAR
 	MOV     DI,[BP+10]
 	PUSH    DI
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     CX,DI
@@ -769,14 +769,14 @@ _eplot PROC FAR
 	POP     BP
 	RET
 
-_eplot ENDP
+_ega_putpixel ENDP
 
 ;=============================================================================;
 ; savepic                                                                     ;
 ;     save picture from screen memory page 1 to page 0                        ;
 ;=============================================================================;
-	PUBLIC _esavepic
-_esavepic PROC FAR
+	PUBLIC _ega_savepic
+_ega_savepic PROC FAR
 	PUSH    SI
 	PUSH    DI
 	PUSH    DS
@@ -804,14 +804,14 @@ loop1:
 	POP     SI
 	RET
 
-_esavepic ENDP
+_ega_savepic ENDP
 
 ;=============================================================================;
 ; retpic                                                                      ;
 ;     return picture from screen memory page 0 to page 1                      ;
 ;=============================================================================;
-	PUBLIC _eretpic
-_eretpic PROC FAR
+	PUBLIC _ega_retpic
+_ega_retpic PROC FAR
 	PUSH    SI
 	PUSH    DI
 	PUSH    DS
@@ -840,14 +840,14 @@ loop2:
 	POP     SI
 	RET
 
-_eretpic ENDP
+_ega_retpic ENDP
 
 ;=============================================================================;
 ; clsall                                                                      ;
 ;       clear screen memory page 1 to blank                                   ;
 ;=============================================================================;
-	PUBLIC _eclsall
-_eclsall PROC FAR
+	PUBLIC _ega_clsall
+_ega_clsall PROC FAR
 	PUSH    DI
 	PUSH    ES
 
@@ -862,15 +862,15 @@ _eclsall PROC FAR
 	POP     DI
 	RET
 
-_eclsall ENDP
+_ega_clsall ENDP
 
 ;=============================================================================;
 ; clsgraph                                                                    ;
 ;     clear graphic screen for window specified                               ;
-; USAGE : clsgraph(int x1,int y1,int x2,int y2)                               ;
+; USAGE : clsgraph(int p_xStart, int p_yStart, int p_xEnd, int p_yEnd)        ;
 ;=============================================================================;
-	PUBLIC _eclsgraph
-_eclsgraph PROC FAR
+	PUBLIC _ega_clsgraph
+_ega_clsgraph PROC FAR
 	PUSH    BP
 	PUSH    DI
 	PUSH    ES
@@ -885,7 +885,7 @@ _eclsgraph PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -925,15 +925,15 @@ endclsgraph:
 	POP     BP
 	RET
 
-_eclsgraph  ENDP
+_ega_clsgraph  ENDP
 
 ;=============================================================================;
 ; clrline                                                                     ;
 ;     clear line y1 from x1 to x2                                             ;
 ; USAGE : clrline(int x1,int y1,int x2)                                       ;
 ;=============================================================================;
-	PUBLIC _eclrline
-_eclrline PROC FAR
+	PUBLIC _ega_clrline
+_ega_clrline PROC FAR
 	PUSH    BP
 	PUSH    DI
 	PUSH    ES
@@ -948,7 +948,7 @@ _eclrline PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -980,14 +980,14 @@ endclearline:
 	POP     BP
 	RET
 
-_eclrline ENDP
+_ega_clrline ENDP
 
 ;=============================================================================;
 ; prakeaw                                                                     ;
 ;       write parkeaw at upper left cornor                                    ;
 ;=============================================================================;
-	PUBLIC _eprakeaw
-_eprakeaw PROC FAR
+	PUBLIC _ega_prakeaw
+_ega_prakeaw PROC FAR
 	PUSH    BP
 	MOV     BP,SP
 	PUSH    SI
@@ -1140,7 +1140,7 @@ _eprakeaw PROC FAR
 	POP     BP
 	RET
 
-_eprakeaw ENDP
+_ega_prakeaw ENDP
 
 ;------------------------------------------------------
 ; fic_getwind(x1, y1, linecount, bytecount, buffptr)
@@ -1163,8 +1163,8 @@ fic_getwind_stack STRUC
 
 fic_getwind_stack ENDS
 
-	PUBLIC _egetwind
-_egetwind PROC FAR
+	PUBLIC _ega_getwind
+_ega_getwind PROC FAR
 	PUSH    BP
 	PUSH    DS
 	PUSH    ES
@@ -1180,7 +1180,7 @@ _egetwind PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	ADD     AX,[BP].x1_9
@@ -1207,7 +1207,7 @@ end_getwind9:
 	POP     BP
 	RET
 
-_egetwind ENDP
+_ega_getwind ENDP
 
 ;------------------------------------------------------
 ; fic_putwind(x1, y1, linecount, bytecount, buffptr)
@@ -1229,8 +1229,8 @@ fic_putwind_stack STRUC
 
 fic_putwind_stack ENDS
 
-	PUBLIC _eputwind
-_eputwind PROC FAR
+	PUBLIC _ega_putwind
+_ega_putwind PROC FAR
 	PUSH    BP
 	PUSH    DS
 	PUSH    ES
@@ -1246,7 +1246,7 @@ _eputwind PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _eoffset                    ; get offset in AX
+	CALL    _ega_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	ADD     AX,[BP].x1_10
@@ -1273,7 +1273,7 @@ end_putwind10:
 	POP     BP
 	RET
 
-_eputwind ENDP
+_ega_putwind ENDP
 
 EGAVGA_TEXT ENDS
 

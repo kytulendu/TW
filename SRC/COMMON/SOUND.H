@@ -23,9 +23,9 @@
 #define Aa 440/2
 #define Bb 494/2
 
-/** Play sound.
-*  \param[in]  p_freq		frequency of sound.
-*  \param[in]  p_duration	duration of sound. */
+/** Emit a sound in frequncy and duration given.
+*  \param[in]  p_freq		frequncy in Hz.
+*  \param[in]  p_duration	time to delay in mili-secound. */
 void soundnoise( unsigned int p_freq, unsigned int p_duration );
 
 /** Play error sound */

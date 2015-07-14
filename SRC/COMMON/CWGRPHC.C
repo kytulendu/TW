@@ -26,20 +26,48 @@
 
 #include "cwgrphc.h"
 
-void prchar( unsigned char p_char, unsigned int p_attr, unsigned int x, unsigned int y ) {
-	( *prchar_ptr )( p_char, p_attr, x, y );
+void prchar( char p_char, int p_attr, int p_x, int p_y ) {
+	( *prchar_ptr )( p_char, p_attr, p_x, p_y );
 }
 
-void prblank( unsigned int x, unsigned int y ) {
-	( *prblank_ptr )( x, y );
+void prblank( int p_x, int p_y ) {
+	( *prblank_ptr )( p_x, p_y );
 }
 
-void setcurpos( unsigned int x, unsigned int y, int p_thaimode ) {
-	( *setcurpos_ptr )( x, y, p_thaimode );
+void setcurpos( int p_x, int p_y, int p_thaimode ) {
+	( *setcurpos_ptr )( p_x, p_y, p_thaimode );
 }
 
-void plot( unsigned int x, unsigned int y ) {
-	( *plot_ptr )( x, y );
+void _putpixel( int p_x, int p_y ) {
+	( *putpixel_ptr )( p_x, p_y );
+}
+
+void settext( ) {
+	( *settext_ptr )( );
+}
+
+void savepic( ) {
+	( *savepic_ptr )( );
+}
+
+void retpic( ) {
+	( *retpic_ptr )( );
+}
+
+void clsall( ) {
+	( *clsall_ptr )( );
+}
+
+void clsgraph( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd ) {
+	( *clsgraph_ptr )( p_xStart, p_yStart, p_xEnd, p_yEnd );
+}
+
+void clrline( int x1, int y1, int x2 ) {
+	( *clrline_ptr )( x1, y1, x2 );
+}
+
+void prakeaw( ) {
+	( *prakeaw_ptr )( );
 }
 
 void setgraph( ) {
@@ -76,57 +104,57 @@ void setgraph( ) {
 	/* MCGA here because current VGA use 640x480 monochrome graphic mode */
 	case MCGA:
 	case VGA:
-		prchar_ptr = eprchar;
-		prblank_ptr = eprblank;
-		setcurpos_ptr = esetcurpos;
-		plot_ptr = eplot;
-		setgraph_ptr = esetgraph;
-		settext_ptr = esettext;
-		savepic_ptr = esavepic;
-		retpic_ptr = eretpic;
-		clsall_ptr = eclsall;
-		clsgraph_ptr = eclsgraph;
-		clrline_ptr = eclrline;
-		prakeaw_ptr = eprakeaw;
-		putwind_ptr = eputwind;
-		getwind_ptr = egetwind;
+		prchar_ptr = ega_prchar;
+		prblank_ptr = ega_blank;
+		setcurpos_ptr = ega_setcurpos;
+		putpixel_ptr = ega_putpixel;
+		setgraph_ptr = ega_setgraph;
+		settext_ptr = ega_settext;
+		savepic_ptr = ega_savepic;
+		retpic_ptr = ega_retpic;
+		clsall_ptr = ega_clsall;
+		clsgraph_ptr = ega_clsgraph;
+		clrline_ptr = ega_clrline;
+		prakeaw_ptr = ega_prakeaw;
+		putwind_ptr = ega_putwind;
+		getwind_ptr = ega_getwind;
 		break;
 
 	case HERCMONO:
 		shrink_factor = 10;
 		center_factor = 5;
 
-		prchar_ptr = hprchar;
-		prblank_ptr = hprblank;
-		setcurpos_ptr = hsetcurpos;
-		plot_ptr = hplot;
-		setgraph_ptr = hsetgraph;
-		settext_ptr = hsettext;
-		savepic_ptr = hsavepic;
-		retpic_ptr = hretpic;
-		clsall_ptr = hclsall;
-		clsgraph_ptr = hclsgraph;
-		clrline_ptr = hclrline;
-		prakeaw_ptr = hprakeaw;
-		putwind_ptr = hputwind;
-		getwind_ptr = hgetwind;
+		prchar_ptr = herc_prchar;
+		prblank_ptr = herc_prblank;
+		setcurpos_ptr = herc_setcurpos;
+		putpixel_ptr = herc_putpixel;
+		setgraph_ptr = herc_setgraph;
+		settext_ptr = herc_settext;
+		savepic_ptr = herc_savepic;
+		retpic_ptr = herc_retpic;
+		clsall_ptr = herc_clsall;
+		clsgraph_ptr = herc_clsgraph;
+		clrline_ptr = herc_clrline;
+		prakeaw_ptr = herc_prakeaw;
+		putwind_ptr = herc_putwind;
+		getwind_ptr = herc_getwind;
 		break;
 
 	case ATT400:
-		prchar_ptr = aprchar;
-		prblank_ptr = aprblank;
-		setcurpos_ptr = asetcurpos;
-		plot_ptr = aplot;
-		setgraph_ptr = asetgraph;
-		settext_ptr = asettext;
-		savepic_ptr = asavepic;
-		retpic_ptr = aretpic;
-		clsall_ptr = aclsall;
-		clsgraph_ptr = aclsgraph;
-		clrline_ptr = aclrline;
-		prakeaw_ptr = aprakeaw;
-		putwind_ptr = aputwind;
-		getwind_ptr = agetwind;
+		prchar_ptr = att_prchar;
+		prblank_ptr = att_prblank;
+		setcurpos_ptr = att_setcurpos;
+		putpixel_ptr = att_putpixel;
+		setgraph_ptr = att_setgraph;
+		settext_ptr = att_settext;
+		savepic_ptr = att_savepic;
+		retpic_ptr = att_retpic;
+		clsall_ptr = att_clsall;
+		clsgraph_ptr = att_clsgraph;
+		clrline_ptr = att_clrline;
+		prakeaw_ptr = att_prakeaw;
+		putwind_ptr = att_putwind;
+		getwind_ptr = att_getwind;
 		break;
 
 	default:
@@ -134,32 +162,4 @@ void setgraph( ) {
 		exit( EXIT_FAILURE );
 	}
 	( *setgraph_ptr )( );
-}
-
-void settext( ) {
-	( *settext_ptr )( );
-}
-
-void savepic( ) {
-	( *savepic_ptr )( );
-}
-
-void retpic( ) {
-	( *retpic_ptr )( );
-}
-
-void clsall( ) {
-	( *clsall_ptr )( );
-}
-
-void clsgraph( unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2 ) {
-	( *clsgraph_ptr )( x1, y1, x2, y2 );
-}
-
-void clrline( unsigned int x1, unsigned int y1, unsigned int x2 ) {
-	( *clrline_ptr )( x1, y1, x2 );
-}
-
-void prakeaw( ) {
-	( *prakeaw_ptr )( );
 }

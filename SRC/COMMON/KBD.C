@@ -14,17 +14,17 @@
 
 #include "kbd.h"
 
-void waitkbd( unsigned int x, unsigned int y ) {
+void waitkbd( unsigned int p_xcurpos, unsigned int p_ycurpos ) {
 	register unsigned int i;
 
-	setcurpos( x, y, thaimode );
+	setcurpos( p_xcurpos, p_ycurpos, thaimode );
 	while ( !keypressed( ) ) {
 		for ( i = 0; !keypressed( ) && i < 6000; i++ );
-		setcurpos( x, y, thaimode );
+		setcurpos( p_xcurpos, p_ycurpos, thaimode );
 		for ( i = 0; !keypressed( ) && i < 6000; i++ );
-		setcurpos( x, y, thaimode );
+		setcurpos( p_xcurpos, p_ycurpos, thaimode );
 	}
-	setcurpos( x, y, thaimode );
+	setcurpos( p_xcurpos, p_ycurpos, thaimode );
 }
 
 int readkbd( void ) {

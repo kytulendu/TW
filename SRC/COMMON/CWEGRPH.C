@@ -1,6 +1,6 @@
 /*
 * ============================================================================
-* EGA/VGA graphics module for CW 1.20
+* EGA/VGA/MCGA graphics module for CW 1.20
 *
 * Kraisorn  Liansee
 * Date:      04/21/1988
@@ -18,13 +18,14 @@
 #include "grdetect.h"
 
 /** Set EGA/VGA/MCGA Graphic Card to graphic mode */
-void esetgraph( void ) {
+void ega_setgraph( void ) {
 	union REGS inregs, outregs;
 
 	if ( scrmode == VGA ) {
-		inregs.x.ax = 0x12;			/* 640 x 480 16 color graphic mode on VGA display */
+		/*inregs.x.ax = 0x12;*/			/* 640 x 480 16 color graphic mode on VGA display */
+		inregs.x.ax = 0x11;
 	} else if ( scrmode == MCGA ) {
-		inregs.x.ax = 0x11;			/* 640 x 350 monochrome graphic mode on EGA display */
+		inregs.x.ax = 0x11;			/* 640 x 480 monochrome graphic mode on MCGA display */
 	} else if ( scrmode == EGA64 || scrmode == EGA ) {
 		inregs.x.ax = 0x10;			/* 640 x 350 4 or 16 color graphic mode on EGA display */
 	} else {						/* scrmode == EGAMONO */
@@ -33,25 +34,24 @@ void esetgraph( void ) {
 
 	int86( 0x10, &inregs, &outregs );
 
-	outportb( 0x03C4, 0x02 );
+	outportb( 0x03C4, 0x02 );		/* CGA, EGA, VGA sequencer index */
 	if ( scrmode != EGAMONO ) {
-		outportb( 0x03C5, 0x0F );
+		outportb( 0x03C5, 0x0F );	/* CGA, EGA, VGA sequencer */
 	} else {
 		outportb( 0x03C5, 0x03 );	/* use 2 plain only on mode 0F */
 	}
 }
 
-/** Set EGA/VGA/MCGA Graphic Card to text mode by call
-*   BIOS routine INT 10h */
-void esettext( void ) {
+/** Set EGA/VGA/MCGA Graphic Card to text mode */
+void ega_settext( void ) {
 	union REGS inregs, outregs;
 
 	inregs.x.ax = 3;					/* 80x25 16 color text mode */
 	int86( 0x10, &inregs, &outregs );
 }
 
-/** Find offest of pixel x, y we use the following formula
+/** Find offest of pixel x, y by use the following formula
 *   ( High_byte * y ) + ( x / 8 )  where High_byte = 640 / 8 = 80 */
-unsigned int eoffset( register unsigned int x, register unsigned int y ) {
+unsigned int ega_offset( register unsigned int x, register unsigned int y ) {
 	return ( ( 80 * y ) + ( x / 8 ) );
 }

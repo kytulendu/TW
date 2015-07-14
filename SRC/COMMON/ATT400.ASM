@@ -5,14 +5,14 @@
 ; AT&T 6300 / Olivetti M24 Graphic Card Driver                               ;
 ;****************************************************************************;
 
-INCLUDE   cwfntam.asm
+INCLUDE cwfntam.asm
 
 	DGROUP		GROUP _DATA, _BSS
 
 	_DATA		SEGMENT WORD PUBLIC 'DATA'
 
 EXTRN _dfont:byte, _ditalicfont:byte
-EXTRN _curfont:byte, _enlargefont:byte, _offsetfont:word
+EXTRN _curfont:byte, _enlargefont:byte, _fontoffset:word
 EXTRN _chulalogo1:word, _chulalogo2:word
 EXTRN _screen_buffptr:dword
 
@@ -26,13 +26,14 @@ ATT_Address		dw   0B800h           ; Beginning of AT&T400 frame buffer
 ATT400_TEXT		SEGMENT BYTE PUBLIC 'CODE'
 				ASSUME CS:ATT400_TEXT, DS:DGROUP
 
-EXTRN _aoffset:far
+EXTRN _att_offset:far
 
 ;=============================================================================;
-; _aprchar -  print character at specified cursor position                    ;
+; _att_prchar -  print character at specified cursor position                 ;
 ;         ( don't forward cursor position )                                   ;
 ;                                                                             ;
-;     USAGE : aprchar(unsigned c, unsigned attr, unsigned x, unsigned y)      ;
+;     USAGE :                                                                 ;
+; att_prchar(unsigned char p_char, unsigned int p_attr, int p_x, int p_y)     ;
 ;             Attribute : bit 0 -> single underline                           ;
 ;                         bit 1 -> reverse                                    ;
 ;                         bit 2 -> bold                                       ;
@@ -42,8 +43,8 @@ EXTRN _aoffset:far
 ;                         bit 6 -> enlarge                                    ;
 ;                         bit 7 -> double underline                           ;
 ;=============================================================================;
-	PUBLIC _aprchar
-_aprchar PROC FAR
+	PUBLIC _att_prchar
+_att_prchar PROC FAR
 	PUSH    BP
 	PUSH    SI
 	PUSH    DI
@@ -55,7 +56,7 @@ _aprchar PROC FAR
 	MOV     SI,[BP+12]                  ; get character
 	AND     SI,00FFh                    ; clear high byte
 	ADD     SI,SI                       ; add for word offset
-	ADD     SI,OFFSET DGROUP:_offsetfont
+	ADD     SI,OFFSET DGROUP:_fontoffset
 	MOV     SI,DS:[SI]                  ; get offset from table
 	MOV     AL,[BP+14]                  ; get attribute
 	OR      AL,AL                       ; Has it have attribute ?
@@ -109,7 +110,7 @@ transferfont:
 	MOV     DS:[DI+16],AX
 	MOV     AX,DS:[BX+SI+18]
 	MOV     DS:[DI+18],AX
-	MOV     BX,OFFSET DGROUP:_curfont    ; base table is in BX
+	MOV     BX,OFFSET DGROUP:_curfont   ; base table is in BX
 	XOR     SI,SI                       ; DS:[BX+SI] now point at font
 	MOV     AL,[BP+14]                  ; get attribute
 	TEST    AL,004h                     ; bold ?
@@ -261,7 +262,7 @@ below_level:
 	PUSH    AX
 	MOV     DI,BX                       ; save in register variable
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     BX,DI
@@ -315,7 +316,7 @@ middle_level:
 	PUSH    AX
 	MOV     DI,BX                       ; save in register variable
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     BX,DI
@@ -472,7 +473,7 @@ cont5:
 	PUSH    AX
 	MOV     DI,BX                       ; save in register variable
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     BX,DI
@@ -523,7 +524,7 @@ above_middle:
 	PUSH    AX
 	MOV     DI,BX                       ; save in register variable
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     BX,DI
@@ -568,16 +569,16 @@ out_write:
 	POP     BP
 	RET
 
-_aprchar ENDP
+_att_prchar ENDP
 
 ;=============================================================================;
-; _aprblank -  print blank character at specified cursor position             ;
+; _att_prblank -  print blank character at specified cursor position          ;
 ;         ( don't forward cursor position )                                   ;
 ;                                                                             ;
-;     USAGE : aprblank(unsigned x, unsigned y)                                ;
+;     USAGE : att_prblank(unsigned x, unsigned y)                             ;
 ;=============================================================================;
-   PUBLIC _aprblank
-_aprblank PROC FAR
+   PUBLIC _att_prblank
+_att_prblank PROC FAR
 	PUSH    BP
 	PUSH    DI
 	PUSH    ES
@@ -592,7 +593,7 @@ _aprblank PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                    ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -645,15 +646,15 @@ _aprblank PROC FAR
 	POP     BP
 	RET
 
-_aprblank ENDP
+_att_prblank ENDP
 
 ;=============================================================================;
-; _asetcurpos -  xor cursor at specified cursor position                      ;
+; _att_setcurpos -  xor cursor at specified cursor position                   ;
 ;                                                                             ;
-;     USAGE : asetcurpos(unsigned x, unsigned y, int thaimode)                ;
+;     USAGE : att_setcurpos(unsigned x, unsigned y, int thaimode)             ;
 ;=============================================================================;
-	PUBLIC _asetcurpos
-_asetcurpos PROC FAR
+	PUBLIC _att_setcurpos
+_att_setcurpos PROC FAR
 	PUSH    BP
 	PUSH    DI
 	PUSH    ES
@@ -674,7 +675,7 @@ thaimode:
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                    ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -715,7 +716,7 @@ englishmode:
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                    ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -732,17 +733,18 @@ outsetcurpos:
 	POP     BP
 	RET
 
-_asetcurpos ENDP
+_att_setcurpos ENDP
 
 ;=============================================================================;
-; _aplot -  plot dot by find byte position from formula                       ;
+; putpixel                                                                    ;
+;     put a pixel to given position                                           ;
 ;         2000h * (Y mod 4) + 80 * integer(Y / 4) + integer(X / 8)            ;
 ;         find bit position in byte from formula 7 - (x mod 8)                ;
 ;                                                                             ;
-;     USAGE : aplot(unsigned x, unsigned y)                                   ;
+;     USAGE : att_putpixel(unsigned x, unsigned y)                            ;
 ;=============================================================================;
-	PUBLIC _aplot
-_aplot PROC FAR
+	PUBLIC _att_putpixel
+_att_putpixel PROC FAR
 	PUSH    BP
 	PUSH    DI
 	PUSH    ES
@@ -752,7 +754,7 @@ _aplot PROC FAR
 	MOV     DI,[BP+10]
 	PUSH    DI
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                    ; get offset in AX
 
 	MOV     SP,BP
 	MOV     CX,DI
@@ -770,13 +772,13 @@ _aplot PROC FAR
 	POP     BP
 	RET
 
-_aplot ENDP
+_att_putpixel ENDP
 
 ;=============================================================================;
-; _asavepic -  save picture from screen memory page 1 to page 0               ;
+; _att_savepic -  save picture from screen memory page 1 to page 0            ;
 ;=============================================================================;
-	PUBLIC _asavepic
-_asavepic PROC FAR
+	PUBLIC _att_savepic
+_att_savepic PROC FAR
 	PUSH    SI
 	PUSH    DI
 	PUSH    DS
@@ -804,13 +806,13 @@ loop1:
 	POP     SI
 	RET
 
-_asavepic ENDP
+_att_savepic ENDP
 
 ;=============================================================================;
-; _aretpic -  return picture from screen memory page 0 to page 1              ;
+; _att_retpic -  return picture from screen memory page 0 to page 1           ;
 ;=============================================================================;
-	PUBLIC _aretpic
-_aretpic PROC FAR
+	PUBLIC _att_retpic
+_att_retpic PROC FAR
 	PUSH    SI
 	PUSH    DI
 	PUSH    DS
@@ -839,13 +841,13 @@ loop2:
 	POP     SI
 	RET
 
-_aretpic ENDP
+_att_retpic ENDP
 
 ;=============================================================================;
-; _aclsall -  clear screen memory page 1 to blank                             ;
+; _att_clsall -  clear screen memory page 1 to blank                          ;
 ;=============================================================================;
-	PUBLIC _aclsall
-_aclsall PROC FAR
+	PUBLIC _att_clsall
+_att_clsall PROC FAR
 	PUSH    DI
 	PUSH    ES
 
@@ -860,15 +862,15 @@ _aclsall PROC FAR
 	POP     DI
 	RET
 
-_aclsall ENDP
+_att_clsall ENDP
 
 ;=============================================================================;
-; _aclsgraph -  clear graphic screen for window specified                     ;
+; _att_clsgraph - clear graphic screen for window specified                   ;
 ;                                                                             ;
-;     USAGE : aclsgraph(int x1, int y1, int x2, int y2)                       ;
+;     USAGE : att_clsgraph(int p_xStart, int p_yStart, int p_xEnd, int p_yEnd);
 ;=============================================================================;
-	PUBLIC _aclsgraph
-_aclsgraph PROC FAR
+	PUBLIC _att_clsgraph
+_att_clsgraph PROC FAR
 	PUSH    BP
 	PUSH    DI
 	PUSH    ES
@@ -883,7 +885,7 @@ _aclsgraph PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                    ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -923,15 +925,15 @@ endclsgraph:
 	POP     BP
 	RET
 
-_aclsgraph  ENDP
+_att_clsgraph  ENDP
 
 ;=============================================================================;
-; _aclrline -  clear line y1 from x1 to x2                                    ;
+; _att_clrline -  clear line y1 from x1 to x2                                 ;
 ;                                                                             ;
-;     USAGE : aclrline(int x1, int y1, int x2)                                ;
+;     USAGE : att_clrline(int x1, int y1, int x2)                             ;
 ;=============================================================================;
-	PUBLIC _aclrline
-_aclrline PROC FAR
+	PUBLIC _att_clrline
+_att_clrline PROC FAR
 	PUSH    BP
 	PUSH    DI
 	PUSH    ES
@@ -946,7 +948,7 @@ _aclrline PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                    ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -978,13 +980,13 @@ endclearline:
 	POP     BP
 	RET
 
-_aclrline ENDP
+_att_clrline ENDP
 
 ;=============================================================================;
-; _aprakeaw -  write logo at upper left cornor                                ;
+; _att_prakeaw -  write logo at upper left cornor                             ;
 ;=============================================================================;
-	PUBLIC _aprakeaw
-_aprakeaw PROC FAR
+	PUBLIC _att_prakeaw
+_att_prakeaw PROC FAR
 	PUSH    SI
 	PUSH    DI
 	PUSH    ES
@@ -1134,7 +1136,7 @@ _aprakeaw PROC FAR
 	POP     SI
 	RET
 
-_aprakeaw ENDP
+_att_prakeaw ENDP
 
 ;------------------------------------------------------
 ;  fic_getwind(x1, y1, linecount, bytecount, buffptr)
@@ -1157,8 +1159,8 @@ fic_getwind_stack STRUC
 
 fic_getwind_stack ENDS
 
-	PUBLIC _agetwind
-_agetwind PROC FAR
+	PUBLIC _att_getwind
+_att_getwind PROC FAR
 	PUSH    BP
 	PUSH    DS
 	PUSH    ES
@@ -1174,7 +1176,7 @@ _agetwind PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	ADD     AX,[BP].x1_9
@@ -1201,7 +1203,7 @@ end_getwind9:
 	POP     BP
 	RET
 
-_agetwind ENDP
+_att_getwind ENDP
 
 ;------------------------------------------------------
 ;  fic_putwind(x1, y1, linecount, bytecount, buffptr)
@@ -1223,8 +1225,8 @@ fic_putwind_stack STRUC
 
 fic_putwind_stack ENDS
 
-	PUBLIC _aputwind
-_aputwind PROC FAR
+	PUBLIC _att_putwind
+_att_putwind PROC FAR
 	PUSH    BP
 	PUSH    DS
 	PUSH    ES
@@ -1240,7 +1242,7 @@ _aputwind PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _aoffset                    ; get offset in AX
+	CALL    _att_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	ADD     AX,[BP].x1_10
@@ -1267,7 +1269,7 @@ end_putwind10:
 	POP     BP
 	RET
 
-_aputwind ENDP
+_att_putwind ENDP
 
 ATT400_TEXT ENDS
 

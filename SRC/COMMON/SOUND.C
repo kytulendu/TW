@@ -19,10 +19,13 @@ void errorsound( void ) { }
 
 #else
 
-void biosdelay( long millisecs );
+/** Delay for duration given.
+*  \param[in]  p_duration	time to delay in mili-secound. */
+void biosdelay( long p_duration );
 
 void soundnoise( unsigned int p_freq, unsigned int p_duration ) {
 	sound( p_freq );
+	/* we can't use delay() because it call dos, so it is not reentrant */
 	biosdelay( ( long ) p_duration );
 	nosound( );
 }
@@ -39,19 +42,18 @@ void errorsound( void ) {
 	soundnoise( C * 2, 40 );
 }
 
-/* we can not use delay() because it call dos, so it is not reentrant */
-void biosdelay( long millisecs ) {
+void biosdelay( long p_duration ) {
 	long i;
 
 	i = biostime( 0, 0 );
-	millisecs = i + 182L * millisecs / 10000L;
-	if ( millisecs == i ) {
-		millisecs++;
+	p_duration = i + 182L * p_duration / 10000L;
+	if ( p_duration == i ) {
+		p_duration++;
 	}
 
 	do {
 		i = biostime( 0, 0 );
-	} while ( i < millisecs );
+	} while ( i < p_duration );
 }
 
 #endif

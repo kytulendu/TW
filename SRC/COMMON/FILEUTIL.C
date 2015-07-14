@@ -21,8 +21,8 @@
 #include "ekbd.h"
 #include "sound.h"
 
-boolean file_exist( char *filename ) {
-	FILE* fd = fopen( filename, "rb" );
+boolean file_exist( char *p_filename ) {
+	FILE* fd = fopen( p_filename, "rb" );
 	if ( !fd ) {
 		return NO;
 	} else {
@@ -31,26 +31,26 @@ boolean file_exist( char *filename ) {
 	}
 }
 
-search_file_mode find_file( char *filename, char *search_path ) {
+search_file_mode find_file( char *p_filename, char *search_path ) {
 	struct ffblk ffblk;
 	char p[MAXPATH];
 
-	if ( findfirst( filename, &ffblk, 0 ) == 0 ) {
+	if ( findfirst( p_filename, &ffblk, 0 ) == 0 ) {
 		return CUR_DIR;
 	}
-	sprintf( p, "%s\\%s", search_path, filename );
+	sprintf( p, "%s\\%s", search_path, p_filename );
 	if ( findfirst( p, &ffblk, 0 ) == 0 ) {
 		return CW_DIR;
 	}
 	return NOT_FOUND;
 }
 
-int havewild( char *filname ) {
-	while ( *filname ) {
-		if ( ( *filname == '*' ) || ( *filname == '?' ) ) {
+boolean havewild( char *p_filename ) {
+	while ( *p_filename ) {
+		if ( ( *p_filename == '*' ) || ( *p_filename == '?' ) ) {
 			return( YES );
 		}
-		filname++;
+		p_filename++;
 	}
 	return( NO );
 }

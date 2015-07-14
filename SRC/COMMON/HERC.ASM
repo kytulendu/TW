@@ -16,7 +16,7 @@ INCLUDE cwfnthm.asm
 
 	_DATA		SEGMENT WORD PUBLIC 'DATA'
 
-EXTRN _curfont:BYTE, _enlargefont:BYTE, _offsetfont:WORD
+EXTRN _curfont:BYTE, _enlargefont:BYTE, _fontoffset:WORD
 EXTRN _chulalogo1:WORD, _chulalogo2:WORD
 EXTRN _dfont:BYTE, _ditalicfont:BYTE
 EXTRN _screen_buffptr:DWORD
@@ -71,10 +71,10 @@ HERC_TEXT  SEGMENT   BYTE PUBLIC 'CODE'
 		   ASSUME    CS:HERC_TEXT,DS:DGROUP
 
 ;=============================================================================;
-; _hprchar -  print character at specified cursor position                    ;
+; _herc_prchar -  print character at specified cursor position                ;
 ;         ( don't forward cursor position )                                   ;
 ;                                                                             ;
-;     USAGE : hprchar(unsigned c, unsigned attr, unsigned x, unsigned y)      ;
+;     USAGE : herc_prchar(unsigned c, unsigned attr, unsigned x, unsigned y)  ;
 ;             Attribute : bit 0 -> single underline                           ;
 ;                         bit 1 -> reverse                                    ;
 ;                         bit 2 -> bold                                       ;
@@ -84,8 +84,8 @@ HERC_TEXT  SEGMENT   BYTE PUBLIC 'CODE'
 ;                         bit 6 -> enlarge                                    ;
 ;                         bit 7 -> double underline                           ;
 ;=============================================================================;
-	PUBLIC _hprchar
-_hprchar PROC FAR
+	PUBLIC _herc_prchar
+_herc_prchar PROC FAR
 	PUSH    BP
 	MOV     BP,SP
 	PUSH    SI
@@ -99,7 +99,7 @@ _hprchar PROC FAR
 	MOV     SI,[BP+6]                   ; get character
 	AND     SI,00FFh                    ; clear high byte
 	ADD     SI,SI                       ; add for word offset
-	ADD     SI,OFFSET DGROUP:_offsetfont
+	ADD     SI,OFFSET DGROUP:_fontoffset
 	MOV     SI,DS:[SI]                  ; get offset from table
 	MOV     AL,[BP+8]                   ; get attribute
 	OR      AL,AL                       ; Has it have attribute ?
@@ -153,7 +153,7 @@ transferfont:
 	MOV     DS:[DI+16],AX
 	MOV     AX,DS:[BX+SI+18]
 	MOV     DS:[DI+18],AX
-	MOV     BX,OFFSET DGROUP:_curfont    ; base table is in BX
+	MOV     BX,OFFSET DGROUP:_curfont   ; base table is in BX
 	XOR     SI,SI                       ; DS:[BX+SI] now point at font
 	MOV     AL,[BP+8]                   ; get attribute
 	TEST    AL,004h                     ; bold ?
@@ -474,16 +474,16 @@ out_write:
 	POP     BP
 	RET
 
-_hprchar  ENDP
+_herc_prchar  ENDP
 
 ;=============================================================================;
-; _hprblank -  print blank character at specified cursor position             ;
+; _herc_prblank -  print blank character at specified cursor position         ;
 ;         ( don't forward cursor position )                                   ;
 ;                                                                             ;
-;     USAGE : hprblank(unsigned x, unsigned y)                                ;
+;     USAGE : herc_prblank(unsigned x, unsigned y)                            ;
 ;=============================================================================;
-	PUBLIC _hprblank
-_hprblank PROC FAR
+	PUBLIC _herc_prblank
+_herc_prblank PROC FAR
 	PUSH    BP
 	MOV     BP,SP
 	PUSH    DI
@@ -524,15 +524,15 @@ _hprblank PROC FAR
 	POP     BP
 	RET
 
-_hprblank ENDP
+_herc_prblank ENDP
 
 ;=============================================================================;
-; _hsetcurpos -  xor cursor at specified cursor position                      ;
+; _herc_setcurpos -  xor cursor at specified cursor position                  ;
 ;                                                                             ;
-;     USAGE : hsetcurpos(unsigned x, unsigned y, int thaimode)                ;
+;     USAGE : herc_setcurpos(unsigned x, unsigned y, int thaimode)            ;
 ;=============================================================================;
-	PUBLIC _hsetcurpos
-_hsetcurpos PROC FAR
+	PUBLIC _herc_setcurpos
+_herc_setcurpos PROC FAR
 	PUSH    BP
 	MOV     BP,SP
 	PUSH    DI
@@ -574,19 +574,19 @@ outsetcurpos:
 	POP     BP
 	RET
 
-_hsetcurpos ENDP
+_herc_setcurpos ENDP
 
 ;=============================================================================;
-; plot                                                                        ;
-;     plot dot by find position as follow                                     ;
+; putpixel                                                                    ;
+;     put a pixel to given position                                           ;
 ;     find byte position from formula                                         ;
 ;          2000h*(Y mod 4) + 90*integer(Y/4) + integer(X/8)                   ;
 ;     find bit position in byte from formula                                  ;
 ;          7 - (x mod 8)                                                      ;
 ;     USAGE : plot(unsigned x,unsigned y)                                     ;
 ;=============================================================================;
-	PUBLIC _hplot
-_hplot PROC FAR
+	PUBLIC _herc_putpixel
+_herc_putpixel PROC FAR
 	PUSH     BP
 	MOV      BP,SP
 	PUSH     DI
@@ -645,14 +645,14 @@ plotnext:
 
 	RET
 
-_hplot ENDP
+_herc_putpixel ENDP
 
 ;=============================================================================;
-; _hsetgraph                                                                  ;
+; _herc_setgraph                                                              ;
 ;         Programs the 6845 CRT controller for the 720 x 348 graphics mode.   ;
 ;=============================================================================;
-	PUBLIC _hsetgraph
-_hsetgraph PROC FAR
+	PUBLIC _herc_setgraph
+_herc_setgraph PROC FAR
 	PUSH    SI
 	PUSH    DS
 	PUSH    ES
@@ -702,7 +702,7 @@ parms:
 	OUT     DX,AL
 
 ; Add By Suttipong Kanakakorn (Noom)
-; Set 0:465 to 0Ah as set to port 3b8h
+; Set 0:465 to 0Ah as set to port 3B8h
 ; Very valuable for Many programs Such as DesqView, Turbo Debugger
 	XOR     SI,SI
 	MOV     DS,SI
@@ -713,24 +713,24 @@ parms:
 	POP     SI
 	RET
 
-_hsetgraph ENDP
+_herc_setgraph ENDP
 
 ;=============================================================================;
-; _hsettext                                                                   ;
+; _herc_settext                                                               ;
 ;      init 6845 CRT Controller to text mode by call BIOS routine INT 10h     ;
 ;=============================================================================;
-;_hsettext PROC FAR
+;_herc_settext PROC FAR
 ;          MOV   AX,7   ; set text mode function
 ;          INT   10h    ; vdo bios routine
 ;          RET
-;_hsettext ENDP
+;_herc_settext ENDP
 
 ;=============================================================================;
-; _hsettext                                                                   ;
+; _herc_settext                                                               ;
 ;         Programs the 6845 CRT controller for text mode.                     ;
 ;=============================================================================;
-	PUBLIC _hsettext
-_hsettext PROC FAR
+	PUBLIC _herc_settext
+_herc_settext PROC FAR
 	PUSH    SI
 	PUSH    DS
 	PUSH    ES
@@ -771,13 +771,13 @@ parms1:
 	POP     SI
 	RET
 
-_hsettext ENDP
+_herc_settext ENDP
 
 ;=============================================================================;
-; _hsavepic -  save picture from screen memory page 1 to page 0               ;
+; _herc_savepic -  save picture from screen memory page 1 to page 0           ;
 ;=============================================================================;
-	PUBLIC _hsavepic
-_hsavepic PROC FAR
+	PUBLIC _herc_savepic
+_herc_savepic PROC FAR
 	PUSH    BP
 	MOV     BP,SP
 	PUSH    SI
@@ -799,13 +799,13 @@ _hsavepic PROC FAR
 	POP     BP
 	RET
 
-_hsavepic ENDP
+_herc_savepic ENDP
 
 ;=============================================================================;
-; _hretpic -  return picture from screen memory page 0 to page 1              ;
+; _herc_retpic -  return picture from screen memory page 0 to page 1          ;
 ;=============================================================================;
-	PUBLIC _hretpic
-_hretpic PROC FAR
+	PUBLIC _herc_retpic
+_herc_retpic PROC FAR
 	PUSH    BP
 	MOV     BP,SP
 	PUSH    SI
@@ -829,13 +829,13 @@ _hretpic PROC FAR
 	POP     BP
 	RET
 
-_hretpic ENDP
+_herc_retpic ENDP
 
 ;=============================================================================;
-; _hclsall -  clear screen memory page 1 to blank                             ;
+; _herc_clsall -  clear screen memory page 1 to blank                         ;
 ;=============================================================================;
-	PUBLIC _hclsall
-_hclsall PROC  FAR
+	PUBLIC _herc_clsall
+_herc_clsall PROC  FAR
 	PUSH    BP
 	MOV     BP,SP
 	PUSH    DI
@@ -853,15 +853,15 @@ _hclsall PROC  FAR
 	POP     BP
 	RET
 
-_hclsall ENDP
+_herc_clsall ENDP
 
 ;=============================================================================;
-; _hclsgraph -  clear graphic screen for window specified                     ;
+; _herc_clsgraph -  clear graphic screen for window specified                 ;
 ;                                                                             ;
-;     USAGE : hclsgraph(int x1, int y1, int x2, int y2)                       ;
+;     USAGE : herc_clsgraph(int x1, int y1, int x2, int y2)                   ;
 ;=============================================================================;
-	PUBLIC _hclsgraph
-_hclsgraph PROC FAR
+	PUBLIC _herc_clsgraph
+_herc_clsgraph PROC FAR
 	PUSH    BP
 	MOV     BP,SP
 	PUSH    DI
@@ -931,15 +931,15 @@ loopfive:
 	POP     BP
 	RET
 
-_hclsgraph ENDP
+_herc_clsgraph ENDP
 
 ;=============================================================================;
-; _hclrline -  clear line y1 from x1 to x2                                    ;
+; _herc_clrline -  clear line y1 from x1 to x2                                ;
 ;                                                                             ;
-;     USAGE : hclrline(int x1, int y1, int x2)                                ;
+;     USAGE : herc_clrline(int x1, int y1, int x2)                            ;
 ;=============================================================================;
-	PUBLIC _hclrline
-_hclrline PROC FAR
+	PUBLIC _herc_clrline
+_herc_clrline PROC FAR
 	PUSH    BP
 	MOV     BP,SP
 	PUSH    DI
@@ -997,14 +997,14 @@ fiveloop:
 	POP     BP
 	RET
 
-_hclrline ENDP
+_herc_clrline ENDP
 
 ;=============================================================================;
 ; prakeaw                                                                     ;
 ;       write parkeaw at upper left cornor                                    ;
 ;=============================================================================;
-	PUBLIC _hprakeaw
-_hprakeaw PROC FAR
+	PUBLIC _herc_prakeaw
+_herc_prakeaw PROC FAR
 	PUSH    BP
 	MOV     BP,SP
 	PUSH    SI
@@ -1117,7 +1117,7 @@ _hprakeaw PROC FAR
 	POP     BP
 	RET
 
-_hprakeaw ENDP
+_herc_prakeaw ENDP
 
 ;------------------------------------------------------
 ; fic_getwind(x1, y1, linecount, bytecount, buffptr)
@@ -1139,8 +1139,8 @@ fic_getwind_stack STRUC
 
 fic_getwind_stack ENDS
 
-	PUBLIC _hgetwind
-_hgetwind PROC FAR
+	PUBLIC _herc_getwind
+_herc_getwind PROC FAR
 	PUSH    BP
 	PUSH    DS
 	PUSH    ES
@@ -1176,7 +1176,7 @@ end_getwind9:
 	POP     BP
 	RET
 
-_hgetwind ENDP
+_herc_getwind ENDP
 
 ;------------------------------------------------------
 ; fic_putwind(x1, y1, linecount, bytecount, buffptr)
@@ -1198,8 +1198,8 @@ fic_putwind_stack STRUC
 
 fic_putwind_stack ENDS
 
-	PUBLIC _hputwind
-_hputwind PROC FAR
+	PUBLIC _herc_putwind
+_herc_putwind PROC FAR
 	PUSH    BP
 	PUSH    DS
 	PUSH    ES
@@ -1235,7 +1235,7 @@ end_putwind10:
 	POP     BP
 	RET
 
-_hputwind ENDP
+_herc_putwind ENDP
 
 HERC_TEXT ENDS
 

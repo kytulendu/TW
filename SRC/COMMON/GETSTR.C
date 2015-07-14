@@ -24,17 +24,16 @@
 
 #include "getstr.h"
 
-int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, char attr, strtype mode ) {
+int getstring( char *p_textstr, int p_x, int p_y, size_t p_maxlen, char p_attr, strtype p_mode ) {
 	int inkey, key;
 	size_t oldlen, temp;
-	char keepchar;
+	char keepchar = '\0';
+	oldlen = strlen( p_textstr );
+	dispblank( p_x, p_y, p_maxlen, p_attr );
+	dispstrhgc( p_textstr, p_x, p_y, p_attr );
+	waitkbd( p_x + thaistrlen( p_textstr ), p_y );
 
-	keepchar = '\0';
-	oldlen = strlen( textst );
-	dispblank( x, y, maxlen, attr );
-	dispstrhgc( textst, x, y, attr );
-	waitkbd( x + thaistrlen( textst ), y );
-	switch ( mode ) {
+	switch ( p_mode ) {
 	case THAIENG:
 		inkey = readkbd( );
 		break;
@@ -51,6 +50,7 @@ int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen
 		}
 		break;
 	}
+
 	switch ( inkey ) {
 	case CNTRL_H:
 	case BSKEY:
@@ -61,22 +61,23 @@ int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen
 		break;
 	default:
 		key = inkey & 0xff;
-		if ( mode == NUMBER ) {
+		if ( p_mode == NUMBER ) {
 			if ( ( key < '0' ) || ( key > '9' ) ) {
 				break; 
 			}
 		}
-		if ( mode == ONEORTWO ) {
+		if ( p_mode == ONEORTWO ) {
 			if ( ( key != '1' ) && ( key != '2' ) ) {
 				break; 
 			}
 		}
 		if ( ( inkey & 0xff ) >= 32 ) {
-			textst[0] = '\0';
-			dispblank( x, y, maxlen, attr );
+			p_textstr[0] = '\0';
+			dispblank( p_x, p_y, p_maxlen, p_attr );
 		}
 		break;
 	}
+
 	do {
 		switch ( inkey ) {
 		case CNTRL_M:
@@ -94,77 +95,76 @@ int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen
 		case BSKEY:
 		case LEKEY:
 		case CNTRL_S:
-			temp = strlen( textst );
+			temp = strlen( p_textstr );
 			if ( temp != 0 ) {
 				if ( temp < oldlen ) {
-					textst[temp] = keepchar;
+					p_textstr[temp] = keepchar;
 				}
-				keepchar = textst[temp - 1];
-				textst[temp - 1] = '\0';
-				dispblank( x, y, maxlen, attr );
-				dispstrhgc( textst, x, y, attr );
+				keepchar = p_textstr[temp - 1];
+				p_textstr[temp - 1] = '\0';
+				dispblank( p_x, p_y, p_maxlen, p_attr );
+				dispstrhgc( p_textstr, p_x, p_y, p_attr );
 			}
 			break;
 		case RIKEY:
 		case CNTRL_D:
-			temp = strlen( textst );
-			if ( ( temp < oldlen ) && ( temp < maxlen ) ) {
-				textst[temp] = keepchar;
-				keepchar = textst[temp + 1];
-				textst[temp + 1] = '\0';
-				dispblank( x, y, maxlen, attr );
-				dispstrhgc( textst, x, y, attr );
+			temp = strlen( p_textstr );
+			if ( ( temp < oldlen ) && ( temp < p_maxlen ) ) {
+				p_textstr[temp] = keepchar;
+				keepchar = p_textstr[temp + 1];
+				p_textstr[temp + 1] = '\0';
+				dispblank( p_x, p_y, p_maxlen, p_attr );
+				dispstrhgc( p_textstr, p_x, p_y, p_attr );
 			}
 			break;
 		case CNTRL_Y:
-			if ( strlen( textst ) < oldlen ) {
-				textst[strlen( textst )] = keepchar;
+			if ( strlen( p_textstr ) < oldlen ) {
+				p_textstr[strlen( p_textstr )] = keepchar;
 			}
-			keepchar = textst[0];
-			textst[0] = '\0';
-			dispblank( x, y, maxlen, attr );
+			keepchar = p_textstr[0];
+			p_textstr[0] = '\0';
+			dispblank( p_x, p_y, p_maxlen, p_attr );
 			break;
 		case CNTRL_R:
-			if ( strlen( textst ) < oldlen ) {
-				textst[strlen( textst )] = keepchar;
-				dispblank( x, y, maxlen, attr );
-				dispstrhgc( textst, x, y, attr );
+			if ( strlen( p_textstr ) < oldlen ) {
+				p_textstr[strlen( p_textstr )] = keepchar;
+				dispblank( p_x, p_y, p_maxlen, p_attr );
+				dispstrhgc( p_textstr, p_x, p_y, p_attr );
 			}
 			break;
 
 		case F10KEY:
 			thaimode = !thaimode;
-			/* writelanguage( ); */
 			break;
 
 		default:
 			inkey = ( inkey & 0xff );
-			if ( mode == NUMBER ) {
+			if ( p_mode == NUMBER ) {
 				if ( ( inkey < '0' ) || ( inkey > '9' ) ) {
 					break; 
 				}
 			}
-			if ( mode == ONEORTWO ) {
+			if ( p_mode == ONEORTWO ) {
 				if ( ( inkey != '1' ) && ( inkey != '2' ) ) {
 					break; 
 				}
 			}
-			if ( inkey >= 32 && strlen( textst ) < maxlen ) {
+			if ( inkey >= 32 && strlen( p_textstr ) < p_maxlen ) {
 				if ( whatlevel( inkey ) == MIDDLE ) {
-					textst[strlen( textst ) + 1] = '\0';
-					textst[strlen( textst )] = inkey;
-					oldlen = strlen( textst );
-					dispblank( x, y, maxlen, attr );
-					dispstrhgc( textst, x, y, attr );
+					p_textstr[strlen( p_textstr ) + 1] = '\0';
+					p_textstr[strlen( p_textstr )] = inkey;
+					oldlen = strlen( p_textstr );
+					dispblank( p_x, p_y, p_maxlen, p_attr );
+					dispstrhgc( p_textstr, p_x, p_y, p_attr );
 				} else {
-					if ( ( strlen( textst ) != 0 ) &&
-						( whatlevel( inkey ) > whatlevel( textst[strlen( textst ) - 1] ) ) &&
+					if ( ( strlen( p_textstr ) != 0 ) &&
+						( whatlevel( inkey ) > whatlevel( p_textstr[strlen( p_textstr ) - 1] ) ) &&
 						( inkey != HUNAKADMITO ) ) {
-						textst[strlen( textst ) + 1] = '\0';
-						textst[strlen( textst )] = inkey;
-						oldlen = strlen( textst );
-						dispblank( x, y, maxlen, attr );
-						dispstrhgc( textst, x, y, attr );
+						p_textstr[strlen( p_textstr ) + 1] = '\0';
+						p_textstr[strlen( p_textstr )] = inkey;
+						oldlen = strlen( p_textstr );
+						dispblank( p_x, p_y, p_maxlen, p_attr );
+						dispstrhgc( p_textstr, p_x, p_y, p_attr );
 					} else {
 						errorsound( );
 					}
@@ -172,8 +172,10 @@ int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen
 			}
 			break;
 		}
-		waitkbd( x + thaistrlen( textst ), y );
-		switch ( mode ) {
+
+		waitkbd( p_x + thaistrlen( p_textstr ), p_y );
+
+		switch ( p_mode ) {
 		case THAIENG:
 			inkey = readkbd( );
 			break;
@@ -190,21 +192,24 @@ int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen
 			}
 			break;
 		}
+
 	} while ( 1 );
 }
 
-int getname( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, char attr ) {
+int getname( char *p_textstr, int p_x, int p_y, size_t p_maxlen, char p_attr ) {
 	int i;
 
 	char drv[MAXDRIVE + 1], dir[MAXDIR + 1], name[MAXFILE + 1], ext[MAXEXT + 1];
-	char textst2[80];
+	char textstr[80];
+
 	do {
-		i = getstring( textst, x, y, maxlen, attr, ENGUPCASE );
+		i = getstring( p_textstr, p_x, p_y, p_maxlen, p_attr, ENGUPCASE );
 	} while ( ( i != YES ) && ( i != ESCKEY ) && ( i != NO ) );
+
 	if ( i == YES ) {
-		fnsplit( textst, drv, dir, name, ext );
-		fnmerge( textst2, drv, dir, name, ext );
-		if ( strcmp( textst, textst2 ) != 0 ) {
+		fnsplit( p_textstr, drv, dir, name, ext );
+		fnmerge( textstr, drv, dir, name, ext );
+		if ( strcmp( p_textstr, textstr ) != 0 ) {
 			errorsound( );
 			blockmsg( 5 );
 			dispstrhgc( "ชื่อแฟ้มข้อมูลผิดพลาด ! กด <ESC> เพื่อทำงานต่อ", ( 14 + center_factor ) + 13, 5, REVERSEATTR );

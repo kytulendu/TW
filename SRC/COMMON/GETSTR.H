@@ -1,17 +1,23 @@
 #ifndef SCUW_GETSTR_H_INCLUDED
 #define SCUW_GETSTR_H_INCLUDED
 
-/** get string.
-*   input
-*      textst : string want to get
-*      x      : vertical position ( 0 - 89 )
-*      y      : horisontal position ( 0 - 16 )
-*      maxlen : maximum length of string
-*      attr   : attribute of string for displaying
-*      mode   : THAIENG, ENGLISH, ENGUPCASE, NUMBER, ONEORTWO */
-int getstring( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, char attr, strtype mode );
+/** Display string input box.
+*   \param[in]  p_textstr		String want to get.
+*   \param[in]  p_xPos			Vertical position ( 0 - 89 ).
+*   \param[in]  p_yPos			Horisontal position ( 0 - 16 ).
+*   \param[in]  p_maxlen		Maximum length of string.
+*   \param[in]  p_attr			Attribute of string for displaying.
+*   \param[in]  p_mode			THAIENG, ENGLISH, ENGUPCASE, NUMBER, ONEORTWO.
+*   \return int					*/
+int getstring( char *p_textstr, int p_xPos, int p_yPos, size_t p_maxlen, char p_attr, strtype p_mode );
 
-/**  */
-int getname( char *textst, unsigned int x, unsigned int y, unsigned int maxlen, char attr );
+/** Display filename input box.
+*   \param[in]  p_textstr		Filename.
+*   \param[in]  p_xPos			Vertical position ( 0 - 89 ).
+*   \param[in]  p_yPos			Horisontal position ( 0 - 16 ).
+*   \param[in]  p_maxlen		Maximum length of string.
+*   \param[in]  p_attr			Attribute of string for displaying.
+*   \return int					*/
+int getname( char *p_textstr, int p_xPos, int p_yPos, size_t p_maxlen, char p_attr );
 
 #endif /* SCUW_GETSTR_H_INCLUDED */

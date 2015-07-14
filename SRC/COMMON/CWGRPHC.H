@@ -17,11 +17,11 @@
 #endif
 
 #ifndef DEFINE_VAR
-EXTERN int scrmode;
+EXTERN int scrmode;				/* Graphic mode. */
 EXTERN int shrink_factor;		/* Columns decreased. 90 column : 10, 80 column : 0 ) */
 EXTERN int center_factor;		/* Shifting left factor. 90 column : 5, 80 column : 0) */
 #else
-EXTERN int scrmode = DETECT;	/* not initialize (text) mode */
+EXTERN int scrmode = DETECT;	/* Not initialize (text) mode */
 EXTERN int shrink_factor = 0;	/* Columns decreased. 90 column : 10, 80 column : 0 ) */
 EXTERN int center_factor = 0;	/* Shifting left factor. 90 column : 5, 80 column : 0) */
 #endif
@@ -30,58 +30,58 @@ EXTERN unsigned char *screen_buffptr;
 
 /* ===================================================================== */
 
-typedef void( Prchar_func )( unsigned char p_char, unsigned int p_attr, unsigned int x, unsigned int y );
+typedef void( Prchar_func )( unsigned char p_char, unsigned int p_attr, int p_x, int p_y );
 typedef Prchar_func *Prchar_ptr;
 
 EXTERN Prchar_ptr  prchar_ptr;
-EXTERN Prchar_func hprchar, eprchar, aprchar;
+EXTERN Prchar_func herc_prchar, ega_prchar, att_prchar;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Prblank_func )( unsigned int x, unsigned int y );
+typedef void ( Prblank_func )( unsigned int p_x, unsigned int p_y );
 typedef Prblank_func *Prblank_ptr;
 
-EXTERN Prblank_func hprblank, eprblank, aprblank;
+EXTERN Prblank_func herc_prblank, ega_blank, att_prblank;
 EXTERN Prblank_ptr  prblank_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Setcurpos_func )( unsigned int x, unsigned int y, int p_thaimode );
+typedef void ( Setcurpos_func )( unsigned int p_x, unsigned int p_y, int p_thaimode );
 typedef Setcurpos_func *Setcurpos_ptr;
 
-EXTERN Setcurpos_func hsetcurpos, esetcurpos, asetcurpos;
+EXTERN Setcurpos_func herc_setcurpos, ega_setcurpos, att_setcurpos;
 EXTERN Setcurpos_ptr  setcurpos_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Plot_func )( unsigned int x, unsigned int y );
-typedef Plot_func *Plot_ptr;
+typedef void ( Putpixel_func )( int p_x, int p_y );
+typedef Putpixel_func *Putpixel_ptr;
 
-EXTERN Plot_func hplot, eplot, aplot;
-EXTERN Plot_ptr  plot_ptr;
+EXTERN Putpixel_func herc_putpixel, ega_putpixel, att_putpixel;
+EXTERN Putpixel_ptr putpixel_ptr;
 
 /* --------------------------------------------------------------------- */
 
 typedef void ( Voidvoid_func )( void );
 typedef Voidvoid_func *Voidvoid_ptr;
 
-EXTERN Voidvoid_func hsetgraph, esetgraph, asetgraph,
-hsettext, esettext, asettext;
-EXTERN Voidvoid_func hsavepic, esavepic, asavepic,
-hretpic, eretpic, aretpic;
-EXTERN Voidvoid_func hclsall, eclsall, aclsall,
-hprakeaw, eprakeaw, aprakeaw;
+EXTERN Voidvoid_func herc_setgraph, ega_setgraph, att_setgraph,
+herc_settext, ega_settext, att_settext;
+EXTERN Voidvoid_func herc_savepic, ega_savepic, att_savepic,
+herc_retpic, ega_retpic, att_retpic;
+EXTERN Voidvoid_func herc_clsall, ega_clsall, att_clsall,
+herc_prakeaw, ega_prakeaw, att_prakeaw;
 
 EXTERN Voidvoid_ptr  setgraph_ptr, settext_ptr, savepic_ptr, retpic_ptr;
 EXTERN Voidvoid_ptr  clsall_ptr, prakeaw_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Clsgraph_func )( unsigned int x1, unsigned int x2,
-	unsigned int y1, unsigned int y2 );
+typedef void ( Clsgraph_func )( unsigned int p_x1, unsigned int p_x2,
+	unsigned int p_y1, unsigned int p_y2 );
 typedef Clsgraph_func *Clsgraph_ptr;
 
-EXTERN Clsgraph_func hclsgraph, eclsgraph, aclsgraph;
+EXTERN Clsgraph_func herc_clsgraph, ega_clsgraph, att_clsgraph;
 EXTERN Clsgraph_ptr  clsgraph_ptr;
 
 /* --------------------------------------------------------------------- */
@@ -89,57 +89,72 @@ EXTERN Clsgraph_ptr  clsgraph_ptr;
 typedef void ( Clrline_func )( unsigned int x1, unsigned int y1, unsigned int x2 );
 typedef Clrline_func *Clrline_ptr;
 
-EXTERN Clrline_func hclrline, eclrline, aclrline;
+EXTERN Clrline_func herc_clrline, ega_clrline, att_clrline;
 EXTERN Clrline_ptr  clrline_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( PGwind_func )( unsigned int x1, unsigned int x2,
-	unsigned linecount, unsigned bytecount,
-	char *buffer );
+typedef void ( PGwind_func )( unsigned int p_x1, unsigned int p_x2,
+	unsigned p_linecount, unsigned p_bytecount,
+	char *p_buffer );
 typedef PGwind_func *PGwind_ptr;
 
-EXTERN PGwind_func hputwind, eputwind, aputwind, hgetwind, egetwind, agetwind;
+EXTERN PGwind_func herc_putwind, ega_putwind, att_putwind, herc_getwind, ega_getwind, att_getwind;
 EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 
 #undef EXTERN /* restore it */
 
 /* ===================================================================== */
 
-/** put a character with attribute in to x,y position */
-void prchar( unsigned char p_char, unsigned int p_attr, unsigned int x, unsigned int y );
+/** Put a character with attribute in to given position.
+*  \param[in]  p_char			Character.
+*  \param[in]  p_attr			Attribute.
+*  \param[in]  p_x				Horizontal position.
+*  \param[in]  p_y				Vertical position. */
+void prchar( char p_char, int p_attr, int p_x, int p_y );
 
-/** put a blank character in to x,y position */
-void prblank( unsigned int x, unsigned int y );
+/** Put a blank character in to given position.
+*  \param[in]  p_x				Horizontal position.
+*  \param[in]  p_y				Vertical position. */
+void prblank( int p_x, int p_y );
 
-/**  */
-void setcurpos( unsigned int x, unsigned int y, int p_thaimode );
+/** XOR cursor at specified cursor position.
+*  \param[in]  p_x				Horizontal position.
+*  \param[in]  p_y				Vertical position.
+*  \param[in]  p_thaimode		Thai/English mode. */
+void setcurpos( int p_x, int p_y, int p_thaimode );
 
-/** put a pixel in to x,y position */
-void plot( unsigned int x, unsigned int y );
+/** Put a pixel in to given position.
+*  \param[in]  p_x				Horizontal position.
+*  \param[in]  p_y				Vertical position. */
+void _putpixel( int p_x, int p_y );
 
-/** set graphic mode */
+/** Set graphic mode. */
 void setgraph( void );
 
-/** set text mode */
+/** Set text mode. */
 void settext( void );
 
-/***/
+/** Save screen. */
 void savepic( void );
 
-/***/
+/** Restore saved screen. */
 void retpic( void );
 
-/** clear screen */
+/** Clear screen. */
 void clsall( void );
 
-/***/
-void clsgraph( unsigned int x1, unsigned int y1, unsigned int x2, unsigned int y2 );
+/** Clear graphic screen for window specified.
+*  \param[in]  p_xStart			Vertical position of start point.
+*  \param[in]  p_yStart			Horizontal position of start point.
+*  \param[in]  p_xEnd			Vertical position of end point.
+*  \param[in]  p_yEnd			Horizontal position of end point. */
+void clsgraph( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd );
 
-/***/
-void clrline( unsigned int x1, unsigned int y1, unsigned int x2 );
+/**  */
+void clrline( int p_x1, int p_y1, int p_x2 );
 
-/** display Prakeaw ( Chula University logo ) at top-left of screen ( fixed position ) */
+/** Display Prakeaw ( Chula University logo ) at top-left of screen. */
 void prakeaw( void );
 
 #endif /* COMMON_CWGRPHC_H_INCLUDED */

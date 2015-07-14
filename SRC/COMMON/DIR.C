@@ -22,7 +22,7 @@
 #include "dir.h"
 
 /* private prototype function */
-int createdir( char *mask );
+int createdir( char *p_fileMask );
 void showfile( int col, int row, char attr );
 void showpagedir( void );
 void freedir( void );
@@ -48,7 +48,7 @@ static struct dirnode *headdir, *dirpage;
 static int dircol;
 static int dirrow;
 
-int createdir( char *mask ) {
+int createdir( char *p_fileMask ) {
 	struct dirnode *tempdir;
 	struct ffblk ffblock;
 	int done, i;
@@ -56,7 +56,7 @@ int createdir( char *mask ) {
 	headdir->previous = headdir;
 	headdir->next = headdir;
 	tempdir = headdir;
-	done = findfirst( mask, &ffblock, 0 );
+	done = findfirst( p_fileMask, &ffblock, 0 );
 	while ( !done ) {
 		tempdir->next = ( struct dirnode * ) malloc( sizeof( struct dirnode ) );
 		if ( tempdir->next == NULL ) {
@@ -231,10 +231,10 @@ void dirleft( void ) {
 	setdirpos( tempdir );
 }
 
-int selectfile( char *mask ) {
+int selectfile( char *p_fileMask ) {
 	struct dirnode *tempdir;
 	int count, c, i, j;
-	if ( createdir( mask ) == NO ) {
+	if ( createdir( p_fileMask ) == NO ) {
 		return( NO );
 	}
 	if ( headdir->next != headdir ) {
@@ -288,7 +288,7 @@ int selectfile( char *mask ) {
 				break;
 			case ESCKEY:
 				freedir( );
-				mask[0] = '\0';
+				p_fileMask[0] = '\0';
 				return( NO );
 			};
 		} while ( c != RETKEY );
@@ -296,20 +296,20 @@ int selectfile( char *mask ) {
 		for ( count = ( DIRCOLMAX * dirrow ) + dircol; ( count != 0 ) && ( tempdir->next != headdir ); count-- ) {
 			tempdir = tempdir->next;
 		}
-		j = strlen( mask );
-		while ( ( j != 0 ) && ( mask[j] != '\\' ) && ( mask[j] != ':' ) ) {
+		j = strlen( p_fileMask );
+		while ( ( j != 0 ) && ( p_fileMask[j] != '\\' ) && ( p_fileMask[j] != ':' ) ) {
 			j--;
 		}
 		if ( j != 0 ) {
 			j++;
 		}
 		for ( i = 0; i < 13; i++ ) {
-			mask[j++] = tempdir->filename[i];
+			p_fileMask[j++] = tempdir->filename[i];
 		}
 		freedir( );
 		return( YES );
 	} else {
-		mask[0] = '\0';
+		p_fileMask[0] = '\0';
 		return( NO );
 	}
 }

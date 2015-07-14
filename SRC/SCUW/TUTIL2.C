@@ -8,6 +8,8 @@
 * ============================================================================
 */
 
+#include <stdlib.h>
+
 #include "..\common\cwtype.h"
 #include "..\common\common.h"
 #include "..\common\cscrn.h"

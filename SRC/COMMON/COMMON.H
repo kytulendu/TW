@@ -13,16 +13,19 @@ unsigned char kutostd( unsigned char p_kucode );
 
 /** Change ascii value of key from english to Thai.
 *   From ACOMMON.ASM
-*  \param[in]  p_key		KU code character.
-*  \return unsigned char	Kedmanee keyboard code. */
+*  \param[in]  p_key			KU code character.
+*  \return unsigned char		Kedmanee keyboard code. */
 int thaikey( register unsigned int p_key );
 
-/** From ACOMMON.ASM */
+/** Check if keyboard is pressed.
+*   From ACOMMON.ASM
+*  \return int					0 if no key pressed.
+*	keyboard scan code of the key pressed if key pressed */
 int asm_keypressed( void );
 
 /** Determining at what level a given character is.
-*  \param[in]  p_char		Character.
-*  \return int				Level of character.
+*  \param[in]  p_char			Character.
+*  \return int					Level of character.
 *	0 : Ordinary (middle) level
 *	1 : Lower level (สระอุ, สระอู)
 *	2 : Upper level (สระอิ, สระอี)

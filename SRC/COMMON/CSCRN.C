@@ -28,8 +28,8 @@ void _line( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, int p_color*/ 
 	int dy = -abs( p_yEnd - p_yStart ), sy = p_yStart < p_yEnd ? 1 : -1;
 	int err = dx + dy, e2; /* error value e_xy */
 
-	for ( ;; ) {  /* loop */
-		plot( p_xStart, p_yStart/*, p_color*/ );
+	for ( ;; ) {
+		_putpixel( p_xStart, p_yStart/*, p_color*/ );
 		if ( p_xStart == p_xEnd && p_yStart == p_yEnd ) {
 			break;
 		}
@@ -52,25 +52,25 @@ void _rectangle( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, p_color*/
 	_line( p_xEnd, p_yStart, p_xEnd, p_yEnd/*, p_color*/ );
 }
 
-void dispstrhgc( char *p_string, unsigned int p_x, unsigned int p_y, font_attr p_attr ) {
-	while ( ( *p_string != '\0' ) && ( p_x < 90 ) ) {
+void dispstrhgc( char *p_string, int p_xPos, int p_yPos, font_attr p_attr ) {
+	while ( ( *p_string != '\0' ) && ( p_xPos < 90 ) ) {
 		if ( *p_string < 32 ) {
 			togglefont( &p_attr, *p_string );
 		} else {
 			if ( whatlevel( *p_string ) == MIDDLE ) {
-				prchar( *p_string, p_attr, p_x, p_y );
+				prchar( *p_string, p_attr, p_xPos, p_yPos );
 				if ( ( p_attr & ENLARGEATTR ) == ENLARGEATTR ) {
-					p_x++;
+					p_xPos++;
 				}
-				p_x++;
+				p_xPos++;
 			} else {
 				if ( ( p_attr & ENLARGEATTR ) == ENLARGEATTR ) {
-					if ( p_x >= 2 ) {
-						prchar( *p_string, p_attr, p_x - 2, p_y );
+					if ( p_xPos >= 2 ) {
+						prchar( *p_string, p_attr, p_xPos - 2, p_yPos );
 					}
 				} else {
-					if ( p_x >= 1 ) {
-						prchar( *p_string, p_attr, p_x - 1, p_y );
+					if ( p_xPos >= 1 ) {
+						prchar( *p_string, p_attr, p_xPos - 1, p_yPos );
 					}
 				}
 			}
@@ -79,20 +79,20 @@ void dispstrhgc( char *p_string, unsigned int p_x, unsigned int p_y, font_attr p
 	}
 }
 
-void dispprintf( unsigned int p_x, unsigned int p_y, font_attr p_attr, char *p_format, ... ) {
+void dispprintf( int p_xPos, int p_yPos, font_attr p_attr, char *p_format, ... ) {
 	va_list argptr;
 	char tstring[240];
 
 	va_start( argptr, p_format );
 	vsprintf( tstring, p_format, argptr );
 	va_end( argptr );
-	dispstrhgc( tstring, p_x, p_y, p_attr );
+	dispstrhgc( tstring, p_xPos, p_yPos, p_attr );
 }
 
-void dispblank( unsigned int p_x, unsigned int p_y, unsigned int p_count, font_attr p_attr ) {
+void dispblank( int p_xPos, int p_yPos, size_t p_count, font_attr p_attr ) {
 	p_count++;
 	while ( p_count-- ) {
-		prchar( ' ', p_attr, p_x++, p_y );
+		prchar( ' ', p_attr, p_xPos++, p_yPos );
 	}
 }
 
@@ -120,8 +120,8 @@ void togglefont( font_attr *p_curfont, font_code p_code ) {
 	}
 }
 
-void framebox( unsigned int p_xStart, unsigned int p_yStart, unsigned int p_xEnd, unsigned int p_yEnd, unsigned int p_attr ) {
-	register unsigned int i, j;
+void framebox( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd, int p_attr ) {
+	register int i, j;
 
 	i = p_xStart;
 	prchar( ' ', p_attr, i++, p_yStart );
@@ -149,8 +149,8 @@ void framebox( unsigned int p_xStart, unsigned int p_yStart, unsigned int p_xEnd
 	prchar( ' ', p_attr, i, p_yEnd );
 }
 
-void blockmsg( int p_y ) {
-	framebox( 11 , p_y - 1, ( 11 + 60 ) + shrink_factor, p_y + 1, REVERSEATTR );
+void blockmsg( int p_linePos ) {
+	framebox( 11, p_linePos - 1, ( 11 + 60 ) + shrink_factor, p_linePos + 1, REVERSEATTR );
 }
 
 void showerrno( void ) {
@@ -171,7 +171,7 @@ void showerrno( void ) {
 	ebioskey( 0 );
 }
 
-char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int  p_yEnd ) {
+char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd ) {
 	char *scrnindex;
 	scrnindex = ( char * ) malloc( ( p_xEnd - p_xStart + 1 ) * ( p_yEnd - p_yStart + 1 ) * 20 );
 	if ( scrnindex == NULL ) {

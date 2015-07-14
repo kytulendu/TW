@@ -11,81 +11,81 @@
 *  author Zingl Alois
 *  code from http://members.chello.at/~easyfilter/bresenham.html
 *  more info http://en.wikipedia.org/wiki/Bresenham%27s_line_algorithm
-*  \param[in]  p_xStart		vertical position of start point.
-*  \param[in]  p_yStart		horizontal position of start point.
-*  \param[in]  p_xEnd		vertical position of end point.
-*  \param[in]  p_yEnd		horizontal position of end point.
-*  \param[in]  p_color		color of line. */
+*  \param[in]  p_xStart			Vertical position of start point.
+*  \param[in]  p_yStart			Horizontal position of start point.
+*  \param[in]  p_xEnd			Vertical position of end point.
+*  \param[in]  p_yEnd			Horizontal position of end point.
+*  \param[in]  p_color			Color of line. */
 void _line( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, int p_color*/ );
 
 /** Draw rectangle.
-*  \param[in]  p_xStart		vertical position of start point.
-*  \param[in]  p_yStart		horizontal position of start point.
-*  \param[in]  p_xEnd		vertical position of end point.
-*  \param[in]  p_yEnd		horizontal position of end point.
-*  \param[in]  p_color		color of line. */
+*  \param[in]  p_xStart			Vertical position of start point.
+*  \param[in]  p_yStart			Horizontal position of start point.
+*  \param[in]  p_xEnd			Vertical position of end point.
+*  \param[in]  p_yEnd			Horizontal position of end point.
+*  \param[in]  p_color			Color of line. */
 void _rectangle( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, p_color*/ );
 
-/** display string on hercules graphic card.
-*  \param[in]  p_string		string to be displayed.
-*  \param[in]  p_x			vertical position ( 0 - 89 ).
-*  \param[in]  p_y			horizontal position ( 0 - 16 ).
-*  \param[in]  p_attr		attribute of string. */
-void dispstrhgc( char *p_string, unsigned int p_x, unsigned int p_y, font_attr p_attr );
+/** Display string on hercules graphic card.
+*  \param[in]  p_string			String to be displayed.
+*  \param[in]  p_xPos			Vertical position ( 0 - 89 ).
+*  \param[in]  p_yPos			Horizontal position ( 0 - 16 ).
+*  \param[in]  p_attr			Attribute of string. */
+void dispstrhgc( char *p_string, int p_xPos, int p_yPos, font_attr p_attr );
 
-/** display string with printf capability.
+/** Display string with printf capability.
 *   Written: Suttipong Kanakakorn
 *            Wed  08-02-1989  00:33:25
-*  \param[in]  p_x			vertical position ( 0 - 89 ).
-*  \param[in]  p_y			horizontal position ( 0 - 16 ).
-*  \param[in]  p_attr		attribute of string.
-*  \param[in]  p_string		string to be displayed.
-*  \param[in]  p_format		format of string. */
-void dispprintf( unsigned int p_x, unsigned int p_y, font_attr p_attr, char *p_format, ... );
+*  \param[in]  p_xPos			Vertical position ( 0 - 89 ).
+*  \param[in]  p_yPos			Horizontal position ( 0 - 16 ).
+*  \param[in]  p_attr			Attribute of string.
+*  \param[in]  p_string			String to be displayed.
+*  \param[in]  p_format			Format of string. */
+void dispprintf( int p_xPos, int p_yPos, font_attr p_attr, char *p_format, ... );
 
-/** display string on hercules graphic card.
-*  \param[in]  p_x			vertical position ( 0 - 89 ).
-*  \param[in]  p_y			horizontal position ( 0 - 16 ).
-*  \param[in]  p_count		number of blank to be displayed.
-*  \param[in]  p_attr		attribute of blank. */
-void dispblank( unsigned int p_x, unsigned int p_y, unsigned int p_count, font_attr p_attr );
+/** Display string on hercules graphic card.
+*  \param[in]  p_xPos			Vertical position ( 0 - 89 ).
+*  \param[in]  p_yPos			Horizontal position ( 0 - 16 ).
+*  \param[in]  p_count			Number of blank to be displayed.
+*  \param[in]  p_attr			Attribute of blank. */
+void dispblank( int p_xPos, int p_yPos, size_t p_count, font_attr p_attr );
 
 /** Set bit in attribute byte on/off from ascii control code given.
-*  \param[in]  p_curfont		current font.
-*  \param[in]  p_code			control code. */
+*  \param[in]  p_curfont		Current font.
+*  \param[in]  p_code			Control code. */
 void togglefont( font_attr *p_curfont, font_code p_code );
 
 /** Draw frame box on screen
 *   Written: Suttipong Kanakakorn
 *            Fri  08-04-1989  23:39:16
-*  \param[in]  p_xStart		vertical position of start point.
-*  \param[in]  p_yStart		horizontal position of start point.
-*  \param[in]  p_xEnd		vertical position of end point.
-*  \param[in]  p_yEnd		horizontal position of end point.
-*  \param[in]  p_attr		attribute of blank. */
-void framebox( unsigned int p_xStart, unsigned int p_yStart, unsigned int p_xEnd, unsigned int p_yEnd, unsigned int p_attr );
+*  \param[in]  p_xStart			Vertical position of start point.
+*  \param[in]  p_yStart			Horizontal position of start point.
+*  \param[in]  p_xEnd			Vertical position of end point.
+*  \param[in]  p_yEnd			Horizontal position of end point.
+*  \param[in]  p_attr			Attribute of blank. */
+void framebox( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd, int p_attr );
 
-/** Draw message box on screen, Max 55 characters.
-*  \param[in]  p_y		vertical position. */
-void blockmsg( int p_y );
+/** Draw message box on screen at given line position, Max 55 characters.
+*  \param[in]  p_linePos		Line position to display. */
+void blockmsg( int p_linePos );
 
 /** Show Error. */
 void showerrno( void );
 
 /** Save content of screen. Return pointer to content of screen.
-*  \param[in]  p_xStart		vertical position of start point.
-*  \param[in]  p_yStart		horizontal position of start point.
-*  \param[in]  p_xEnd		vertical position of end point.
-*  \param[in]  p_yEnd		horizontal position of end point.
-*  \return char				pointer to content of screen. */
+*  \param[in]  p_xStart			Vertical position of start point.
+*  \param[in]  p_yStart			Horizontal position of start point.
+*  \param[in]  p_xEnd			Vertical position of end point.
+*  \param[in]  p_yEnd			Horizontal position of end point.
+*  \return char					Pointer to content of screen. */
 char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int  p_yEnd );
 
 /** Restore content of screen..
-*  \param[in]  p_scrnindex	pointer to saved screen.
-*  \param[in]  p_xStart		vertical position of start point.
-*  \param[in]  p_yStart		horizontal position of start point.
-*  \param[in]  p_xEnd		vertical position of end point.
-*  \param[in]  p_yEnd		horizontal position of end point. */
+*  \param[in]  p_scrnindex		Pointer to saved screen.
+*  \param[in]  p_xStart			Vertical position of start point.
+*  \param[in]  p_yStart			Horizontal position of start point.
+*  \param[in]  p_xEnd			Vertical position of end point.
+*  \param[in]  p_yEnd			Horizontal position of end point. */
 void resscrn( char *p_scrnindex, int p_xStart, int p_yStart, int p_xEnd, int p_yEnd );
 
 #endif /* COMMON_CSCRN_H_INCLUDED */
