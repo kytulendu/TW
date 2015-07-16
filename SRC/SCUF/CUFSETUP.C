@@ -39,7 +39,6 @@ void usage( void );
 
 void cufsetup( int argc, char *argv[] ) {
 	register int i;
-	extern align;
 
 	progname = argv[0];
 
