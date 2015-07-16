@@ -59,7 +59,6 @@ int searchonlyinfo( void ) {
 			break;
 		}
 	}
-	return 0;
 }
 
 int searchreplaceinfo( void ) {
@@ -107,7 +106,6 @@ int searchreplaceinfo( void ) {
 			break;
 		}
 	}
-	return 0;
 }
 
 int optionglobal( void ) {
