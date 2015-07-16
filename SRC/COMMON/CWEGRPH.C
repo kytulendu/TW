@@ -1,6 +1,6 @@
 /*
 * ============================================================================
-* EGA/VGA/MCGA graphics module for CW 1.20
+* EGA/VGA/MCGA graphics module for CW 1.20.
 *
 * Kraisorn  Liansee
 * Date:      04/21/1988
@@ -52,6 +52,6 @@ void ega_settext( void ) {
 
 /** Find offest of pixel x, y by use the following formula
 *   ( High_byte * y ) + ( x / 8 )  where High_byte = 640 / 8 = 80 */
-unsigned int ega_offset( register unsigned int x, register unsigned int y ) {
+int ega_offset( register int x, register int y ) {
 	return ( ( 80 * y ) + ( x / 8 ) );
 }

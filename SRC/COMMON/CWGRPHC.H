@@ -30,7 +30,7 @@ EXTERN unsigned char *screen_buffptr;
 
 /* ===================================================================== */
 
-typedef void( Prchar_func )( unsigned char p_char, unsigned int p_attr, int p_x, int p_y );
+typedef void( Prchar_func )( char p_char, int p_attr, int p_x, int p_y );
 typedef Prchar_func *Prchar_ptr;
 
 EXTERN Prchar_ptr  prchar_ptr;
@@ -38,7 +38,7 @@ EXTERN Prchar_func herc_prchar, ega_prchar, att_prchar;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Prblank_func )( unsigned int p_x, unsigned int p_y );
+typedef void ( Prblank_func )( int p_x, int p_y );
 typedef Prblank_func *Prblank_ptr;
 
 EXTERN Prblank_func herc_prblank, ega_blank, att_prblank;
@@ -46,7 +46,7 @@ EXTERN Prblank_ptr  prblank_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Setcurpos_func )( unsigned int p_x, unsigned int p_y, int p_thaimode );
+typedef void ( Setcurpos_func )( int p_x, int p_y, int p_thaimode );
 typedef Setcurpos_func *Setcurpos_ptr;
 
 EXTERN Setcurpos_func herc_setcurpos, ega_setcurpos, att_setcurpos;
@@ -77,8 +77,7 @@ EXTERN Voidvoid_ptr  clsall_ptr, prakeaw_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Clsgraph_func )( unsigned int p_x1, unsigned int p_x2,
-	unsigned int p_y1, unsigned int p_y2 );
+typedef void ( Clsgraph_func )( int p_x1, int p_x2, int p_y1, int p_y2 );
 typedef Clsgraph_func *Clsgraph_ptr;
 
 EXTERN Clsgraph_func herc_clsgraph, ega_clsgraph, att_clsgraph;
@@ -86,7 +85,7 @@ EXTERN Clsgraph_ptr  clsgraph_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( Clrline_func )( unsigned int x1, unsigned int y1, unsigned int x2 );
+typedef void ( Clrline_func )( int p_x1, int p_y1, int p_x2 );
 typedef Clrline_func *Clrline_ptr;
 
 EXTERN Clrline_func herc_clrline, ega_clrline, att_clrline;
@@ -94,8 +93,7 @@ EXTERN Clrline_ptr  clrline_ptr;
 
 /* --------------------------------------------------------------------- */
 
-typedef void ( PGwind_func )( unsigned int p_x1, unsigned int p_x2,
-	unsigned p_linecount, unsigned p_bytecount,
+typedef void ( PGwind_func )( int p_x1, int p_x2, int p_linecount, int p_bytecount,
 	char *p_buffer );
 typedef PGwind_func *PGwind_ptr;
 

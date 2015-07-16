@@ -1,6 +1,6 @@
 /*
 * ============================================================================
-* AT&T 6300/Olivetti M24 graphics module for CW 1.20
+* AT&T 6300/Olivetti M24 graphics module for CW 1.20.
 *
 * Kraisorn  Liansee
 * Date:      04/21/1988
@@ -27,7 +27,7 @@ void att_settext( void ) {
 }
 
 /** Find offest of pixel x, y by use the following formula
-*   0x2000 * ( y % 4 ) + 80 * ( y / 4 ) + x / 8 ) */
-unsigned int att_offset( register unsigned int x, register unsigned int y ) {
-	return ( 0x2000 * ( y % 4 ) + 80 * ( y / 4 ) + x / 8 );
+*   0x2000 * ( y % 4 ) + 80 * ( y / 4 ) + ( x / 8 ) ) */
+int att_offset( register int x, register int y ) {
+	return ( 0x2000 * ( y % 4 ) + 80 * ( y / 4 ) + ( x / 8 ) );
 }
