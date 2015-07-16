@@ -290,7 +290,7 @@ int selectfile( char *p_fileMask ) {
 		dirrow = 0;
 		showpagedir( );
 		showfile( dircol, dirrow, 0 );
-		do {
+		for ( ;; ) {
 			key = ebioskey( 0 );
 			switch ( key ) {
 			case UPKEY:
@@ -380,7 +380,7 @@ int selectfile( char *p_fileMask ) {
 					return( YES );
 				}
 			};
-		} while ( 1 );
+		}
 
 	} else {
 		p_fileMask[0] = '\0';

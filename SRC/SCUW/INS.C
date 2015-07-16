@@ -572,7 +572,7 @@ void editmacro( void ) {
 	}
 	dispstrhgc( "กด <ESC> เพื่อเลิกการแก้ไขคำย่อ", ( 19 + center_factor ) + 3, 15, REVERSEATTR );
 	i = 0;
-	do {
+	for ( ;; ) {
 		c = getstring( &macro[i][0], 33 + center_factor, 5 + i, 35, NORMALATTR, THAIENG );
 		switch ( c ) {
 		case UPKEY:
@@ -596,5 +596,5 @@ void editmacro( void ) {
 			writelanguage( );
 			return;
 		}
-	} while ( 1 );
+	}
 }

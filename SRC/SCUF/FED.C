@@ -755,7 +755,7 @@ void file_menu( void ) {
 		"11.continue working",
 		"12.exit",
 		0 };
-	while ( 1 ) {
+	for ( ;; ) {
 		switch ( popup_menu( menu, &buff ) ) {
 		case 0:
 			new_load = SCR_FONT;
@@ -869,7 +869,7 @@ void main_menu( void ) {
 	static int pageno = 0; char status;
 	char ch;
 	file_menu( );
-	while ( 1 ) {
+	for ( ;; ) {
 		ch = select_font( &pageno, &status );
 		switch ( status ) {
 		case RET:

@@ -76,7 +76,7 @@ void reform( void ) {
 	templine = firstline;	/* start to concatenate all lines to one line only */
 	temp1 = ( char * ) malloc( 1 );
 	*temp1 = '\0';
-	while ( 1 ) {
+	for ( ;; ) {
 		temp2 = ( char * ) malloc( strlen( templine->text ) + 1 );
 		i = 0;
 		j = 0;
@@ -93,7 +93,9 @@ void reform( void ) {
 		strcat( temp3, temp2 );
 		free( temp1 );
 		free( temp2 );
-		if ( templine->wrap == NO ) break;
+		if ( templine->wrap == NO ) {
+			break;
+		}
 		temp1 = temp3;
 		templine = templine->next;
 	}

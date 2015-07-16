@@ -78,7 +78,7 @@ int getstring( char *p_textstr, int p_x, int p_y, size_t p_maxlen, char p_attr, 
 		break;
 	}
 
-	do {
+	for ( ;; ) {
 		switch ( inkey ) {
 		case CNTRL_M:
 		case RETKEY:
@@ -192,8 +192,7 @@ int getstring( char *p_textstr, int p_x, int p_y, size_t p_maxlen, char p_attr, 
 			}
 			break;
 		}
-
-	} while ( 1 );
+	}
 }
 
 int getname( char *p_textstr, int p_x, int p_y, size_t p_maxlen, char p_attr ) {

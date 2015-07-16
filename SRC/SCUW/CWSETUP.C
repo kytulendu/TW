@@ -277,7 +277,7 @@ void setoption( void ) {
 		dispoption( i );
 	}
 	i = 0;
-	do {
+	for ( ;; ) {
 		sprintf( st, "%d", *option_setup[i].p_option_value );
 		c = getstring( st, 65 + 2, 6 + i, option_setup[i].maxlen,
 			NORMALATTR, option_setup[i].stype );
@@ -314,7 +314,7 @@ void setoption( void ) {
 			if ( cu_song == 2 ) { cu_song = 0; }
 			return;
 		}
-	} while ( 1 );
+	}
 }
 
 void set_option_to_default( void ) {

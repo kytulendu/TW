@@ -39,7 +39,7 @@ int searchonlyinfo( void ) {
 	dispstrhgc( source, 29 + center_factor, 5, REVERSEATTR );
 	dispstrhgc( option, 51 + center_factor, 6, REVERSEATTR );
 	pagecomplete = NO;
-	while ( 1 ) {
+	for ( ;; ) {
 		i = getstring( source, 29 + center_factor, 5, 50, REVERSEATTR, THAIENG );
 		switch ( i ) {
 		case ESCKEY:
@@ -77,7 +77,7 @@ int searchreplaceinfo( void ) {
 	dispstrhgc( replace, 29 + center_factor, 6, REVERSEATTR );
 	dispstrhgc( option, 51 + center_factor, 7, REVERSEATTR );
 	pagecomplete = NO;
-	while ( 1 ) {
+	for ( ;; ) {
 		i = getstring( source, 29 + center_factor, 5, 50, REVERSEATTR, THAIENG );
 		switch ( i ) {
 		case ESCKEY:

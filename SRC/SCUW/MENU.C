@@ -535,7 +535,7 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 
 	findcurlevel( *curmenu, &lev1, &lev2, &lev3, &lev4 );
 	headmenu( lev1, REVERSEATTR );
-	do {
+	for ( ;; ) {
 		scrnndx = savescrn( xlev1[lev1 - 1] - 1,
 			ylev1[lev1 - 1] - 1,
 			xlev1[lev1 - 1] + thaistrlen( *msglev1[lev1 - 1] ),
@@ -999,5 +999,5 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 			headmenu( lev1, REVERSEATTR );
 			break;
 		}
-	} while ( 1 );
+	}
 }
