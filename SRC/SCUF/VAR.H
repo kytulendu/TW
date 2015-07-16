@@ -21,9 +21,6 @@
 /* =================================================================== */
 /* First part can define and declare with the same attribute           */
 
-EXTERN char dfont[20 * 256];
-EXTERN char ditalicfont[1];
-
 EXTERN char *progname;   /* point to argv[0] */
 EXTERN char cuf_dir[MAXDRIVE+MAXDIR];  /* which directory is CW.EXE in */
 

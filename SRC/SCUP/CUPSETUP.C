@@ -32,11 +32,6 @@
 
 #include "cupsetup.h"
 
-#define ALL_FONT_SIZE 5120
-
-char dfont[ALL_FONT_SIZE];
-char ditalicfont[ALL_FONT_SIZE];
-
 void cupsetup( int argc, char *argv[] ) {
 	register int i;
 

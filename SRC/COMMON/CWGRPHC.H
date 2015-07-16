@@ -17,14 +17,17 @@
 #endif
 
 #ifndef DEFINE_VAR
-EXTERN int scrmode;				/* Graphic mode. */
-EXTERN int shrink_factor;		/* Columns decreased. 90 column : 10, 80 column : 0 ) */
-EXTERN int center_factor;		/* Shifting left factor. 90 column : 5, 80 column : 0) */
+extern int scrmode;				/* Graphic mode. */
+extern int shrink_factor;		/* Columns decreased. 90 column : 10, 80 column : 0 ) */
+extern int center_factor;		/* Shifting left factor. 90 column : 5, 80 column : 0) */
 #else
-EXTERN int scrmode = DETECT;	/* Not initialize (text) mode */
-EXTERN int shrink_factor = 0;	/* Columns decreased. 90 column : 10, 80 column : 0 ) */
-EXTERN int center_factor = 0;	/* Shifting left factor. 90 column : 5, 80 column : 0) */
+int scrmode = DETECT;	/* Not initialize (text) mode */
+int shrink_factor = 0;	/* Columns decreased. 90 column : 10, 80 column : 0 ) */
+int center_factor = 0;	/* Shifting left factor. 90 column : 5, 80 column : 0) */
 #endif
+
+EXTERN char dfont[20 * 256];
+EXTERN char ditalicfont[20 * 256];
 
 EXTERN unsigned char *screen_buffptr;
 

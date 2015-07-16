@@ -69,9 +69,6 @@ EXTERN struct blockstruct blkbegin, blkend;
 
 EXTERN char *graphbuff[13];
 
-EXTERN char dfont[20 * 256];
-EXTERN char ditalicfont[20 * 256];
-
 EXTERN char *progname;   /* point to argv[0] */
 EXTERN char cw_dir[MAXDRIVE + MAXDIR];  /* which directory is cw.exe in */
 EXTERN char filename[MAXPATH]; /* filename that is currently edited */

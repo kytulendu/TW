@@ -22,9 +22,11 @@
 #include "common.h"
 #include "grdetect.h"
 
-#define DEFINE_VAR
+#define DEFINE_VAR 1
 
 #include "cwgrphc.h"
+
+#undef DEFINE_VAR
 
 void prchar( char p_char, int p_attr, int p_x, int p_y ) {
 	( *prchar_ptr )( p_char, p_attr, p_x, p_y );
