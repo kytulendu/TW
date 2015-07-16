@@ -16,7 +16,7 @@
 
 #include "tutil2.h"
 
-unsigned int linearcolumn( char *textstream, unsigned int thaicol, font_attr *font ) {
+unsigned int linearcolumn( unsigned char *textstream, unsigned int thaicol, font_attr *font ) {
 	register unsigned int logiccol = 0;	/* origin 0 */
 	*font = 0;
 	while ( ( thaicol > 0 ) && ( *textstream != '\0' ) ) {

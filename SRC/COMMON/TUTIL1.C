@@ -6,7 +6,7 @@
 
 #include "tutil1.h"
 
-size_t thaistrlen( register char *p_thaistring ) {
+size_t thaistrlen( register unsigned char *p_thaistring ) {
 	register size_t count = 0;
 	font_attr curfont = 0;
 

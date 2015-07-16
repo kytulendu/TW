@@ -157,8 +157,8 @@ const int fontoffset[] = {
 };
 
 /* Initialize font buffer */
-char curfont[20] = { 0 };
-char enlargefont[40] = { 0 };
+unsigned char curfont[20] = { 0 };
+unsigned char enlargefont[40] = { 0 };
 
 unsigned char stdtoku( unsigned char p_stdcode ) {
 	return ( ( p_stdcode >= 0x80 ) ? std_to_ku[p_stdcode - 0x80] : p_stdcode );

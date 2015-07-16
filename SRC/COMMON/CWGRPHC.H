@@ -26,8 +26,8 @@ int shrink_factor = 0;	/* Columns decreased. 90 column : 10, 80 column : 0 ) */
 int center_factor = 0;	/* Shifting left factor. 90 column : 5, 80 column : 0) */
 #endif
 
-EXTERN char dfont[20 * 256];
-EXTERN char ditalicfont[20 * 256];
+EXTERN unsigned char dfont[20 * 256];
+EXTERN unsigned char ditalicfont[20 * 256];
 
 EXTERN unsigned char *screen_buffptr;
 
@@ -97,7 +97,7 @@ EXTERN Clrline_ptr  clrline_ptr;
 /* --------------------------------------------------------------------- */
 
 typedef void ( PGwind_func )( int p_x1, int p_x2, int p_linecount, int p_bytecount,
-	char *p_buffer );
+	unsigned  char *p_buffer );
 typedef PGwind_func *PGwind_ptr;
 
 EXTERN PGwind_func herc_putwind, ega_putwind, att_putwind, herc_getwind, ega_getwind, att_getwind;
@@ -112,7 +112,7 @@ EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 *  \param[in]  p_attr			Attribute.
 *  \param[in]  p_x				Horizontal position.
 *  \param[in]  p_y				Vertical position. */
-void prchar( char p_char, int p_attr, int p_x, int p_y );
+void prchar( unsigned char p_char, int p_attr, int p_x, int p_y );
 
 /** Put a blank character in to given position.
 *  \param[in]  p_x				Horizontal position.

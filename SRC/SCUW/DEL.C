@@ -71,11 +71,11 @@ void delete_char( unsigned int x ) {
 }
 
 void deletereturn( struct line_node *line ) {
-	char *temp;
+	unsigned char *temp;
 	struct line_node *linedeleted;
 	if ( line->next != sentinel ) {
 		linedeleted = line->next;
-		temp = ( char * ) malloc( strlen( line->text ) + strlen( linedeleted->text ) + 1 );
+		temp = ( unsigned char * ) malloc( strlen( line->text ) + strlen( linedeleted->text ) + 1 );
 		strcpy( temp, line->text );
 		strcat( temp, linedeleted->text );
 		free( line->text );
@@ -128,8 +128,8 @@ void del_return( void ) {
 }
 
 void backspace( unsigned int *x ) {
-	register int i;
-	int enlargeflag = NO;
+	register size_t i;
+	boolean enlargeflag = NO;
 	i = *x + firstcol;
 	if ( i > 0 ) {	/* begin of line ? */
 		if ( workline.below[i] == ENLARGEATTR ) {
@@ -216,7 +216,7 @@ void backspace( unsigned int *x ) {
 }
 
 void delete_word( unsigned int x ) {
-	int i;
+	size_t i;
 	i = x + firstcol + 1;
 	if ( workline.middle[i] != '\0' ) {
 		if ( ( workline.middle[i] != ' ' ) && ( workline.middle[i] != WRAPBLANK ) ) {
@@ -274,7 +274,7 @@ void deleteline( struct line_node *line ) {
 			free( line->graph );
 		}
 #endif
-		line->text = ( char * ) malloc( 1 );
+		line->text = ( unsigned char * ) malloc( 1 );
 		*( line->text ) = '\0';
 		if ( curline == line ) {
 			loadtoline( curline->text );

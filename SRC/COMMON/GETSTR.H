@@ -9,7 +9,7 @@
 *   \param[in]  p_attr			Attribute of string for displaying.
 *   \param[in]  p_mode			THAIENG, ENGLISH, ENGUPCASE, NUMBER, ONEORTWO.
 *   \return int					*/
-int getstring( char *p_textstr, int p_xPos, int p_yPos, size_t p_maxlen, char p_attr, strtype p_mode );
+int getstring( unsigned char *p_textstr, int p_xPos, int p_yPos, size_t p_maxlen, font_attr p_attr, strtype p_mode );
 
 /** Display filename input box.
 *   \param[in]  p_textstr		Filename.
@@ -18,6 +18,6 @@ int getstring( char *p_textstr, int p_xPos, int p_yPos, size_t p_maxlen, char p_
 *   \param[in]  p_maxlen		Maximum length of string.
 *   \param[in]  p_attr			Attribute of string for displaying.
 *   \return int					*/
-int getname( char *p_textstr, int p_xPos, int p_yPos, size_t p_maxlen, char p_attr );
+int getname( char *p_textstr, int p_xPos, int p_yPos, size_t p_maxlen, font_attr p_attr );
 
 #endif /* SCUW_GETSTR_H_INCLUDED */

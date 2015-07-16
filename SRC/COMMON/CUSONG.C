@@ -43,7 +43,7 @@ static int cusong_data[] = {
 };
 
 void cusong( void ) {
-	register int i;
+	register unsigned int i;
 	for ( i = 0; !keypressed( ) && i < sizeof( cusong_data ) / sizeof( int ); i += 2 ) {
 		soundnoise( cusong_data[i], cusong_data[i + 1] );
 	}

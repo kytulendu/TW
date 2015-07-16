@@ -52,7 +52,7 @@ void _rectangle( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, p_color*/
 	_line( p_xEnd, p_yStart, p_xEnd, p_yEnd/*, p_color*/ );
 }
 
-void dispstrhgc( char *p_string, int p_xPos, int p_yPos, font_attr p_attr ) {
+void dispstrhgc( unsigned char *p_string, int p_xPos, int p_yPos, font_attr p_attr ) {
 	while ( ( *p_string != '\0' ) && ( p_xPos < 90 ) ) {
 		if ( *p_string < 32 ) {
 			togglefont( &p_attr, *p_string );
@@ -81,7 +81,7 @@ void dispstrhgc( char *p_string, int p_xPos, int p_yPos, font_attr p_attr ) {
 
 void dispprintf( int p_xPos, int p_yPos, font_attr p_attr, char *p_format, ... ) {
 	va_list argptr;
-	char tstring[240];
+	unsigned char tstring[240];
 
 	va_start( argptr, p_format );
 	vsprintf( tstring, p_format, argptr );
@@ -171,9 +171,9 @@ void showerrno( void ) {
 	ebioskey( 0 );
 }
 
-char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd ) {
-	char *scrnindex;
-	scrnindex = ( char * ) malloc( ( p_xEnd - p_xStart + 1 ) * ( p_yEnd - p_yStart + 1 ) * 20 );
+unsigned char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd ) {
+	unsigned char *scrnindex;
+	scrnindex = ( unsigned char * ) malloc( ( p_xEnd - p_xStart + 1 ) * ( p_yEnd - p_yStart + 1 ) * 20 );
 	if ( scrnindex == NULL ) {
 		savepic( );
 		errorsound( );
@@ -187,7 +187,7 @@ char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd ) {
 	return( scrnindex );
 }
 
-void resscrn( char *p_scrnindex, int p_xStart, int p_yStart, int p_xEnd, int p_yEnd ) {
+void resscrn( unsigned char *p_scrnindex, int p_xStart, int p_yStart, int p_xEnd, int p_yEnd ) {
 	if ( p_scrnindex == NULL ) {
 		retpic( );
 		return;

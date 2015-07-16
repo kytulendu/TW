@@ -28,7 +28,7 @@
 
 #undef DEFINE_VAR
 
-void prchar( char p_char, int p_attr, int p_x, int p_y ) {
+void prchar( unsigned char p_char, int p_attr, int p_x, int p_y ) {
 	( *prchar_ptr )( p_char, p_attr, p_x, p_y );
 }
 
@@ -84,7 +84,7 @@ void setgraph( ) {
 #ifdef EDA_VERSION
 	scrmode = DETECT;
 #endif
-	if ( ( screen_buffptr = malloc( ( size_t ) 32768L ) ) == NULL ) {
+	if ( ( screen_buffptr = malloc( ( size_t ) 38400L ) ) == NULL ) {
 		fputs( "Not enough memory\n", stderr );
 		exit( EXIT_FAILURE );
 	}

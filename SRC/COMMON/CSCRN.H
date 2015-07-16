@@ -31,7 +31,7 @@ void _rectangle( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd/*, p_color*/
 *  \param[in]  p_xPos			Vertical position ( 0 - 89 ).
 *  \param[in]  p_yPos			Horizontal position ( 0 - 16 ).
 *  \param[in]  p_attr			Attribute of string. */
-void dispstrhgc( char *p_string, int p_xPos, int p_yPos, font_attr p_attr );
+void dispstrhgc( unsigned char *p_string, int p_xPos, int p_yPos, font_attr p_attr );
 
 /** Display string with printf capability.
 *   Written: Suttipong Kanakakorn
@@ -77,8 +77,8 @@ void showerrno( void );
 *  \param[in]  p_yStart			Horizontal position of start point.
 *  \param[in]  p_xEnd			Vertical position of end point.
 *  \param[in]  p_yEnd			Horizontal position of end point.
-*  \return char					Pointer to content of screen. */
-char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int  p_yEnd );
+*  \return unsigned char		Pointer to content of screen. */
+unsigned char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int  p_yEnd );
 
 /** Restore content of screen..
 *  \param[in]  p_scrnindex		Pointer to saved screen.
@@ -86,6 +86,6 @@ char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int  p_yEnd );
 *  \param[in]  p_yStart			Horizontal position of start point.
 *  \param[in]  p_xEnd			Vertical position of end point.
 *  \param[in]  p_yEnd			Horizontal position of end point. */
-void resscrn( char *p_scrnindex, int p_xStart, int p_yStart, int p_xEnd, int p_yEnd );
+void resscrn( unsigned char *p_scrnindex, int p_xStart, int p_yStart, int p_xEnd, int p_yEnd );
 
 #endif /* COMMON_CSCRN_H_INCLUDED */

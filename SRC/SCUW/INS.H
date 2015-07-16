@@ -2,7 +2,7 @@
 #define SCUW_INS_H_INCLUDED
 
 /** Insert blank to workline at specified column(origin 1). */
-void insertblank( unsigned int j, char code );
+void insertblank( unsigned int j, unsigned char code );
 
 /** Insert new line after line specified. */
 void insert_line( struct line_node *currentline, struct line_node *newline );
@@ -15,7 +15,7 @@ void shiftscrn( unsigned int count, unsigned int *x );
 void linetoolong( void );
 
 /** Insert print control character at column given. */
-void inscntrl( char cntrl, unsigned int x, unsigned int y );
+void inscntrl( unsigned char cntrl, unsigned int x, unsigned int y );
 
 /** Wait keyboard for insert control character then insert it to workline
 *   at current cursor position. */
@@ -40,7 +40,7 @@ void returnkey( unsigned int *x, unsigned int y );
 void ret_with_ins( unsigned int *x, unsigned int y );
 
 /** Insert macro word at current cursor position. */
-void insertmacro( char *macro, unsigned int *x, unsigned int *y );
+void insertmacro( unsigned char *macro, unsigned int *x, unsigned int *y );
 
 /**  */
 void blankmaro( int y );

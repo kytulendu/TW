@@ -14,7 +14,7 @@
 
 #include "kbd.h"
 
-void waitkbd( unsigned int p_xcurpos, unsigned int p_ycurpos ) {
+void waitkbd( int p_xcurpos, int p_ycurpos ) {
 	register unsigned int i;
 
 	setcurpos( p_xcurpos, p_ycurpos, thaimode );

@@ -66,7 +66,7 @@ void writetab( void ) {
 	}
 }
 
-void centerline( unsigned y ) {
+void centerline( unsigned int y ) {
 	int i, j, k, count;
 	for ( i = 1; ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ); i++ );
 	for ( j = strlen( workline.middle ) - 1; ( workline.middle[j] == ' ' )

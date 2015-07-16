@@ -379,9 +379,8 @@ int selectfile( char *p_fileMask ) {
 					freedir( );
 					return( YES );
 				}
-			};
+			}
 		}
-
 	} else {
 		p_fileMask[0] = '\0';
 		return( NO );

@@ -69,15 +69,15 @@ void reform( void ) {
 	unsigned char *temp1, *temp2, *temp3, *cuthere;
 	unsigned int i, j;
 	font_attr font = 0;
-	char fontcode[9];
+	unsigned char fontcode[9];
 
 	storeline( curline );
 	firstline = curline;
 	templine = firstline;	/* start to concatenate all lines to one line only */
-	temp1 = ( char * ) malloc( 1 );
+	temp1 = ( unsigned char * ) malloc( 1 );
 	*temp1 = '\0';
 	for ( ;; ) {
-		temp2 = ( char * ) malloc( strlen( templine->text ) + 1 );
+		temp2 = ( unsigned char * ) malloc( strlen( templine->text ) + 1 );
 		i = 0;
 		j = 0;
 		while ( templine->text[i] != '\0' ) {
@@ -88,7 +88,7 @@ void reform( void ) {
 			i++;
 		}
 		temp2[j] = '\0';
-		temp3 = ( char * ) malloc( strlen( temp1 ) + strlen( temp2 ) + 1 );
+		temp3 = ( unsigned char * ) malloc( strlen( temp1 ) + strlen( temp2 ) + 1 );
 		strcpy( temp3, temp1 );
 		strcat( temp3, temp2 );
 		free( temp1 );
@@ -143,7 +143,7 @@ void reform( void ) {
 		}
 		findstrcode( fontcode, font );
 		templine = ( struct line_node * ) malloc( sizeof( struct line_node ) );
-		templine->text = ( char * ) malloc( strlen( fontcode ) + strlen( cuthere ) + 1 );
+		templine->text = ( unsigned char * ) malloc( strlen( fontcode ) + strlen( cuthere ) + 1 );
 		templine->wrap = NO;
 #ifdef WANT_TO_USE_GRAPH
 		templine->graph = NULL;
@@ -151,7 +151,7 @@ void reform( void ) {
 		strcpy( templine->text, fontcode );
 		strcat( templine->text, cuthere );
 		*cuthere = '\0';
-		temp3 = ( char * ) malloc( leftmar + strlen( curline->text ) + strlen( fontcode ) );
+		temp3 = ( unsigned char * ) malloc( leftmar + strlen( curline->text ) + strlen( fontcode ) );
 		i = 0;
 		while ( i != ( leftmar - 1 ) ) {
 			temp3[i] = WRAPBLANK;
@@ -172,7 +172,7 @@ void reform( void ) {
 		storeline( curline );
 		curline = curline->next;
 	}
-	temp3 = ( char * ) malloc( strlen( curline->text ) + leftmar );
+	temp3 = ( unsigned char * ) malloc( strlen( curline->text ) + leftmar );
 	i = 0;
 	while ( i != ( leftmar - 1 ) ) {
 		temp3[i] = WRAPBLANK;
@@ -199,7 +199,7 @@ void reform( void ) {
 }
 
 void manualwrap( unsigned int *x, unsigned int *y ) {
-	int i;
+	size_t i;
 	insert_ret( x );
 	curline->wrap = YES;
 	*x = ( leftmar - 1 ) + ( *x - thaistrlen( curline->text ) );
@@ -213,7 +213,7 @@ void manualwrap( unsigned int *x, unsigned int *y ) {
 
 void autowrap( unsigned int *x, unsigned int *y ) {
 	unsigned int i, j, already = NO, diff;
-	char *temp1, *temp3, *cuthere, fontcode[9];
+	unsigned char *temp1, *temp3, *cuthere, fontcode[9];
 	font_attr font = 0;
 	struct line_node *templine;
 
@@ -255,7 +255,7 @@ void autowrap( unsigned int *x, unsigned int *y ) {
 	}
 	findstrcode( fontcode, font );
 	templine = ( struct line_node * ) malloc( sizeof( struct line_node ) );
-	templine->text = ( char * ) malloc( leftmar + strlen( fontcode ) + strlen( cuthere ) );
+	templine->text = ( unsigned char * ) malloc( leftmar + strlen( fontcode ) + strlen( cuthere ) );
 	for ( i = 0; i != ( leftmar - 1 ); i++ ) {
 		templine->text[i] = WRAPBLANK;
 	}
@@ -267,7 +267,7 @@ void autowrap( unsigned int *x, unsigned int *y ) {
 #endif
 	templine->wrap = ( curline->next )->wrap;
 	*cuthere = '\0';
-	temp3 = ( char * ) malloc( strlen( curline->text ) + strlen( fontcode ) + 1 );
+	temp3 = ( unsigned char * ) malloc( strlen( curline->text ) + strlen( fontcode ) + 1 );
 	strcpy( temp3, curline->text );
 	strcat( temp3, fontcode );
 	free( curline->text );

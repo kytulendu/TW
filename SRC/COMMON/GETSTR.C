@@ -24,10 +24,10 @@
 
 #include "getstr.h"
 
-int getstring( char *p_textstr, int p_x, int p_y, size_t p_maxlen, char p_attr, strtype p_mode ) {
+int getstring( unsigned char *p_textstr, int p_x, int p_y, size_t p_maxlen, font_attr p_attr, strtype p_mode ) {
 	int inkey, key;
 	size_t oldlen, temp;
-	char keepchar = '\0';
+	unsigned char keepchar = '\0';
 	oldlen = strlen( p_textstr );
 	dispblank( p_x, p_y, p_maxlen, p_attr );
 	dispstrhgc( p_textstr, p_x, p_y, p_attr );
@@ -195,7 +195,7 @@ int getstring( char *p_textstr, int p_x, int p_y, size_t p_maxlen, char p_attr, 
 	}
 }
 
-int getname( char *p_textstr, int p_x, int p_y, size_t p_maxlen, char p_attr ) {
+int getname( char *p_textstr, int p_x, int p_y, size_t p_maxlen, font_attr p_attr ) {
 	int i;
 
 	char drv[MAXDRIVE + 1], dir[MAXDIR + 1], name[MAXFILE + 1], ext[MAXEXT + 1];

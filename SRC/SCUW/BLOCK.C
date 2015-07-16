@@ -127,7 +127,7 @@ struct line_node *copytospace( struct line_node *fline, struct line_node *lline,
 #endif
 	i = linearcolumn( fline->text, fcol, &font );
 	findstrcode( fontcode, font );		/* find string of control code */
-	firstline->text = ( char * ) malloc( strlen( fontcode ) + strlen( fline->text ) - i + 1 );
+	firstline->text = ( unsigned char * ) malloc( strlen( fontcode ) + strlen( fline->text ) - i + 1 );
 	strcpy( firstline->text, fontcode );
 	strcat( firstline->text, ( fline->text ) + i );
 	if ( fline == lline ) {
@@ -135,7 +135,7 @@ struct line_node *copytospace( struct line_node *fline, struct line_node *lline,
 		temp = firstline->text;
 		*( temp + strlen( fontcode ) + ( j - i ) ) = '\0';
 		findstrcode( fontcode, font );
-		firstline->text = ( char * ) malloc( strlen( temp ) + strlen( fontcode ) + 1 );
+		firstline->text = ( unsigned char * ) malloc( strlen( temp ) + strlen( fontcode ) + 1 );
 		strcpy( firstline->text, temp );
 		strcat( firstline->text, fontcode );
 		free( temp );
@@ -149,14 +149,14 @@ struct line_node *copytospace( struct line_node *fline, struct line_node *lline,
 		newline->graph = NULL;
 #endif
 		if ( fline != lline ) {
-			newline->text = ( char * ) malloc( strlen( fline->text ) + 1 );
+			newline->text = ( unsigned char * ) malloc( strlen( fline->text ) + 1 );
 			strcpy( newline->text, fline->text );
 			insert_line( templine, newline );
 			templine = templine->next;
 		} else {
 			i = linearcolumn( lline->text, lcol, &font );
 			findstrcode( fontcode, font );
-			newline->text = ( char * ) malloc( i + strlen( fontcode ) + 1 );
+			newline->text = ( unsigned char * ) malloc( i + strlen( fontcode ) + 1 );
 			strncpy( newline->text, lline->text, i );
 			strcpy( newline->text + i, fontcode );
 			insert_line( templine, newline );
@@ -170,7 +170,7 @@ void insertlinklist( struct line_node *sourceline, struct line_node *destline,
 	int i;
 	struct line_node *lastline;
 	font_attr font;
-	char fontcode[9], *temp;
+	unsigned char fontcode[9], *temp;
 	lastline = sourceline->previous;
 	if ( sourceline->next != sourceline ) {			/* > 1 line ? */
 		insertreturn( destline, destcol );
@@ -179,12 +179,12 @@ void insertlinklist( struct line_node *sourceline, struct line_node *destline,
 		destline->next = sourceline;				/* last line of    */
 		sourceline->previous = destline;			/* source after    */
 		destline->wrap = sourceline->wrap;
-		temp = ( char * ) malloc( strlen( destline->text ) + strlen( sourceline->text ) + 1 );
+		temp = ( unsigned char * ) malloc( strlen( destline->text ) + strlen( sourceline->text ) + 1 );
 		strcpy( temp, destline->text );
 		strcat( temp, sourceline->text );
 		free( destline->text );
 		destline->text = temp;
-		temp = ( char * ) malloc( strlen( lastline->text ) + strlen( ( lastline->next )->text ) + 1 );
+		temp = ( unsigned char * ) malloc( strlen( lastline->text ) + strlen( ( lastline->next )->text ) + 1 );
 		strcpy( temp, lastline->text );
 		strcat( temp, ( lastline->next )->text );
 		free( ( lastline->next )->text );
@@ -194,7 +194,7 @@ void insertlinklist( struct line_node *sourceline, struct line_node *destline,
 	} else {	/* only one line */
 		i = linearcolumn( destline->text, destcol, &font );
 		findstrcode( fontcode, font );
-		temp = ( char * ) malloc( strlen( sourceline->text ) + strlen( destline->text ) + ( 2 * strlen( fontcode ) ) + 1 );
+		temp = ( unsigned char * ) malloc( strlen( sourceline->text ) + strlen( destline->text ) + ( 2 * strlen( fontcode ) ) + 1 );
 		strncpy( temp, destline->text, i );
 		temp[i] = '\0';
 		strcat( temp, fontcode );
@@ -315,6 +315,7 @@ void moveblk( unsigned int *x ) {
 	}
 }
 
+/* This function is really messy, need to remove goto and clean-up here. */
 struct line_node *rdfiletospace( char *file_name ) {
 	FILE *fip, *fopen( );
 	register int i;
@@ -341,7 +342,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 #ifdef WANT_TO_USE_GRAPH
 		space->graph = NULL;
 #endif
-		space->text = ( char * ) malloc( 1 );
+		space->text = ( unsigned char * ) malloc( 1 );
 
 		if ( space->text == NULL ) {
 			goto no_mem_avail; 
@@ -369,7 +370,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 					space->wrap = YES;
 				}
 				free( space->text );
-				space->text = ( char * ) malloc( strlen( text_str ) + 1 );
+				space->text = ( unsigned char * ) malloc( strlen( text_str ) + 1 );
 
 				if ( space->text == NULL ) { 
 					goto no_mem_avail;
@@ -419,7 +420,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 						text_str[i - 1] = '\0';
 						newline->wrap = YES;
 					}
-					newline->text = ( char * ) malloc( strlen( text_str ) + 1 );
+					newline->text = ( unsigned char * ) malloc( strlen( text_str ) + 1 );
 
 					if ( newline->text == NULL ) {
 						goto no_mem_avail; 
@@ -619,7 +620,7 @@ void writeblk( char *file_name, struct line_node *linebegin,
 	FILE *fip;
 	struct line_node *currentline;
 	int key, i, j, firstround, count;
-	char *templine, fontcode[9];
+	unsigned char *templine, fontcode[9];
 	font_attr font;
 	char drv[MAXDRIVE], dir[MAXDIR], name[MAXFILE], ext[MAXEXT];
 	char name_bak[MAXPATH];

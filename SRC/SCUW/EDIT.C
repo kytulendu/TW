@@ -24,7 +24,7 @@
 
 #include "edit.h"
 
-void findstrcode( char *fontcode, font_attr attr ) {
+void findstrcode( unsigned char *fontcode, font_attr attr ) {
 	int i = 0;
 	if ( ( attr & ONELINEATTR ) != 0 ) {
 		fontcode[i] = ONELINECODE;
@@ -81,7 +81,7 @@ void displine( struct line_node *line, unsigned int y, unsigned int linenum ) {
 	register unsigned int x = 0;
 	int count = firstcol;
 	font_attr tempfont, curfont = 0;
-	char *st;
+	unsigned char *st;
 
 	st = line->text;
 	y += wind.row;
@@ -168,7 +168,7 @@ void set_graphic_buffer( ) {
 	unsigned int count, i, j, m, n;
 	unsigned int linenum = lineno, linenum2;
 	struct line_node *templine;
-	char *gr;
+	unsigned char *gr;
 
 	templine = curpage;
 	while ( templine != curline ) {    /* find lineno of curpage */
@@ -213,7 +213,7 @@ void set_graphic_buffer( ) {
 				n += strlen( gr + n ) + 1;
 				m++;
 			}
-			graphbuff[i] = ( char * ) malloc( n );
+			graphbuff[i] = ( unsigned char * ) malloc( n );
 			memcpy( graphbuff[i], gr, n );
 			gr += n;
 			i++;
@@ -242,7 +242,7 @@ void set_graphic_buffer( ) {
 					n += strlen( gr + n ) + 1;
 					m++;
 				}
-				graphbuff[j] = ( char * ) malloc( n );
+				graphbuff[j] = ( unsigned char * ) malloc( n );
 				memcpy( graphbuff[j], gr, n );
 				gr += n;
 				linenum2++;
@@ -373,7 +373,7 @@ void adjustcol( unsigned int *x ) {
 	}
 }
 
-void loadtoline( char *address ) {
+void loadtoline( unsigned char *address ) {
 	register unsigned int index = 1;
 	font_attr curfont, oldfont;
 
@@ -432,7 +432,7 @@ void loadtoline( char *address ) {
 void storeline( struct line_node *curline ) {
 	unsigned int count, col;
 	unsigned char *oneline;
-	char oldfont, fontcode[9];
+	unsigned char oldfont, fontcode[9];
 	unsigned char *keep_ptr;
 	count = 0;
 	col = 1;
@@ -483,7 +483,7 @@ void storeline( struct line_node *curline ) {
 	oneline[count] = '\0';
 
 	keep_ptr = curline->text;
-	curline->text = ( char * ) malloc( count + 1 );
+	curline->text = ( unsigned char * ) malloc( count + 1 );
 	if ( curline->text != NULL ) {
 		if ( keep_ptr != NULL ) {
 			free( keep_ptr );
@@ -500,7 +500,7 @@ void storeline( struct line_node *curline ) {
 
 void refreshline( unsigned int x, unsigned int y ) {
 	register size_t i, len;
-	char attr;
+	unsigned char attr;
 	len = wind.length - 2;
 	y += wind.row;
 	if ( x == 0 ) {

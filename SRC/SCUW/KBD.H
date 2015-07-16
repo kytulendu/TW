@@ -1,13 +1,16 @@
 #ifndef SCUW_KBD_H_INCLUDED
 #define SCUW_KBD_H_INCLUDED
 
-/**  */
-void waitkbd( unsigned int x, unsigned int y );
+/** Wait for keyboard press and display cursor at given position.
+*   \param[in]  p_xcurpos		Vertical position of cursor.
+*   \param[in]  p_ycurpos		Horizontal position of cursor.*/
+void waitkbd( int p_xcurpos, int p_ycurpos );
 
 /**  */
 int changekey( int key );
 
-/**  */
+/** Read keyboard.
+*   \return int					*/
 int readkbd( void );
 
 /** Alt_char_map function

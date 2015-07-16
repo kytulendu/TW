@@ -59,7 +59,7 @@ struct Workline {
 };
 EXTERN struct Workline workline;
 
-EXTERN char macro[10][36];
+EXTERN unsigned char macro[10][36];
 
 struct blockstruct {
 	unsigned int lineno;
@@ -98,7 +98,7 @@ EXTERN boolean relmargin;
 
 EXTERN unsigned int firstcol;      /* first column(physical) to be displayed onscreen */
 EXTERN unsigned int lineno;        /* line number of current line (origin 1)          */
-EXTERN unsigned int fontused;      /* current attribute of character e.g. BOLD ITALIC */
+EXTERN font_attr fontused;         /* current attribute of character e.g. BOLD ITALIC */
 EXTERN boolean dispblock;          /* display block or not                            */
 
 EXTERN boolean quitprog;
@@ -125,9 +125,9 @@ EXTERN boolean relmargin = NO;
 
 /* กำหนดขอบเขตการแสดงผลบนจอภาพเก็บไว้ในตัวแปร window */
 
-EXTERN unsigned int firstcol = 0;      /* first column(physical) to be displayed onscreen */
-EXTERN unsigned int lineno = 1;        /* line number of current line (origin 1)          */
-EXTERN unsigned int fontused = 0;      /* current attribute of character e.g. BOLD ITALIC */
+EXTERN unsigned int firstcol = 0;  /* first column(physical) to be displayed onscreen */
+EXTERN unsigned int lineno = 1;    /* line number of current line (origin 1)          */
+EXTERN font_attr fontused = 0;     /* current attribute of character e.g. BOLD ITALIC */
 EXTERN boolean dispblock = YES;    /* display block or not                            */
 
 EXTERN boolean quitprog = NO;

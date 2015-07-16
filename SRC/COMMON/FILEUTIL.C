@@ -55,25 +55,25 @@ boolean havewild( char *p_filename ) {
 	return( NO );
 }
 
-void readscrfont( void *font_buffer, char *fontname, char *search_path ) {
-	FILE* fp = fopen( fontname, "rb" );
+void readscrfont( void *p_fontbuffer, char *p_fontname, char *p_searchpath ) {
+	FILE* fp = fopen( p_fontname, "rb" );
 	char fn[MAXPATH];
 
 	if ( !fp ) {
-		sprintf( fn, "%s\\%s", search_path, fontname );
+		sprintf( fn, "%s\\%s", p_searchpath, p_fontname );
 		fp = fopen( fn, "rb" );
 	}
 	if ( fp ) {
-		fread( font_buffer, sizeof( font_buffer ), 20 * 256, fp );
+		fread( p_fontbuffer, sizeof( p_fontbuffer ), 20 * 256, fp );
 		fclose( fp );
 	} else {
-		fprintf( stderr, "FONT FILE (%s) NOT FOUND !\n", fontname );
+		fprintf( stderr, "FONT FILE (%s) NOT FOUND !\n", p_fontname );
 		exit( EXIT_FAILURE );
 	}
 }
 
 int handler( int errval, int ax, int bp, int si ) {
-	char *scrn;
+	unsigned char *scrn;
 
 	errorsound( );
 	if ( ax >= 0 ) {

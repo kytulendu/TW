@@ -2,7 +2,7 @@
 #define SCUW_EDIT_H_INCLUDED
 
 /** From attribute given,find string of ascii control code. */
-void findstrcode( char *fontcode, font_attr attr );
+void findstrcode( unsigned char *fontcode, font_attr attr );
 
 /** Find line number from line pointer given. */
 unsigned int findlineno( struct line_node *line );
@@ -35,7 +35,7 @@ unsigned int findrow( void );
 void adjustcol( unsigned int *x );
 
 /** Load line from linked list to workline. */
-void loadtoline( char *text );
+void loadtoline( unsigned char *text );
 
 /** Store line from workline to linked list. */
 void storeline( struct line_node *line );

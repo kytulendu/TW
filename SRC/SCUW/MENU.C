@@ -44,7 +44,7 @@ extern int last_menu_on;
 
 static int special_char = 0;
 
-char *menu1lev1[] = {
+unsigned char *menu1lev1[] = {
 	"  สร้างแฟ้มข้อมูลใหม่       ",
 	"  แก้ไขแฟ้มข้อมูลเก่า       ",
 	"  จัดเก็บแฟ้มข้อมูล    ^KS  ",
@@ -55,7 +55,7 @@ char *menu1lev1[] = {
 	"  เลิกการทำงาน   ALT-X  ",
 };
 
-char *menu2lev1[] = {
+unsigned char *menu2lev1[] = {
 	"  เลื่อนตำแหน่ง          ",
 	"  เลื่อนจอภาพ           ",
 	"  ไปยังตำแหน่งเริ่มต้น     ",
@@ -65,7 +65,7 @@ char *menu2lev1[] = {
 	"  ไปบรรทัดที่...  ALT-L  ",
 };
 
-char *menu3lev1[] = {
+unsigned char *menu3lev1[] = {
 	"  ลบตัวอักษร         ^G  ",
 	"  ลบอักษรทางซ้าย BackSp  ",
 	"  ลบคำ             ^T  ",
@@ -75,7 +75,7 @@ char *menu3lev1[] = {
 	"  พิมพ์แทรก/พิมพ์ทับ    ^V  ",
 };
 
-char *menu4lev1[] = {
+unsigned char *menu4lev1[] = {
 	"  ตัวอักษรปกติ       F1  ",
 	"  ตัวเอียง          F2  ",
 	"  ขีดเส้นใต้ ๑ เส้น   F3  ",
@@ -89,13 +89,13 @@ char *menu4lev1[] = {
 	"  ออกแบบตัวอักษร...     ",
 };
 
-char *menu5lev1[] = {
+unsigned char *menu5lev1[] = {
 	"  ค้นหาคำ          ^QF  ",
 	"  ค้นหาและเปลี่ยนคำ  ^QA  ",
 	"  ค้นหาคำต่อไป       ^L  ",
 };
 
-char *menu6lev1[] = {
+unsigned char *menu6lev1[] = {
 	"  กำหนดตำแหน่งต้นบล็อก   ^KB  ",
 	"  กำหนดตำแหน่งท้ายบล็อก  ^KK  ",
 	"  คัดลอกบล็อก (Copy)    ^KC  ",
@@ -106,7 +106,7 @@ char *menu6lev1[] = {
 	"  ซ่อน/แสดงบล็อก        ^KH  ",
 };
 
-char *menu7lev1[] = {
+unsigned char *menu7lev1[] = {
 	"  ตั้งกั้นหน้า     ^OL  ",
 	"  ตั้งกั้นหลัง     ^OR  ",
 	"  ตั้ง TAB      ^OI  ",
@@ -117,13 +117,13 @@ char *menu7lev1[] = {
 };
 
 #ifdef WANT_TO_USE_GRAPH
-char *menu8lev1[] = {
+unsigned char *menu8lev1[] = {
 	"  อ่านแฟ้มรูปภาพ  ALT-G ",
 	"  ลบรูปภาพ      ALT-D ",
 };
 #endif
 
-char *menu9lev1[] = {
+unsigned char *menu9lev1[] = {
 	"  จัดย่อหน้า (Reform)     ^B  ",
 	"  ตัดคำ                 F9  ",
 	"  แทรกรหัสการพิมพ์        ^P  ",
@@ -133,7 +133,7 @@ char *menu9lev1[] = {
 	"  หน่วยความจำที่เหลือ          "
 };
 
-char *menu10lev1[] = {
+unsigned char *menu10lev1[] = {
 	"  ตั้งค่าตัวเลือก    ",
 	"  อ่านตัวเลือกเก่า  ",
 	"  เก็บตัวเลือก     ",
@@ -161,7 +161,7 @@ int nolev1[] = {
 #endif
 };
 
-char **msglev1[] = {
+unsigned char **msglev1[] = {
 	menu1lev1, menu2lev1, menu3lev1,
 	menu4lev1, menu5lev1, menu6lev1,
 	menu7lev1,
@@ -171,7 +171,7 @@ char **msglev1[] = {
 	menu9lev1, menu10lev1
 };
 
-char *cursormenu[] = {
+unsigned char *cursormenu[] = {
 	"  ไปทางซ้าย      ^S  ",
 	"  ไปทางขวา      ^D  ",
 	"  เลื่อนขึ้นบน      ^E  ",
@@ -180,26 +180,26 @@ char *cursormenu[] = {
 	"  ไปคำที่แล้ว      ^A  ",
 };
 
-char *scrnmenu[] = {
+unsigned char *scrnmenu[] = {
 	"  เลื่อนบรรทัดขึ้น   ^W  ",
 	"  เลื่อนบรรทัดลง   ^Z  ",
 	"  เลื่อนหน้าขึ้น     ^R  ",
 	"  เลื่อนหน้าลง     ^C  ",
 };
 
-char *beginmenu[] = {
+unsigned char *beginmenu[] = {
 	"  ไปต้นบรรทัด   Home  ",
 	"  ไปต้นบล็อก     ^QB  ",
 	"  ไปต้นแฟ้มข้อมูล  ^QR  ",
 };
 
-char *endmenu[] = {
+unsigned char *endmenu[] = {
 	"  ไปท้ายบรรทัด   End  ",
 	"  ไปท้ายบล็อก    ^QK  ",
 	"  ไปท้ายแฟ้มข้อมูล ^QC  ",
 };
 
-char *specialcharmenu[] = {
+unsigned char *specialcharmenu[] = {
 	"  ALT-A    €  ",
 	"  ALT-B      ",
 	"  ALT-C      ",
@@ -220,7 +220,7 @@ char *specialcharmenu[] = {
 	"  ALT-Y      ",
 };
 
-char *cntrlpmenu[] = {
+unsigned char *cntrlpmenu[] = {
 	"  ตัวเอียง         ^PW  ",
 	"  ขีดเส้นใต้ ๑ เส้น  ^PS  ",
 	"  ขีดเส้นใต้ ๒ เส้น  ^PR  ",
@@ -238,7 +238,7 @@ unsigned int key_to_menu( unsigned int key ) {
 }
 
 int selectmenu( unsigned int x, unsigned int y, unsigned int number,
-	char *message[], unsigned int *curmenu ) {
+	unsigned char *message[], unsigned int *curmenu ) {
 	int c;
 	size_t length, i;
 	boolean out;
@@ -454,7 +454,7 @@ int selectmenu( unsigned int x, unsigned int y, unsigned int number,
 	}
 }
 
-void headmenu( unsigned int topmenu, char attr ) {
+void headmenu( unsigned int topmenu, font_attr attr ) {
 	switch ( topmenu ) {
 	case 1: dispstrhgc( " แฟ้มข้อมูล ", 1, 1, attr );
 		_line( 0, 24, 80, 24 );
@@ -531,7 +531,7 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 	unsigned int lev1, lev2, lev3, lev4;
 	int i, key, quit;
 	char cur_dir[50];
-	char *scrnndx, *scrnndx2;
+	unsigned char *scrnndx, *scrnndx2;
 
 	findcurlevel( *curmenu, &lev1, &lev2, &lev3, &lev4 );
 	headmenu( lev1, REVERSEATTR );

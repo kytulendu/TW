@@ -37,7 +37,7 @@
 
 #include "ins.h"
 
-void insertblank( register unsigned int j, char code ) {
+void insertblank( register unsigned int j, unsigned char code ) {
 	register size_t i;
 	i = strlen( workline.middle );
 	while ( i >= j ) {
@@ -93,7 +93,7 @@ void linetoolong( void ) {
 	pagecomplete = NO;
 }
 
-void inscntrl( char cntrl, unsigned int x, unsigned int y ) {
+void inscntrl( unsigned char cntrl, unsigned int x, unsigned int y ) {
 	register unsigned int i = MAXCOL;
 	register unsigned int j = x + firstcol + 1;
 	while ( i >= j ) {
@@ -441,7 +441,7 @@ int ovrwrite_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 
 void insertreturn( struct line_node *line, unsigned int thaicol ) {
 	font_attr font = 0;
-	char fontcode[9], *text;
+	unsigned char fontcode[9], *text;
 	struct line_node *line2;
 	register int i;
 
@@ -452,10 +452,10 @@ void insertreturn( struct line_node *line, unsigned int thaicol ) {
 #ifdef WANT_TO_USE_GRAPH
 	line2->graph = NULL;
 #endif
-	line2->text = ( char * ) malloc( strlen( line->text ) + strlen( fontcode ) - i + 1 );
+	line2->text = ( unsigned char * ) malloc( strlen( line->text ) + strlen( fontcode ) - i + 1 );
 	strcpy( line2->text, fontcode );
 	strcpy( ( line2->text ) + strlen( fontcode ), ( line->text ) + i );
-	text = ( char * ) malloc( i + strlen( fontcode ) + 1 );
+	text = ( unsigned char * ) malloc( i + strlen( fontcode ) + 1 );
 	strncpy( text, line->text, i );
 	strcpy( text + i, fontcode );
 	free( line->text );
@@ -535,7 +535,7 @@ void ret_with_ins( unsigned int *x, unsigned int y ) {
 	returnkey( x, y );
 }
 
-void insertmacro( char *macro, unsigned int *x, unsigned int *y ) {
+void insertmacro( unsigned char *macro, unsigned int *x, unsigned int *y ) {
 	int quit = NO;
 	while ( ( *macro != '\0' ) && ( quit == NO ) ) {
 		if ( !insert_char( *macro, x, y ) ) {
@@ -553,7 +553,7 @@ void blankmaro( int y ) {
 
 /* Modify by Suttpong Sat  08-05-1989  03:07:24 */
 void dispmacro( register int i ) {
-	static char *numstr[] = {
+	static unsigned char *numstr[] = {
 		"1", "2", "3", "4", "5",
 		"6", "7", "8", "9", "10"
 	};

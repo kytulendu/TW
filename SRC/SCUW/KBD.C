@@ -27,20 +27,20 @@
 
 int last_menu_on = 0;
 
-void waitkbd( unsigned int x, unsigned int y ) {
+void waitkbd( int p_xcurpos, int p_ycurpos ) {
 	register unsigned int i;
 
-	setcurpos( x, y, thaimode );
+	setcurpos( p_xcurpos, p_ycurpos, thaimode );
 	while ( !keypressed( ) ) {
 		for ( i = 0; !keypressed( ) && i < 6000; i++ );
-		setcurpos( x, y, thaimode );
+		setcurpos( p_xcurpos, p_ycurpos, thaimode );
 		for ( i = 0; !keypressed( ) && i < 6000; i++ );
-		setcurpos( x, y, thaimode );
+		setcurpos( p_xcurpos, p_ycurpos, thaimode );
 		if ( !last_menu_on )
 			dispstrhgc( ( ebioskey( 2 ) & 0x10 ) ? "สร้างตาราง" : "         ",
 			70, 2, BOLDATTR );
 	}
-	setcurpos( x, y, thaimode );
+	setcurpos( p_xcurpos, p_ycurpos, thaimode );
 }
 
 int changekey( int key ) {
