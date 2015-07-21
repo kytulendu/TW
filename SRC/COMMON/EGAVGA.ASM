@@ -29,18 +29,22 @@ EGAVGA_TEXT		SEGMENT BYTE PUBLIC 'CODE'
 EXTRN _ega_offset:far
 
 ;=============================================================================;
-; prchar                                                                      ;
-;     print character at specified cursor position                            ;
-;          ( don't forward cursor position )                                  ;
-;     USAGE : prchar(unsigned c,unsigned attr,unsigned x,unsigned y)          ;
-;             Attribute : bit 0 -> single underline                           ;
-;                         bit 1 -> reverse                                    ;
-;                         bit 2 -> bold                                       ;
-;                         bit 3 -> superscript                                ;
-;                         bit 4 -> subscript                                  ;
-;                         bit 5 -> italic                                     ;
-;                         bit 6 -> enlarge                                    ;
-;                         bit 7 -> double underline                           ;
+; _ega_prchar                                                                 ;
+;     Put a character with attribute at given position.                       ;
+; Usage :                                                                     ;
+; ega_prchar( unsigned char p_char, int p_attr, int p_x, int p_y )            ;
+;  \param[in]  p_char			Character.                                    ;
+;  \param[in]  p_attr			Attribute.                                    ;
+;                                   bit 0 -> single underline                 ;
+;                                   bit 1 -> reverse                          ;
+;                                   bit 2 -> bold                             ;
+;                                   bit 3 -> superscript                      ;
+;                                   bit 4 -> subscript                        ;
+;                                   bit 5 -> italic                           ;
+;                                   bit 6 -> enlarge                          ;
+;                                   bit 7 -> double underline                 ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
 ;=============================================================================;
 	PUBLIC _ega_prchar
 _ega_prchar PROC FAR
@@ -568,10 +572,12 @@ out_write:
 _ega_prchar ENDP
 
 ;=============================================================================;
-; prblank                                                                     ;
-;     print blank character at specified cursor position                      ;
-;          ( don't forward cursor position )                                  ;
-;     USAGE : prblank(unsigned x,unsigned y)                                  ;
+; _ega_prblank                                                                ;
+;     Put a blank character at given position.                                ;
+; Usage :                                                                     ;
+; _ega_prblank( int p_x, int p_y )                                            ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
 ;=============================================================================;
 	PUBLIC _ega_blank
 _ega_blank PROC FAR
@@ -645,9 +651,13 @@ _ega_blank PROC FAR
 _ega_blank ENDP
 
 ;=============================================================================;
-; setcurpos                                                                   ;
-;    xor cursor at specified cursor position                                  ;
-;    USAGE : setcurpos(unsigned x,unsigned y,int thaimode)                    ;
+; _ega_setcurpos                                                              ;
+;     XOR cursor at specified cursor position.                                ;
+; Usage :                                                                     ;
+; _ega_setcurpos( int p_x, int p_y, int p_thaimode )                          ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
+;  \param[in]  p_thaimode		Thai/English mode.                            ;
 ;=============================================================================;
 	PUBLIC _ega_setcurpos
 _ega_setcurpos PROC FAR
@@ -732,13 +742,12 @@ outsetcurpos:
 _ega_setcurpos ENDP
 
 ;=============================================================================;
-; putpixel                                                                    ;
-;     put a pixel to given position                                           ;
-;     find byte position from formula                                         ;
-;          2000h*(Y mod 4) + 90*integer(Y/4) + integer(X/8)                   ;
-;     find bit position in byte from formula                                  ;
-;          7 - (x mod 8)                                                      ;
-;     USAGE : plot(unsigned x,unsigned y)                                     ;
+; _att_putpixel                                                               ;
+;     Put a pixel at given position.                                          ;
+; Usage :                                                                     ;
+; _att_putpixel( int p_x, int p_y )                                           ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
 ;=============================================================================;
 	PUBLIC _ega_putpixel
 _ega_putpixel PROC FAR
@@ -758,7 +767,7 @@ _ega_putpixel PROC FAR
 	MOV     DI,AX
 	MOV     ES,EGA_Address
 
-	AND     CL,7                        ; compute which bit ( x mod 8 ) to modify
+	AND     CL,7                        ; calculate which bit to modify
 	MOV     AL,80h
 	SHR     AL,CL
 
@@ -772,8 +781,10 @@ _ega_putpixel PROC FAR
 _ega_putpixel ENDP
 
 ;=============================================================================;
-; savepic                                                                     ;
-;     save picture from screen memory page 1 to page 0                        ;
+; _ega_savepic                                                                ;
+;     Save picture from screen memory page 1 to page 0.                       ;
+; Usage :                                                                     ;
+; _ega_savepic( )                                                             ;
 ;=============================================================================;
 	PUBLIC _ega_savepic
 _ega_savepic PROC FAR
@@ -807,8 +818,10 @@ loop1:
 _ega_savepic ENDP
 
 ;=============================================================================;
-; retpic                                                                      ;
-;     return picture from screen memory page 0 to page 1                      ;
+; _ega_retpic                                                                 ;
+;     Return picture from screen memory page 0 to page 1.                     ;
+; Usage :                                                                     ;
+; _ega_retpic( )                                                              ;
 ;=============================================================================;
 	PUBLIC _ega_retpic
 _ega_retpic PROC FAR
@@ -843,8 +856,10 @@ loop2:
 _ega_retpic ENDP
 
 ;=============================================================================;
-; clsall                                                                      ;
-;       clear screen memory page 1 to blank                                   ;
+; _ega_clsall                                                                 ;
+;     Clear screen memory page 1 to blank.                                    ;
+; Usage :                                                                     ;
+; _ega_clsall( )                                                              ;
 ;=============================================================================;
 	PUBLIC _ega_clsall
 _ega_clsall PROC FAR
@@ -865,9 +880,14 @@ _ega_clsall PROC FAR
 _ega_clsall ENDP
 
 ;=============================================================================;
-; clsgraph                                                                    ;
-;     clear graphic screen for window specified                               ;
-; USAGE : clsgraph(int p_xStart, int p_yStart, int p_xEnd, int p_yEnd)        ;
+; _ega_clsgraph                                                               ;
+;     Clear graphic screen for window specified.                              ;
+; Usage :                                                                     ;
+; _ega_clsgraph( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd )         ;
+;  \param[in]  p_xStart			Vertical position of start point.             ;
+;  \param[in]  p_yStart			Horizontal position of start point.           ;
+;  \param[in]  p_xEnd			Vertical position of end point.               ;
+;  \param[in]  p_yEnd			Horizontal position of end point.             ;
 ;=============================================================================;
 	PUBLIC _ega_clsgraph
 _ega_clsgraph PROC FAR
@@ -928,9 +948,10 @@ endclsgraph:
 _ega_clsgraph  ENDP
 
 ;=============================================================================;
-; clrline                                                                     ;
-;     clear line y1 from x1 to x2                                             ;
-; USAGE : clrline(int x1,int y1,int x2)                                       ;
+; _ega_clrline                                                                ;
+;     Clear graphic screen for window specified.                              ;
+; Usage :                                                                     ;
+; _ega_clrline( int p_x1, int p_y1, int p_x2 )                                ;
 ;=============================================================================;
 	PUBLIC _ega_clrline
 _ega_clrline PROC FAR
@@ -983,8 +1004,10 @@ endclearline:
 _ega_clrline ENDP
 
 ;=============================================================================;
-; prakeaw                                                                     ;
-;       write parkeaw at upper left cornor                                    ;
+; _ega_prakeaw                                                                ;
+;     Display Prakeaw ( Chula University logo ) at top-left of screen.        ;
+; Usage :                                                                     ;
+; _ega_prakeaw( )                                                             ;
 ;=============================================================================;
 	PUBLIC _ega_prakeaw
 _ega_prakeaw PROC FAR

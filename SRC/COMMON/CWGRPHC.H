@@ -33,7 +33,7 @@ EXTERN unsigned char *screen_buffptr;
 
 /* ===================================================================== */
 
-typedef void( Prchar_func )( char p_char, int p_attr, int p_x, int p_y );
+typedef void( Prchar_func )( unsigned char p_char, int p_attr, int p_x, int p_y );
 typedef Prchar_func *Prchar_ptr;
 
 EXTERN Prchar_ptr  prchar_ptr;
@@ -97,7 +97,7 @@ EXTERN Clrline_ptr  clrline_ptr;
 /* --------------------------------------------------------------------- */
 
 typedef void ( PGwind_func )( int p_x1, int p_x2, int p_linecount, int p_bytecount,
-	unsigned  char *p_buffer );
+	unsigned char *p_buffer );
 typedef PGwind_func *PGwind_ptr;
 
 EXTERN PGwind_func herc_putwind, ega_putwind, att_putwind, herc_getwind, ega_getwind, att_getwind;
@@ -107,14 +107,22 @@ EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 
 /* ===================================================================== */
 
-/** Put a character with attribute in to given position.
+/** Put a character with attribute at given position.
 *  \param[in]  p_char			Character.
 *  \param[in]  p_attr			Attribute.
+*                                   bit 0 -> single underline
+*                                   bit 1 -> reverse
+*                                   bit 2 -> bold
+*                                   bit 3 -> superscript
+*                                   bit 4 -> subscript
+*                                   bit 5 -> italic
+*                                   bit 6 -> enlarge
+*                                   bit 7 -> double underline
 *  \param[in]  p_x				Horizontal position.
 *  \param[in]  p_y				Vertical position. */
 void prchar( unsigned char p_char, int p_attr, int p_x, int p_y );
 
-/** Put a blank character in to given position.
+/** Put a blank character at given position.
 *  \param[in]  p_x				Horizontal position.
 *  \param[in]  p_y				Vertical position. */
 void prblank( int p_x, int p_y );
@@ -125,7 +133,7 @@ void prblank( int p_x, int p_y );
 *  \param[in]  p_thaimode		Thai/English mode. */
 void setcurpos( int p_x, int p_y, int p_thaimode );
 
-/** Put a pixel in to given position.
+/** Put a pixel at given position.
 *  \param[in]  p_x				Horizontal position.
 *  \param[in]  p_y				Vertical position. */
 void _putpixel( int p_x, int p_y );
@@ -136,13 +144,13 @@ void setgraph( void );
 /** Set text mode. */
 void settext( void );
 
-/** Save screen. */
+/** Save picture from screen memory page 1 to page 0. */
 void savepic( void );
 
-/** Restore saved screen. */
+/** Return picture from screen memory page 0 to page 1. */
 void retpic( void );
 
-/** Clear screen. */
+/** Clear screen memory page 1 to blank. */
 void clsall( void );
 
 /** Clear graphic screen for window specified.
@@ -152,7 +160,7 @@ void clsall( void );
 *  \param[in]  p_yEnd			Horizontal position of end point. */
 void clsgraph( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd );
 
-/**  */
+/** Clear line p_y1 from p_x1 to p_x2. */
 void clrline( int p_x1, int p_y1, int p_x2 );
 
 /** Display Prakeaw ( Chula University logo ) at top-left of screen. */

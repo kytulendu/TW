@@ -29,19 +29,22 @@ ATT400_TEXT		SEGMENT BYTE PUBLIC 'CODE'
 EXTRN _att_offset:far
 
 ;=============================================================================;
-; _att_prchar -  print character at specified cursor position                 ;
-;         ( don't forward cursor position )                                   ;
-;                                                                             ;
-;     USAGE :                                                                 ;
-; att_prchar(unsigned char p_char, unsigned int p_attr, int p_x, int p_y)     ;
-;             Attribute : bit 0 -> single underline                           ;
-;                         bit 1 -> reverse                                    ;
-;                         bit 2 -> bold                                       ;
-;                         bit 3 -> superscript                                ;
-;                         bit 4 -> subscript                                  ;
-;                         bit 5 -> italic                                     ;
-;                         bit 6 -> enlarge                                    ;
-;                         bit 7 -> double underline                           ;
+; _att_prchar                                                                 ;
+;     Put a character with attribute at given position.                       ;
+; Usage :                                                                     ;
+; att_prchar( unsigned char p_char, int p_attr, int p_x, int p_y )            ;
+;  \param[in]  p_char			Character.                                    ;
+;  \param[in]  p_attr			Attribute.                                    ;
+;                                   bit 0 -> single underline                 ;
+;                                   bit 1 -> reverse                          ;
+;                                   bit 2 -> bold                             ;
+;                                   bit 3 -> superscript                      ;
+;                                   bit 4 -> subscript                        ;
+;                                   bit 5 -> italic                           ;
+;                                   bit 6 -> enlarge                          ;
+;                                   bit 7 -> double underline                 ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
 ;=============================================================================;
 	PUBLIC _att_prchar
 _att_prchar PROC FAR
@@ -572,10 +575,12 @@ out_write:
 _att_prchar ENDP
 
 ;=============================================================================;
-; _att_prblank -  print blank character at specified cursor position          ;
-;         ( don't forward cursor position )                                   ;
-;                                                                             ;
-;     USAGE : att_prblank(unsigned x, unsigned y)                             ;
+; _att_prblank                                                                ;
+;     Put a blank character at given position.                                ;
+; Usage :                                                                     ;
+; _att_prblank( int p_x, int p_y )                                            ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
 ;=============================================================================;
    PUBLIC _att_prblank
 _att_prblank PROC FAR
@@ -593,7 +598,7 @@ _att_prblank PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _att_offset                    ; get offset in AX
+	CALL    _att_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -649,9 +654,13 @@ _att_prblank PROC FAR
 _att_prblank ENDP
 
 ;=============================================================================;
-; _att_setcurpos -  xor cursor at specified cursor position                   ;
-;                                                                             ;
-;     USAGE : att_setcurpos(unsigned x, unsigned y, int thaimode)             ;
+; _att_setcurpos                                                              ;
+;     XOR cursor at specified cursor position.                                ;
+; Usage :                                                                     ;
+; _att_setcurpos( int p_x, int p_y, int p_thaimode )                          ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
+;  \param[in]  p_thaimode		Thai/English mode.                            ;
 ;=============================================================================;
 	PUBLIC _att_setcurpos
 _att_setcurpos PROC FAR
@@ -675,7 +684,7 @@ thaimode:
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _att_offset                    ; get offset in AX
+	CALL    _att_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -716,7 +725,7 @@ englishmode:
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _att_offset                    ; get offset in AX
+	CALL    _att_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -736,12 +745,12 @@ outsetcurpos:
 _att_setcurpos ENDP
 
 ;=============================================================================;
-; putpixel                                                                    ;
-;     put a pixel to given position                                           ;
-;         2000h * (Y mod 4) + 80 * integer(Y / 4) + integer(X / 8)            ;
-;         find bit position in byte from formula 7 - (x mod 8)                ;
-;                                                                             ;
-;     USAGE : att_putpixel(unsigned x, unsigned y)                            ;
+; _att_putpixel                                                               ;
+;     Put a pixel at given position.                                          ;
+; Usage :                                                                     ;
+; _att_putpixel( int p_x, int p_y )                                           ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
 ;=============================================================================;
 	PUBLIC _att_putpixel
 _att_putpixel PROC FAR
@@ -754,14 +763,14 @@ _att_putpixel PROC FAR
 	MOV     DI,[BP+10]
 	PUSH    DI
 
-	CALL    _att_offset                    ; get offset in AX
+	CALL    _att_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     CX,DI
 	MOV     DI,AX
 	MOV     ES,ATT_Address
 
-	AND     CL,7                        ; compute which bit ( x mod 8 ) to modify
+	AND     CL,7                        ; calculate which bit to modify
 	MOV     AL,80h
 	SHR     AL,CL
 
@@ -775,7 +784,10 @@ _att_putpixel PROC FAR
 _att_putpixel ENDP
 
 ;=============================================================================;
-; _att_savepic -  save picture from screen memory page 1 to page 0            ;
+; _att_savepic                                                                ;
+;     Save picture from screen memory page 1 to page 0.                       ;
+; Usage :                                                                     ;
+; _att_savepic( )                                                             ;
 ;=============================================================================;
 	PUBLIC _att_savepic
 _att_savepic PROC FAR
@@ -809,7 +821,10 @@ loop1:
 _att_savepic ENDP
 
 ;=============================================================================;
-; _att_retpic -  return picture from screen memory page 0 to page 1           ;
+; _att_savepic                                                                ;
+;     Return picture from screen memory page 0 to page 1.                     ;
+; Usage :                                                                     ;
+; _att_savepic( )                                                             ;
 ;=============================================================================;
 	PUBLIC _att_retpic
 _att_retpic PROC FAR
@@ -844,7 +859,10 @@ loop2:
 _att_retpic ENDP
 
 ;=============================================================================;
-; _att_clsall -  clear screen memory page 1 to blank                          ;
+; _att_clsall                                                                 ;
+;     Clear screen memory page 1 to blank.                                    ;
+; Usage :                                                                     ;
+; _att_clsall( )                                                              ;
 ;=============================================================================;
 	PUBLIC _att_clsall
 _att_clsall PROC FAR
@@ -865,9 +883,14 @@ _att_clsall PROC FAR
 _att_clsall ENDP
 
 ;=============================================================================;
-; _att_clsgraph - clear graphic screen for window specified                   ;
-;                                                                             ;
-;     USAGE : att_clsgraph(int p_xStart, int p_yStart, int p_xEnd, int p_yEnd);
+; _att_clsgraph                                                               ;
+;     Clear graphic screen for window specified.                              ;
+; Usage :                                                                     ;
+; _att_clsgraph( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd )         ;
+;  \param[in]  p_xStart			Vertical position of start point.             ;
+;  \param[in]  p_yStart			Horizontal position of start point.           ;
+;  \param[in]  p_xEnd			Vertical position of end point.               ;
+;  \param[in]  p_yEnd			Horizontal position of end point.             ;
 ;=============================================================================;
 	PUBLIC _att_clsgraph
 _att_clsgraph PROC FAR
@@ -885,7 +908,7 @@ _att_clsgraph PROC FAR
 	XOR     AX,AX
 	PUSH    AX
 
-	CALL    _att_offset                    ; get offset in AX
+	CALL    _att_offset                 ; get offset in AX
 
 	MOV     SP,BP
 	MOV     DI,AX
@@ -928,9 +951,10 @@ endclsgraph:
 _att_clsgraph  ENDP
 
 ;=============================================================================;
-; _att_clrline -  clear line y1 from x1 to x2                                 ;
-;                                                                             ;
-;     USAGE : att_clrline(int x1, int y1, int x2)                             ;
+; _att_clrline                                                                ;
+;     Clear graphic screen for window specified.                              ;
+; Usage :                                                                     ;
+; _att_clrline( int p_x1, int p_y1, int p_x2 )                                ;
 ;=============================================================================;
 	PUBLIC _att_clrline
 _att_clrline PROC FAR
@@ -983,7 +1007,10 @@ endclearline:
 _att_clrline ENDP
 
 ;=============================================================================;
-; _att_prakeaw -  write logo at upper left cornor                             ;
+; _att_prakeaw                                                                ;
+;     Display Prakeaw ( Chula University logo ) at top-left of screen.        ;
+; Usage :                                                                     ;
+; _att_prakeaw( )                                                             ;
 ;=============================================================================;
 	PUBLIC _att_prakeaw
 _att_prakeaw PROC FAR

@@ -71,18 +71,22 @@ HERC_TEXT  SEGMENT   BYTE PUBLIC 'CODE'
 		   ASSUME    CS:HERC_TEXT,DS:DGROUP
 
 ;=============================================================================;
-; _herc_prchar -  print character at specified cursor position                ;
-;         ( don't forward cursor position )                                   ;
-;                                                                             ;
-;     USAGE : herc_prchar(unsigned c, unsigned attr, unsigned x, unsigned y)  ;
-;             Attribute : bit 0 -> single underline                           ;
-;                         bit 1 -> reverse                                    ;
-;                         bit 2 -> bold                                       ;
-;                         bit 3 -> superscript                                ;
-;                         bit 4 -> subscript                                  ;
-;                         bit 5 -> italic                                     ;
-;                         bit 6 -> enlarge                                    ;
-;                         bit 7 -> double underline                           ;
+; _herc_prchar                                                                ;
+;     Put a character with attribute at given position.                       ;
+; Usage :                                                                     ;
+; herc_prchar( unsigned char p_char, int p_attr, int p_x, int p_y )           ;
+;  \param[in]  p_char			Character.                                    ;
+;  \param[in]  p_attr			Attribute.                                    ;
+;                                   bit 0 -> single underline                 ;
+;                                   bit 1 -> reverse                          ;
+;                                   bit 2 -> bold                             ;
+;                                   bit 3 -> superscript                      ;
+;                                   bit 4 -> subscript                        ;
+;                                   bit 5 -> italic                           ;
+;                                   bit 6 -> enlarge                          ;
+;                                   bit 7 -> double underline                 ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
 ;=============================================================================;
 	PUBLIC _herc_prchar
 _herc_prchar PROC FAR
@@ -477,10 +481,12 @@ out_write:
 _herc_prchar  ENDP
 
 ;=============================================================================;
-; _herc_prblank -  print blank character at specified cursor position         ;
-;         ( don't forward cursor position )                                   ;
-;                                                                             ;
-;     USAGE : herc_prblank(unsigned x, unsigned y)                            ;
+; _att_prblank                                                                ;
+;     Put a blank character at given position.                                ;
+; Usage :                                                                     ;
+; _att_prblank( int p_x, int p_y )                                            ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
 ;=============================================================================;
 	PUBLIC _herc_prblank
 _herc_prblank PROC FAR
@@ -527,9 +533,13 @@ _herc_prblank PROC FAR
 _herc_prblank ENDP
 
 ;=============================================================================;
-; _herc_setcurpos -  xor cursor at specified cursor position                  ;
-;                                                                             ;
-;     USAGE : herc_setcurpos(unsigned x, unsigned y, int thaimode)            ;
+; _herc_setcurpos                                                             ;
+;     XOR cursor at specified cursor position.                                ;
+; Usage :                                                                     ;
+; _herc_setcurpos( int p_x, int p_y, int p_thaimode )                         ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
+;  \param[in]  p_thaimode		Thai/English mode.                            ;
 ;=============================================================================;
 	PUBLIC _herc_setcurpos
 _herc_setcurpos PROC FAR
@@ -577,13 +587,14 @@ outsetcurpos:
 _herc_setcurpos ENDP
 
 ;=============================================================================;
-; putpixel                                                                    ;
-;     put a pixel to given position                                           ;
+; _att_putpixel                                                               ;
+;     Put a pixel at given position.                                          ;
 ;     find byte position from formula                                         ;
-;          2000h*(Y mod 4) + 90*integer(Y/4) + integer(X/8)                   ;
-;     find bit position in byte from formula                                  ;
-;          7 - (x mod 8)                                                      ;
-;     USAGE : plot(unsigned x,unsigned y)                                     ;
+;         2000h*(Y mod 4) + 90*integer(Y/4) + integer(X/8)                    ;
+; Usage :                                                                     ;
+; _att_putpixel( int p_x, int p_y )                                           ;
+;  \param[in]  p_x				Horizontal position.                          ;
+;  \param[in]  p_y				Vertical position.                            ;
 ;=============================================================================;
 	PUBLIC _herc_putpixel
 _herc_putpixel PROC FAR
@@ -649,7 +660,9 @@ _herc_putpixel ENDP
 
 ;=============================================================================;
 ; _herc_setgraph                                                              ;
-;         Programs the 6845 CRT controller for the 720 x 348 graphics mode.   ;
+;     Programs the 6845 CRT controller for the 720 x 348 graphics mode.       ;
+; Usage :                                                                     ;
+; _herc_setgraph( )                                                           ;
 ;=============================================================================;
 	PUBLIC _herc_setgraph
 _herc_setgraph PROC FAR
@@ -717,7 +730,9 @@ _herc_setgraph ENDP
 
 ;=============================================================================;
 ; _herc_settext                                                               ;
-;      init 6845 CRT Controller to text mode by call BIOS routine INT 10h     ;
+;     init 6845 CRT Controller to text mode by call BIOS routine INT 10h.     ;
+; Usage :                                                                     ;
+; _herc_settext( )                                                            ;
 ;=============================================================================;
 ;_herc_settext PROC FAR
 ;          MOV   AX,7   ; set text mode function
@@ -727,7 +742,9 @@ _herc_setgraph ENDP
 
 ;=============================================================================;
 ; _herc_settext                                                               ;
-;         Programs the 6845 CRT controller for text mode.                     ;
+;     Programs the 6845 CRT controller for text mode.                         ;
+; Usage :                                                                     ;
+; _herc_settext( )                                                            ;
 ;=============================================================================;
 	PUBLIC _herc_settext
 _herc_settext PROC FAR
@@ -774,7 +791,10 @@ parms1:
 _herc_settext ENDP
 
 ;=============================================================================;
-; _herc_savepic -  save picture from screen memory page 1 to page 0           ;
+; _herc_savepic                                                               ;
+;     Save picture from screen memory page 1 to page 0.                       ;
+; Usage :                                                                     ;
+; _herc_savepic( )                                                            ;
 ;=============================================================================;
 	PUBLIC _herc_savepic
 _herc_savepic PROC FAR
@@ -802,7 +822,10 @@ _herc_savepic PROC FAR
 _herc_savepic ENDP
 
 ;=============================================================================;
-; _herc_retpic -  return picture from screen memory page 0 to page 1          ;
+; _herc_retpic                                                                ;
+;     Return picture from screen memory page 0 to page 1.                     ;
+; Usage :                                                                     ;
+; _herc_retpic( )                                                             ;
 ;=============================================================================;
 	PUBLIC _herc_retpic
 _herc_retpic PROC FAR
@@ -832,7 +855,10 @@ _herc_retpic PROC FAR
 _herc_retpic ENDP
 
 ;=============================================================================;
-; _herc_clsall -  clear screen memory page 1 to blank                         ;
+; _herc_clsall                                                                ;
+;     Clear screen memory page 1 to blank.                                    ;
+; Usage :                                                                     ;
+; _herc_clsall( )                                                             ;
 ;=============================================================================;
 	PUBLIC _herc_clsall
 _herc_clsall PROC  FAR
@@ -856,9 +882,14 @@ _herc_clsall PROC  FAR
 _herc_clsall ENDP
 
 ;=============================================================================;
-; _herc_clsgraph -  clear graphic screen for window specified                 ;
-;                                                                             ;
-;     USAGE : herc_clsgraph(int x1, int y1, int x2, int y2)                   ;
+; _herc_clsgraph                                                              ;
+;     Clear graphic screen for window specified.                              ;
+; Usage :                                                                     ;
+; _herc_clsgraph( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd )        ;
+;  \param[in]  p_xStart			Vertical position of start point.             ;
+;  \param[in]  p_yStart			Horizontal position of start point.           ;
+;  \param[in]  p_xEnd			Vertical position of end point.               ;
+;  \param[in]  p_yEnd			Horizontal position of end point.             ;
 ;=============================================================================;
 	PUBLIC _herc_clsgraph
 _herc_clsgraph PROC FAR
@@ -934,9 +965,10 @@ loopfive:
 _herc_clsgraph ENDP
 
 ;=============================================================================;
-; _herc_clrline -  clear line y1 from x1 to x2                                ;
-;                                                                             ;
-;     USAGE : herc_clrline(int x1, int y1, int x2)                            ;
+; _herc_clrline                                                               ;
+;     Clear graphic screen for window specified.                              ;
+; Usage :                                                                     ;
+; _herc_clrline( int p_x1, int p_y1, int p_x2 )                               ;
 ;=============================================================================;
 	PUBLIC _herc_clrline
 _herc_clrline PROC FAR
@@ -1000,8 +1032,10 @@ fiveloop:
 _herc_clrline ENDP
 
 ;=============================================================================;
-; prakeaw                                                                     ;
-;       write parkeaw at upper left cornor                                    ;
+; _herc_prakeaw                                                               ;
+;     Display Prakeaw ( Chula University logo ) at top-left of screen.        ;
+; Usage :                                                                     ;
+; _herc_prakeaw( )                                                            ;
 ;=============================================================================;
 	PUBLIC _herc_prakeaw
 _herc_prakeaw PROC FAR
