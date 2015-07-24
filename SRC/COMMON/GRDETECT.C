@@ -149,9 +149,9 @@ int is_att400( void ) {
 	reg_pack.x.ax = 0xFE00;
 	int86( 0x1a, &reg_pack, &reg_pack );
 	if ( reg_pack.x.cx != 0 ) {			/* if any bits are set, we have AT&T 6300 */
-		return ( 1 );
-	} else {
 		return ( 0 );
+	} else {
+		return ( 1 );
 	}
 }
 
