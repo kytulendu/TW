@@ -5,14 +5,20 @@ Thai Write
 
 Descriptions
 ------------
-Thai Write is a word processor that run from Free-DOS,
+Thai Write is a word processor that run on Free-DOS,
 M$-DOS, DR-DOS, Novell-DOS or any DOS compatible OSs.
-Base on [CU-Writer](http://th.wikipedia.org/wiki/%E0%B8%8B%E0%B8%B5%E0%B8%A2%E0%B8%B9%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C) 1.41 which is a clone of WordStar,
-by Chulalongkorn University.
+Base on [CU Writer](http://th.wikipedia.org/wiki/%E0%B8%8B%E0%B8%B5%E0%B8%A2%E0%B8%B9%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C) 1.41 which is a clone of WordStar,
+by Computer Service Centre and Faculty of Engineering, Chulalongkorn University.
+
+The original source code for CU Writer is found found on a ftp server
+ftp://ftp.cs.washington.edu/pub/thaisys/software/dos/cu-writer/
+and also on [here](https://github.com/kytulendu/CW141) which is the same as found on ftp server,
+but with change a function name in \COMMON\CSCR.C from line to _line to make it not conflict with
+Borland Graphics Interface (BGI) when linking CUFONT and some edit in MAKEFILE and TURBOC.CFG.
 
 My current goal is restructure, re-format, clean up, add comment,
 make self document code to the source code for easy to understand what the code do
-while make the software not change much from CU-Writer 1.41.
+while make the software not change much from CU Writer 1.41.
 
 Next is port to OpenWATCOM.
 
@@ -24,13 +30,13 @@ System requirement may change in the furure.
   * DOS 3.3 or better
   * Hercules, EGA, VGA, MCGA or AT&T 400 (Graphic card in AT&T PC 6300/Olivetti M24)
   * Two 5.25" 360Kb floppy disk drive
-  * Free hard drive space 700Kb (Optional)
+  * 700Kb free hard drive space (Optional)
   * 9 pin or 24 pin Dot-Matrix printer (Optional)
 
 Download
 --------
 All downloads is in my Google drive, which can be found [here](http://goo.gl/aMYPds)
-Include all version of CU-Writer, both DOS and Win16 version that I can find.
+Include all version of CU Writer, both DOS and Win16 version that I can find.
 
 Compiling the source code
 -------------------------
@@ -52,10 +58,9 @@ Note
 If you use Turbo C/C++ or Turbo Assembler or Borland C++ or the C compilier is
 in directory other than C:\BC, you need to edit makefile.
 
-The source code use Thai Industrial Standard 620-2533 (TIS-620)
-for character encoding.
+The source code use Thai Industrial Standard 620-2533 (TIS-620) for character encoding.
 
-CU-Writer developers
+CU Writer developers
 --------------------
 `สถาบันบริการคอมพิวเตอร์ จุฬาลงกรณ์มหาวิทยาลัย และ ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย`
 
@@ -83,7 +88,7 @@ CU-Writer developers
 
 `สุวพจน์ จันทโรจนวงศ์`
 
-If you know any one who is in CU-Writer project that isn't in this list,
+If you know any one who is in CU Writer project that isn't in this list,
 please in inform me. ;)
 
 Thai Write developer
@@ -102,7 +107,7 @@ License
     Thai Write, A DOS word processor.
     Copyright (C) 2014 Khral Steelforge <https://github.com/kytulendu>.
 
-    CU-Writer
+    CU Writer
     Copyright (C) 1989-1993 Chulalongkorn University.
 
     This program is free software; you can redistribute it and/or modify
@@ -119,9 +124,9 @@ License
     with this program; if not, write to the Free Software Foundation, Inc.,
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-Although, CU-Writer 1.41 is in [public domain](http://unlicense.org/)
+Although, CU Writer 1.41 is in [public domain](http://unlicense.org/)
 as descriped in [Wikipedia]((http://th.wikipedia.org/wiki/%E0%B8%8B%E0%B8%B5%E0%B8%A2%E0%B8%B9%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C)),
 but I'd like to add copyright for Chulalongkorn University anyway.
 
-Thai-Write is released under [GPL v3](http://www.gnu.org/licenses/gpl-2.0.html),
+Thai Write is released under [GPL v3](http://www.gnu.org/licenses/gpl-2.0.html),
 some source code is in other license, please see source code for detail.
