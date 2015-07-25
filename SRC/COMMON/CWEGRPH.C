@@ -38,12 +38,10 @@ void ega_setcurpos( int p_x, int p_y, int p_thaimode ) {
 }
 */
 void ega_putpixel( int p_x, int p_y ) {
-	/* from */
 	unsigned char far *vram = ( unsigned char far * ) 0xa0000000UL;
-	unsigned char bit;
 
 	/* calculate which bit to modify */
-	bit = ( unsigned char ) ( 0x80 >> ( p_x & 7 ) );
+	unsigned char bit = ( unsigned char ) ( 0x80 >> ( p_x & 7 ) );
 
 	/* set the value on VRAM */
 	vram[ega_offset( p_x, p_y )] |= bit;
@@ -83,33 +81,21 @@ void ega_settext( void ) {
 }
 
 void ega_savepic( void ) {
-	size_t i;
 	unsigned char far *vram = ( unsigned char far * ) 0xa0000000UL;
 
-	/* 38400 = (640*480)/8 */
-	for ( i = 0; i <= 38400 - 1; i++ ) {
-		screen_buffptr[i] = vram[i];
-	}
+	memcpy( screen_buffptr, vram, 38400U );	/* 38400 = (640*480)/8 */
 }
 
 void ega_retpic( void ) {
-	size_t i;
 	unsigned char far *vram = ( unsigned char far * ) 0xa0000000UL;
 
-	/* 38400 = (640*480)/8 */
-	for ( i = 0; i <= 38400 - 1; i++ ) {
-		vram[i] = screen_buffptr[i];
-	}
+	memcpy( vram, screen_buffptr, 38400U );	/* 38400 = (640*480)/8 */
 }
 
 void ega_clsall( void ) {
-	size_t i;
 	unsigned char far *vram = ( unsigned char far * ) 0xa0000000UL;
 
-	/* 38400 = (640*480)/8 */
-	for ( i = 0; i <= 38400 - 1; i++ ) {
-		vram[i] = 0U;
-	}
+	memset( vram, 0, 38400U );	/* 38400 = (640*480)/8 */
 }
 /*
 void ega_clsgraph( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd ) {
