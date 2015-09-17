@@ -131,6 +131,9 @@
     <ClInclude Include="SRC\COMMON\COMMON.H">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="SRC\COMMON\VAR.H">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="SRC\COMMON\CCOMMON.C">

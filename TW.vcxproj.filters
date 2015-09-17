@@ -66,6 +66,9 @@
     <None Include="TODO.md">
       <Filter>Documents</Filter>
     </None>
+    <None Include="CHANGE.md">
+      <Filter>Documents</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="SRC\SCUW\THAISYLS\MAINSYLS.H">
