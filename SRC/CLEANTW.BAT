@@ -1,0 +1,15 @@
+@ECHO OFF
+ECHO.
+ECHO Cleaning Editor ...
+DEL *.LOG
+CD SCUW
+DEL *.OBJ
+CD THAISYLS
+DEL *.OBJ
+CD ..
+CD ..
+CD ..
+DEL TW.EXE
+CD SRC
+ECHO Finish!
+ECHO.

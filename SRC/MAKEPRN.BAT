@@ -1,0 +1,9 @@
+@ECHO OFF
+CD ..
+DEL TWPRINT.EXE
+CD SRC
+CD SCUP
+ECHO Building Printer.
+MAKE
+ECHO Done!
+CD ..

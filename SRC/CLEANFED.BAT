@@ -1,0 +1,12 @@
+@ECHO OFF
+ECHO.
+ECHO Cleaning Font Editor ...
+DEL *.LOG
+CD SCUF
+DEL *.OBJ
+CD ..
+CD ..
+DEL TWFONT.EXE
+CD SRC
+ECHO Finish!
+ECHO.

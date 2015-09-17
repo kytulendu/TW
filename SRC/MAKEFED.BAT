@@ -1,0 +1,9 @@
+@ECHO OFF
+CD ..
+DEL TWFONT.EXE
+CD SRC
+CD SCUF
+ECHO Building Font Editor.
+MAKE
+ECHO Done!
+CD ..

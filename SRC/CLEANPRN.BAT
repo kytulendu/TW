@@ -1,0 +1,12 @@
+@ECHO OFF
+ECHO.
+ECHO Cleaning Printer ...
+DEL *.LOG
+CD SCUP
+DEL *.OBJ
+CD ..
+CD ..
+DEL TWPRINT.EXE
+CD SRC
+ECHO Finish!
+ECHO.
