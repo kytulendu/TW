@@ -3,9 +3,9 @@
 
 /** Check if given file exist.
 *   \param[in]  p_filename		Name of file to check.
-*   \return boolean				0 (NO), file not exist.
+*   \return int					0 (NO), file not exist.
 *								1 (YES), file exist. */
-boolean file_exist( char *p_filename );
+int file_exist( char *p_filename );
 
 /** Find file.
 *   \param[in]  p_filename		Name of file to search.
@@ -17,9 +17,9 @@ search_file_mode find_file( char *p_filename, char *p_searchpath );
 
 /** Check if given file name have wildcard character.
 *   \param[in]  p_filename		Name of file to check.
-*   \return boolean				0 (NO), not have wildcard.
+*   \return int					0 (NO), not have wildcard.
 *								1 (YES), have wildcard. */
-boolean havewild( char *p_filename );
+int havewild( char *p_filename );
 
 /** Read screen font from current dir first, if not found try reading from searchpath
 *   Tue  08-01-1989  13:52:17

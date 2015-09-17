@@ -11,7 +11,7 @@
 *         : Tue  08-15-1989  02:09:46
 *           Use macro instead of function call
 *         : Tue  08-22-1989  02:01:28
-*           Add egamono mode
+*           Add EGAMONO mode
 * ============================================================================
 */
 

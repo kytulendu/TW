@@ -16,7 +16,7 @@ EXTRN _kedmanee_table:BYTE
 				ASSUME  CS:ACOMMON_TEXT, DS:DGROUP
 				
 ;=============================================================================;
-; _thaikey -  Change ascii value of key from english to thai                  ;
+; _thaikey -  Change ASCII value of key from English to Thai.                 ;
 ;                                                                             ;
 ;     USAGE : thaikey(unsigned key)                                           ;
 ;=============================================================================;
@@ -26,8 +26,8 @@ _thaikey PROC FAR
 	MOV     BP,SP
 
 	MOV     BX,OFFSET DGROUP:_kedmanee_table
-	MOV     AX,[BP+6]                   ; get ascii code & scan code
-	XLAT                                ; look up table for changing ascii code only
+	MOV     AX,[BP+6]                   ; get ASCII code & scan code
+	XLAT                                ; look up table for changing ASCII code only
 
 	POP     BP
 	RET
@@ -35,7 +35,7 @@ _thaikey PROC FAR
 _thaikey ENDP
 
 ;=============================================================================;
-; asm_keypressed -  check keyboard status                                     ;
+; asm_keypressed -  Check keyboard status.                                    ;
 ;                                                                             ;
 ;     USAGE : int asm_keypressed(void)                                        ;
 ;         return 0 : no keypressed                                            ;

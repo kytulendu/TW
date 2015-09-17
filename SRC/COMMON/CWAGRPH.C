@@ -26,7 +26,7 @@ void att_settext( void ) {
 	int86( 0x10, &inregs, &outregs );
 }
 
-/** Find offest of pixel x, y by use the following formula
+/** Find offset of pixel x, y by use the following formula
 *   0x2000 * ( y % 4 ) + 80 * ( y / 4 ) + ( x / 8 ) ) */
 int att_offset( register int x, register int y ) {
 	return ( 0x2000 * ( y % 4 ) + 80 * ( y / 4 ) + ( x / 8 ) );

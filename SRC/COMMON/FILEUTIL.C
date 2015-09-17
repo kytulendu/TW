@@ -21,7 +21,7 @@
 #include "ekbd.h"
 #include "sound.h"
 
-boolean file_exist( char *p_filename ) {
+int file_exist( char *p_filename ) {
 	FILE* fd = fopen( p_filename, "rb" );
 	if ( !fd ) {
 		return NO;
@@ -45,7 +45,7 @@ search_file_mode find_file( char *p_filename, char *search_path ) {
 	return NOT_FOUND;
 }
 
-boolean havewild( char *p_filename ) {
+int havewild( char *p_filename ) {
 	while ( *p_filename ) {
 		if ( ( *p_filename == '*' ) || ( *p_filename == '?' ) ) {
 			return( YES );

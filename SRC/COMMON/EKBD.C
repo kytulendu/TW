@@ -45,7 +45,7 @@ void placekey( register int p_key ) {
 		
 }
 
-boolean keypressed( void ) {
+int keypressed( void ) {
 	if ( keyb_head == keyb_tail ) {
 		return( asm_keypressed( ) ); 
 	}

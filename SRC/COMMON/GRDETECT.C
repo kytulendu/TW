@@ -15,7 +15,8 @@
 
 void graph_detecthardware( graphics_hardware *mode_ptr ) {
 	union REGS reg_pack;
-	unsigned char far *mem_ptr, byte_keep;
+	unsigned char far *mem_ptr;
+	unsigned char byte_keep;
 
 	*mode_ptr = UNKNOWN_HW;
 
@@ -40,7 +41,7 @@ void graph_detecthardware( graphics_hardware *mode_ptr ) {
 			} else {
 				*mode_ptr = CGA;
 			}
-			return;								/* CGA adaptor */
+			return;								/* CGA adapter */
 		} else {
 			*mode_ptr = HERCMONO;
 			return;

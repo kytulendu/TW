@@ -19,7 +19,7 @@
 #include "cwgrphc.h"
 #include "grdetect.h"
 
-/** Find offest of pixel x, y by use the following formula
+/** Find offset of pixel x, y by use the following formula
 *   ( High_byte * y ) + ( x / 8 )  where High_byte = 640 / 8 = 80 */
 int ega_offset( register int x, register int y ) {
 	return ( ( 80 * y ) + ( x / 8 ) );

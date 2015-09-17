@@ -20,7 +20,7 @@ void errorsound( void ) { }
 #else
 
 /** Delay for duration given.
-*  \param[in]  p_duration	time to delay in mili-secound. */
+*  \param[in]  p_duration	time to delay in millisecond. */
 void biosdelay( long p_duration );
 
 void soundnoise( unsigned int p_freq, unsigned int p_duration ) {

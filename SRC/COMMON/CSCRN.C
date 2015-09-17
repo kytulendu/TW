@@ -121,7 +121,8 @@ void togglefont( font_attr *p_curfont, font_code p_code ) {
 }
 
 void framebox( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd, int p_attr ) {
-	register int i, j;
+	register int i;
+	register int j;
 
 	i = p_xStart;
 	prchar( ' ', p_attr, i++, p_yStart );

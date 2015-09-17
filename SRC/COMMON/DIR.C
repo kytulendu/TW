@@ -53,7 +53,8 @@ void dirleft( void );
 int createdir( char *p_fileMask ) {
 	struct dirnode *tempdir;
 	struct ffblk ffblock;
-	int done, i;
+	int done;
+	int i;
 	char *fileName;
 
 	headdir->previous = headdir;
@@ -128,6 +129,7 @@ int createdir( char *p_fileMask ) {
 void showfile( int col, int row, char attr ) {
 	struct dirnode *tempdir;
 	int count;
+
 	tempdir = dirpage;
 	for ( count = ( DIRCOLMAX * row ) + col; ( count != 0 ) && ( tempdir != headdir ); count-- ) {
 		tempdir = tempdir->next;
@@ -142,7 +144,9 @@ void showfile( int col, int row, char attr ) {
 }
 
 void showpagedir( void ) {
-	int col, row;
+	int col;
+	int row;
+
 	framebox( 4, 8, 4 + 70, 14, 2 );
 	for ( row = 0; row != DIRROWMAX; row++ ) {
 		for ( col = 0; col != DIRCOLMAX; col++ ) {
@@ -152,7 +156,9 @@ void showpagedir( void ) {
 }
 
 void freedir( void ) {
-	struct dirnode *tempdir, *tempdir2;
+	struct dirnode *tempdir;
+	struct dirnode *tempdir2;
+
 	tempdir = headdir->next;
 	while ( tempdir != headdir ) {
 		tempdir2 = tempdir;
@@ -163,7 +169,9 @@ void freedir( void ) {
 
 void dirpgup( void ) {
 	struct dirnode *tempdir;
-	int count, countrow;
+	int count;
+	int countrow;
+
 	tempdir = dirpage;
 	for ( countrow = DIRROWMAX; ( countrow != 0 ) && ( tempdir->previous != headdir ); countrow-- ) {
 		for ( count = DIRCOLMAX; ( count != 0 ) && ( tempdir->previous != headdir ); count-- ) {
@@ -182,6 +190,7 @@ void dirpgup( void ) {
 void setdirpos( struct dirnode *namewant ) {
 	int count;
 	struct dirnode *tempdir;
+
 	tempdir = dirpage;
 	dirrow = 0;
 	dircol = 0;
@@ -200,7 +209,9 @@ void setdirpos( struct dirnode *namewant ) {
 
 void dirpgdn( void ) {
 	struct dirnode *tempdir;
-	int count, countrow;
+	int count;
+	int countrow;
+
 	tempdir = dirpage;
 	for ( countrow = DIRROWMAX; ( countrow != 0 ) && ( tempdir->next != headdir ); countrow-- ) {
 		for ( count = DIRCOLMAX; ( count != 0 ) && ( tempdir->next != headdir ); count-- ) {
@@ -220,6 +231,7 @@ void dirpgdn( void ) {
 void dirup( void ) {
 	struct dirnode *tempdir;
 	int count;
+
 	tempdir = dirpage;
 	for ( count = DIRCOLMAX; ( count != 0 ) && ( tempdir->previous != headdir ); count-- ) {
 		tempdir = tempdir->previous;
@@ -231,8 +243,10 @@ void dirup( void ) {
 }
 
 void dirdown( void ) {
-	struct dirnode *tempdir, *tempdir2;
+	struct dirnode *tempdir;
+	struct dirnode *tempdir2;
 	int count;
+
 	tempdir = dirpage;
 	for ( count = ( DIRCOLMAX * dirrow ); ( count != 0 ) && ( tempdir->next != headdir ); count-- ) {
 		tempdir = tempdir->next;
@@ -258,6 +272,7 @@ void dirdown( void ) {
 void dirright( void ) {
 	struct dirnode *tempdir;
 	int count;
+
 	tempdir = dirpage;
 	for ( count = ( DIRCOLMAX * dirrow ) + dircol; count != 0; count-- ) {
 		tempdir = tempdir->next;
@@ -270,6 +285,7 @@ void dirright( void ) {
 void dirleft( void ) {
 	struct dirnode *tempdir;
 	int count;
+
 	tempdir = dirpage;
 	for ( count = ( DIRCOLMAX * dirrow ) + DIRCOLMAX - 1; ( count != 0 ) && ( tempdir->next != headdir ); count-- ) {
 		tempdir = tempdir->next;
@@ -279,7 +295,10 @@ void dirleft( void ) {
 
 int selectfile( char *p_fileMask ) {
 	struct dirnode *tempdir;
-	int count, key, i, j;
+	int count;
+	int key;
+	int i;
+	int j;
 
 	if ( createdir( p_fileMask ) == NO ) {
 		return( NO );

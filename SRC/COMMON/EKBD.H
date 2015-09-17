@@ -11,6 +11,6 @@ int ebioskey( int p_cmd );
 void placekey( int p_key );
 
 /** Check whether key is pressed or not. */
-boolean keypressed( void );
+int keypressed( void );
 
 #endif /* COMMON_EKBD_H_INCLUDED */
