@@ -51,32 +51,3 @@ int keypressed( void ) {
 	}
 	return( YES );
 }
-
-/*  Pointer version
-#define KBUFSIZE 128
-int ebioskey_buf[KBUFSIZE];
-int *keyb_head = ebioskey_buf;
-int *keyb_tail = ebioskey_buf;
-
-int ebioskey( register int p_cmd ) {
-	register int keycode;
-	if ( p_cmd == 0 ) {
-		if ( keyb_head == keyb_tail ) { 
-			return ( bioskey( 0 ) );
-		}
-		keycode = *keyb_head++;
-		if ( keyb_head == ebioskey_buf + KBUFSIZE ) {
-			keyb_head = ebioskey_buf;
-		}
-		return( keycode );
-	}
-	return ( bioskey( p_cmd ) );
-}
-
-void placekey( register int p_key ) {
-	*keyb_tail++ = p_key;
-	if ( keyb_tail == ebioskey_buf + KBUFSIZE ) {
-		keyb_tail = ebioskey_buf;
-	}
-}
-*/
