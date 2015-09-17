@@ -8,7 +8,7 @@ Descriptions
 Thai Write is a word processor that run on Free-DOS,
 M$-DOS, DR-DOS, Novell-DOS or any DOS compatible OSs.
 Base on [CU Writer](http://th.wikipedia.org/wiki/%E0%B8%8B%E0%B8%B5%E0%B8%A2%E0%B8%B9%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C) 1.41 which is a clone of WordStar,
-by Computer Service Centre and Faculty of Engineering, Chulalongkorn University.
+by Computer Service Center and Faculty of Engineering, Chulalongkorn University.
 
 The original source code for CU Writer is found found on a ftp server
 ftp://ftp.cs.washington.edu/pub/thaisys/software/dos/cu-writer/
@@ -24,7 +24,7 @@ Next is port to OpenWATCOM.
 
 System Requirement
 ------------------
-System requirement may change in the furure.
+System requirement may change in the future.
 
   * IBM PC or Compatible, 8086 or 8088 CPU, 512 KB RAM or better
   * DOS 3.3 or better
@@ -125,7 +125,7 @@ License
     51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
 Although, CU Writer 1.41 is in [public domain](http://unlicense.org/)
-as descriped in [Wikipedia]((http://th.wikipedia.org/wiki/%E0%B8%8B%E0%B8%B5%E0%B8%A2%E0%B8%B9%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C)),
+as described in [Wikipedia]((http://th.wikipedia.org/wiki/%E0%B8%8B%E0%B8%B5%E0%B8%A2%E0%B8%B9%E0%B9%84%E0%B8%A3%E0%B9%80%E0%B8%95%E0%B8%AD%E0%B8%A3%E0%B9%8C)),
 but I'd like to add copyright for Chulalongkorn University anyway.
 
 Thai Write is released under [GPL v3](http://www.gnu.org/licenses/gpl-2.0.html),
