@@ -24,149 +24,15 @@
 
 #include "edit.h"
 
-void findstrcode( unsigned char *fontcode, font_attr attr ) {
-	int i = 0;
-	if ( ( attr & ONELINEATTR ) != 0 ) {
-		fontcode[i] = ONELINECODE;
-		i++;
-	}
-	if ( ( attr & SUPERATTR ) != 0 ) {
-		fontcode[i] = SUPERCODE;
-		i++;
-	}
-	if ( ( attr & SUBATTR ) != 0 ) {
-		fontcode[i] = SUBCODE;
-		i++;
-	}
-	if ( ( attr & ITALICATTR ) != 0 ) {
-		fontcode[i] = ITALICCODE;
-		i++;
-	}
-	if ( ( attr & BOLDATTR ) != 0 ) {
-		fontcode[i] = BOLDCODE;
-		i++;
-	}
-	if ( ( attr & TWOLINEATTR ) != 0 ) {
-		fontcode[i] = TWOLINECODE;
-		i++;
-	}
-	if ( ( attr & ENLARGEATTR ) != 0 ) {
-		fontcode[i] = ENLARGECODE;
-		i++;
-	}
-	fontcode[i] = '\0';
-}
-
-unsigned int findlineno( struct line_node *line ) {
-	register unsigned int linenumber = 1;
-	struct line_node *templine;
-	templine = sentinel->next;
-	while ( templine != line ) {
-		templine = templine->next;
-		linenumber++;
-	}
-	return( linenumber );
-}
-
-struct line_node *linepointer( unsigned int linenum ) {
-	struct line_node *line;
-	line = sentinel->next;
-	while ( linenum-- > 1 ) {
-		line = line->next;
-	}
-	return( line );
-}
-
-void displine( struct line_node *line, unsigned int y, unsigned int linenum ) {
-	register unsigned int x = 0;
-	int count = firstcol;
-	font_attr tempfont, curfont = 0;
-	unsigned char *st;
-
-	st = line->text;
-	y += wind.row;
-	while ( ( count > 0 ) && ( *st != '\0' ) ) {
-		if ( whatlevel( *st ) == MIDDLE ) {
-			if ( *st < 32 ) {
-				togglefont( &curfont, *st );
-			} else {
-				if ( ( curfont & ENLARGEATTR ) == ENLARGEATTR ) {
-					count--;
-				}
-				count--;
-			}
-		}
-		st++;
-	}
-	if ( ( count < 0 ) && ( ( curfont & ENLARGEATTR ) == ENLARGEATTR ) ) {
-		x++;
-	}
-	while ( ( *st != '\0' ) && ( x < ( wind.length - 2 ) ) ) {
-		if ( *st < 32 ) {
-			togglefont( &curfont, *st );
-		} else {
-			tempfont = curfont;
-			if ( haveblock( ) && inblock( linenum, x + firstcol ) && dispblock ) {
-				curfont = curfont | REVERSEATTR;
-			}
-			if ( whatlevel( *st ) != MIDDLE ) {
-				if ( x > 0 ) {
-					if ( ( curfont & ENLARGEATTR ) == ENLARGEATTR ) {
-						if ( x >= 2 ) {
-							prchar( *st, curfont, wind.col + x - 2, y );
-						}
-					} else {
-						prchar( *st, curfont, wind.col + x - 1, y );
-					}
-				}
-			} else {
-				if ( ( *st != ' ' ) || ( curfont != 0 ) ) {
-					if ( ( curfont & ENLARGEATTR ) != ENLARGEATTR ) {
-						prchar( *st, curfont, wind.col + x, y );
-						x++;
-					} else {
-						prchar( *st, curfont, wind.col + x, y );
-						x += 2;
-					}
-				} else { /* if it's blank and normal attribute,use prblank to speed up */
-					prblank( wind.col + x, y );
-					x++;
-				}
-			}
-			curfont = tempfont;
-		}
-		st++;
-	}
-	clrline( wind.col + x, y, wind.col + wind.length - 1 );
-	if ( line->wrap == NO ) {
-		prchar( '<', NORMALATTR, wind.col + wind.length - 1, y );
-	}
-	if ( *st != '\0' ) {
-		prchar( '+', NORMALATTR, wind.col + wind.length - 1, y );
-	}
 #ifdef WANT_TO_USE_GRAPH
-	y -= wind.row;
-	if ( graphbuff[y] != NULL ) {
-		paintlinegraph( graphbuff[y], y );
-	}
-#endif
-}
-
-void disppagebreak( unsigned int y ) {
-	register unsigned int i = 0, j;
-	y += wind.row;
-	j = wind.col + wind.length - 1;
-	while ( i != j ) {
-		prchar( '-', NORMALATTR, wind.col + i, y );
-		i++;
-	}
-	prchar( 'P', NORMALATTR, i, y );
-}
-
-#ifdef WANT_TO_USE_GRAPH
-void set_graphic_buffer( ) {
-	unsigned int count, i, j, m, n;
-	unsigned int linenum = lineno, linenum2;
+void set_graphic_buffer( void ) {
+	unsigned int count;
+	unsigned int i;
+	unsigned int j;
+	unsigned int m;
+	unsigned int n;
+	unsigned int linenum = lineno;
+	unsigned int linenum2;
 	struct line_node *templine;
 	unsigned char *gr;
 
@@ -267,9 +133,156 @@ void set_graphic_buffer( ) {
 }
 #endif
 
+void findstrcode( unsigned char *p_fontcode, font_attr p_attr ) {
+	int i = 0;
+
+	if ( ( p_attr & ONELINEATTR ) != 0 ) {
+		p_fontcode[i] = ONELINECODE;
+		i++;
+	}
+	if ( ( p_attr & SUPERATTR ) != 0 ) {
+		p_fontcode[i] = SUPERCODE;
+		i++;
+	}
+	if ( ( p_attr & SUBATTR ) != 0 ) {
+		p_fontcode[i] = SUBCODE;
+		i++;
+	}
+	if ( ( p_attr & ITALICATTR ) != 0 ) {
+		p_fontcode[i] = ITALICCODE;
+		i++;
+	}
+	if ( ( p_attr & BOLDATTR ) != 0 ) {
+		p_fontcode[i] = BOLDCODE;
+		i++;
+	}
+	if ( ( p_attr & TWOLINEATTR ) != 0 ) {
+		p_fontcode[i] = TWOLINECODE;
+		i++;
+	}
+	if ( ( p_attr & ENLARGEATTR ) != 0 ) {
+		p_fontcode[i] = ENLARGECODE;
+		i++;
+	}
+	p_fontcode[i] = '\0';
+}
+
+unsigned int findlineno( struct line_node *p_line ) {
+	register unsigned int linenumber = 1;
+	struct line_node *templine;
+
+	templine = sentinel->next;
+	while ( templine != p_line ) {
+		templine = templine->next;
+		linenumber++;
+	}
+	return( linenumber );
+}
+
+struct line_node *linepointer( unsigned int p_linenum ) {
+	struct line_node *line;
+
+	line = sentinel->next;
+	while ( p_linenum-- > 1 ) {
+		line = line->next;
+	}
+	return( line );
+}
+
+void displine( struct line_node *p_line, unsigned int p_row, unsigned int p_linenum ) {
+	register unsigned int x = 0;
+	int count = firstcol;
+	font_attr tempfont;
+	font_attr curfont = NORMALATTR;
+	unsigned char *st;
+
+	st = p_line->text;
+	p_row += wind.row;
+	while ( ( count > 0 ) && ( *st != '\0' ) ) {
+		if ( whatlevel( *st ) == MIDDLE ) {
+			if ( *st < 32 ) {
+				togglefont( &curfont, *st );
+			} else {
+				if ( ( curfont & ENLARGEATTR ) == ENLARGEATTR ) {
+					count--;
+				}
+				count--;
+			}
+		}
+		st++;
+	}
+	if ( ( count < 0 ) && ( ( curfont & ENLARGEATTR ) == ENLARGEATTR ) ) {
+		x++;
+	}
+	while ( ( *st != '\0' ) && ( x < ( wind.length - 2 ) ) ) {
+		if ( *st < 32 ) {
+			togglefont( &curfont, *st );
+		} else {
+			tempfont = curfont;
+			if ( haveblock( ) && inblock( p_linenum, x + firstcol ) && dispblock ) {
+				curfont = curfont | REVERSEATTR;
+			}
+			if ( whatlevel( *st ) != MIDDLE ) {
+				if ( x > 0 ) {
+					if ( ( curfont & ENLARGEATTR ) == ENLARGEATTR ) {
+						if ( x >= 2 ) {
+							prchar( *st, curfont, wind.col + x - 2, p_row );
+						}
+					} else {
+						prchar( *st, curfont, wind.col + x - 1, p_row );
+					}
+				}
+			} else {
+				if ( ( *st != ' ' ) || ( curfont != 0 ) ) {
+					if ( ( curfont & ENLARGEATTR ) != ENLARGEATTR ) {
+						prchar( *st, curfont, wind.col + x, p_row );
+						x++;
+					} else {
+						prchar( *st, curfont, wind.col + x, p_row );
+						x += 2;
+					}
+				} else { /* if it's blank and normal attribute,use prblank to speed up */
+					prblank( wind.col + x, p_row );
+					x++;
+				}
+			}
+			curfont = tempfont;
+		}
+		st++;
+	}
+	clrline( wind.col + x, p_row, wind.col + wind.length - 1 );
+	if ( p_line->wrap == NO ) {
+		prchar( '<', NORMALATTR, wind.col + wind.length - 1, p_row );
+	}
+	if ( *st != '\0' ) {
+		prchar( '+', NORMALATTR, wind.col + wind.length - 1, p_row );
+	}
+#ifdef WANT_TO_USE_GRAPH
+	p_row -= wind.row;
+	if ( graphbuff[p_row] != NULL ) {
+		paintlinegraph( graphbuff[p_row], y );
+	}
+#endif
+}
+
+void disppagebreak( unsigned int p_row ) {
+	register unsigned int i = 0;
+	register unsigned int j;
+
+	p_row += wind.row;
+	j = wind.col + wind.length - 1;
+	while ( i != j ) {
+		prchar( '-', NORMALATTR, wind.col + i, p_row );
+		i++;
+	}
+	prchar( 'P', NORMALATTR, i, p_row );
+}
+
 void showpage( void ) {
-	register unsigned int y = 0, linenum = lineno;
+	register unsigned int y = 0;
+	register unsigned int linenum = lineno;
 	struct line_node *temppage = curpage;
+
 #ifdef WANT_TO_USE_GRAPH
 	set_graphic_buffer();
 #endif
@@ -329,8 +342,10 @@ void showpageall( void ) {
 }
 
 unsigned int findrow( void ) {
-	register unsigned int row = 0, linenum = lineno;
+	register unsigned int row = 0;
+	register unsigned int linenum = lineno;
 	struct line_node *temppage = curpage;
+
 	while ( temppage != curline ) {
 		linenum--;
 		temppage = temppage->next;
@@ -348,24 +363,24 @@ unsigned int findrow( void ) {
 	return( row );
 }
 
-void adjustcol( unsigned int *x ) {
-	if ( ( *x + firstcol ) >= strlen( workline.middle ) ) {
+void adjustcol( unsigned int *p_col ) {
+	if ( ( *p_col + firstcol ) >= strlen( workline.middle ) ) {
 		if ( firstcol > ( strlen( workline.middle ) - 1 ) ) {
 			firstcol = strlen( workline.middle ) - 1;
 			pagecomplete = NO;
 		}
-		*x = strlen( workline.middle ) - 1 - firstcol;
-		if ( *x > ( wind.length - 2 ) ) {
-			firstcol += *x - ( wind.length - 2 );
+		*p_col = strlen( workline.middle ) - 1 - firstcol;
+		if ( *p_col > ( wind.length - 2 ) ) {
+			firstcol += *p_col - ( wind.length - 2 );
 			pagecomplete = NO;
 		}
 	}
-	if ( *x > 0 ) {
-		if ( workline.below[*x + firstcol + 1] == ENLARGEATTR ) {
-			( *x )--;
+	if ( *p_col > 0 ) {
+		if ( workline.below[*p_col + firstcol + 1] == ENLARGEATTR ) {
+			( *p_col )--;
 		}
 	} else {
-		if ( ( workline.below[*x + firstcol + 1] == ENLARGEATTR ) &&
+		if ( ( workline.below[*p_col + firstcol + 1] == ENLARGEATTR ) &&
 			( firstcol != 0 ) ) {
 			firstcol--;
 			pagecomplete = NO;
@@ -373,9 +388,10 @@ void adjustcol( unsigned int *x ) {
 	}
 }
 
-void loadtoline( unsigned char *address ) {
+void loadtoline( unsigned char *p_text ) {
 	register unsigned int index = 1;
-	font_attr curfont, oldfont;
+	font_attr curfont;
+	font_attr oldfont;
 
 	workline.middle[0] = ' ';
 	while ( index <= ( MAXCOL + 1 ) ) {
@@ -389,11 +405,11 @@ void loadtoline( unsigned char *address ) {
 	index = 0;
 	curfont = 0;
 	oldfont = 0;
-	while ( ( *address != '\0' ) && ( index <= MAXCOL ) ) {
-		if ( *address < 32 ) {
-			togglefont( &curfont, *address );
+	while ( ( *p_text != '\0' ) && ( index <= MAXCOL ) ) {
+		if ( *p_text < 32 ) {
+			togglefont( &curfont, *p_text );
 		} else {
-			switch ( whatlevel( *address ) ) {
+			switch ( whatlevel( *p_text ) ) {
 			case MIDDLE:
 				index++;
 				if ( ( oldfont & ENLARGEATTR ) == ENLARGEATTR ) {
@@ -402,22 +418,22 @@ void loadtoline( unsigned char *address ) {
 					workline.below[index] = ENLARGEATTR;
 					index++;
 				}
-				workline.middle[index] = ( *address );
+				workline.middle[index] = ( *p_text );
 				workline.attr[index] = curfont;
 				break;
 			case UPPER:
-				workline.upper[index] = ( *address );
+				workline.upper[index] = ( *p_text );
 				break;
 			case TOPEST:
-				workline.topest[index] = ( *address );
+				workline.topest[index] = ( *p_text );
 				break;
 			case BELOW:
-				workline.below[index] = ( *address );
+				workline.below[index] = ( *p_text );
 				break;
 			}
 			oldfont = curfont;
 		}
-		address++;
+		p_text++;
 	}
 	index++;
 	if ( ( oldfont & ENLARGEATTR ) == ENLARGEATTR ) {
@@ -429,14 +445,13 @@ void loadtoline( unsigned char *address ) {
 	workline.middle[index] = '\0';
 }
 
-void storeline( struct line_node *curline ) {
-	unsigned int count, col;
+void storeline( struct line_node *p_line ) {
+	unsigned int count = 0;
+	unsigned int col = 1;
 	unsigned char *oneline;
-	unsigned char oldfont, fontcode[9];
+	unsigned char oldfont = 0;
+	unsigned char fontcode[9];
 	unsigned char *keep_ptr;
-	count = 0;
-	col = 1;
-	oldfont = 0;
 
 	oneline = ( unsigned char * ) malloc( MAXCOL * sizeof( unsigned char ) );
 	if ( oneline == NULL ) {
@@ -482,15 +497,15 @@ void storeline( struct line_node *curline ) {
 	}
 	oneline[count] = '\0';
 
-	keep_ptr = curline->text;
-	curline->text = ( unsigned char * ) malloc( count + 1 );
-	if ( curline->text != NULL ) {
+	keep_ptr = p_line->text;
+	p_line->text = ( unsigned char * ) malloc( count + 1 );
+	if ( p_line->text != NULL ) {
 		if ( keep_ptr != NULL ) {
 			free( keep_ptr );
 		}
-		strcpy( curline->text, oneline );
+		strcpy( p_line->text, oneline );
 	} else {
-		curline->text = keep_ptr;
+		p_line->text = keep_ptr;
 		dispstrhgc( "Internal error in storeline", 1, 1, REVERSEATTR );
 		getchar( );
 	}
@@ -498,65 +513,70 @@ void storeline( struct line_node *curline ) {
 	free( oneline );
 }
 
-void refreshline( unsigned int x, unsigned int y ) {
-	register size_t i, len;
+void refreshline( unsigned int p_col, unsigned int p_row ) {
+	register size_t i;
+	register size_t len;
 	unsigned char attr;
+
 	len = wind.length - 2;
-	y += wind.row;
-	if ( x == 0 ) {
-		if ( workline.below[firstcol + x + 1] == ENLARGEATTR ) {
-			prchar( ' ', workline.attr[firstcol + x + 1], wind.col + x, y );
-			x++;
+	p_row += wind.row;
+	if ( p_col == 0 ) {
+		if ( workline.below[firstcol + p_col + 1] == ENLARGEATTR ) {
+			prchar( ' ', workline.attr[firstcol + p_col + 1], wind.col + p_col, p_row );
+			p_col++;
 		}
 	} else {
-		if ( workline.below[firstcol + x] != ENLARGEATTR ) {
-			x--;
+		if ( workline.below[firstcol + p_col] != ENLARGEATTR ) {
+			p_col--;
 		} else {
-			if ( x >= 2 ) {
-				x = x - 2;
+			if ( p_col >= 2 ) {
+				p_col = p_col - 2;
 			}
 		}
 	}
-	i = firstcol + x + 1;
-	while ( ( x < len ) && ( workline.middle[i] != '\0' ) ) {
+	i = firstcol + p_col + 1;
+	while ( ( p_col < len ) && ( workline.middle[i] != '\0' ) ) {
 		attr = workline.attr[i];
 		if ( haveblock( ) && inblock( lineno, i - 1 ) && dispblock ) {
 			attr = attr | REVERSEATTR;
 		}
 		if ( ( workline.middle[i] != ' ' ) || ( attr != 0 ) ) {
-			prchar( workline.middle[i], attr, wind.col + x, y );
-			if ( workline.below[i] != ' ' )
-				prchar( workline.below[i], attr, wind.col + x, y );
-			if ( workline.upper[i] != ' ' )
-				prchar( workline.upper[i], attr, wind.col + x, y );
-			if ( workline.topest[i] != ' ' )
-				prchar( workline.topest[i], attr, wind.col + x, y );
+			prchar( workline.middle[i], attr, wind.col + p_col, p_row );
+			if ( workline.below[i] != ' ' ) {
+				prchar( workline.below[i], attr, wind.col + p_col, p_row );
+			}
+			if ( workline.upper[i] != ' ' ) {
+				prchar( workline.upper[i], attr, wind.col + p_col, p_row );
+			}
+			if ( workline.topest[i] != ' ' ) {
+				prchar( workline.topest[i], attr, wind.col + p_col, p_row );
+			}
 		} else {
-			prblank( wind.col + x, y );
+			prblank( wind.col + p_col, p_row );
 		}
 		if ( ( workline.attr[i] & ENLARGEATTR ) == ENLARGEATTR ) {
-			x++;
+			p_col++;
 		}
-		x++;
-		i = firstcol + x + 1;
+		p_col++;
+		i = firstcol + p_col + 1;
 	}
-	prblank( wind.col + wind.length - 2, y );
+	prblank( wind.col + wind.length - 2, p_row );
 	if ( workline.middle[i] == '\0' ) {
-		for ( ; x < len; x++ ) {
-			prblank( wind.col + x, y );
+		for ( ; p_col < len; p_col++ ) {
+			prblank( wind.col + p_col, p_row );
 		}
 		if ( curline->wrap == NO ) {
-			prchar( '<', 0, wind.col + wind.length - 1, y );
+			prchar( '<', NORMALATTR, wind.col + wind.length - 1, p_row );
 		} else {
-			prblank( wind.col + wind.length - 1, y );
+			prblank( wind.col + wind.length - 1, p_row );
 		}
 	} else {
-		prchar( '+', 0, wind.col + wind.length - 1, y );
+		prchar( '+', NORMALATTR, wind.col + wind.length - 1, p_row );
 	}
 #ifdef WANT_TO_USE_GRAPH
-	y -= wind.row;
-	if ( graphbuff[y] != NULL ) {
-		paintlinegraph( graphbuff[y], y );
+	p_row -= wind.row;
+	if ( graphbuff[p_row] != NULL ) {
+		paintlinegraph( graphbuff[p_row], p_row );
 	}
 #endif
 }

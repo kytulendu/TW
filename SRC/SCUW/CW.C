@@ -70,7 +70,9 @@ void setupnode( void ) {
 }
 
 void destroynode( void ) {
-	struct line_node *currentline, *templine;
+	struct line_node *currentline;
+	struct line_node *templine;
+
 	blockmsg( 5 );
 	dispstrhgc( "กำลังทำการยกเลิกแฟ้มข้อมูลเดิมอยู่ กรุณารอสักครู่...", 26 + center_factor, 5, REVERSEATTR );
 	currentline = sentinel->next;
@@ -90,49 +92,52 @@ void destroynode( void ) {
 
 unsigned menu_to_key( register unsigned int p_curmenu ) {
 	register int i;
+
 	for ( i = 0; ( command_tab[i] != p_curmenu ) && ( command_tab[i] != 0 ); i += 2 );
 	return( command_tab[i + 1] );
 }
 
 void splashscreen( void ) {
-	extern char prog_date[], prog_time[];
+	extern char prog_date[];
+	extern char prog_time[];
+
 #ifdef EDA_VERSION
 
-	framebox( 21 + center_factor, 5, ( 21 + center_factor ) + 45, 11, REVERSEATTR );
-	dispstrhgc( "CU  WRITER", 35 + center_factor, 6, REVERSEATTR );
-	dispstrhgc( "Version 1.2", 38 + center_factor, 7, REVERSEATTR );
-	dispstrhgc( "EDA version", 38 + center_factor, 8, REVERSEATTR );
-	dispstrhgc( "อภินันทนาการจาก จุฬาลงกรณ์มหาวิทยาลัย", 28 + center_factor, 9, REVERSEATTR );
-	dispstrhgc( "มอบแด่ กระทรวงต่างประเทศ", 33 + center_factor, 10, REVERSEATTR );
+	framebox( 17 + center_factor, 5, ( 17 + center_factor ) + 46, 11, REVERSEATTR );
+	dispstrhgc( "CU  WRITER", ( 21 + center_factor ) + 10, 6, REVERSEATTR );
+	dispstrhgc( "Version 1.2", ( 21 + center_factor ) + 13, 7, REVERSEATTR );
+	dispstrhgc( "EDA version", ( 21 + center_factor ) + 12, 8, REVERSEATTR );
+	dispstrhgc( "อภินันทนาการจาก จุฬาลงกรณ์มหาวิทยาลัย", ( 21 + center_factor ) + 4, 9, REVERSEATTR );
+	dispstrhgc( "มอบแด่ กระทรวงต่างประเทศ", ( 21 + center_factor ) + 8, 10, REVERSEATTR );
 
 #else
 #ifdef CW_VERSION
 
-	framebox( 21 + center_factor, 5, ( 21 + center_factor ) + 45, 13, REVERSEATTR );
+	framebox( 17 + center_factor, 5, ( 17 + center_factor ) + 46, 13, REVERSEATTR );
 	/*
-	framebox( 21 + center_factor, 5, ( 21 + center_factor ) + 45, 14, REVERSEATTR );
+	framebox( 17 + center_factor, 5, ( 17 + center_factor ) + 46, 14, REVERSEATTR );
 	*/
-	dispstrhgc( "CU  WRITER", 34 + center_factor, 6, REVERSEATTR );
-	dispstrhgc( "Version 1.41", 37 + center_factor, 7, REVERSEATTR );
-	dispprintf( 33 + center_factor, 8, REVERSEATTR, "%11s  %8s", prog_date, prog_time );
-	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", 30 + center_factor, 9, REVERSEATTR );
-	dispstrhgc( "พัฒนาโดย สถาบันบริการคอมพิวเตอร์ ร่วมกับ", 27 + center_factor, 10, REVERSEATTR );
-	dispstrhgc( "ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์", 25 + center_factor, 11, REVERSEATTR );
+	dispstrhgc( "CU  WRITER", ( 21 + center_factor ) + 10, 6, REVERSEATTR );
+	dispstrhgc( "Version 1.41", ( 21 + center_factor ) + 13, 7, REVERSEATTR );
+	dispprintf( ( 21 + center_factor ) + 8, 8, REVERSEATTR, "%11s   %8s", prog_date, prog_time );
+	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 21 + center_factor ) + 6, 9, REVERSEATTR );
+	dispstrhgc( "พัฒนาโดย สถาบันบริการคอมพิวเตอร์ ร่วมกับ", ( 21 + center_factor ) + 3, 10, REVERSEATTR );
+	dispstrhgc( "ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์", ( 21 + center_factor ), 11, REVERSEATTR );
 	/*
-	dispstrhgc("และ ชมรมคอมพิวเตอร์ อบจ.", 33 + center_factor, 12, REVERSEATTR );
-	dispstrhgc("จุฬาลงกรณ์มหาวิทยาลัย", 33 + center_factor, 13, REVERSEATTR );
+	dispstrhgc( "และ ชมรมคอมพิวเตอร์ อบจ.", ( 21 + center_factor ) + 8, 12, REVERSEATTR );
+	dispstrhgc("จุฬาลงกรณ์มหาวิทยาลัย", ( 21 + center_factor ) + 10, 13, REVERSEATTR );
 	*/
-	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 35 + center_factor, 12, REVERSEATTR );
+	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", ( 21 + center_factor ) + 10, 12, REVERSEATTR );
 
 #else
 
 	framebox( 17 + center_factor, 5, ( 17 + center_factor ) + 46, 14, REVERSEATTR );
-	dispstrhgc( "THAI WRITE", ( 21 + center_factor ) + 11, 6, REVERSEATTR );
-	dispstrhgc( "Version 1.0", ( 21 + center_factor ) + 14, 7, REVERSEATTR );
-	dispprintf( ( 21 + center_factor ) + 9, 8, REVERSEATTR, "%11s   %8s", prog_date, prog_time );
-	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 21 + center_factor ) + 7, 9, REVERSEATTR );
-	dispstrhgc( "Khral Steelforge", ( 21 + center_factor ) + 12, 10, REVERSEATTR );
-	dispstrhgc( "The Forge Warband, Iron Legion", ( 21 + center_factor ) + 5, 11, REVERSEATTR );
+	dispstrhgc( "THAI  WRITE", ( 21 + center_factor ) + 9, 6, REVERSEATTR );
+	dispstrhgc( "Version 1.0.0", ( 21 + center_factor ) + 13, 7, REVERSEATTR );
+	dispprintf( ( 21 + center_factor ) + 8, 8, REVERSEATTR, "%11s   %8s", prog_date, prog_time );
+	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 21 + center_factor ) + 6, 9, REVERSEATTR );
+	dispstrhgc( "Khral Steelforge", ( 21 + center_factor ) + 11, 10, REVERSEATTR );
+	dispstrhgc( "The Forge Warband,  Iron Legion", ( 21 + center_factor ) + 4, 11, REVERSEATTR );
 	dispstrhgc( "พัฒนาจาก เวิร์ดจุฬา โดย มหาวิทยาลัยจุฬาลงกรณ์", ( 21 + center_factor ) + 1, 13, REVERSEATTR );
 
 #endif
@@ -141,12 +146,16 @@ void splashscreen( void ) {
 	if ( cu_song ) {
 		cusong( );
 	}
+
 	ebioskey( 0 );
 	cls( );
 }
 
 int main( int argc, char *argv[] ) {
-	unsigned int x = 0, y = 0;		/* (x,y) position -> (0,0) at upper left on screen */
+	/* (x,y) position of edit window. x column, y line -> (0,0) at upper left on screen */
+	unsigned int xCursorPos = 0;
+	unsigned int yCursorPos = 0;
+
 	unsigned int curmenu = 0x1100;
 	int i;
 
@@ -160,7 +169,7 @@ int main( int argc, char *argv[] ) {
 	/* Main program loop */
 	do {
 		dispstrhgc( "   ", wind.col, 2, NORMALATTR );
-		i = pulled_down_menu( &curmenu, &x, &y );
+		i = pulled_down_menu( &curmenu, &xCursorPos, &yCursorPos );
 		if ( filename[0] != '\0' ) {
 			switch ( i ) {
 			case RETKEY:
@@ -168,7 +177,7 @@ int main( int argc, char *argv[] ) {
 				break;
 
 			case ESCKEY:
-				waitkbd( wind.col + x, wind.row + y );		/* Show blinking cursor */
+				waitkbd( wind.col + xCursorPos, wind.row + yCursorPos );		/* Show blinking cursor */
 				keymain = readkbd( );		/* If keypressed Get it */
 				break;
 
@@ -181,15 +190,15 @@ int main( int argc, char *argv[] ) {
 				if ( ( keymain & 0xff ) >= 32 ) {
 					keymain = changekey( keymain );
 					if ( insertmode ) {
-						if ( !insert_char( keymain, &x, &y ) ) {
+						if ( !insert_char( keymain, &xCursorPos, &yCursorPos ) ) {
 							linetoolong( );
 						}
 					} else {
-						if ( !ovrwrite_char( keymain, &x, &y ) ) {
+						if ( !ovrwrite_char( keymain, &xCursorPos, &yCursorPos ) ) {
 							linetoolong( );
 						}
 					}
-					refreshline( x, y );
+					refreshline( xCursorPos, yCursorPos );
 				} else {	/*  Function Key  */
 					switch ( keymain ) {
 					case PGUPKEY:
@@ -209,25 +218,25 @@ int main( int argc, char *argv[] ) {
 
 					case DNKEY:
 					case CNTRL_X:
-						cursor_down( y );
+						cursor_down( yCursorPos );
 						break;
 
 					case LEKEY:
 					case CNTRL_S:
-						cursor_left( &x );
+						cursor_left( &xCursorPos );
 						break;
 
 					case 0x2301:
-						gobeginblk( &x );
+						gobeginblk( &xCursorPos );
 						break;
 
 					case 0x2401:
-						goendblk( &x );
+						goendblk( &xCursorPos );
 						break;
 
 					case RIKEY:
 					case CNTRL_D:
-						cursor_right( &x, y );
+						cursor_right( &xCursorPos, yCursorPos );
 						break;
 
 					case CNTRL_W:
@@ -243,7 +252,7 @@ int main( int argc, char *argv[] ) {
 						break;
 
 					case CPGUPKEY:
-						topfile( &x );
+						topfile( &xCursorPos );
 						break;
 
 					case CENDKEY:
@@ -251,19 +260,19 @@ int main( int argc, char *argv[] ) {
 						break;
 
 					case CPGDNKEY:
-						endfile( &x );
+						endfile( &xCursorPos );
 						break;
 
 					case DELKEY:
 					case CNTRL_G:
-						delete_char( x );
-						refreshline( x, y );
+						delete_char( xCursorPos );
+						refreshline( xCursorPos, yCursorPos );
 						changeflag = YES;
 						break;
 
 					case CNTRL_T:
-						delete_word( x );
-						refreshline( x, y );
+						delete_word( xCursorPos );
+						refreshline( xCursorPos, yCursorPos );
 						changeflag = YES;
 						break;
 
@@ -275,18 +284,18 @@ int main( int argc, char *argv[] ) {
 					case CNTRL_M:
 					case RETKEY:
 						if ( insertmode == NO ) {
-							returnkey( &x, y );
+							returnkey( &xCursorPos, yCursorPos );
 						} else {
-							ret_with_ins( &x, y );
+							ret_with_ins( &xCursorPos, yCursorPos );
 							changeflag = YES;
 						}
 						break;
 
 					case BSKEY:
 					case CNTRL_H:
-						backspace( &x );
-						y = findrow( );
-						refreshline( 0, y );
+						backspace( &xCursorPos );
+						yCursorPos = findrow( );
+						refreshline( 0, yCursorPos );
 						changeflag = YES;
 						break;
 
@@ -297,7 +306,7 @@ int main( int argc, char *argv[] ) {
 						break;
 
 					case CNTRL_N:
-						insert_ret( &x );
+						insert_ret( &xCursorPos );
 						break;
 
 					case F10KEY:
@@ -354,7 +363,7 @@ int main( int argc, char *argv[] ) {
 						break;
 
 					case F9KEY:
-						manualwrap( &x, &y );
+						manualwrap( &xCursorPos, &yCursorPos );
 						break;
 
 					case ALTM:
@@ -363,123 +372,123 @@ int main( int argc, char *argv[] ) {
 
 					case TABKEY:
 					case CNTRL_I:
-						movetotab( &x, y );
+						movetotab( &xCursorPos, yCursorPos );
 						break;
 
 					case CNTRL_K:
-						blockcommand( &x );
+						blockcommand( &xCursorPos );
 						break;
 
 					case 0x1401:
-						blkcmd( 'p', &x );
+						blkcmd( 'p', &xCursorPos );
 						break;
 					case 0x6101:
-						blkcmd( 'b', &x );
+						blkcmd( 'b', &xCursorPos );
 						break;
 					case 0x6201:
-						blkcmd( 'k', &x );
+						blkcmd( 'k', &xCursorPos );
 						break;
 					case 0x6301:
-						blkcmd( 'c', &x );
+						blkcmd( 'c', &xCursorPos );
 						break;
 					case 0x6401:
-						blkcmd( 'y', &x );
+						blkcmd( 'y', &xCursorPos );
 						break;
 					case 0x6501:
-						blkcmd( 'v', &x );
+						blkcmd( 'v', &xCursorPos );
 						break;
 					case 0x6601:
-						blkcmd( 'r', &x );
+						blkcmd( 'r', &xCursorPos );
 						break;
 					case 0x6701:
-						blkcmd( 'w', &x );
+						blkcmd( 'w', &xCursorPos );
 						break;
 					case 0x6801:
-						blkcmd( 'h', &x );
+						blkcmd( 'h', &xCursorPos );
 						break;
 
 					case CNTRL_O:
-						onscreen( x, y );
+						onscreen( xCursorPos, yCursorPos );
 						break;
 
 					case 0x7101:
-						doonscrn( 'l', x, y );
+						doonscrn( 'l', xCursorPos, yCursorPos );
 						break;
 					case 0x7201:
-						doonscrn( 'r', x, y );
+						doonscrn( 'r', xCursorPos, yCursorPos );
 						break;
 					case 0x7301:
-						doonscrn( 'i', x, y );
+						doonscrn( 'i', xCursorPos, yCursorPos );
 						break;
 					case 0x7401:
-						doonscrn( 'n', x, y );
+						doonscrn( 'n', xCursorPos, yCursorPos );
 						break;
 					case 0x7501:
-						doonscrn( 'c', x, y );
+						doonscrn( 'c', xCursorPos, yCursorPos );
 						break;
 					case 0x7601:
-						doonscrn( 'p', x, y );
+						doonscrn( 'p', xCursorPos, yCursorPos );
 						break;
 					case 0x7701:
-						doonscrn( 'x', x, y );
+						doonscrn( 'x', xCursorPos, yCursorPos );
 						break;
 
 					case CNTRL_Q:
-						quick( &x, &y );
+						quick( &xCursorPos, &yCursorPos );
 						break;
 
 					case 0x8111:
-						inscntrl( CNTRL_W, x, y );
+						inscntrl( CNTRL_W, xCursorPos, yCursorPos );
 						break;
 					case 0x8211:
-						inscntrl( CNTRL_S, x, y );
+						inscntrl( CNTRL_S, xCursorPos, yCursorPos );
 						break;
 					case 0x8311:
-						inscntrl( CNTRL_R, x, y );
+						inscntrl( CNTRL_R, xCursorPos, yCursorPos );
 						break;
 					case 0x8411:
-						inscntrl( CNTRL_B, x, y );
+						inscntrl( CNTRL_B, xCursorPos, yCursorPos );
 						break;
 					case 0x8511:
-						inscntrl( CNTRL_E, x, y );
+						inscntrl( CNTRL_E, xCursorPos, yCursorPos );
 						break;
 					case 0x8611:
-						inscntrl( CNTRL_T, x, y );
+						inscntrl( CNTRL_T, xCursorPos, yCursorPos );
 						break;
 					case 0x8711:
-						inscntrl( CNTRL_V, x, y );
+						inscntrl( CNTRL_V, xCursorPos, yCursorPos );
 						break;
 
 					case CNTRL_P:
-						printcntrl( x, y );
+						printcntrl( xCursorPos, yCursorPos );
 						break;
 
 					case HOMEKEY:
-						home( &x );
+						home( &xCursorPos );
 						break;
 
 					case ENDKEY:
-						endline( &x );
+						endline( &xCursorPos );
 						break;
 
 					case CLEKEY:
 					case CNTRL_A:
-						backword( &x );
+						backword( &xCursorPos );
 						break;
 
 					case CRIKEY:
 					case CNTRL_F:
-						nextword( &x, y );
+						nextword( &xCursorPos, yCursorPos );
 						break;
 
 					case CNTRL_L:
 						if ( source[0] != '\0' ) {
 							if ( replaceflag == NO ) {
-								if ( searchfwd( &x, &y ) == NO ) {
+								if ( searchfwd( &xCursorPos, &yCursorPos ) == NO ) {
 									wordnotfound( );
 								}
 							} else {
-								if ( searchreplace( &x, &y ) == NO ) {
+								if ( searchreplace( &xCursorPos, &yCursorPos ) == NO ) {
 									wordnotfound( );
 								}
 							}
@@ -500,77 +509,77 @@ int main( int argc, char *argv[] ) {
 						break;
 
 					case 0x5101:
-						searching( &x, &y );
+						searching( &xCursorPos, &yCursorPos );
 						break;
 
 					case 0x5201:
-						replacing( &x, &y );
+						replacing( &xCursorPos, &yCursorPos );
 						break;
 
 					case 0x8501:
 						loadtoline( curline->text );
-						refreshline( 0, y );
+						refreshline( 0, yCursorPos );
 						break;
 
 					case CF1KEY:
-						insertmacro( &macro[0][0], &x, &y );
+						insertmacro( &macro[0][0], &xCursorPos, &yCursorPos );
 						break;
 					case CF2KEY:
-						insertmacro( &macro[1][0], &x, &y );
+						insertmacro( &macro[1][0], &xCursorPos, &yCursorPos );
 						break;
 					case CF3KEY:
-						insertmacro( &macro[2][0], &x, &y );
+						insertmacro( &macro[2][0], &xCursorPos, &yCursorPos );
 						break;
 					case CF4KEY:
-						insertmacro( &macro[3][0], &x, &y );
+						insertmacro( &macro[3][0], &xCursorPos, &yCursorPos );
 						break;
 					case CF5KEY:
-						insertmacro( &macro[4][0], &x, &y );
+						insertmacro( &macro[4][0], &xCursorPos, &yCursorPos );
 						break;
 					case CF6KEY:
-						insertmacro( &macro[5][0], &x, &y );
+						insertmacro( &macro[5][0], &xCursorPos, &yCursorPos );
 						break;
 					case CF7KEY:
-						insertmacro( &macro[6][0], &x, &y );
+						insertmacro( &macro[6][0], &xCursorPos, &yCursorPos );
 						break;
 					case CF8KEY:
-						insertmacro( &macro[7][0], &x, &y );
+						insertmacro( &macro[7][0], &xCursorPos, &yCursorPos );
 						break;
 					case CF9KEY:
-						insertmacro( &macro[8][0], &x, &y );
+						insertmacro( &macro[8][0], &xCursorPos, &yCursorPos );
 						break;
 					case CF10KEY:
-						insertmacro( &macro[9][0], &x, &y );
+						insertmacro( &macro[9][0], &xCursorPos, &yCursorPos );
 						break;
 
 					case AF2KEY:
-						inscntrl( ITALICCODE, x, y );
+						inscntrl( ITALICCODE, xCursorPos, yCursorPos );
 						break;
 					case AF3KEY:
-						inscntrl( ONELINECODE, x, y );
+						inscntrl( ONELINECODE, xCursorPos, yCursorPos );
 						break;
 					case AF4KEY:
-						inscntrl( TWOLINECODE, x, y );
+						inscntrl( TWOLINECODE, xCursorPos, yCursorPos );
 						break;
 					case AF5KEY:
-						inscntrl( BOLDCODE, x, y );
+						inscntrl( BOLDCODE, xCursorPos, yCursorPos );
 						break;
 					case AF6KEY:
-						inscntrl( ENLARGECODE, x, y );
+						inscntrl( ENLARGECODE, xCursorPos, yCursorPos );
 						break;
 					case AF7KEY:
-						inscntrl( SUPERCODE, x, y );
+						inscntrl( SUPERCODE, xCursorPos, yCursorPos );
 						break;
 					case AF8KEY:
-						inscntrl( SUBCODE, x, y );
+						inscntrl( SUBCODE, xCursorPos, yCursorPos );
 						break;
 
 #ifdef WANT_TO_USE_GRAPH
 					case ALTG:
-						insertgraph();
+						insertgraph( );
 						break;
 					case ALTD:
-						deletegraph();
+						deletegraph( );
 						break;
 #endif
 
@@ -583,21 +592,21 @@ int main( int argc, char *argv[] ) {
 						if ( ( alt_char_map( keymain ) ) != -1 ) {
 							keymain = alt_char_map( keymain );
 							if ( insertmode ) {
-								if ( !insert_char( keymain, &x, &y ) ) {
+								if ( !insert_char( keymain, &xCursorPos, &yCursorPos ) ) {
 									linetoolong( );
 								}
 							} else {
-								if ( !ovrwrite_char( keymain, &x, &y ) ) {
+								if ( !ovrwrite_char( keymain, &xCursorPos, &yCursorPos ) ) {
 									linetoolong( );
 								}
 							}
-							refreshline( x, y );
+							refreshline( xCursorPos, yCursorPos );
 						}
 						break;
 					} /* switch ( keymain ) */
 				}
-				adjustcol( &x );
-				while ( ( y = findrow( ) ) > ( wind.width - 1 ) ) {
+				adjustcol( &xCursorPos );
+				while ( ( yCursorPos = findrow( ) ) > ( wind.width - 1 ) ) {
 					storeline( curline );
 					curline = curline->previous;
 					loadtoline( curline->text );
@@ -608,7 +617,7 @@ int main( int argc, char *argv[] ) {
 						showpage( );
 					}
 					if ( !keypressed( ) ) {
-						writecolno( firstcol + x );
+						writecolno( firstcol + xCursorPos );
 						dispstrhgc( "   ", wind.col, 2, NORMALATTR );
 						if ( !keypressed( ) ) {
 							writepageline( );
@@ -616,7 +625,7 @@ int main( int argc, char *argv[] ) {
 					}
 				}
 				if ( quitprog != YES ) {
-					waitkbd( wind.col + x, wind.row + y );
+					waitkbd( wind.col + xCursorPos, wind.row + yCursorPos );
 					keymain = readkbd( );
 					dispkey( keymain );
 				}

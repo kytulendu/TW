@@ -528,10 +528,19 @@ void findcurlevel( unsigned int curmenu, unsigned int *lev1, unsigned int *lev2,
 
 unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned int *y ) {
 	FILE *fp;
-	unsigned int lev1, lev2, lev3, lev4;
-	int i, key, quit;
+
+	unsigned int lev1;
+	unsigned int lev2;
+	unsigned int lev3;
+	unsigned int lev4;
+
+	int i;
+	int key;
+	int quit;
 	char cur_dir[50];
-	unsigned char *scrnndx, *scrnndx2;
+
+	unsigned char *scrnndx;
+	unsigned char *scrnndx2;
 
 	findcurlevel( *curmenu, &lev1, &lev2, &lev3, &lev4 );
 	headmenu( lev1, REVERSEATTR );

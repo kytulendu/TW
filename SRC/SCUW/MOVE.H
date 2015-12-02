@@ -1,29 +1,39 @@
 #ifndef SCUW_MOVE_CONST_H_INCLUDED
 #define SCUW_MOVE_CONST_H_INCLUDED
 
-/** Go to line specified. */
-void goline( unsigned int linetogo );
+/** Go to line specified.
+*  \param[in]  p_linetogo		Line to go. */
+void goline( unsigned int p_linetogo );
 
-/** Go to column specified. (Column origin 0) */
-void gocol( unsigned int coltogo, unsigned int *x );
+/** Go to column specified, column is origin 0
+*  \param[in]  p_coltogo		Column to go.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+void gocol( unsigned int p_coltogo, unsigned int *p_xCursorPos );
 
-/** Go to first column of line. */
-void home( unsigned int *x );
+/** Go to first column of line.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+void home( unsigned int *p_xCursorPos );
 
-/** Go to end of line. */
-void endline( unsigned int *x );
+/** Go to end of line.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+void endline( unsigned int *p_xCursorPos );
 
-/** Go to top of file. */
-void topfile( unsigned int *x );
+/** Go to top of file.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+void topfile( unsigned int *p_xCursorPos );
 
-/** Go to end of file. */
-void endfile( unsigned int *x );
+/** Go to end of file.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+void endfile( unsigned int *p_xCursorPos );
 
-/** Goto previous word.  */
-void backword( unsigned int *x );
+/** Goto previous word.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+void backword( unsigned int *p_xCursorPos );
 
-/** Goto next word. */
-void nextword( unsigned int *x, unsigned int y );
+/** Goto next word.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window.
+*  \param[in]  y_CursorPos		Line cursor position in editing window. */
+void nextword( unsigned int *p_xCursorPos, unsigned int p_yCursorPos );
 
 /** Goto page specified. */
 void gotopage( void );
@@ -31,13 +41,17 @@ void gotopage( void );
 /** Goto line specified. */
 void gotoline( void );
 
-/**  */
-void gobeginblk( unsigned int *x );
+/** Goto begining of block.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+void gobeginblk( unsigned int *p_xCursorPos );
 
-/**  */
-void goendblk( unsigned int *x );
+/** Goto end of block.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+void goendblk( unsigned int *p_xCursorPos );
 
-/**  */
-void quick( unsigned int *x, unsigned int *y );
+/**
+*  \param[in]  p_xCursorPos		Column cursor position in editing window.
+*  \param[in]  yCursorPos		Line cursor position in editing window. */
+void quick( unsigned int *p_xCursorPos, unsigned int *p_yCursorPos );
 
 #endif /* SCUW_MOVE_CONST_H_INCLUDED */

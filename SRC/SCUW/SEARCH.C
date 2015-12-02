@@ -152,10 +152,10 @@ int optionnoask( void ) {
 	return( NO );
 }
 
-char *searchline( char *textline, int startpos ) { /* startpos origin 0 */
-	int i;
-	unsigned char *buffer;
-	char *point, *buffaddr, *textaddr;
+unsigned char *searchline( unsigned char *textline, unsigned int startpos ) { /* startpos origin 0 */
+	size_t i;
+	unsigned char *buffer, *buffaddr, *textaddr;
+	char *point;
 
 	buffer = ( unsigned char * ) malloc( MAXCOL * sizeof( unsigned char ) );
 	if ( buffer == NULL ) {
@@ -202,9 +202,12 @@ void wordnotfound( void ) {
 }
 int searchfwd( unsigned int *x, unsigned int *y ) {
 	struct line_node *savepage, *templine;
-	int linecount, savecol, i, enlargeflag, startpos;
-	font_attr font = 0;
+	boolean enlargeflag;
+	unsigned int linecount, savecol, startpos;
+	size_t i;
+	font_attr font = NORMALATTR;
 	char *foundpoint, *addr;
+
 	savecol = firstcol;
 	savepage = curpage;
 	storeline( curline );

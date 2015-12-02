@@ -43,20 +43,20 @@ void writetab( void ) {
 		i++;
 	}
 	if ( ( i < wind.length ) && ( ( i + firstcol + 1 ) == leftmar ) ) {
-		prchar( 'L', 0, wind.col + i, 3 );
+		prchar( 'L', NORMALATTR, wind.col + i, 3 );
 		i++;
 	}
 
 	while ( ( ( i + firstcol + 1 ) < rightmar ) && ( i < wind.length ) ) {
 		if ( tab[i + firstcol] == NO ) {
-			prchar( '-', 0, wind.col + i, 3 );
+			prchar( '-', NORMALATTR, wind.col + i, 3 );
 		} else {
-			prchar( '|', 0, wind.col + i, 3 );
+			prchar( '|', NORMALATTR, wind.col + i, 3 );
 		}
 		i++;
 	}
 	if ( ( rightmar - 1 - firstcol ) < wind.length ) {
-		prchar( 'R', 0, wind.col + rightmar - 1 - firstcol, 3 );
+		prchar( 'R', NORMALATTR, wind.col + rightmar - 1 - firstcol, 3 );
 	}
 
 	i++;
@@ -66,11 +66,10 @@ void writetab( void ) {
 	}
 }
 
-void centerline( unsigned int y ) {
+void centerline( unsigned int p_yCursorPos ) {
 	int i, j, k, count;
 	for ( i = 1; ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ); i++ );
-	for ( j = strlen( workline.middle ) - 1; ( workline.middle[j] == ' ' )
-		|| ( workline.middle[j] == WRAPBLANK ); j-- );
+	for ( j = strlen( workline.middle ) - 1; ( workline.middle[j] == ' ' ) || ( workline.middle[j] == WRAPBLANK ); j-- );
 	if ( ( rightmar - leftmar ) > ( j - i ) ) {
 		k = leftmar + ( ( rightmar - leftmar ) - ( j - i ) ) / 2;
 		if ( k < i ) {
@@ -82,20 +81,20 @@ void centerline( unsigned int y ) {
 				insertblank( 1, ' ' );
 			}
 		}
-		refreshline( 0, y );
+		refreshline( 0, p_yCursorPos );
 	}
 }
 
-void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
+void doonscrn( register unsigned p_key, unsigned int p_xCursorPos, unsigned int p_yCursorPos ) {
 	register unsigned int j;
 	char st[4], invmsg[60];
 
-	key &= 0xff;
-	if ( !isalpha( key ) && !iscntrl( key ) ) {
+	p_key &= 0xff;
+	if ( !isalpha( p_key ) && !iscntrl( p_key ) ) {
 		return;
 	}
-	key &= 0x1f;
-	switch ( key ) {
+	p_key &= 0x1f;
+	switch ( p_key ) {
 	case 'l' - 'a' + 1:
 		sprintf( st, "%d", leftmar );
 		blockmsg( 5 );
@@ -141,7 +140,7 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		}
 		break;
 	case 'i' - 'a' + 1:
-		sprintf( st, "%d", x + 1 );
+		sprintf( st, "%d", p_xCursorPos + 1 );
 		blockmsg( 5 );
 		dispstrhgc( "ต้องการตั้ง TAB ที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
 		if ( getstring( st, ( 16 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
@@ -180,7 +179,7 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		}
 		break;
 	case 'c' - 'a' + 1:
-		centerline( y );
+		centerline( p_yCursorPos );
 		break;
 	case 'x' - 'a' + 1:
 		relmargin = !relmargin;
@@ -188,34 +187,34 @@ void doonscrn( register unsigned key, unsigned int x, unsigned int y ) {
 		break;
 	}
 	pagecomplete = NO;
-	writestatus( x );
+	writestatus( p_xCursorPos );
 }
 
-void movetotab( unsigned int *x, unsigned int y ) {
+void movetotab( unsigned int *p_xCursorPos, unsigned int p_yCursorPos ) {
 	size_t i, count;
-	if ( ( *x + firstcol ) >= ( leftmar - 1 ) ) {
-		i = *x + firstcol + 1;
+	if ( ( *p_xCursorPos + firstcol ) >= ( leftmar - 1 ) ) {
+		i = *p_xCursorPos + firstcol + 1;
 	} else {
 		i = leftmar - 1;
 	}
 	for ( ; ( i < ( rightmar - 1 ) && ( tab[i] != YES ) ); i++ );
 	if ( i < ( rightmar - 1 ) ) {
-		count = i - ( *x + firstcol );
+		count = i - ( *p_xCursorPos + firstcol );
 		while ( count-- != 0 ) {
 			if ( insertmode ) {
-				insertblank( *x + firstcol + 1, ' ' );
+				insertblank( *p_xCursorPos + firstcol + 1, ' ' );
 			}
 		}
-		gocol( i, x );
-		refreshline( 0, y );
+		gocol( i, p_xCursorPos );
+		refreshline( 0, p_yCursorPos );
 	}
 }
 
-void onscreen( unsigned int x, unsigned int y ) {
+void onscreen( unsigned int p_xCursorPos, unsigned int p_yCursorPos ) {
 	int key;
 	dispkey( CNTRL_O );
 	waitkbd( 3, 2 );
 	key = ebioskey( 0 );
-	prchar( key, 0, 3, 2 );
-	doonscrn( key, x, y );
+	prchar( key, NORMALATTR, 3, 2 );
+	doonscrn( key, p_xCursorPos, p_yCursorPos );
 }

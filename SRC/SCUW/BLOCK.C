@@ -50,9 +50,9 @@ void toggleblk( void ) {
 	pagecomplete = NO;
 }
 
-void markbegin( unsigned int x ) {
+void markbegin( unsigned int p_xCursorPos ) {
 	blkbegin.lineno = lineno;
-	blkbegin.column = firstcol + x;
+	blkbegin.column = firstcol + p_xCursorPos;
 	if ( blkbegin.lineno > blkend.lineno ) {
 		blkend.lineno = blkbegin.lineno;
 		blkend.column = blkbegin.column;
@@ -67,9 +67,9 @@ void markbegin( unsigned int x ) {
 	pagecomplete = NO;
 }
 
-void markend( unsigned int x ) {
+void markend( unsigned int p_xCursorPos ) {
 	blkend.lineno = lineno;
-	blkend.column = firstcol + x;
+	blkend.column = firstcol + p_xCursorPos;
 	if ( blkbegin.lineno > blkend.lineno ) {
 		blkbegin.lineno = blkend.lineno;
 		blkbegin.column = blkend.column;
@@ -93,16 +93,16 @@ int haveblock( void ) {
 	}
 }
 
-int inblock( unsigned int linenum, unsigned int colnum ) {	/* column origin 0 */
-	if ( ( linenum >= blkbegin.lineno ) &&
-		( linenum <= blkend.lineno ) ) {
-		if ( linenum == blkbegin.lineno ) {
-			if ( colnum < blkbegin.column ) {
+int inblock( unsigned int p_line, unsigned int p_col ) {
+	if ( ( p_line >= blkbegin.lineno ) &&
+		( p_line <= blkend.lineno ) ) {
+		if ( p_line == blkbegin.lineno ) {
+			if ( p_col < blkbegin.column ) {
 				return( NO );
 			}
 		}
-		if ( linenum == blkend.lineno ) {
-			if ( colnum >= blkend.column ) {
+		if ( p_line == blkend.lineno ) {
+			if ( p_col >= blkend.column ) {
 				return( NO );
 			}
 		}
@@ -112,26 +112,31 @@ int inblock( unsigned int linenum, unsigned int colnum ) {	/* column origin 0 */
 	}
 }
 
-struct line_node *copytospace( struct line_node *fline, struct line_node *lline,
-	unsigned int fcol, unsigned int lcol ) {
-	struct line_node *firstline, *templine, *newline;
-	unsigned int i, j;
+struct line_node *copytospace( struct line_node *p_firstLine, struct line_node *p_lastLine,
+	unsigned int p_firstCol, unsigned int p_lastCol ) {
+	struct line_node *firstline;
+	struct line_node *templine;
+	struct line_node *newline;
+	unsigned int i;
+	unsigned int j;
 	font_attr font;
-	unsigned char fontcode[9], *temp;
+	unsigned char fontcode[9];
+	unsigned char *temp;
+
 	firstline = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 	firstline->next = firstline;		/* set up     */
 	firstline->previous = firstline;	/* first node */
-	firstline->wrap = fline->wrap;
+	firstline->wrap = p_firstLine->wrap;
 #ifdef WANT_TO_USE_GRAPH
 	firstline->graph = NULL;			/* graphic image is not copied */
 #endif
-	i = linearcolumn( fline->text, fcol, &font );
+	i = linearcolumn( p_firstLine->text, p_firstCol, &font );
 	findstrcode( fontcode, font );		/* find string of control code */
-	firstline->text = ( unsigned char * ) malloc( strlen( fontcode ) + strlen( fline->text ) - i + 1 );
+	firstline->text = ( unsigned char * ) malloc( strlen( fontcode ) + strlen( p_firstLine->text ) - i + 1 );
 	strcpy( firstline->text, fontcode );
-	strcat( firstline->text, ( fline->text ) + i );
-	if ( fline == lline ) {
-		j = linearcolumn( lline->text, lcol, &font );
+	strcat( firstline->text, ( p_firstLine->text ) + i );
+	if ( p_firstLine == p_lastLine ) {
+		j = linearcolumn( p_lastLine->text, p_lastCol, &font );
 		temp = firstline->text;
 		*( temp + strlen( fontcode ) + ( j - i ) ) = '\0';
 		findstrcode( fontcode, font );
@@ -141,23 +146,23 @@ struct line_node *copytospace( struct line_node *fline, struct line_node *lline,
 		free( temp );
 	}
 	templine = firstline;
-	while ( fline != lline ) {
-		fline = fline->next;
+	while ( p_firstLine != p_lastLine ) {
+		p_firstLine = p_firstLine->next;
 		newline = ( struct line_node * ) malloc( sizeof( struct line_node ) );
-		newline->wrap = fline->wrap;
+		newline->wrap = p_firstLine->wrap;
 #ifdef WANT_TO_USE_GRAPH
 		newline->graph = NULL;
 #endif
-		if ( fline != lline ) {
-			newline->text = ( unsigned char * ) malloc( strlen( fline->text ) + 1 );
-			strcpy( newline->text, fline->text );
+		if ( p_firstLine != p_lastLine ) {
+			newline->text = ( unsigned char * ) malloc( strlen( p_firstLine->text ) + 1 );
+			strcpy( newline->text, p_firstLine->text );
 			insert_line( templine, newline );
 			templine = templine->next;
 		} else {
-			i = linearcolumn( lline->text, lcol, &font );
+			i = linearcolumn( p_lastLine->text, p_lastCol, &font );
 			findstrcode( fontcode, font );
 			newline->text = ( unsigned char * ) malloc( i + strlen( fontcode ) + 1 );
-			strncpy( newline->text, lline->text, i );
+			strncpy( newline->text, p_lastLine->text, i );
 			strcpy( newline->text + i, fontcode );
 			insert_line( templine, newline );
 		}
@@ -165,62 +170,66 @@ struct line_node *copytospace( struct line_node *fline, struct line_node *lline,
 	return( firstline );
 }
 
-void insertlinklist( struct line_node *sourceline, struct line_node *destline,
-	unsigned int destcol ) {
-	int i;
+void insertlinklist( struct line_node *p_sourceLine, struct line_node *p_destLine,
+	unsigned int p_destCol ) {
+	unsigned int i;
 	struct line_node *lastline;
 	font_attr font;
-	unsigned char fontcode[9], *temp;
-	lastline = sourceline->previous;
-	if ( sourceline->next != sourceline ) {			/* > 1 line ? */
-		insertreturn( destline, destcol );
-		( destline->next )->previous = lastline;	/* link all before */
-		lastline->next = destline->next;			/* delete first &  */
-		destline->next = sourceline;				/* last line of    */
-		sourceline->previous = destline;			/* source after    */
-		destline->wrap = sourceline->wrap;
-		temp = ( unsigned char * ) malloc( strlen( destline->text ) + strlen( sourceline->text ) + 1 );
-		strcpy( temp, destline->text );
-		strcat( temp, sourceline->text );
-		free( destline->text );
-		destline->text = temp;
+	unsigned char fontcode[9];
+	unsigned char *temp;
+
+	lastline = p_sourceLine->previous;
+	if ( p_sourceLine->next != p_sourceLine ) {		/* > 1 line ? */
+		insertreturn( p_destLine, p_destCol );
+		( p_destLine->next )->previous = lastline;	/* link all before */
+		lastline->next = p_destLine->next;			/* delete first &  */
+		p_destLine->next = p_sourceLine;			/* last line of    */
+		p_sourceLine->previous = p_destLine;		/* source after    */
+		p_destLine->wrap = p_sourceLine->wrap;
+		temp = ( unsigned char * ) malloc( strlen( p_destLine->text ) + strlen( p_sourceLine->text ) + 1 );
+		strcpy( temp, p_destLine->text );
+		strcat( temp, p_sourceLine->text );
+		free( p_destLine->text );
+		p_destLine->text = temp;
 		temp = ( unsigned char * ) malloc( strlen( lastline->text ) + strlen( ( lastline->next )->text ) + 1 );
 		strcpy( temp, lastline->text );
 		strcat( temp, ( lastline->next )->text );
 		free( ( lastline->next )->text );
 		( lastline->next )->text = temp;
-		deleteline( sourceline );
+		deleteline( p_sourceLine );
 		deleteline( lastline );
 	} else {	/* only one line */
-		i = linearcolumn( destline->text, destcol, &font );
+		i = linearcolumn( p_destLine->text, p_destCol, &font );
 		findstrcode( fontcode, font );
-		temp = ( unsigned char * ) malloc( strlen( sourceline->text ) + strlen( destline->text ) + ( 2 * strlen( fontcode ) ) + 1 );
-		strncpy( temp, destline->text, i );
+		temp = ( unsigned char * ) malloc( strlen( p_sourceLine->text ) + strlen( p_destLine->text ) + ( 2 * strlen( fontcode ) ) + 1 );
+		strncpy( temp, p_destLine->text, i );
 		temp[i] = '\0';
 		strcat( temp, fontcode );
-		strcat( temp, sourceline->text );
+		strcat( temp, p_sourceLine->text );
 		strcat( temp, fontcode );
-		strcat( temp, ( destline->text ) + i );
-		free( destline->text );
-		destline->text = temp;
+		strcat( temp, ( p_destLine->text ) + i );
+		free( p_destLine->text );
+		p_destLine->text = temp;
 	}
 }
 
-void deletelinklist( struct line_node *fline, struct line_node *lline,
-	unsigned int fcol, unsigned int lcol ) {
-	struct line_node *templine, *freeline;
-	insertreturn( lline, lcol );
-	lline = lline->next;
-	insertreturn( fline, fcol );
-	templine = fline->next;
-	fline->next = lline;
-	lline->previous = fline;
-	while ( templine != lline ) {
+void deletelinklist( struct line_node *p_firstLine, struct line_node *p_lastLine,
+	unsigned int p_firstCol, unsigned int p_lastCol ) {
+	struct line_node *templine;
+	struct line_node *freeline;
+
+	insertreturn( p_lastLine, p_lastCol );
+	p_lastLine = p_lastLine->next;
+	insertreturn( p_firstLine, p_firstCol );
+	templine = p_firstLine->next;
+	p_firstLine->next = p_lastLine;
+	p_lastLine->previous = p_firstLine;
+	while ( templine != p_lastLine ) {
 		if ( templine == curline ) {
-			curline = fline;
+			curline = p_firstLine;
 		}
 		if ( templine == curpage ) {
-			curpage = fline;
+			curpage = p_firstLine;
 		}
 		freeline = templine;
 		templine = templine->next;
@@ -234,23 +243,26 @@ void deletelinklist( struct line_node *fline, struct line_node *lline,
 #endif
 		free( freeline );
 	}
-	deletereturn( fline );
+	deletereturn( p_firstLine );
 }
 
-void copyblk( unsigned int *x ) {
-	struct line_node *fline, *lline, *space;
+void copyblk( unsigned int *p_xCursorPos ) {
+	struct line_node *fline;
+	struct line_node *lline;
+	struct line_node *space;
+
 	if ( haveblock( ) && dispblock ) {
 		storeline( curline );
 		fline = linepointer( blkbegin.lineno );
 		lline = linepointer( blkend.lineno );
 		space = copytospace( fline, lline, blkbegin.column, blkend.column );
-		insertlinklist( space, curline, *x + firstcol );
+		insertlinklist( space, curline, *p_xCursorPos + firstcol );
 		blkend.lineno = lineno + blkend.lineno - blkbegin.lineno;
 		blkbegin.lineno = lineno;
 		if ( blkbegin.lineno == blkend.lineno ) {
-			blkend.column = blkend.column - blkbegin.column + *x + firstcol;
+			blkend.column = blkend.column - blkbegin.column + *p_xCursorPos + firstcol;
 		}
-		blkbegin.column = *x + firstcol;
+		blkbegin.column = *p_xCursorPos + firstcol;
 		pagecomplete = NO;
 		changeflag = YES;
 		dispblock = YES;
@@ -259,7 +271,9 @@ void copyblk( unsigned int *x ) {
 }
 
 void deleteblk( void ) {
-	struct line_node *firstline, *lastline;
+	struct line_node *firstline;
+	struct line_node *lastline;
+
 	if ( haveblock( ) && dispblock ) {
 		storeline( curline );
 		firstline = linepointer( blkbegin.lineno );
@@ -276,8 +290,11 @@ void deleteblk( void ) {
 	}
 }
 
-void moveblk( unsigned int *x ) {
-	struct line_node *space, *fline, *lline;
+void moveblk( unsigned int *p_xCursorPos ) {
+	struct line_node *space;
+	struct line_node *fline;
+	struct line_node *lline;
+
 	if ( haveblock( ) && dispblock ) {
 		storeline( curline );
 		fline = linepointer( blkbegin.lineno );
@@ -286,28 +303,28 @@ void moveblk( unsigned int *x ) {
 		deletelinklist( fline, lline, blkbegin.column, blkend.column );
 		if ( lineno == blkend.lineno ) {
 			if ( blkend.column > blkbegin.column ) {
-				if ( *x > blkend.column ) {
-					*x = *x - ( blkend.column - blkbegin.column );
+				if ( *p_xCursorPos > blkend.column ) {
+					*p_xCursorPos = *p_xCursorPos - ( blkend.column - blkbegin.column );
 				} else {
-					if ( *x > blkbegin.column ) {
-						*x = blkbegin.column;
+					if ( *p_xCursorPos > blkbegin.column ) {
+						*p_xCursorPos = blkbegin.column;
 					}
 				}
 			}
 			if ( blkbegin.column > blkend.column ) {
-				*x = *x + blkbegin.column - blkend.column;
+				*p_xCursorPos = *p_xCursorPos + blkbegin.column - blkend.column;
 			}
 		}
 		lineno = findlineno( curline );
 		blkbegin.lineno = lineno;
-		blkbegin.column = *x + firstcol;
+		blkbegin.column = *p_xCursorPos + firstcol;
 		blkend.lineno = lineno + spacesize( space );
 		if ( space->next != space ) {
 			blkend.column = thaistrlen( ( space->previous )->text );
 		} else {
 			blkend.column = blkbegin.column + thaistrlen( space->text );
 		}
-		insertlinklist( space, curline, *x + firstcol );
+		insertlinklist( space, curline, *p_xCursorPos + firstcol );
 		loadtoline( curline->text );
 		changeflag = YES;
 		pagecomplete = NO;
@@ -315,14 +332,16 @@ void moveblk( unsigned int *x ) {
 	}
 }
 
-/* This function is really messy, need to remove goto and clean-up here. */
-struct line_node *rdfiletospace( char *file_name ) {
-	FILE *fip, *fopen( );
+struct line_node *rdfiletospace( char *p_filename ) {
+	FILE *fip;
 	register int i;
-	struct line_node *space, *newline, *currentline, *freeline;
+	struct line_node *space;
+	struct line_node *newline;
+	struct line_node *currentline;
+	struct line_node *freeline;
 	unsigned char *text_str;
 
-	if ( ( fip = fopen( file_name, "rt" ) ) != NULL ) {
+	if ( ( fip = fopen( p_filename, "rt" ) ) != NULL ) {
 		blockmsg( 5 );
 		dispstrhgc( "กำลังอ่านข้อมูลจากแผ่นจานแม่เหล็กอยู่ กรุณารอสักครู่...", ( 14 + center_factor ) + 6, 5, REVERSEATTR );
 
@@ -345,7 +364,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 		space->text = ( unsigned char * ) malloc( 1 );
 
 		if ( space->text == NULL ) {
-			goto no_mem_avail; 
+			goto no_mem_avail;
 		}
 
 		*( space->text ) = '\0';
@@ -372,7 +391,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 				free( space->text );
 				space->text = ( unsigned char * ) malloc( strlen( text_str ) + 1 );
 
-				if ( space->text == NULL ) { 
+				if ( space->text == NULL ) {
 					goto no_mem_avail;
 				}
 
@@ -423,7 +442,7 @@ struct line_node *rdfiletospace( char *file_name ) {
 					newline->text = ( unsigned char * ) malloc( strlen( text_str ) + 1 );
 
 					if ( newline->text == NULL ) {
-						goto no_mem_avail; 
+						goto no_mem_avail;
 					}
 
 					if ( !stdcode ) {
@@ -489,21 +508,23 @@ no_mem_avail:
 	return( NULL );
 }
 
-unsigned int spacesize( struct line_node *space ) {
+unsigned int spacesize( struct line_node *p_space ) {
 	struct line_node *temp;
 	unsigned int size = 0;
-	temp = space;
-	while ( temp->next != space ) {
+
+	temp = p_space;
+	while ( temp->next != p_space ) {
 		temp = temp->next;
 		size++;
 	}
 	return( size );
 }
 
-int readblk( unsigned int *x ) {
-	char file_name[22];
+void readblk( unsigned int *p_xCursorPos ) {
+	char file_name[MAXPATH];
 	struct line_node *space;
 	int i;
+
 	storeline( curline );
 	pagecomplete = NO;
 	blockmsg( 5 );
@@ -517,24 +538,24 @@ int readblk( unsigned int *x ) {
 		space = rdfiletospace( file_name );
 		if ( space != NULL ) {
 			blkbegin.lineno = lineno;
-			blkbegin.column = *x + firstcol;
+			blkbegin.column = *p_xCursorPos + firstcol;
 			blkend.lineno = lineno + spacesize( space );
 			if ( space->next != space ) {
 				blkend.column = thaistrlen( ( space->previous )->text );
 			} else {
 				blkend.column = blkbegin.column + thaistrlen( space->text );
 			}
-			insertlinklist( space, curline, *x + firstcol );
+			insertlinklist( space, curline, *p_xCursorPos + firstcol );
 			changeflag = YES;
 			dispblock = YES;
 			loadtoline( curline->text );
 		}
 	}
-	return 0;
 }
 
 unsigned long getfilesize( void ) {
-	struct line_node *keepline, *templine = sentinel->next;
+	struct line_node *keepline;
+	struct line_node *templine = sentinel->next;
 
 	unsigned long fsize = 0;
 	unsigned int lineno = 0;
@@ -570,22 +591,32 @@ unsigned long getfilesize( void ) {
 
 struct dfree *dfreep;
 
-unsigned long diskfree( int driveno ) {
-	unsigned long avail, bsec, sclus;
-	getdfree( driveno, dfreep );
+unsigned long diskfree( char p_driveno ) {
+	unsigned long avail;
+	unsigned long bsec;
+	unsigned long sclus;
+
+	getdfree( p_driveno, dfreep );
+
 	avail = dfreep->df_avail;
 	bsec = dfreep->df_bsec;
 	sclus = dfreep->df_sclus;
+
 	return( avail * bsec * sclus );
 }
 
-int chkspace( char *fname ) {
-	unsigned long diskspace, filesize;
-	int i, flag;
+int chkspace( char *p_filename ) {
+	unsigned long diskspace;
+	unsigned long filesize;
+	int flag;
+	char i;
 	struct ffblk fdat;
-	char drv[MAXDRIVE], dir[MAXDIR], name[MAXFILE], ext[MAXEXT];
+	char drv[MAXDRIVE];
+	char dir[MAXDIR];
+	char name[MAXFILE];
+	char ext[MAXEXT];
 
-	flag = fnsplit( fname, drv, dir, name, ext );	/* Analyse Fname */
+	flag = fnsplit( p_filename, drv, dir, name, ext );	/* Analyse Fname */
 	filesize = getfilesize( );
 
 	framebox( 14 + center_factor, 4, ( 14 + center_factor ) + 52, 8, REVERSEATTR );
@@ -599,8 +630,8 @@ int chkspace( char *fname ) {
 	}
 	diskspace = diskfree( i );
 
-	if ( !create_bak && file_exist( fname ) ) {			/* If .BAK is not necessary */
-		findfirst( fname, &fdat, 0 );					/* DiskSpace can be increased */
+	if ( !create_bak && file_exist( p_filename ) ) {			/* If .BAK is not necessary */
+		findfirst( p_filename, &fdat, 0 );					/* DiskSpace can be increased */
 		diskspace += ( unsigned long ) fdat.ff_fsize;	/* By old file size */
 	}
 
@@ -615,14 +646,22 @@ int chkspace( char *fname ) {
 	}
 }
 
-void writeblk( char *file_name, struct line_node *linebegin,
-	unsigned int colbegin, struct line_node *lineend, unsigned int colend ) {
+void writeblk( char *p_filename, struct line_node *p_firstLine, unsigned int p_firstCol,
+struct line_node *p_lastLine, unsigned int p_lastCol ) {
 	FILE *fip;
 	struct line_node *currentline;
-	int key, i, j, firstround, count;
-	unsigned char *templine, fontcode[9];
+	int key;
+	int i;
+	int j;
+	int firstround;
+	int count;
+	unsigned char *templine;
+	unsigned char fontcode[9];
 	font_attr font;
-	char drv[MAXDRIVE], dir[MAXDIR], name[MAXFILE], ext[MAXEXT];
+	char drv[MAXDRIVE];
+	char dir[MAXDIR];
+	char name[MAXFILE];
+	char ext[MAXEXT];
 	char name_bak[MAXPATH];
 
 	static char bakext[] = ".BAK";
@@ -639,16 +678,16 @@ void writeblk( char *file_name, struct line_node *linebegin,
 
 	blockmsg( 5 );
 	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการจัดเก็บ :", ( 14 + center_factor ) + 3, 5, REVERSEATTR );
-	i = getname( file_name, ( 14 + center_factor ) + 29, 5, 22, REVERSEATTR );
-	if ( ( i != YES ) || ( file_name[0] == '\0' ) ) {
+	i = getname( p_filename, ( 14 + center_factor ) + 29, 5, 22, REVERSEATTR );
+	if ( ( i != YES ) || ( p_filename[0] == '\0' ) ) {
 		free( text_str );
 		return;
 	}
 
 	blockmsg( 5 );
-	fnsplit( file_name, drv, dir, name, ext );
+	fnsplit( p_filename, drv, dir, name, ext );
 
-	if ( file_exist( file_name ) ) {
+	if ( file_exist( p_filename ) ) {
 		dispstrhgc( "แฟ้มข้อมูลเดิมมีอยู่แล้ว ต้องการเขียนทับหรือไม่ ? (Y/N)", ( 14 + center_factor ) + 5, 5, REVERSEATTR );
 		do {
 			key = toupper( ebioskey( 0 ) & 0xff );
@@ -658,15 +697,15 @@ void writeblk( char *file_name, struct line_node *linebegin,
 			if ( create_bak ) {					/* Create .BAK */
 				fnmerge( name_bak, drv, dir, name, bakext );
 				remove( name_bak );				/* Delete Old .BAK */
-				if ( chkspace( file_name ) ) {	/* Enough Space ? */
-					rename( file_name, name_bak );
+				if ( chkspace( p_filename ) ) {	/* Enough Space ? */
+					rename( p_filename, name_bak );
 				} else {
 					free( text_str );
 					return;						/* File too large */
 				}
 			} else {							/* Ignore .BAK */
-				if ( chkspace( file_name ) ) {	/* Enough Space ? */
-					remove( file_name );
+				if ( chkspace( p_filename ) ) {	/* Enough Space ? */
+					remove( p_filename );
 				} else {
 					free( text_str );
 					return;
@@ -677,24 +716,24 @@ void writeblk( char *file_name, struct line_node *linebegin,
 			return;
 		}
 	} else {									/* Save new File */
-		if ( !chkspace( file_name ) ) {			/* Not enough space */
+		if ( !chkspace( p_filename ) ) {			/* Not enough space */
 			free( text_str );
 			return;
 		}
 	}
 
-	if ( ( fip = fopen( file_name, "wt" ) ) != NULL ) {
+	if ( ( fip = fopen( p_filename, "wt" ) ) != NULL ) {
 		dispstrhgc( "กำลังจัดเก็บแฟ้มข้อมูลอยู่ กรุณารอสักครู่...", ( 14 + center_factor ) + 12, 7, REVERSEATTR );
-		currentline = linebegin;
+		currentline = p_firstLine;
 #ifdef WANT_TO_USE_GRAPH
 		if ( currentline->graph != NULL ) {
 			fprintf( fip, ".GR %s\n", currentline->graph );
 		}
 #endif
-		firstround = linearcolumn( currentline->text, colbegin, &font );
+		firstround = linearcolumn( currentline->text, p_firstCol, &font );
 		findstrcode( fontcode, font );
 		fputs( fontcode, fip );
-		while ( currentline != lineend ) {
+		while ( currentline != p_lastLine ) {
 			if ( !stdcode ) {
 				templine = currentline->text;
 				i = 0;
@@ -726,7 +765,7 @@ void writeblk( char *file_name, struct line_node *linebegin,
 #endif
 		}
 		templine = currentline->text;
-		count = linearcolumn( templine, colend, &font );
+		count = linearcolumn( templine, p_lastCol, &font );
 		i = firstround;
 		j = 0;
 		while ( ( i != count ) &&
@@ -761,7 +800,9 @@ void writeblk( char *file_name, struct line_node *linebegin,
 void writeblock( void ) {
 	int linenum;
 	char file_name[22];
-	struct line_node *firstline, *lastline;
+	struct line_node *firstline;
+	struct line_node *lastline;
+
 	if ( haveblock( ) ) {
 		file_name[0] = '\0';
 		linenum = blkbegin.lineno;			/* get displacement */
@@ -778,26 +819,26 @@ void writeblock( void ) {
 	}
 }
 
-void blkcmd( register unsigned int key, unsigned int *x ) {
-	key &= 0xff;
-	if ( !isalpha( key ) && !iscntrl( key ) ) {
+void blkcmd( register unsigned int p_key, unsigned int *p_xCursorPos ) {
+	p_key &= 0xff;
+	if ( !isalpha( p_key ) && !iscntrl( p_key ) ) {
 		return;
 	}
-	switch ( key & 0x1f ) {
+	switch ( p_key & 0x1f ) {
 	case 'b' - 'a' + 1:
-		markbegin( *x );
+		markbegin( *p_xCursorPos );
 		break;
 	case 'k' - 'a' + 1:
-		markend( *x );
+		markend( *p_xCursorPos );
 		break;
 	case 'c' - 'a' + 1:
-		copyblk( x );
+		copyblk( p_xCursorPos );
 		break;
 	case 'y' - 'a' + 1:
 		deleteblk( );
 		break;
 	case 'v' - 'a' + 1:
-		moveblk( x );
+		moveblk( p_xCursorPos );
 		break;
 	case 'h' - 'a' + 1:
 		toggleblk( );
@@ -806,7 +847,7 @@ void blkcmd( register unsigned int key, unsigned int *x ) {
 		print_file( );
 		break;
 	case 'r' - 'a' + 1:
-		readblk( x );
+		readblk( p_xCursorPos );
 		break;
 	case 'w' - 'a' + 1:
 		writeblock( );
@@ -818,10 +859,11 @@ void blkcmd( register unsigned int key, unsigned int *x ) {
 	}
 }
 
-void blockcommand( unsigned int *x ) {
+void blockcommand( unsigned int *p_xCursorPos ) {
 	unsigned int key;
+
 	dispkey( CNTRL_K );
 	waitkbd( 3, 2 );
 	key = ebioskey( 0 );
-	blkcmd( key, x );
+	blkcmd( key, p_xCursorPos );
 }

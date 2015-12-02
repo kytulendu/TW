@@ -19,9 +19,10 @@
 
 #include "del.h"
 
-void delete_char( unsigned int x ) {
-	register unsigned int i = x + firstcol + 1;
+void delete_char( unsigned int p_xCursorPos ) {
+	register unsigned int i = p_xCursorPos + firstcol + 1;
 	unsigned int j = strlen( workline.middle );
+
 	if ( i != j ) {
 		if ( ( workline.attr[i] & ENLARGEATTR ) == ENLARGEATTR ) {
 			for ( ; i < j; i++ ) {
@@ -33,17 +34,17 @@ void delete_char( unsigned int x ) {
 			}
 			if ( haveblock( ) ) {
 				if ( lineno == blkbegin.lineno ) {
-					if ( ( x + firstcol ) < blkbegin.column ) {
+					if ( ( p_xCursorPos + firstcol ) < blkbegin.column ) {
 						blkbegin.column--;
 					}
 				}
 				if ( lineno == blkend.lineno ) {
-					if ( ( x + firstcol ) < blkend.column ) {
+					if ( ( p_xCursorPos + firstcol ) < blkend.column ) {
 						blkend.column--;
 					}
 				}
 			}
-			i = x + firstcol + 1;
+			i = p_xCursorPos + firstcol + 1;
 		}
 		for ( ; i < j; i++ ) {
 			workline.middle[i] = workline.middle[i + 1];
@@ -54,12 +55,12 @@ void delete_char( unsigned int x ) {
 		}
 		if ( haveblock( ) ) {
 			if ( lineno == blkbegin.lineno ) {
-				if ( ( x + firstcol ) < blkbegin.column ) {
+				if ( ( p_xCursorPos + firstcol ) < blkbegin.column ) {
 					blkbegin.column--;
 				}
 			}
 			if ( lineno == blkend.lineno ) {
-				if ( ( x + firstcol ) < blkend.column ) {
+				if ( ( p_xCursorPos + firstcol ) < blkend.column ) {
 					blkend.column--;
 				}
 			}
@@ -70,30 +71,31 @@ void delete_char( unsigned int x ) {
 	changeflag = YES;
 }
 
-void deletereturn( struct line_node *line ) {
+void deletereturn( struct line_node *p_line ) {
 	unsigned char *temp;
 	struct line_node *linedeleted;
-	if ( line->next != sentinel ) {
-		linedeleted = line->next;
-		temp = ( unsigned char * ) malloc( strlen( line->text ) + strlen( linedeleted->text ) + 1 );
-		strcpy( temp, line->text );
+
+	if ( p_line->next != sentinel ) {
+		linedeleted = p_line->next;
+		temp = ( unsigned char * ) malloc( strlen( p_line->text ) + strlen( linedeleted->text ) + 1 );
+		strcpy( temp, p_line->text );
 		strcat( temp, linedeleted->text );
-		free( line->text );
-		line->text = temp;
-		line->next = linedeleted->next;
-		( linedeleted->next )->previous = line;
-		line->wrap = linedeleted->wrap;
+		free( p_line->text );
+		p_line->text = temp;
+		p_line->next = linedeleted->next;
+		( linedeleted->next )->previous = p_line;
+		p_line->wrap = linedeleted->wrap;
 #ifdef WANT_TO_USE_GRAPH
-		if ( ( linedeleted->graph != NULL ) && ( line->graph == NULL ) ) {
-			line->graph = linedeleted->graph;
+		if ( ( linedeleted->graph != NULL ) && ( p_line->graph == NULL ) ) {
+			p_line->graph = linedeleted->graph;
 			linedeleted->graph = NULL;
 		}
 #endif
 		if ( linedeleted == curline ) {
-			curline = line;
+			curline = p_line;
 		}
 		if ( linedeleted == curpage ) {
-			curpage = line;
+			curpage = p_line;
 		}
 		free( linedeleted->text );
 #ifdef WANT_TO_USE_GRAPH
@@ -127,10 +129,11 @@ void del_return( void ) {
 	changeflag = YES;
 }
 
-void backspace( unsigned int *x ) {
+void backspace( unsigned int *p_xCursorPos ) {
 	register size_t i;
 	boolean enlargeflag = NO;
-	i = *x + firstcol;
+
+	i = *p_xCursorPos + firstcol;
 	if ( i > 0 ) {	/* begin of line ? */
 		if ( workline.below[i] == ENLARGEATTR ) {
 			enlargeflag = YES;
@@ -148,17 +151,17 @@ void backspace( unsigned int *x ) {
 			}
 			if ( haveblock( ) ) {
 				if ( lineno == blkbegin.lineno ) {
-					if ( ( *x + firstcol ) <= blkbegin.column ) {
+					if ( ( *p_xCursorPos + firstcol ) <= blkbegin.column ) {
 						blkbegin.column--;
 					}
 				}
 				if ( lineno == blkend.lineno ) {
-					if ( ( *x + firstcol ) <= blkend.column ) {
+					if ( ( *p_xCursorPos + firstcol ) <= blkend.column ) {
 						blkend.column--;
 					}
 				}
 			}
-			i = *x + firstcol - 1;
+			i = *p_xCursorPos + firstcol - 1;
 		}
 		if ( workline.topest[i] != ' ' ) {
 			workline.topest[i] = ' ';
@@ -177,27 +180,27 @@ void backspace( unsigned int *x ) {
 			}
 			if ( haveblock( ) ) {
 				if ( lineno == blkbegin.lineno ) {
-					if ( ( *x + firstcol ) <= blkbegin.column ) {
+					if ( ( *p_xCursorPos + firstcol ) <= blkbegin.column ) {
 						blkbegin.column--;
 					}
 				}
 				if ( lineno == blkend.lineno ) {
-					if ( ( *x + firstcol ) <= blkend.column ) {
+					if ( ( *p_xCursorPos + firstcol ) <= blkend.column ) {
 						blkend.column--;
 					}
 				}
 			}
 			if ( enlargeflag != YES ) {
-				if ( *x > 0 ) {
-					( *x )--;
+				if ( *p_xCursorPos > 0 ) {
+					( *p_xCursorPos )--;
 				} else {
 					firstcol--;
 					storeline( curline );
 					pagecomplete = NO;
 				}
 			} else {
-				if ( *x >= 2 ) {
-					*x = *x - 2;
+				if ( *p_xCursorPos >= 2 ) {
+					*p_xCursorPos = *p_xCursorPos - 2;
 				} else {
 					firstcol = firstcol - 2;
 					storeline( curline );
@@ -208,24 +211,25 @@ void backspace( unsigned int *x ) {
 	} else {
 		if ( lineno != 1 ) {
 			cursor_up( );
-			endline( x );
+			endline( p_xCursorPos );
 			del_return( );
 		}
 	}
 	changeflag = YES;
 }
 
-void delete_word( unsigned int x ) {
+void delete_word( unsigned int p_xCursorPos ) {
 	size_t i;
-	i = x + firstcol + 1;
+
+	i = p_xCursorPos + firstcol + 1;
 	if ( workline.middle[i] != '\0' ) {
 		if ( ( workline.middle[i] != ' ' ) && ( workline.middle[i] != WRAPBLANK ) ) {
 			while ( ( workline.middle[i] != ' ' ) && ( workline.middle[i] != WRAPBLANK ) && ( workline.middle[i] != '\0' ) ) {
-				delete_char( x );
+				delete_char( p_xCursorPos );
 			}
 		} else {
 			while ( ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ) ) {
-				delete_char( x );
+				delete_char( p_xCursorPos );
 			}
 		}
 	} else {
@@ -233,9 +237,10 @@ void delete_word( unsigned int x ) {
 	}
 }
 
-void deltoendline( unsigned int x, unsigned int y ) {
+void deltoendline( unsigned int p_xCursorPos, unsigned int p_yCursorPos ) {
 	register unsigned int i = MAXCOL + 1;
-	unsigned int j = x + firstcol + 1;
+	unsigned int j = p_xCursorPos + firstcol + 1;
+
 	while ( i <= j ) {
 		workline.topest[i] = ' ';
 		workline.upper[i] = ' ';
@@ -245,38 +250,38 @@ void deltoendline( unsigned int x, unsigned int y ) {
 		i--;
 	}
 	workline.middle[j] = '\0';
-	refreshline( x, y );
+	refreshline( p_xCursorPos, p_yCursorPos );
 	changeflag = YES;
 }
 
-void deleteline( struct line_node *line ) {
-	if ( line->next != sentinel ) {
-		if ( curline == line ) {
+void deleteline( struct line_node *p_line ) {
+	if ( p_line->next != sentinel ) {
+		if ( curline == p_line ) {
 			curline = curline->next;
 			loadtoline( curline->text );
 		}
-		if ( curpage == line ) {
+		if ( curpage == p_line ) {
 			curpage = curpage->next;
 		}
-		( line->previous )->next = line->next;
-		( line->next )->previous = line->previous;
-		free( line->text );
+		( p_line->previous )->next = p_line->next;
+		( p_line->next )->previous = p_line->previous;
+		free( p_line->text );
 #ifdef WANT_TO_USE_GRAPH
-		if ( line->graph != NULL ) {
-			free( line->graph );
+		if ( p_line->graph != NULL ) {
+			free( p_line->graph );
 		}
 #endif
-		free( line );
+		free( p_line );
 	} else {
-		free( line->text );
+		free( p_line->text );
 #ifdef WANT_TO_USE_GRAPH
-		if ( line->graph != NULL ) {
-			free( line->graph );
+		if ( p_line->graph != NULL ) {
+			free( p_line->graph );
 		}
 #endif
-		line->text = ( unsigned char * ) malloc( 1 );
-		*( line->text ) = '\0';
-		if ( curline == line ) {
+		p_line->text = ( unsigned char * ) malloc( 1 );
+		*( p_line->text ) = '\0';
+		if ( curline == p_line ) {
 			loadtoline( curline->text );
 		}
 	}

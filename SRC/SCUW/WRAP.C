@@ -27,7 +27,10 @@
 #include "wrap.h"
 
 void justify_right( void ) {
-	register size_t count, i, j, k;
+	register size_t count;
+	register size_t i;
+	register size_t j;
+	register size_t k;
 	boolean already = NO;
 	for ( i = strlen( workline.middle ) - 1;
 		( ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ) ) &&
@@ -65,10 +68,16 @@ void justify_right( void ) {
 }
 
 void reform( void ) {
-	struct line_node *templine, *firstline, *freeline;
-	unsigned char *temp1, *temp2, *temp3, *cuthere;
-	unsigned int i, j;
-	font_attr font = 0;
+	struct line_node *templine;
+	struct line_node *firstline;
+	struct line_node *freeline;
+	unsigned char *temp1;
+	unsigned char *temp2;
+	unsigned char *temp3;
+	unsigned char *cuthere;
+	unsigned int i;
+	unsigned int j;
+	font_attr font = NORMALATTR;
 	unsigned char fontcode[9];
 
 	storeline( curline );
@@ -198,27 +207,27 @@ void reform( void ) {
 	blkend.column = 0;
 }
 
-void manualwrap( unsigned int *x, unsigned int *y ) {
+void manualwrap( unsigned int *p_xCursorPos, unsigned int *p_yCursorPos ) {
 	size_t i;
-	insert_ret( x );
+	insert_ret( p_xCursorPos );
 	curline->wrap = YES;
-	*x = ( leftmar - 1 ) + ( *x - thaistrlen( curline->text ) );
+	*p_xCursorPos = ( leftmar - 1 ) + ( *p_xCursorPos - thaistrlen( curline->text ) );
 	justify_right( );
-	*y = findrow( );
-	cursor_down( *y );
+	*p_yCursorPos = findrow( );
+	cursor_down( *p_yCursorPos );
 	for ( i = 1; i != leftmar; i++ ) {
 		workline.middle[i] = WRAPBLANK;
 	}
 }
 
-void autowrap( unsigned int *x, unsigned int *y ) {
+void autowrap( unsigned int *p_xCursorPos, unsigned int *p_yCursorPos ) {
 	unsigned int i, j, already = NO, diff;
 	unsigned char *temp1, *temp3, *cuthere, fontcode[9];
-	font_attr font = 0;
+	font_attr font = NORMALATTR;
 	struct line_node *templine;
 
 	storeline( curline );
-	diff = strlen( workline.middle ) - ( *x + firstcol + 1 );
+	diff = strlen( workline.middle ) - ( *p_xCursorPos + firstcol + 1 );
 	i = 0;
 	j = 0;
 	while ( curline->text[i] != '\0' ) {
@@ -279,10 +288,10 @@ void autowrap( unsigned int *x, unsigned int *y ) {
 	curline->wrap = YES;
 	loadtoline( curline->text );
 	justify_right( );
-	*y = findrow( );
-	cursor_down( *y );
+	*p_yCursorPos = findrow( );
+	cursor_down( *p_yCursorPos );
 	firstcol = 0;
-	gocol( strlen( workline.middle ) - 1 - diff, x );
+	gocol( strlen( workline.middle ) - 1 - diff, p_xCursorPos );
 	pagecomplete = NO;
 }
 

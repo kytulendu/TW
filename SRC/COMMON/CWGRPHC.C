@@ -44,19 +44,19 @@ void _putpixel( int p_x, int p_y ) {
 	( *putpixel_ptr )( p_x, p_y );
 }
 
-void settext( ) {
+void settext( void ) {
 	( *settext_ptr )( );
 }
 
-void savepic( ) {
+void savepic( void ) {
 	( *savepic_ptr )( );
 }
 
-void retpic( ) {
+void retpic( void ) {
 	( *retpic_ptr )( );
 }
 
-void clsall( ) {
+void clsall( void ) {
 	( *clsall_ptr )( );
 }
 
@@ -68,11 +68,11 @@ void clrline( int x1, int y1, int x2 ) {
 	( *clrline_ptr )( x1, y1, x2 );
 }
 
-void prakeaw( ) {
+void prakeaw( void ) {
 	( *prakeaw_ptr )( );
 }
 
-void setgraph( ) {
+void setgraph( void ) {
 	static int first = 1;
 
 	if ( !first ) {

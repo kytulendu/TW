@@ -7,16 +7,16 @@
 void waitkbd( int p_xcurpos, int p_ycurpos );
 
 /**  */
-int changekey( int key );
+int changekey( int p_key );
 
 /** Read keyboard.
 *   \return int					*/
 int readkbd( void );
 
-/** Alt_char_map function
-*
-*   remap alternate character, return (-1) if fail. */
-int alt_char_map( int c );
+/** Remap alternate character.
+*   \param[in]  p_key			Keyboard code.
+*   \return int					ALT mapped keyboard code, return -1 if fail. */
+int alt_char_map( int p_key );
 
 /** Display key combination when press control at top left of screen.
 *  \param[in]  p_key		Key code.*/

@@ -43,45 +43,45 @@ void waitkbd( int p_xcurpos, int p_ycurpos ) {
 	setcurpos( p_xcurpos, p_ycurpos, thaimode );
 }
 
-int changekey( int key ) {
+int changekey( int p_key ) {
 	if ( ( ebioskey( 2 ) & 0x10 ) != 0 ) {    /* table ? */
-		switch ( key & 0xff00 ) {
+		switch ( p_key & 0xff00 ) {
 		case SHIFT_7_NP & 0xff00:
-			key = 0x98;
+			p_key = 0x98;
 			break;
 		case SHIFT_8_NP & 0xff00:
-			key = 0x91;
+			p_key = 0x91;
 			break;
 		case SHIFT_9_NP & 0xff00:
-			key = 0x99;
+			p_key = 0x99;
 			break;
 		case GRAY_MINUS & 0xff00:
-			key = 0x95;
+			p_key = 0x95;
 			break;
 		case SHIFT_4_NP & 0xff00:
-			key = 0x93;
+			p_key = 0x93;
 			break;
 		case SHIFT_5_NP & 0xff00:
-			key = 0x96;
+			p_key = 0x96;
 			break;
 		case SHIFT_6_NP & 0xff00:
-			key = 0x92;
+			p_key = 0x92;
 			break;
 		case GRAY_PLUS & 0xff00:
-			key = 0x8f;
+			p_key = 0x8f;
 			break;
 		case SHIFT_1_NP & 0xff00:
-			key = 0x9a;
+			p_key = 0x9a;
 			break;
 		case SHIFT_2_NP & 0xff00:
-			key = 0x90;
+			p_key = 0x90;
 			break;
 		case SHIFT_3_NP & 0xff00:
-			key = 0x9b;
+			p_key = 0x9b;
 			break;
 		}
 	}
-	return( key & 0xff );
+	return( p_key & 0xff );
 }
 
 int readkbd( void ) {
@@ -93,9 +93,9 @@ int readkbd( void ) {
 	return( c );
 }
 
-int alt_char_map( int c ) {
+int alt_char_map( int p_key ) {
 	int k;
-	switch ( c ) {
+	switch ( p_key ) {
 	case ALTA: k = 0x80;
 		break;
 	case ALTB: k = 0x81;
@@ -141,7 +141,7 @@ int alt_char_map( int c ) {
 void dispkey( register unsigned int p_key ) {
 	dispstrhgc( "   ", wind.col, 2, NORMALATTR );
 	if ( ( p_key & 0xff ) < 32 ) {
-		prchar( '^', 0, wind.col, REVERSEATTR );
-		prchar( ( p_key & 0xff ) + 0x40, 0, wind.col + 1, REVERSEATTR );
+		prchar( '^', NORMALATTR, wind.col, REVERSEATTR );
+		prchar( ( p_key & 0xff ) + 0x40, NORMALATTR, wind.col + 1, REVERSEATTR );
 	}
 }

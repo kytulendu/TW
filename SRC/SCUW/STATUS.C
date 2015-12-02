@@ -22,12 +22,12 @@ void relmarstatus( void ) {
 	}
 }
 
-void arabictothai( char *st ) {
-	while ( *st != '\0' ) {
-		if ( ( *st >= '0' ) && ( *st <= '9' ) ) {
-			*st = *st | 0xf0;
+void arabictothai( char *p_string ) {
+	while ( *p_string != '\0' ) {
+		if ( ( *p_string >= '0' ) && ( *p_string <= '9' ) ) {
+			*p_string = *p_string | 0xf0;
 		}
-		st++;
+		p_string++;
 	}
 }
 
@@ -64,10 +64,10 @@ void writepageline( void ) {
 	}
 }
 
-void writecolno( unsigned int x ) {
+void writecolno( unsigned int p_xCursorPos ) {
 	char st2[5];
 	dispstrhgc( "¤ÍÅÑÁ¹ì", 21, 2, NORMALATTR );
-	sprintf( st2, "%d", x + 1 );
+	sprintf( st2, "%d", p_xCursorPos + 1 );
 	dispstrhgc( "    ", 27, 2, NORMALATTR );
 	arabictothai( st2 );
 	dispstrhgc( st2, 27, 2, NORMALATTR );
@@ -114,9 +114,9 @@ void writedriveno( void ) {
 	prchar( 'A' + getdisk( ), BOLDATTR, 45, NORMALATTR );
 }
 
-void writestatus( unsigned int x ) {
+void writestatus( unsigned int p_xCursorPos ) {
 	writepageline( );
-	writecolno( x );
+	writecolno( p_xCursorPos );
 	writeinsmode( );
 	writelanguage( );
 	writedriveno( );

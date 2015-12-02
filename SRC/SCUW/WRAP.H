@@ -8,9 +8,9 @@ void justify_right( void );
 /** Reform paragraph from line specified to end of paragraph. */
 void reform( void );
 
-void manualwrap( unsigned int *x, unsigned int *y );
+void manualwrap( unsigned int *p_xCursorPos, unsigned int *p_yCursorPos );
 
-void autowrap( unsigned int *x, unsigned int *y );
+void autowrap( unsigned int *p_xCursorPos, unsigned int *p_yCursorPos );
 
 /** leave the leading blank alone, just compress the rest
 *   and trim the trailing blank. */

@@ -18,9 +18,10 @@
 
 #include "file.h"
 
-int read_file( char *file_name ) {
+int read_file( char *p_filename ) {
 	struct line_node *space;
-	space = rdfiletospace( file_name );
+
+	space = rdfiletospace( p_filename );
 	if ( space != NULL ) {
 		insertlinklist( space, curline, 0 );
 		return( !ERROR );

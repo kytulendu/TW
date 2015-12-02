@@ -16,27 +16,27 @@
 
 #include "tutil2.h"
 
-unsigned int linearcolumn( unsigned char *textstream, unsigned int thaicol, font_attr *font ) {
-	register unsigned int logiccol = 0;	/* origin 0 */
-	*font = 0;
-	while ( ( thaicol > 0 ) && ( *textstream != '\0' ) ) {
-		if ( whatlevel( *textstream ) == MIDDLE ) {
-			if ( *textstream < 32 ) {
-				togglefont( font, *textstream );
+unsigned int linearcolumn( unsigned char *p_textstream, unsigned int p_thaiCol, font_attr *p_attr ) {
+	register unsigned int logiccol = 0;	/* logical column (physical), column is origin 0. */
+	*p_attr = NORMALATTR;
+	while ( ( p_thaiCol > 0 ) && ( *p_textstream != '\0' ) ) {
+		if ( whatlevel( *p_textstream ) == MIDDLE ) {
+			if ( *p_textstream < 32 ) {
+				togglefont( p_attr, *p_textstream );
 			} else {
-				if ( ( *font & ENLARGEATTR ) == ENLARGEATTR ) {
-					thaicol--; 
+				if ( ( *p_attr & ENLARGEATTR ) == ENLARGEATTR ) {
+					p_thaiCol--;
 				}
-				if ( thaicol > 0 ) {
-					thaicol--; 
+				if ( p_thaiCol > 0 ) {
+					p_thaiCol--;
 				}
 			}
 		}
-		textstream++;
+		p_textstream++;
 		logiccol++;
 	}
-	if ( *textstream != MIDDLE ) {
-		while ( whatlevel( *( textstream++ ) ) != MIDDLE ) {
+	if ( *p_textstream != MIDDLE ) {
+		while ( whatlevel( *( p_textstream++ ) ) != MIDDLE ) {
 			logiccol++;
 		}
 	}

@@ -36,12 +36,12 @@ void cursor_up( void ) {
 	}
 }
 
-void cursor_down( unsigned int y ) {
+void cursor_down( unsigned int p_yCursorPos ) {
 	if ( curline->next != sentinel ) {  /* end of file ? */
 		storeline( curline );
 		lineno++;                       /* increment lineno */
 		curline = curline->next;        /* down one line    */
-		if ( y == ( wind.width - 1 ) ) {    /* bottom of screen ? */
+		if ( p_yCursorPos == ( wind.width - 1 ) ) {    /* bottom of screen ? */
 			if ( pagebreak && ( ( ( lineno - 1 ) % lineperpage ) == 0 ) ) {
 				curpage = curpage->next;    /* skip over page break */
 			}
@@ -50,7 +50,7 @@ void cursor_down( unsigned int y ) {
 		} else {
 			if ( pagebreak &&  /* page break is displayed at bottom of screen ? */
 				( ( ( ( lineno - 1 ) % lineperpage ) == 0 ) &&
-				( y == ( wind.width - 2 ) ) ) ) {
+				( p_yCursorPos == ( wind.width - 2 ) ) ) ) {
 				curpage = curpage->next;     /* skip over page break */
 				pagecomplete = NO;           /* refresh screen       */
 			}
@@ -59,33 +59,33 @@ void cursor_down( unsigned int y ) {
 	}
 }
 
-void cursor_left( unsigned int *x ) {
-	unsigned int i = *x + firstcol;
+void cursor_left( unsigned int *p_xCursorPos ) {
+	unsigned int i = *p_xCursorPos + firstcol;
 	if ( i != 0 ) {    /* Home of line ? */
-		gocol( i - 1, x );
+		gocol( i - 1, p_xCursorPos );
 	} else {
 		if ( curline->previous != sentinel ) {
 			cursor_up( );   /* go to end of  */
-			endline( x );    /* previous line */
+			endline( p_xCursorPos );    /* previous line */
 		}
 	}
 }
 
-void cursor_right( unsigned int *x, unsigned int y ) {
-	if ( ( *x + firstcol + 1 ) == strlen( workline.middle ) ) {
+void cursor_right( unsigned int *p_xCursorPos, unsigned int p_yCursorPos ) {
+	if ( ( *p_xCursorPos + firstcol + 1 ) == strlen( workline.middle ) ) {
 		if ( curline->next != sentinel ) {
-			cursor_down( y );
-			home( x );
+			cursor_down( p_yCursorPos );
+			home( p_xCursorPos );
 		}
 	} else {
-		if ( ( *x + firstcol + 1 ) < MAXCOL ) {    /* 5 to TUDCUM in 255 RMAR */
-			if ( *x >= ( wind.length - 2 ) ) {
-				shiftscrn( 20, x );
+		if ( ( *p_xCursorPos + firstcol + 1 ) < MAXCOL ) {    /* 5 to TUDCUM in 255 RMAR */
+			if ( *p_xCursorPos >= ( wind.length - 2 ) ) {
+				shiftscrn( 20, p_xCursorPos );
 			}
-			if ( ( workline.attr[*x + firstcol + 1] & ENLARGEATTR ) == ENLARGEATTR ) {
-				( *x )++;
+			if ( ( workline.attr[*p_xCursorPos + firstcol + 1] & ENLARGEATTR ) == ENLARGEATTR ) {
+				( *p_xCursorPos )++;
 			}
-			( *x )++;
+			( *p_xCursorPos )++;
 		} else {
 			linetoolong( );
 		}

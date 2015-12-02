@@ -37,10 +37,10 @@
 
 #include "ins.h"
 
-void insertblank( register unsigned int j, unsigned char code ) {
+void insertblank( unsigned int p_col, unsigned char p_blankchar ) {
 	register size_t i;
 	i = strlen( workline.middle );
-	while ( i >= j ) {
+	while ( i >= p_col ) {
 		workline.middle[i + 1] = workline.middle[i];  /* shift right */
 		workline.upper[i + 1] = workline.upper[i];    /*  by ignore  */
 		workline.topest[i + 1] = workline.topest[i];  /*  character  */
@@ -48,19 +48,19 @@ void insertblank( register unsigned int j, unsigned char code ) {
 		workline.attr[i + 1] = workline.attr[i];      /*   column    */
 		i--;
 	}
-	workline.middle[j] = code;         /* put blank */
-	workline.upper[j] = ' ';           /* put blank */
-	workline.topest[j] = ' ';          /* put blank */
-	workline.below[j] = ' ';           /* put blank */
-	workline.attr[j] = 0;
+	workline.middle[p_col] = p_blankchar;  /* put blank */
+	workline.upper[p_col] = ' ';           /* put blank */
+	workline.topest[p_col] = ' ';          /* put blank */
+	workline.below[p_col] = ' ';           /* put blank */
+	workline.attr[p_col] = 0;
 	if ( haveblock( ) ) {
 		if ( lineno == blkbegin.lineno ) {
-			if ( ( j - 1 ) <= blkbegin.column ) {
+			if ( ( p_col - 1 ) <= blkbegin.column ) {
 				blkbegin.column++;
 			}
 		}
 		if ( lineno == blkend.lineno ) {
-			if ( ( j - 1 ) < blkend.column ) {
+			if ( ( p_col - 1 ) < blkend.column ) {
 				blkend.column++;
 			}
 		}
@@ -68,19 +68,19 @@ void insertblank( register unsigned int j, unsigned char code ) {
 	changeflag = YES;
 }
 
-void insert_line( struct line_node *currentline, struct line_node *newline ) {
-	newline->previous = currentline;
-	newline->next = currentline->next;
-	( currentline->next )->previous = newline;
-	currentline->next = newline;
+void insert_line( struct line_node *p_curline, struct line_node *p_newline ) {
+	p_newline->previous = p_curline;
+	p_newline->next = p_curline->next;
+	( p_curline->next )->previous = p_newline;
+	p_curline->next = p_newline;
 }
 
-void shiftscrn( unsigned int count, unsigned int *x ) {
+void shiftscrn( unsigned int p_count, unsigned int *p_x ) {
 	storeline( curline );
-	while ( ( count != 0 ) && ( ( firstcol + wind.length ) <= MAXCOL ) ) {
+	while ( ( p_count != 0 ) && ( ( firstcol + wind.length ) <= MAXCOL ) ) {
 		firstcol++;
-		( *x )--;
-		count--;
+		( *p_x )--;
+		p_count--;
 	}
 	pagecomplete = NO;  /* set flag to refresh screen */
 }
@@ -93,9 +93,9 @@ void linetoolong( void ) {
 	pagecomplete = NO;
 }
 
-void inscntrl( unsigned char cntrl, unsigned int x, unsigned int y ) {
+void inscntrl( unsigned char p_ctrlChar, unsigned int p_xCursorPos, unsigned int p_yCursorPos ) {
 	register unsigned int i = MAXCOL;
-	register unsigned int j = x + firstcol + 1;
+	register unsigned int j = p_xCursorPos + firstcol + 1;
 	while ( i >= j ) {
 		workline.middle[i + 1] = workline.middle[i];  /* shift right */
 		workline.upper[i + 1] = workline.upper[i];    /*  by ignore  */
@@ -104,72 +104,72 @@ void inscntrl( unsigned char cntrl, unsigned int x, unsigned int y ) {
 		workline.attr[i + 1] = workline.attr[i];      /*   column    */
 		i--;
 	}
-	workline.middle[j] = cntrl;   /* put print control character */
-	workline.upper[j] = ' ';      /* put blank */
-	workline.topest[j] = ' ';     /* put blank */
-	workline.below[j] = ' ';      /* put blank */
+	workline.middle[j] = p_ctrlChar;	/* put print control character */
+	workline.upper[j] = ' ';			/* put blank */
+	workline.topest[j] = ' ';			/* put blank */
+	workline.below[j] = ' ';			/* put blank */
 	workline.attr[j] = fontused;
-	storeline( curline );           /* store workline to linked list then  */
-	loadtoline( curline->text );    /* load back and redisplay line        */
-	refreshline( 0, y );             /* to show new attribute of character  */
+	storeline( curline );				/* store workline to linked list then */
+	loadtoline( curline->text );		/* load back and redisplay line */
+	refreshline( 0, p_yCursorPos );		/* to show new attribute of character */
 }
 
-void printcntrl( register unsigned int x, register unsigned int y ) {
+void printcntrl( register unsigned int p_xCursorPos, register unsigned int p_yCursorPos ) {
 	register int key;
 
 	dispkey( CNTRL_P );
 	waitkbd( 3, 2 );
 	key = ebioskey( 0 ) & 0xff;
-	prchar( key, 0, 3, 2 );
+	prchar( key, NORMALATTR, 3, 2 );
 	if ( !isalpha( key ) && !iscntrl( key ) )
 		return;
 	switch ( key & 0x1f ) {
 	case 'w' - 'a' + 1:
-		inscntrl( CNTRL_W, x, y );
+		inscntrl( CNTRL_W, p_xCursorPos, p_yCursorPos );
 		break;
 	case 's' - 'a' + 1:
-		inscntrl( CNTRL_S, x, y );
+		inscntrl( CNTRL_S, p_xCursorPos, p_yCursorPos );
 		break;
 	case 'r' - 'a' + 1:
-		inscntrl( CNTRL_R, x, y );
+		inscntrl( CNTRL_R, p_xCursorPos, p_yCursorPos );
 		break;
 	case 'b' - 'a' + 1:
-		inscntrl( CNTRL_B, x, y );
+		inscntrl( CNTRL_B, p_xCursorPos, p_yCursorPos );
 		break;
 	case 'e' - 'a' + 1:
-		inscntrl( CNTRL_E, x, y );
+		inscntrl( CNTRL_E, p_xCursorPos, p_yCursorPos );
 		break;
 	case 't' - 'a' + 1:
-		inscntrl( CNTRL_T, x, y );
+		inscntrl( CNTRL_T, p_xCursorPos, p_yCursorPos );
 		break;
 	case 'v' - 'a' + 1:
-		inscntrl( CNTRL_V, x, y );
+		inscntrl( CNTRL_V, p_xCursorPos, p_yCursorPos );
 		break;
 	};
 }
 
-int insert_char( unsigned char c, unsigned int *x, unsigned int *y ) {
+int insert_char( unsigned char p_char, unsigned int *p_xCursorPos, unsigned int *p_yCursorPos ) {
 	register unsigned int i;
 	unsigned int j;
-	if ( ( *x + firstcol + 1 ) <= MAXCOL ) {   /* if out of line , not insert */
-		if ( wordwrap && ( ( *x + firstcol + 1 ) >= ( rightmar + 5 ) ) ) {
+	if ( ( *p_xCursorPos + firstcol + 1 ) <= MAXCOL ) {   /* if out of line , not insert */
+		if ( wordwrap && ( ( *p_xCursorPos + firstcol + 1 ) >= ( rightmar + 5 ) ) ) {
 			if ( relmargin == NO ) {
-				autowrap( x, y );
+				autowrap( p_xCursorPos, p_yCursorPos );
 			}
 		}
-		switch ( whatlevel( c ) ) {
+		switch ( whatlevel( p_char ) ) {
 		case MIDDLE:
-			if ( ( *x + firstcol + 1 ) < leftmar ) {  /* cursor before left margin ? */
+			if ( ( *p_xCursorPos + firstcol + 1 ) < leftmar ) {  /* cursor before left margin ? */
 				if ( !relmargin ) {    /* release margin ? */
-					for ( i = *x + firstcol + 1; i != leftmar; i++ ) {
+					for ( i = *p_xCursorPos + firstcol + 1; i != leftmar; i++ ) {
 						insertblank( 1, WRAPBLANK );
 					}
-					gocol( leftmar - 1, x );
-					refreshline( 0, *y );
+					gocol( leftmar - 1, p_xCursorPos );
+					refreshline( 0, *p_yCursorPos );
 				}
 			}
 			i = strlen( workline.middle );
-			j = *x + firstcol + 1;
+			j = *p_xCursorPos + firstcol + 1;
 			while ( i >= j ) {
 				workline.middle[i + 1] = workline.middle[i];  /* shift right */
 				workline.upper[i + 1] = workline.upper[i];    /*  by ignore  */
@@ -178,19 +178,19 @@ int insert_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 				workline.attr[i + 1] = workline.attr[i];      /*   column    */
 				i--;
 			}
-			workline.middle[j] = c;      /* put character */
+			workline.middle[j] = p_char; /* put character */
 			workline.upper[j] = ' ';     /* put blank */
 			workline.topest[j] = ' ';    /* put blank */
 			workline.below[j] = ' ';     /* put blank */
 			workline.attr[j] = fontused;
 			if ( haveblock( ) ) {
 				if ( lineno == blkbegin.lineno ) {
-					if ( ( *x + firstcol ) <= blkbegin.column ) {
+					if ( ( *p_xCursorPos + firstcol ) <= blkbegin.column ) {
 						blkbegin.column++;
 					}
 				}
 				if ( lineno == blkend.lineno ) {
-					if ( ( *x + firstcol ) < blkend.column ) {
+					if ( ( *p_xCursorPos + firstcol ) < blkend.column ) {
 						blkend.column++;
 					}
 				}
@@ -198,7 +198,7 @@ int insert_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 			if ( ( fontused & ENLARGEATTR ) == ENLARGEATTR ) {
 				i = strlen( workline.middle ); /*  if enlarge , insert special column  */
 				i++;
-				j = *x + firstcol + 2;
+				j = *p_xCursorPos + firstcol + 2;
 				while ( i >= j ) {
 					workline.middle[i + 1] = workline.middle[i];
 					workline.upper[i + 1] = workline.upper[i];
@@ -207,17 +207,17 @@ int insert_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 					workline.attr[i + 1] = workline.attr[i];
 					i--;
 				}
-				workline.middle[j] = c;
+				workline.middle[j] = p_char;
 				workline.below[j] = ENLARGEATTR;
 				workline.attr[j] = fontused;
 				if ( haveblock( ) ) {
 					if ( lineno == blkbegin.lineno ) {
-						if ( ( *x + firstcol ) <= blkbegin.column ) {
+						if ( ( *p_xCursorPos + firstcol ) <= blkbegin.column ) {
 							blkbegin.column++;
 						}
 					}
 					if ( lineno == blkend.lineno ) {
-						if ( ( *x + firstcol ) < blkend.column ) {
+						if ( ( *p_xCursorPos + firstcol ) < blkend.column ) {
 							blkend.column++;
 						}
 					}
@@ -225,19 +225,19 @@ int insert_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 			}
 			break;
 		case UPPER:
-			i = *x + firstcol;
+			i = *p_xCursorPos + firstcol;
 			if ( ( workline.middle[i] >= '¡' ) &&   /* possible character ? */
 				( workline.middle[i] <= 'Î' ) ) {
 				if ( workline.below[i] == ENLARGEATTR ) {
-					if ( c != HUNAKADMITO ) {
-						workline.upper[i - 1] = c;
+					if ( p_char != HUNAKADMITO ) {
+						workline.upper[i - 1] = p_char;
 					} else {
 						workline.topest[i - 1] = 0xe9;
 						workline.upper[i - 1] = 0xd1;
 					}
 				} else {
-					if ( c != HUNAKADMITO ) {
-						workline.upper[i] = c;
+					if ( p_char != HUNAKADMITO ) {
+						workline.upper[i] = p_char;
 					} else {
 						workline.topest[i] = 0xe9;
 						workline.upper[i] = 0xd1;
@@ -248,42 +248,42 @@ int insert_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 			}
 			break;
 		case TOPEST:
-			i = *x + firstcol;
+			i = *p_xCursorPos + firstcol;
 			if ( ( workline.middle[i] >= '¡' ) &&
 				( workline.middle[i] <= 'Î' ) ) {
 				if ( workline.below[i] == ENLARGEATTR ) {
-					workline.topest[i - 1] = c;
+					workline.topest[i - 1] = p_char;
 				} else {
-					workline.topest[i] = c;
+					workline.topest[i] = p_char;
 				}
 			} else {
 				errorsound( );
 			}
 			break;
 		case BELOW:
-			i = *x + firstcol;
+			i = *p_xCursorPos + firstcol;
 			if ( ( workline.middle[i] >= '¡' ) &
 				( workline.middle[i] <= 'Î' ) ) {
 				if ( workline.below[i] == ENLARGEATTR ) {
-					workline.below[i - 1] = c;
+					workline.below[i - 1] = p_char;
 				} else {
-					workline.below[i] = c;
+					workline.below[i] = p_char;
 				}
 			} else {
 				errorsound( );
 			}
 			break;
 		}
-		if ( *x >= ( wind.length - 2 ) ) {
-			if ( whatlevel( c ) == MIDDLE ) {
-				shiftscrn( 20, x );
+		if ( *p_xCursorPos >= ( wind.length - 2 ) ) {
+			if ( whatlevel( p_char ) == MIDDLE ) {
+				shiftscrn( 20, p_xCursorPos );
 			}
 		}
-		if ( whatlevel( c ) == MIDDLE ) {
+		if ( whatlevel( p_char ) == MIDDLE ) {
 			if ( ( fontused & ENLARGEATTR ) == ENLARGEATTR ) {
-				( *x )++;
+				( *p_xCursorPos )++;
 			}
-			( *x )++;
+			( *p_xCursorPos )++;
 		}
 		changeflag = YES;
 		return( YES );
@@ -292,28 +292,28 @@ int insert_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 	}
 }
 
-int ovrwrite_char( unsigned char c, unsigned int *x, unsigned int *y ) {
+int ovrwrite_char( unsigned char p_char, unsigned int *p_xCursorPos, unsigned int *p_yCursorPos ) {
 	register unsigned int i;
 	unsigned int j;
-	if ( ( *x + firstcol + 1 ) <= MAXCOL ) {   /* no write at last column */
-		if ( wordwrap && ( ( *x + firstcol + 1 ) >= ( rightmar + 5 ) ) ) {
+	if ( ( *p_xCursorPos + firstcol + 1 ) <= MAXCOL ) {   /* no write at last column */
+		if ( wordwrap && ( ( *p_xCursorPos + firstcol + 1 ) >= ( rightmar + 5 ) ) ) {
 			if ( relmargin == NO ) {
-				autowrap( x, y );
+				autowrap( p_xCursorPos, p_yCursorPos );
 			}
 		}
-		switch ( whatlevel( c ) ) {
+		switch ( whatlevel( p_char ) ) {
 		case MIDDLE:
-			if ( ( *x + firstcol + 1 ) < leftmar ) {  /* cursor before left margin ? */
+			if ( ( *p_xCursorPos + firstcol + 1 ) < leftmar ) {  /* cursor before left margin ? */
 				if ( !relmargin ) {    /* release margin ? */
-					for ( i = *x + firstcol + 1; i != leftmar; i++ ) {
+					for ( i = *p_xCursorPos + firstcol + 1; i != leftmar; i++ ) {
 						insertblank( 1, WRAPBLANK );
 					}
-					gocol( leftmar - 1, x );
-					refreshline( 0, *y );
+					gocol( leftmar - 1, p_xCursorPos );
+					refreshline( 0, *p_yCursorPos );
 				}
 			}
-			if ( ( workline.attr[*x + firstcol + 1] & ENLARGEATTR ) == ENLARGEATTR ) {
-				i = *x + firstcol + 2;
+			if ( ( workline.attr[*p_xCursorPos + firstcol + 1] & ENLARGEATTR ) == ENLARGEATTR ) {
+				i = *p_xCursorPos + firstcol + 2;
 				while ( i < MAXCOL ) {
 					workline.middle[i] = workline.middle[i + 1];
 					workline.upper[i] = workline.upper[i + 1];
@@ -324,28 +324,28 @@ int ovrwrite_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 				}
 				if ( haveblock( ) ) {
 					if ( lineno == blkbegin.lineno ) {
-						if ( ( *x + firstcol ) <= blkbegin.column ) {
+						if ( ( *p_xCursorPos + firstcol ) <= blkbegin.column ) {
 							blkbegin.column--;
 						}
 					}
 					if ( lineno == blkend.lineno ) {
-						if ( ( *x + firstcol ) < blkend.column ) {
+						if ( ( *p_xCursorPos + firstcol ) < blkend.column ) {
 							blkend.column--;
 						}
 					}
 				}
 			}
-			i = *x + firstcol + 1;
+			i = *p_xCursorPos + firstcol + 1;
 			if ( workline.middle[i] == '\0' )
 				workline.middle[i + 1] = '\0';
-			workline.middle[i] = c;
+			workline.middle[i] = p_char;
 			workline.upper[i] = ' ';
 			workline.below[i] = ' ';
 			workline.topest[i] = ' ';
 			workline.attr[i] = fontused;
 			if ( ( fontused & ENLARGEATTR ) == ENLARGEATTR ) {
 				i = MAXCOL + 5;
-				j = *x + firstcol + 2;
+				j = *p_xCursorPos + firstcol + 2;
 				while ( i >= j ) {
 					workline.middle[i + 1] = workline.middle[i];
 					workline.upper[i + 1] = workline.upper[i];
@@ -354,17 +354,17 @@ int ovrwrite_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 					workline.attr[i + 1] = workline.attr[i];
 					i--;
 				}
-				workline.middle[j] = c;
+				workline.middle[j] = p_char;
 				workline.below[j] = ENLARGEATTR;
 				workline.attr[j] = fontused;
 				if ( haveblock( ) ) {
 					if ( lineno == blkbegin.lineno ) {
-						if ( ( *x + firstcol ) <= blkbegin.column ) {
+						if ( ( *p_xCursorPos + firstcol ) <= blkbegin.column ) {
 							blkbegin.column++;
 						}
 					}
 					if ( lineno == blkend.lineno ) {
-						if ( ( *x + firstcol ) < blkend.column ) {
+						if ( ( *p_xCursorPos + firstcol ) < blkend.column ) {
 							blkend.column++;
 						}
 					}
@@ -372,19 +372,19 @@ int ovrwrite_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 			}
 			break;
 		case UPPER:
-			i = *x + firstcol;
+			i = *p_xCursorPos + firstcol;
 			if ( ( workline.middle[i] >= '¡' ) &&
 				( workline.middle[i] <= 'Î' ) ) {
 				if ( workline.below[i] == ENLARGEATTR ) {
-					if ( c != HUNAKADMITO ) {
-						workline.upper[i - 1] = c;
+					if ( p_char != HUNAKADMITO ) {
+						workline.upper[i - 1] = p_char;
 					} else {
 						workline.topest[i - 1] = 0xe9;
 						workline.upper[i - 1] = 0xd1;
 					}
 				} else {
-					if ( c != HUNAKADMITO ) {
-						workline.upper[i] = c;
+					if ( p_char != HUNAKADMITO ) {
+						workline.upper[i] = p_char;
 					} else {
 						workline.topest[i] = 0xe9;
 						workline.upper[i] = 0xd1;
@@ -395,42 +395,42 @@ int ovrwrite_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 			}
 			break;
 		case TOPEST:
-			i = *x + firstcol;
+			i = *p_xCursorPos + firstcol;
 			if ( ( workline.middle[i] >= '¡' ) &&
 				( workline.middle[i] <= 'Î' ) ) {
 				if ( workline.below[i] == ENLARGEATTR ) {
-					workline.topest[i - 1] = c;
+					workline.topest[i - 1] = p_char;
 				} else {
-					workline.topest[i] = c;
+					workline.topest[i] = p_char;
 				}
 			} else {
 				errorsound( );
 			}
 			break;
 		case BELOW:
-			i = *x + firstcol;
+			i = *p_xCursorPos + firstcol;
 			if ( ( workline.middle[i] >= '¡' ) &&
 				( workline.middle[i] <= 'Î' ) ) {
 				if ( workline.below[i] == ENLARGEATTR ) {
-					workline.below[i - 1] = c;
+					workline.below[i - 1] = p_char;
 				} else {
-					workline.below[i] = c;
+					workline.below[i] = p_char;
 				}
 			} else {
 				errorsound( );
 			}
 			break;
 		}
-		if ( *x >= ( wind.length - 2 ) ) {
-			if ( whatlevel( c ) == MIDDLE ) {
-				shiftscrn( 20, x );
+		if ( *p_xCursorPos >= ( wind.length - 2 ) ) {
+			if ( whatlevel( p_char ) == MIDDLE ) {
+				shiftscrn( 20, p_xCursorPos );
 			}
 		}
-		if ( whatlevel( c ) == MIDDLE ) {
+		if ( whatlevel( p_char ) == MIDDLE ) {
 			if ( ( fontused & ENLARGEATTR ) == ENLARGEATTR ) {
-				( *x )++;
+				( *p_xCursorPos )++;
 			}
-			( *x )++;
+			( *p_xCursorPos )++;
 		}
 		changeflag = YES;
 		return( YES );
@@ -439,53 +439,53 @@ int ovrwrite_char( unsigned char c, unsigned int *x, unsigned int *y ) {
 	}
 }
 
-void insertreturn( struct line_node *line, unsigned int thaicol ) {
-	font_attr font = 0;
+void insertreturn( struct line_node *p_line, unsigned int p_col ) {
+	font_attr font = NORMALATTR;
 	unsigned char fontcode[9], *text;
 	struct line_node *line2;
 	register int i;
 
-	i = linearcolumn( line->text, thaicol, &font );
+	i = linearcolumn( p_line->text, p_col, &font );
 	findstrcode( fontcode, font );
 	line2 = ( struct line_node * ) malloc( sizeof( struct line_node ) );
-	line2->wrap = line->wrap;
+	line2->wrap = p_line->wrap;
 #ifdef WANT_TO_USE_GRAPH
 	line2->graph = NULL;
 #endif
-	line2->text = ( unsigned char * ) malloc( strlen( line->text ) + strlen( fontcode ) - i + 1 );
+	line2->text = ( unsigned char * ) malloc( strlen( p_line->text ) + strlen( fontcode ) - i + 1 );
 	strcpy( line2->text, fontcode );
-	strcpy( ( line2->text ) + strlen( fontcode ), ( line->text ) + i );
+	strcpy( ( line2->text ) + strlen( fontcode ), ( p_line->text ) + i );
 	text = ( unsigned char * ) malloc( i + strlen( fontcode ) + 1 );
-	strncpy( text, line->text, i );
+	strncpy( text, p_line->text, i );
 	strcpy( text + i, fontcode );
-	free( line->text );
-	line->text = text;
-	insert_line( line, line2 );
+	free( p_line->text );
+	p_line->text = text;
+	insert_line( p_line, line2 );
 }
 
-void insert_ret( unsigned int *x ) {
+void insert_ret( unsigned int *p_xCursorPos ) {
 	storeline( curline );
-	insertreturn( curline, *x + firstcol );
+	insertreturn( curline, *p_xCursorPos + firstcol );
 	curline->wrap = NO;
 	if ( haveblock( ) ) {
 		if ( lineno <= blkend.lineno ) {
 			if ( lineno == blkend.lineno ) {
-				if ( ( *x + firstcol ) < blkend.column ) {
+				if ( ( *p_xCursorPos + firstcol ) < blkend.column ) {
 					blkend.lineno++;
-					blkend.column = blkend.column - *x - firstcol;
+					blkend.column = blkend.column - *p_xCursorPos - firstcol;
 					if ( lineno == blkbegin.lineno ) {
-						if ( ( *x + firstcol ) <= blkbegin.column ) {
+						if ( ( *p_xCursorPos + firstcol ) <= blkbegin.column ) {
 							blkbegin.lineno++;
-							blkbegin.column = blkbegin.column - *x - firstcol;
+							blkbegin.column = blkbegin.column - *p_xCursorPos - firstcol;
 						}
 					}
 				}
 			} else {
 				if ( lineno <= blkbegin.lineno ) {
 					if ( lineno == blkbegin.lineno ) {
-						if ( ( *x + firstcol ) <= blkbegin.column ) {
+						if ( ( *p_xCursorPos + firstcol ) <= blkbegin.column ) {
 							blkbegin.lineno++;
-							blkbegin.column = blkbegin.column - *x - firstcol;
+							blkbegin.column = blkbegin.column - *p_xCursorPos - firstcol;
 						}
 					} else {  /* so -> lineno < blkbegin.lineno */
 						blkbegin.lineno++;
@@ -500,16 +500,16 @@ void insert_ret( unsigned int *x ) {
 	changeflag = YES;
 }
 
-void returnkey( unsigned int *x, register unsigned int y ) {
+void returnkey( unsigned int *p_xCursorPos, register unsigned int p_yCursorPos ) {
 	if ( firstcol != 0 ) {
 		firstcol = 0;
 		pagecomplete = NO;
 	}
-	*x = 0;
+	*p_xCursorPos = 0;
 	if ( curline->next != sentinel ) {
 		storeline( curline );
 		lineno++;
-		if ( y == ( wind.width - 1 ) ) {
+		if ( p_yCursorPos == ( wind.width - 1 ) ) {
 			if ( ( pagebreak == YES ) && ( ( ( lineno - 1 ) % lineperpage ) == 0 ) ) {
 				curpage = curpage->next;
 			}
@@ -517,7 +517,7 @@ void returnkey( unsigned int *x, register unsigned int y ) {
 			curline = curline->next;
 			pagecomplete = NO;
 		} else {
-			if ( ( pagebreak == YES ) && ( y == ( wind.width - 2 ) ) &&
+			if ( ( pagebreak == YES ) && ( p_yCursorPos == ( wind.width - 2 ) ) &&
 				( ( ( lineno - 1 ) % lineperpage ) == 0 ) ) {
 				curpage = curpage->next;
 				pagecomplete = NO;
@@ -530,41 +530,42 @@ void returnkey( unsigned int *x, register unsigned int y ) {
 	}
 }
 
-void ret_with_ins( unsigned int *x, unsigned int y ) {
-	insert_ret( x );
-	returnkey( x, y );
+void ret_with_ins( unsigned int *p_xCursorPos, unsigned int p_yCursorPos ) {
+	insert_ret( p_xCursorPos );
+	returnkey( p_xCursorPos, p_yCursorPos );
 }
 
-void insertmacro( unsigned char *macro, unsigned int *x, unsigned int *y ) {
+void insertmacro( unsigned char *p_macro, unsigned int *p_xCursorPos, unsigned int *p_yCursorPos ) {
 	int quit = NO;
-	while ( ( *macro != '\0' ) && ( quit == NO ) ) {
-		if ( !insert_char( *macro, x, y ) ) {
+	while ( ( *p_macro != '\0' ) && ( quit == NO ) ) {
+		if ( !insert_char( *p_macro, p_xCursorPos, p_yCursorPos ) ) {
 			linetoolong( );
 			quit = YES;
 		}
-		macro++;
+		p_macro++;
 	}
-	refreshline( 0, *y );
+	refreshline( 0, *p_yCursorPos );
 }
 
-void blankmaro( int y ) {
-	dispprintf( 19 + center_factor, y, REVERSEATTR, " – CTRL-F   =%37s– ", " " );
+void blankmaro( int p_yPos ) {
+	dispprintf( 19 + center_factor, p_yPos, REVERSEATTR, " – CTRL-F   =%37s– ", " " );
 }
 
 /* Modify by Suttpong Sat  08-05-1989  03:07:24 */
-void dispmacro( register int i ) {
+void dispmacro( register int p_macro ) {
 	static unsigned char *numstr[] = {
 		"1", "2", "3", "4", "5",
 		"6", "7", "8", "9", "10"
 	};
 
-	blankmaro( 5 + i );
-	dispstrhgc( numstr[i], 28 + center_factor, 5 + i, REVERSEATTR );
-	dispstrhgc( &macro[i][0], 33 + center_factor, 5 + i, REVERSEATTR );
+	blankmaro( 5 + p_macro );
+	dispstrhgc( numstr[p_macro], 28 + center_factor, 5 + p_macro, REVERSEATTR );
+	dispstrhgc( &macro[p_macro][0], 33 + center_factor, 5 + p_macro, REVERSEATTR );
 }
 
 void editmacro( void ) {
-	register int i, c;
+	register int i;
+	register int c;
 	pagecomplete = NO;
 	framebox( 19 + center_factor, 4, ( 19 + center_factor ) + 51, 15, REVERSEATTR );
 	for ( i = 0; i < 10; i++ ) {

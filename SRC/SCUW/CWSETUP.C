@@ -39,18 +39,18 @@ static char cup_option[16]; /* assume that only 16 char max for argument */
 
 typedef struct each_option_setup {
 	char *option_name;
-	int *p_option_value;
-	int p_option_default;
+	unsigned int *p_option_value;
+	unsigned int p_option_default;
 	unsigned char maxlen;
 	strtype stype;
 } each_option_setup;
 
 each_option_setup option_setup[] = {
-		{ "รหัส (1.สมอ. 2.เกษตร)", ( int * ) &stdcode, YES, 1, ONEORTWO },
-		{ "แบ่งหน้า (1.แบ่ง 2.ไม่แบ่ง)", ( int * ) &pagebreak, YES, 1, ONEORTWO },
-		{ "ตัดคำอัตโนมัติ (1.ตัด 2.ไม่ตัด)", ( int * ) &wordwrap, YES, 1, ONEORTWO },
-		{ "สร้างไฟล์สำรองทุกครั้งที่มีการเก็บข้อมูล (1.สร้าง 2.ไม่สร้าง)", ( int * ) &create_bak, YES, 1, ONEORTWO },
-		{ "มีเพลง (1. มี 2. ไม่มี) ", ( int * ) &cu_song, YES, 1, ONEORTWO },
+		{ "รหัส (1.สมอ. 2.เกษตร)", ( unsigned int * ) &stdcode, YES, 1, ONEORTWO },
+		{ "แบ่งหน้า (1.แบ่ง 2.ไม่แบ่ง)", ( unsigned int * ) &pagebreak, YES, 1, ONEORTWO },
+		{ "ตัดคำอัตโนมัติ (1.ตัด 2.ไม่ตัด)", ( unsigned int * ) &wordwrap, YES, 1, ONEORTWO },
+		{ "สร้างไฟล์สำรองทุกครั้งที่มีการเก็บข้อมูล (1.สร้าง 2.ไม่สร้าง)", ( unsigned int * ) &create_bak, YES, 1, ONEORTWO },
+		{ "มีเพลง (1. มี 2. ไม่มี) ", ( unsigned int * ) &cu_song, YES, 1, ONEORTWO },
 		{ "กั้นหน้าซ้าย", &leftmar, 1, 3, NUMBER },
 		{ "กั้นหน้าขวา (ไม่เกิน 256)", &rightmar, 65, 3, NUMBER },
 		{ "จำนวนบรรทัดต่อหน้า", &lineperpage, 33, 3, NUMBER },
@@ -59,8 +59,13 @@ each_option_setup option_setup[] = {
 /* number of element of option_setup */
 #define NELEM_OPTION ( sizeof( option_setup ) / sizeof( option_setup[0] ) )
 
+void usage( void );
+void set_directory( void );
+void dispoption( int i );
 void set_option_to_default( void );
+void offbreak( void );
 
+/** Print usage information. */
 void usage( void ) {
 	fputs( "Usage: TW.EXE [option] [file]\n", stderr );
 	fputs( "Options:\n", stderr );
@@ -172,22 +177,40 @@ void cwsetup( int argc, char *argv[] ) {
 
 	initscrn( );
 
-	/** set window of edit area by video mode
+	/** Set window of edit area by video mode
 	*   CGA                  78 column, 5 line.
 	*   VGA, MCGA            78 column, 19 line.
 	*   EGA, EGA64, EGAMONO  78 column, 13 line.
 	*   HERCMONO             88 column, 13 line.
-	*   ATT400               78 column, 15 line.*/
+	*   ATT400               78 column, 15 line. */
 	wind.row = 4;
 	wind.col = 1;
 	wind.length = ( scrmode == HERCMONO ) ? 88 : 78;
-	wind.width = ( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 19 : ( scrmode == ATT400 ) ? 15 : ( scrmode == CGA ) ? 5 : 13;
+
+	switch ( scrmode ) {
+	case VGA:
+	case MCGA:
+		wind.width = 19;
+		break;
+	case ATT400:
+		wind.width = 15;
+		break;
+	case CGA:
+		wind.width = 5;
+		break;
+	default:			/* HERCMONO, EGA, EGA64, EGAMONO */
+		wind.width = 13;
+	}
 
 	offbreak( );		/* Turn off Ctrl-C checking */
 }
 
+/** Set CW directory. */
 void set_directory( void ) {
-	char drive[MAXDRIVE], dir[MAXDIR], name[MAXFILE], ext[MAXEXT];
+	char drive[MAXDRIVE];
+	char dir[MAXDIR];
+	char name[MAXFILE];
+	char ext[MAXEXT];
 
 	/* build cw_dir like this -> c:\edit\cuwriter */
 	fnsplit( progname, drive, dir, name, ext );
@@ -198,7 +221,8 @@ void set_directory( void ) {
 int readoption( search_file_mode p_mode ) {
 	FILE *fp;
 	char fname[MAXPATH];
-	int  field, temp;
+	int field;
+	int temp;
 	each_option_setup *op;
 
 
@@ -208,8 +232,9 @@ int readoption( search_file_mode p_mode ) {
 	} else {
 		fp = fopen( fname, "rt" );
 	}
+
 	if ( fp == NULL && p_mode == AUTO_FIND ) {
-		/* fopen file not succes */
+		/* fopen file not success */
 		/* continue searching in cw_dir */
 		if ( ( fp = fopen( fname, "rt" ) ) == NULL ) {
 			return 0; /* if not found in both dir return 0 for autofind */
@@ -219,10 +244,10 @@ int readoption( search_file_mode p_mode ) {
 		showerrno( );
 		return -1; /* if search in CUR_DIR or CW_DIR and not found return -1 */
 	}
-	/* If we reach here we succesfully open cw.cfg file */
+	/* If we reach here we successfully open cfg file */
 	for ( op = option_setup; op < option_setup + NELEM_OPTION; op++ ) {
 		field = fscanf( fp, "%d", &temp );
-		if ( field == 1 ) { /* succesfully scan */
+		if ( field == 1 ) { /* successfully scan */
 			if ( *op->p_option_value == -1 ) { /* not set from command line */
 				*op->p_option_value = temp; /* so set it */
 			}
@@ -256,6 +281,7 @@ void saveoption( search_file_mode p_mode ) {
 	fclose( fp );
 }
 
+/** Display options on screen. */
 void dispoption( int i ) {
 	dispstrhgc( option_setup[i].option_name,
 		65 - thaistrlen( option_setup[i].option_name ), i + 6, NORMALATTR );
@@ -263,7 +289,8 @@ void dispoption( int i ) {
 }
 
 void setoption( void ) {
-	int i, c;
+	int i;
+	int c;
 	char st[5];
 
 	pagecomplete = NO;
@@ -317,6 +344,7 @@ void setoption( void ) {
 	}
 }
 
+/** Set options to default setting. */
 void set_option_to_default( void ) {
 	each_option_setup *op;
 
@@ -329,10 +357,10 @@ void set_option_to_default( void ) {
 	}
 }
 
-void initvalue( unsigned *x, unsigned *y ) {
+void initvalue( unsigned int *xCursorPos, unsigned int *yCursorPos ) {
 	lineno = 1;
-	*x = 0;
-	*y = 0;
+	*xCursorPos = 0;
+	*yCursorPos = 0;
 	firstcol = 0;
 	blkbegin.lineno = 1;
 	blkend.lineno = 1;
@@ -343,6 +371,7 @@ void initvalue( unsigned *x, unsigned *y ) {
 
 void initscrn( void ) {
 	int countcol;
+
 	setgraph( );              /* set to graphic mode */
 	clsall( );
 	_rectangle( 0, 0, ( scrmode == HERCMONO ) ? 719 : 639,
@@ -401,6 +430,7 @@ void edit_font( void ) {
 	showpageall( );
 }
 
+/** Turn off Ctrl-C checking */
 void offbreak( ) {
 	union REGS inreg, outreg;
 

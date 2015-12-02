@@ -12,10 +12,10 @@ void setupnode( void );
 /** Destroy node created by setupnode();. */
 void destroynode( void );
 
-/** Menu selection to keyboard shortcut command.*/
+/** Menu selection to keyboard shortcut command. */
 unsigned menu_to_key( register unsigned int p_curmenu );
 
-/** Show splash screen.*/
+/** Show splash screen. */
 void splashscreen( void );
 
 #endif /* SCUW_CW_H_INCLUDED */

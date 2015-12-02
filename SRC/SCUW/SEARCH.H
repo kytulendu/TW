@@ -29,7 +29,7 @@ int optionword( void );
 int optionnoask( void );
 
 /**  */
-char *searchline( char *textline, int startpos );
+unsigned char *searchline( unsigned char *textline, unsigned int startpos );
 
 /**  */
 void wordnotfound( void );

@@ -30,11 +30,11 @@
 
 #include "move.h"
 
-void goline( unsigned int linetogo ) {
+void goline( unsigned int p_linetogo ) {
 	storeline( curline );
 	curline = sentinel->next;
 	lineno = 1;
-	while ( ( lineno != linetogo ) && ( curline->next != sentinel ) ) {
+	while ( ( lineno != p_linetogo ) && ( curline->next != sentinel ) ) {
 		curline = curline->next;
 		lineno++;
 	}
@@ -43,54 +43,55 @@ void goline( unsigned int linetogo ) {
 	pagecomplete = NO;
 }
 
-void gocol( unsigned int coltogo, unsigned int *x ) {
-	if ( coltogo > MAXCOL ) {
+void gocol( unsigned int p_coltogo, unsigned int *p_xCursorPos ) {
+	if ( p_coltogo > MAXCOL ) {
 		workline.middle[MAXCOL + 1] = '\0';
-		coltogo = MAXCOL;
+		p_coltogo = MAXCOL;
 	}
-	if ( coltogo > ( strlen( workline.middle ) - 1 ) ) {
-		coltogo = strlen( workline.middle );
+	if ( p_coltogo > ( strlen( workline.middle ) - 1 ) ) {
+		p_coltogo = strlen( workline.middle );
 	}
-	if ( coltogo < firstcol ) {
-		firstcol = coltogo;
+	if ( p_coltogo < firstcol ) {
+		firstcol = p_coltogo;
 		pagecomplete = NO;
 	}
-	*x = coltogo - firstcol;
-	if ( *x >( wind.length - 2 ) ) {
-		firstcol = firstcol + *x - ( wind.length - 2 );
-		*x = coltogo - firstcol;
+	*p_xCursorPos = p_coltogo - firstcol;
+	if ( *p_xCursorPos > ( wind.length - 2 ) ) {
+		firstcol = firstcol + *p_xCursorPos - ( wind.length - 2 );
+		*p_xCursorPos = p_coltogo - firstcol;
 		pagecomplete = NO;
 	}
-	adjustcol( x ); /* adjust if cursor is positioned to end of enlarge char */
+	adjustcol( p_xCursorPos ); /* adjust if cursor is positioned to end of enlarge char */
 }
 
-void home( unsigned int *x ) {
-	*x = 0;
+void home( unsigned int *p_xCursorPos ) {
+	*p_xCursorPos = 0;
 	if ( firstcol != 0 ) {
 		firstcol = 0;
 		pagecomplete = NO;
 	}
 }
 
-void endline( unsigned int *x ) {
-	gocol( strlen( workline.middle ) - 1, x );
+void endline( unsigned int *p_xCursorPos ) {
+	gocol( strlen( workline.middle ) - 1, p_xCursorPos );
 }
 
-void topfile( unsigned int *x ) {
+void topfile( unsigned int *p_xCursorPos ) {
 	storeline( curline );
 	if ( curpage != sentinel->next ) {
 		curpage = sentinel->next;
 		pagecomplete = NO;
 	}
 	curline = curpage;
-	*x = 0;
+	*p_xCursorPos = 0;
 	firstcol = 0;
 	lineno = 1;
 	loadtoline( curline->text );
 }
 
-void endfile( unsigned int *x ) {
-	int count, linenum;
+void endfile( unsigned int *p_xCursorPos ) {
+	int count;
+	int linenum;
 	storeline( curline );
 	curline = sentinel->previous;
 	curpage = curline;
@@ -111,13 +112,13 @@ void endfile( unsigned int *x ) {
 		count--;
 	}
 	loadtoline( curline->text );
-	endline( x );
+	endline( p_xCursorPos );
 	pagecomplete = NO;
 }
 
-void backword( unsigned int *x ) {
+void backword( unsigned int *p_xCursorPos ) {
 	int i;
-	i = *x + firstcol + 1;
+	i = *p_xCursorPos + firstcol + 1;
 	if ( i != 1 ) {   /* first column ? */
 		if ( ( !ISBLANK( workline.middle[i] ) ) && ( !ISBLANK( workline.middle[i - 1] ) ) ) {
 			while ( ( !ISBLANK( workline.middle[i] ) ) && ( i > 0 ) ) {
@@ -134,21 +135,22 @@ void backword( unsigned int *x ) {
 				i--;
 			}
 		}
-		gocol( i, x );
+		gocol( i, p_xCursorPos );
 		if ( ( i == 0 ) && ( ISBLANK( workline.middle[1] ) ) ) {
-			backword( x );
+			backword( p_xCursorPos );
 		}
 	} else {
 		if ( curline->previous != sentinel ) {
 			cursor_up( );
-			endline( x );
+			endline( p_xCursorPos );
 		}
 	}
 }
 
-void nextword( unsigned int *x, unsigned int y ) {
-	int i, j;
-	i = *x + firstcol + 1;
+void nextword( unsigned int *p_xCursorPos, unsigned int p_yCursorPos ) {
+	int i;
+	unsigned int j;
+	i = *p_xCursorPos + firstcol + 1;
 	j = i;
 	while ( !ISBLANK( workline.middle[i] ) && ( i != MAXCOL ) ) {
 		i++;
@@ -158,14 +160,14 @@ void nextword( unsigned int *x, unsigned int y ) {
 	}
 	if ( i != MAXCOL ) {
 		i--;
-		gocol( i, x );
+		gocol( i, p_xCursorPos );
 	} else {
-		endline( x );
-		if ( ( *x + firstcol + 1 ) <= j ) {
-			cursor_down( y );
-			home( x );
+		endline( p_xCursorPos );
+		if ( ( *p_xCursorPos + firstcol + 1 ) <= j ) {
+			cursor_down( p_yCursorPos );
+			home( p_xCursorPos );
 			if ( ISBLANK( workline.middle[1] ) ) {
-				nextword( x, y );
+				nextword( p_xCursorPos, p_yCursorPos );
 			}
 		}
 	}
@@ -201,61 +203,61 @@ void gotoline( void ) {
 	pagecomplete = NO;
 }
 
-void gobeginblk( unsigned int *x ) {
+void gobeginblk( unsigned int *p_xCursorPos ) {
 	if ( haveblock( ) ) {
 		goline( blkbegin.lineno );
-		gocol( blkbegin.column, x );
+		gocol( blkbegin.column, p_xCursorPos );
 	}
 }
 
-void goendblk( unsigned int *x ) {
+void goendblk( unsigned int *p_xCursorPos ) {
 	if ( haveblock( ) ) {
 		goline( blkend.lineno );
-		gocol( blkend.column, x );
+		gocol( blkend.column, p_xCursorPos );
 	}
 }
 
-void quick( unsigned int *x, unsigned int *y ) {
+void quick( unsigned int *p_xCursorPos, unsigned int *p_yCursorPos ) {
 	register int key;
 
 	dispkey( CNTRL_Q );
 	waitkbd( 3, 2 );
 	key = ebioskey( 0 ) & 0xff;
-	prchar( key, 0, 3, 2 );
+	prchar( key, NORMALATTR, 3, 2 );
 	if ( !isalpha( key ) && !iscntrl( key ) ) {
 		return;
 	}
 	switch ( key & 0x1f ) {
 	case 'r' - 'a' + 1:
-		topfile( x );
+		topfile( p_xCursorPos );
 		break;
 	case 'c' - 'a' + 1:
-		endfile( x );
+		endfile( p_xCursorPos );
 		break;
 	case 'f' - 'a' + 1:
-		searching( x, y );
+		searching( p_xCursorPos, p_yCursorPos );
 		break;
 	case 'a' - 'a' + 1:
-		replacing( x, y );
+		replacing( p_xCursorPos, p_yCursorPos );
 		break;
 	case 'y' - 'a' + 1:
-		deltoendline( *x, *y );
+		deltoendline( *p_xCursorPos, *p_yCursorPos );
 		break;
 	case 'l' - 'a' + 1:
 		loadtoline( curline->text );
-		refreshline( 0, *y );
+		refreshline( 0, *p_yCursorPos );
 		break;
 	case 'b' - 'a' + 1:
-		gobeginblk( x );
+		gobeginblk( p_xCursorPos );
 		break;
 	case 'k' - 'a' + 1:
-		goendblk( x );
+		goendblk( p_xCursorPos );
 		break;
 	case 'd' - 'a' + 1:
-		endline( x );
+		endline( p_xCursorPos );
 		break;
 	case 's' - 'a' + 1:
-		home( x );
+		home( p_xCursorPos );
 		break;
 	case 'x' - 'a' + 1:
 		bottom_of_page( );

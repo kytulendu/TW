@@ -5,13 +5,13 @@
 void cursor_up( void );
 
 /** Down line one line. */
-void cursor_down( unsigned int y );
+void cursor_down( unsigned int p_yCursorPos );
 
 /** Left cursor. */
-void cursor_left( unsigned int *x );
+void cursor_left( unsigned int *p_xCursorPos );
 
 /** Right cursor. */
-void cursor_right( unsigned int *x, unsigned int y );
+void cursor_right( unsigned int *p_xCursorPos, unsigned int p_yCursorPos );
 
 /** Page up. */
 void page_up( void );

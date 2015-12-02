@@ -45,9 +45,10 @@ EXTERN struct line_node *curline;   /* pointer to current line */
 struct windowtype {
 	unsigned int row;               /* row of upper left corner */
 	unsigned int col;               /* column of upper left corner */
-	unsigned int length;            /* no. of maximum column */
-	unsigned int width;             /* no. of line per page */
+	unsigned int length;            /* maximum column */
+	unsigned int width;             /* line per page */
 };
+/* define working boundary in window variable. */
 EXTERN struct windowtype wind;
 
 struct Workline {
@@ -94,8 +95,6 @@ EXTERN boolean insertmode;  /*  toggle insert mode ON/OFF   */
 EXTERN boolean replaceflag;
 EXTERN boolean relmargin;
 
-/* กำหนดขอบเขตการแสดงผลบนจอภาพเก็บไว้ในตัวแปร window */
-
 EXTERN unsigned int firstcol;      /* first column(physical) to be displayed onscreen */
 EXTERN unsigned int lineno;        /* line number of current line (origin 1)          */
 EXTERN font_attr fontused;         /* current attribute of character e.g. BOLD ITALIC */
@@ -123,11 +122,9 @@ EXTERN boolean insertmode = YES;  /*  toggle insert mode ON/OFF   */
 EXTERN boolean replaceflag = NO;
 EXTERN boolean relmargin = NO;
 
-/* กำหนดขอบเขตการแสดงผลบนจอภาพเก็บไว้ในตัวแปร window */
-
 EXTERN unsigned int firstcol = 0;  /* first column(physical) to be displayed onscreen */
 EXTERN unsigned int lineno = 1;    /* line number of current line (origin 1)          */
-EXTERN font_attr fontused = 0;     /* current attribute of character e.g. BOLD ITALIC */
+EXTERN font_attr fontused = NORMALATTR; /* current attribute of character e.g. BOLD ITALIC */
 EXTERN boolean dispblock = YES;    /* display block or not                            */
 
 EXTERN boolean quitprog = NO;

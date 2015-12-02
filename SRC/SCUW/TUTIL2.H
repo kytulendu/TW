@@ -3,7 +3,10 @@
 
 /** Find column of string from column given in Thai, ignore level of Thai
 *   character & attribute code of font. Column is origin 0. Find current
-*   attribute of font of string via *font too. */
-unsigned int linearcolumn( unsigned char *textstream, unsigned int thaicol, font_attr *font );
+*   attribute of font of string via *p_attr too.
+*  \param[in]  p_textstream		Pointer to string.
+*  \param[in]  p_thaiCol		Column, column is origin 0
+*  \param[in]  p_attr			Character attribute. */
+unsigned int linearcolumn( unsigned char *p_textstream, unsigned int p_thaiCol, font_attr *p_attr );
 
 #endif /* SCUW_TUTIL1_H_INCLUDED */
