@@ -659,6 +659,68 @@ plotnext:
 _herc_putpixel ENDP
 
 ;=============================================================================;
+; _herc_setmd                                                                 ;
+;     sets mode to graphic or text depending on al                            ;
+;     from Hercules Graphics Card Owner's Manual                              ;
+; Usage :                                                                     ;
+;         si = address of parameter table                                     ;
+;         cx = number of words to be cleared                                  ;
+;         bx = blank value                                                    ;
+;=============================================================================;
+
+_herc_setmd PROC NEAR
+	PUSH    BP
+	MOV     BP,SP
+	PUSH    AX
+	PUSH    BX
+	PUSH    CX
+
+; change mode, but without screen on
+	MOV     DX,herc_cntrl               ; get address of control register
+	OUT     DX,AL                       ; al has the mode byte
+
+; initialize the 6845
+	MOV     AX,DS
+	MOV     ES,AX                       ; also point es:si to parameter table
+
+	MOV     DX,herc_index               ; get index register address
+	MOV     CX,12                       ; 12 parameters to be output
+	XOR     AH,AH                       ; starting from register 0
+
+parms:
+	MOV     AL,AH                       ; first output register number
+	OUT     DX,AL
+
+	INC     DX                          ; get data register address
+	LODSB                               ; get next byte from param. table
+	OUT     DX,AL                       ; output parameter data
+
+	INC     AH                          ; increment register number
+	DEC     DX                          ; restore index register address
+	LOOP    parms                       ; go do another one
+
+; now go clear the buffer
+	POP     CX                          ; get number of words to clear
+	MOV     AX,HGC_Address              ; get address off video buffer
+	CLD                                 ; set auto increment
+	MOV     ES,AX                       ; set segment for string move
+	XOR     DI,DI                       ; start at offset 0
+	POP     AX                          ; get blank value
+	REP     STOSW                       ; repeat store string
+
+; turn screen on with page 0 active
+	MOV     DX,herc_cntrl               ; get control register address
+	POP     AX                          ; get the mode byte
+	ADD     AL,scrn_on                  ; set the screen-on bit
+	OUT     DX,AL
+
+	MOV     SP,BP
+	POP     BP
+	RET
+
+_herc_setmd ENDP
+
+;=============================================================================;
 ; _herc_setgraph                                                              ;
 ;     Programs the 6845 CRT controller for the 720 x 348 graphics mode.       ;
 ; Usage :                                                                     ;
@@ -675,44 +737,14 @@ _herc_setgraph PROC FAR
 ; attempting to set graphics mode.
 	MOV     AL,1
 	MOV     DX,herc_config
-	OUT     DX,AL
+	OUT     DX,AL                       ; enable mode changes
 
 ; set graphic mode
-	MOV     AL,graph
-	MOV     DX,herc_cntrl
-	OUT     DX,AL
-
-; initialize the 6845
-	MOV     SI,OFFSET DGROUP:graphic_table	; address of graphic parameters
-	MOV     DX,herc_index
-	MOV     CX,12						; 12 parameters to be output
-	XOR     AH,AH						; starting from register 0
-
-parms:
-	MOV     AL,AH						; first output register number
-	OUT     DX,AL
-
-	INC     DX							; get data register address
-	LODSB								; get next byte from param. table
-	OUT     DX,AL						; output parameter data
-
-	INC     AH							; increment register number
-	DEC     DX							; restore index register address
-	LOOP    parms						; go do another one
-
-; clear the buffer
-	MOV     ES,HGC_Address				; address of video buffer
-	XOR     DI,DI						; start at offset 0
-	MOV     CX,4000h					; number of words to clear
-	MOV     AX,0						; blank value
-	CLD									; set auto increment
-	REP     STOSW						; repeat store string
-
-; turn screen on with page 0 active
-	MOV     DX,herc_cntrl				; get control register address
-	MOV     AX,graph					; get the mode byte
-	ADD     AL,scrn_on					; set the screen-on bit
-	OUT     DX,AL
+	MOV     AL,graph                    ; set graphic mode
+	LEA     SI,graphic_table            ; address of graphic parameters
+	MOV     BX,0
+	MOV     CX,4000h
+	CALL    _herc_setmd                 ; call set mode common processing
 
 ; Add By Suttipong Kanakakorn (Noom)
 ; Set 0:465 to 0Ah as set to port 3B8h
@@ -736,7 +768,7 @@ _herc_setgraph ENDP
 ;=============================================================================;
 ;_herc_settext PROC FAR
 ;          MOV   AX,7   ; set text mode function
-;          INT   10h    ; vdo bios routine
+;          INT   10h    ; video bios routine
 ;          RET
 ;_herc_settext ENDP
 
@@ -752,36 +784,11 @@ _herc_settext PROC FAR
 	PUSH    DS
 	PUSH    ES
 
-; set text mode
-	MOV     AL,text
-	MOV     DX,herc_cntrl
-	OUT     DX,AL
-
-; initialize the 6845
-	MOV     SI,OFFSET DGROUP:text_table	; address of text parameters
-	MOV     DX,herc_index
-	MOV     CX,12						; 12 parameters to be output
-	XOR     AH,AH						; starting from register 0
-
-parms1:
-	MOV     AL,AH						; first output register number
-	OUT     DX,AL
-
-	INC     DX							; get data register address
-	LODSB								; get next byte from param. table
-	OUT     DX,AL						; output parameter data
-
-	INC     AH							; increment register number
-	DEC     DX							; restore index register address
-	LOOP    parms1						; go do another one
-
-; clear the buffer
-	MOV     ES,HGC_Address				; address of video buffer
-	XOR     DI,DI						; start at offset 0
-	MOV     CX,2000h					; number of words to clear
-	MOV     AX,720h						; blank value
-	CLD									; set auto increment
-	REP     STOSW						; repeat store string
+	MOV     AL,text                     ; set text mode
+	LEA     SI,text_table               ; get address of text parameters
+	MOV     BX,720H
+	MOV     CX,2000
+	CALL    _herc_setmd
 
 	POP     ES
 	POP     DS
