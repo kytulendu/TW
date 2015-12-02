@@ -84,6 +84,13 @@ void setup_screen( void ) {
 	registerfarbgidriver( Herc_driver_far );
 
 	setgraph( );
+
+	/* Temporary fix when use with vga card */
+	if ( scrmode == VGA ) {
+		scrmode == EGA;
+		writech = ewritech;
+	}
+
 	if ( scrmode == HERCMONO ) {
 		writech = hgcwritech;
 	} else {
