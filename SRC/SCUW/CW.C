@@ -437,6 +437,10 @@ int main( int argc, char *argv[] ) {
 						quick( &xCursorPos, &yCursorPos );
 						break;
 
+					case 0x3501:
+						deltoendline( xCursorPos, yCursorPos );
+						break;
+
 					case 0x8111:
 						inscntrl( CNTRL_W, xCursorPos, yCursorPos );
 						break;

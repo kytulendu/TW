@@ -169,7 +169,7 @@ EXTERN unsigned int command_tab[] = {
 	0x3200, BSKEY,
 	0x3300, CNTRL_T,
 	0x3400, CNTRL_Y,
-	0x3500, ALTY,
+	0x3500, 0x3501,
 	0x3600, CNTRL_N,
 	0x3700, CNTRL_V,
 	0x4100, F1KEY,
