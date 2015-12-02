@@ -38,8 +38,6 @@ void ega_setcurpos( int p_x, int p_y, int p_thaimode ) {
 }
 */
 void ega_putpixel( int p_x, int p_y ) {
-	unsigned char far *vram = ( unsigned char far * ) 0xa0000000UL;
-
 	/* calculate which bit to modify */
 	unsigned char bit = ( unsigned char ) ( 0x80 >> ( p_x & 7 ) );
 
@@ -49,6 +47,8 @@ void ega_putpixel( int p_x, int p_y ) {
 
 /** Set EGA/VGA/MCGA Graphic Card to graphic mode */
 void ega_setgraph( void ) {
+	*vram = ( unsigned char far * ) 0xa0000000UL;
+
 	union REGS inregs, outregs;
 
 	if ( scrmode == VGA ) {
@@ -81,20 +81,14 @@ void ega_settext( void ) {
 }
 
 void ega_savepic( void ) {
-	unsigned char far *vram = ( unsigned char far * ) 0xa0000000UL;
-
 	memcpy( screen_buffptr, vram, 38400U );	/* 38400 = (640*480)/8 */
 }
 
 void ega_retpic( void ) {
-	unsigned char far *vram = ( unsigned char far * ) 0xa0000000UL;
-
 	memcpy( vram, screen_buffptr, 38400U );	/* 38400 = (640*480)/8 */
 }
 
 void ega_clsall( void ) {
-	unsigned char far *vram = ( unsigned char far * ) 0xa0000000UL;
-
 	memset( vram, 0, 38400U );	/* 38400 = (640*480)/8 */
 }
 /*

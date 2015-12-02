@@ -30,6 +30,7 @@ EXTERN unsigned char dfont[20 * 256];
 EXTERN unsigned char ditalicfont[20 * 256];
 
 EXTERN unsigned char *screen_buffptr;
+EXTERN unsigned char far *vram;
 
 /* ===================================================================== */
 
