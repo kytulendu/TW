@@ -47,9 +47,9 @@ void ega_putpixel( int p_x, int p_y ) {
 
 /** Set EGA/VGA/MCGA Graphic Card to graphic mode */
 void ega_setgraph( void ) {
-	*vram = ( unsigned char far * ) 0xa0000000UL;
-
 	union REGS inregs, outregs;
+
+	vram = ( unsigned char far * ) 0xa0000000UL;
 
 	if ( scrmode == VGA ) {
 		/*inregs.x.ax = 0x12;*/			/* 640 x 480 16 color graphic mode on VGA display */
