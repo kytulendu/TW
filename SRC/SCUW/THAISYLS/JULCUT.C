@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "thai.h"
 
 #include "global.h"

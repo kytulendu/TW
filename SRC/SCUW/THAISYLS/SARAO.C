@@ -35,7 +35,6 @@ unsigned char *SaraORtn( register unsigned char *TempIndx ) {
 			}
 		}
 		return( TempIndxm1 );								/* cut before sara O */
-		break;
 
 	case OrAng:												/* Íâ³·ÑÂ ÍâÃ¤ÂÒ ÍâËÊÔ Íâ¹ªÒ Íâ·ÊĞ ÍâÁËĞ ÍâÅÀĞ ÍâÅËĞ ÍâÈ¡*/
 		for ( i = 0; i <= OrAngTbLen; ++i ) {
@@ -44,7 +43,6 @@ unsigned char *SaraORtn( register unsigned char *TempIndx ) {
 			}
 		}
 		return( TempIndxm1 );								/* cut before sara O */
-		break;
 
 	case MoreMar:											/* ÁâËÃĞ·Ö¡, ÁâËÃÊ¾,ÁâËÌÒÃ,ÁâËÃ,ÁâËÊ¶ */
 		for ( i = 0; i <= MoreMarTbLen; ++i ) {
@@ -53,7 +51,6 @@ unsigned char *SaraORtn( register unsigned char *TempIndx ) {
 			}
 		}
 		return( TempIndxm1 );								/* cut before sara O */
-		break;
 
 	case NoreNoo:											/* ¹âÂºÒÂ ¹âÃ´Á */
 		if ( !( nstrcmp( "¹âÁ", TempIndxm1 ) ) && !( istlvwl( *( TempIndx - 2 ) ) ) ) {
@@ -67,7 +64,6 @@ unsigned char *SaraORtn( register unsigned char *TempIndx ) {
 			}
 		}
 		return( TempIndxm1 );								/* cut before sara O */
-		break;
 
 	case ShoreChang:										/* ªâÅºÅ ªâÅ¸Ã ªâÅÁ ªâÂ */
 		for ( i = 0; i <= ShoreChangTbLen; ++i ) {
@@ -76,7 +72,6 @@ unsigned char *SaraORtn( register unsigned char *TempIndx ) {
 			}
 		}
 		return( TempIndxm1 );								/* cut before sara O */
-		break;
 
 	case ToreTaharn:										/* ·âÁ¹ */
 		if ( nstrcmp( ToreTaharnWord, TempIndxm1 ) ) {

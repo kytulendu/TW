@@ -13,9 +13,6 @@ int nstrcmp( register unsigned char *source, register unsigned char *destination
 /*---------------------End Global---------------------*/
 
 /*---------------Symbol that used often---------------*/
-#ifndef NULL
-#define NULL 0
-#endif
 
 #ifndef FAIL
 #define FAIL 0

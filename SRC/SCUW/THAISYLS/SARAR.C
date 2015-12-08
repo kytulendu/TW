@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "tctype.h"
 #include "thai.h"
 

@@ -60,7 +60,6 @@ unsigned char *SaraARtn( unsigned char *TempIndx ) {
 			return( TempIndxm2 );							/* found cut before leading-consonant */
 		}
 		return( TempIndxm1 );								/* cut before SaraA */
-		break;
 
 	case ToreTong:
 		if ( !( nstrcmp( ToreTongAEx, TempIndxm1 ) ) ) {
