@@ -6,12 +6,10 @@ May change over time.
 - Remove unused stuff
 - More Comment
 - Cleanup
-- Hercules, can config to display 80 or 90 column, default 80 col like CU Writer 1.41
 - Removal of gotos in rdfiletospace function in SCUW\BLOCK.C.
 - read what display mode used before enter graphic mode and return to the original text mode.
-- Convert some assembly language to C
+- Convert most of assembly language function to C.
 - Redo all dialog and text position.
-- Look-like CU Writer 1.41
 
 ## Version 2.0.0
 - OpenWatcom port?
