@@ -62,7 +62,8 @@ int searchonlyinfo( void ) {
 }
 
 int searchreplaceinfo( void ) {
-	int i, j;
+	int i;
+	int j;
 	framebox( 8 + center_factor, 4, ( 21 + center_factor ) + 60, 12, REVERSEATTR );
 	dispstrhgc( "ใส่คำที่ต้องการค้นหา :", 11 + center_factor, 5, REVERSEATTR );
 	dispstrhgc( "ใส่คำที่ต้องการแทนที่ :", 11 + center_factor, 6, REVERSEATTR );
@@ -152,9 +153,11 @@ int optionnoask( void ) {
 	return( NO );
 }
 
-unsigned char *searchline( unsigned char *textline, unsigned int startpos ) { /* startpos origin 0 */
+unsigned char *searchline( unsigned char *p_textline, unsigned int p_startpos ) { /* startpos origin 0 */
 	size_t i;
-	unsigned char *buffer, *buffaddr, *textaddr;
+	unsigned char *buffer;
+	unsigned char *buffaddr;
+	unsigned char *textaddr;
 	char *point;
 
 	buffer = ( unsigned char * ) malloc( MAXCOL * sizeof( unsigned char ) );
@@ -163,17 +166,17 @@ unsigned char *searchline( unsigned char *textline, unsigned int startpos ) { /*
 		return( NULL );							/* Not enough memory */
 	}
 
-	while ( ( startpos > 0 ) && ( *textline != '\0' ) ) {
-		if ( ( *textline < 32 ) && ( *textline != '\0' ) ) {
-			textline++;
+	while ( ( p_startpos > 0 ) && ( *p_textline != '\0' ) ) {
+		if ( ( *p_textline < 32 ) && ( *p_textline != '\0' ) ) {
+			p_textline++;
 		}
-		textline++;
-		startpos--;
+		p_textline++;
+		p_startpos--;
 	}
-	textaddr = textline;
+	textaddr = p_textline;
 	i = 0;
-	while ( *textline != '\0' ) {
-		buffer[i++] = *( textline++ );
+	while ( *p_textline != '\0' ) {
+		buffer[i++] = *( p_textline++ );
 	}
 	buffer[i] = ' ';
 	buffer[i + 1] = '\0';
@@ -200,7 +203,7 @@ void wordnotfound( void ) {
 	while ( ebioskey( 0 ) != ESCKEY );
 	pagecomplete = NO;
 }
-int searchfwd( unsigned int *x, unsigned int *y ) {
+int searchfwd( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 	struct line_node *savepage, *templine;
 	boolean enlargeflag;
 	unsigned int linecount, savecol, startpos;
@@ -217,24 +220,24 @@ int searchfwd( unsigned int *x, unsigned int *y ) {
 		linecount--;
 		templine = templine->next;
 	}
-	startpos = linearcolumn( curline->text, *x + firstcol, &font );
+	startpos = linearcolumn( curline->text, *p_xCursorPos + firstcol, &font );
 	foundpoint = NULL;
 	while ( ( foundpoint == NULL ) && ( curline != sentinel ) ) {
 		foundpoint = searchline( curline->text, startpos );
 		if ( foundpoint != NULL ) {		/* found */
-			while ( ( *y = findrow( ) ) >= wind.width ) {
+			while ( ( *y_CursorPos = findrow( ) ) >= wind.width ) {
 				curpage = curpage->next;
 			}
-			*x = 0;
+			*p_xCursorPos = 0;
 			firstcol = 0;
 			addr = curline->text;
 			enlargeflag = NO;
 			while ( addr != foundpoint ) {
 				if ( ( whatlevel( *addr ) == MIDDLE ) && ( *addr >= 32 ) ) {
 					if ( enlargeflag ) {
-						( *x )++;
+						( *p_xCursorPos )++;
 					}
-					( *x )++;
+					( *p_xCursorPos )++;
 				} else {
 					if ( *addr == ENLARGECODE ) {
 						enlargeflag = enlargeflag ^ 1;
@@ -245,14 +248,14 @@ int searchfwd( unsigned int *x, unsigned int *y ) {
 			for ( i = 0; source[i] != '\0'; i++ ) {
 				if ( whatlevel( source[i] ) == MIDDLE ) {
 					if ( enlargeflag ) {
-						( *x )++;
+						( *p_xCursorPos )++;
 					}
-					( *x )++;
+					( *p_xCursorPos )++;
 				}
 			}
-			while ( *x >= wind.length ) {
+			while ( *p_xCursorPos >= wind.length ) {
 				firstcol = firstcol + wind.length;
-				*x = *x - wind.length;
+				*p_xCursorPos = *p_xCursorPos - wind.length;
 			}
 		} else {
 			if ( linecount > 0 ) {
@@ -272,7 +275,7 @@ int searchfwd( unsigned int *x, unsigned int *y ) {
 		curline = sentinel->previous;
 		curpage = curline;
 		loadtoline( curline->text );
-		endline( x );
+		endline( p_xCursorPos );
 	}
 	loadtoline( curline->text );
 	if ( savepage != curpage ) {
@@ -301,7 +304,7 @@ void addblank( void ) {
 	source[i + 1] = '\0';
 }
 
-void searching( unsigned int *x, unsigned int *y ) {
+void searching( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 	storeline( curline );
 	if ( searchonlyinfo( ) == YES ) {
 		showpageall( );
@@ -313,40 +316,40 @@ void searching( unsigned int *x, unsigned int *y ) {
 			strupr( source );
 		}
 		if ( optionglobal( ) ) {
-			topfile( x );
+			topfile( p_xCursorPos );
 			showpageall( );
 		}
-		if ( !searchfwd( x, y ) ) {
+		if ( !searchfwd( p_xCursorPos, y_CursorPos ) ) {
 			wordnotfound( );
 		}
 	}
 }
 
-void replaceword( unsigned int *x, unsigned int *y ) {
+void replaceword( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 	int i;
 	for ( i = strlen( source ); i != 0; i-- ) {
-		backspace( x );
+		backspace( p_xCursorPos );
 	}
 	while ( replace[i] != '\0' ) {
-		insert_char( replace[i], x, y );
+		insert_char( replace[i], p_xCursorPos, y_CursorPos );
 		i++;
 	}
-	refreshline( 0, *y );
+	refreshline( 0, *y_CursorPos );
 }
 
-int searchreplace( unsigned int *x, unsigned int *y ) {
+int searchreplace( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 	int ok = 0, i, ask = YES, global = NO, found = NO;
 	if ( optionnoask( ) ) {
 		ok = 'y';
 		ask = NO;
 	}
 	if ( optionglobal( ) ) {
-		topfile( x );
+		topfile( p_xCursorPos );
 		showpageall( );
 		global = YES;
 	}
 	do {
-		if ( searchfwd( x, y ) ) {
+		if ( searchfwd( p_xCursorPos, y_CursorPos ) ) {
 			found = YES;
 			if ( ask ) {
 				dispstrhgc( "แทนที่หรือไม่ ? (Y/N) ", 1, 2, BOLDATTR );
@@ -357,9 +360,9 @@ int searchreplace( unsigned int *x, unsigned int *y ) {
 						for ( i = 0; i < 15000; i++ );
 						setcurpos( 19, 2, thaimode );
 						for ( i = 0; i < 15000; i++ );
-						setcurpos( wind.col + *x, wind.row + *y, thaimode );
+						setcurpos( wind.col + *p_xCursorPos, wind.row + *y_CursorPos, thaimode );
 						for ( i = 0; i < 15000; i++ );
-						setcurpos( wind.col + *x, wind.row + *y, thaimode );
+						setcurpos( wind.col + *p_xCursorPos, wind.row + *y_CursorPos, thaimode );
 						for ( i = 0; i < 15000; i++ );
 					} /* while !keypressed */
 					ok = ebioskey( 0 );
@@ -379,7 +382,7 @@ int searchreplace( unsigned int *x, unsigned int *y ) {
 				ok = 'y';
 			}
 			if ( ( ok == 'y' ) || ( ok == 'Y' ) ) {
-				replaceword( x, y );
+				replaceword( p_xCursorPos, y_CursorPos );
 			}
 			ok = 0;
 		} else {
@@ -389,7 +392,7 @@ int searchreplace( unsigned int *x, unsigned int *y ) {
 	return( found );
 }
 
-void replacing( unsigned int *x, unsigned int *y ) {
+void replacing( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 	storeline( curline );
 	if ( searchreplaceinfo( ) == YES ) {
 		showpageall( );
@@ -400,7 +403,7 @@ void replacing( unsigned int *x, unsigned int *y ) {
 		if ( optionupper( ) ) {
 			strupr( source );
 		}
-		if ( !searchreplace( x, y ) ) {
+		if ( !searchreplace( p_xCursorPos, y_CursorPos ) ) {
 			wordnotfound( );
 		}
 	}

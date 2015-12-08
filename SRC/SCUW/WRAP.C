@@ -295,20 +295,20 @@ void autowrap( unsigned int *p_xCursorPos, unsigned int *p_yCursorPos ) {
 	pagecomplete = NO;
 }
 
-void compress_blank( register unsigned char *s ) {
+void compress_blank( register unsigned char *p_string ) {
 	register unsigned char *r;
 
-	for ( ; *s == ' '; s++ );
-	r = s;
-	while ( *s++ = *r ) {
+	for ( ; *p_string == ' '; p_string++ );
+	r = p_string;
+	while ( *p_string++ = *r ) {
 		if ( *r == ' ' ) {
 			for ( ; *r == ' '; r++ );
 		} else {
 			r++;
 		}
 	}
-	s -= 2;
-	if ( *s == ' ' ) {
-		*s = '\0';
+	p_string -= 2;
+	if ( *p_string == ' ' ) {
+		*p_string = '\0';
 	}
 }
