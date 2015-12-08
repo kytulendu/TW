@@ -62,6 +62,9 @@ void cupsetup( int argc, char *argv[] ) {
 			case 'A':
 				scrmode = ATT400;
 				break;
+			case 'C':/* /HC for Hercules, 80 column */
+				herc_align = 5;
+				break;
 			case 'N':
 			case 'W':
 			case 'P':
@@ -91,14 +94,14 @@ void cupsetup( int argc, char *argv[] ) {
 
 void usage( void ) {
 	fputs( "Usage: TWPRINT [option] [file]\n", stderr );
-	fputs( "Options\n", stderr );
-	fputs( "\t-h,\t/h  Hercules graphic adapter\n", stderr );
-	fputs( "\t-hl,\t/hl Hercules graphic adapter, left justify\n", stderr );
-	fputs( "\t-v,\t/v  vga\n", stderr );
-	fputs( "\t-e,\t/e  ega with ega display\n", stderr );
-	fputs( "\t-em,\t/em ega with monochrome display\n", stderr );
-	fputs( "\t-m,\t/m  mcga\n", stderr );
-	fputs( "\t-a,\t/a  at&t400\n", stderr );
+	fputs( "Options:\n", stderr );
+	fputs( "\t-h,  /h  Hercules Graphic Card.\n", stderr );
+	fputs( "\t-hc, /hc Hercules Graphic Card, 80 column.\n", stderr );
+	fputs( "\t-v,  /v  VGA.\n", stderr );
+	fputs( "\t-e,  /e  EGA with EGA display.\n", stderr );
+	fputs( "\t-em, /em EGA with Monochrome display.\n", stderr );
+	fputs( "\t-m,  /m  MCGA.\n", stderr );
+	fputs( "\t-a,  /a  AT&T400.\n", stderr );
 	exit( EXIT_FAILURE );
 }
 

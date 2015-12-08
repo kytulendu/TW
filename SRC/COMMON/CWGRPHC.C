@@ -123,8 +123,13 @@ void setgraph( void ) {
 		break;
 
 	case HERCMONO:
-		shrink_factor = 10;
-		center_factor = 5;
+		if ( herc_align == 0 ) {	/* 90 column */
+			shrink_factor = 10;
+			center_factor = 5;
+		} else {					/* 80 column */
+			shrink_factor = 0;
+			center_factor = 0;
+		}
 
 		prchar_ptr = herc_prchar;
 		prblank_ptr = herc_prblank;

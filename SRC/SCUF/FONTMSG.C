@@ -83,7 +83,7 @@ int error_message( char *prompt ) {
 
 	put_box( center_x - 16 * thaistrlen( prompt ) / 2 - 5, 8 * 20 - 20,
 		center_x + 16 * thaistrlen( prompt ) / 2 + 3, 8 * 20 + 7 );
-	dispstrhgc( prompt, 40 - thaistrlen( prompt ), 7, ENLARGEATTR | REVERSEATTR );
+	dispstrhgc( prompt, 40 - thaistrlen( prompt ) + herc_align, 7, ENLARGEATTR | REVERSEATTR );
 	bioskey( 0 );
 	retpic( );
 }

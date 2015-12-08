@@ -70,6 +70,7 @@ void usage( void ) {
 	fputs( "Usage: TW.EXE [option] [file]\n", stderr );
 	fputs( "Options:\n", stderr );
 	fputs( "\t-h,  /h  Hercules Graphic Card.\n", stderr );
+	fputs( "\t-hc, /hc Hercules Graphic Card, 80 column.\n", stderr );
 	fputs( "\t-v,  /v  VGA.\n", stderr );
 	fputs( "\t-e,  /e  EGA with EGA display.\n", stderr );
 	fputs( "\t-em, /em EGA with Monochrome display.\n", stderr );
@@ -123,6 +124,9 @@ void cwsetup( int argc, char *argv[] ) {
 				break;
 			case 'A':
 				scrmode = ATT400;
+				break;
+			case 'C':		/* /HC for Hercules, 80 column. */
+				herc_align = 5;
 				break;
 			case 'N':
 				create_bak = NO;
@@ -185,7 +189,7 @@ void cwsetup( int argc, char *argv[] ) {
 	*   ATT400               78 column, 15 line. */
 	wind.row = 4;
 	wind.col = 1;
-	wind.length = ( scrmode == HERCMONO ) ? 88 : 78;
+	wind.length = ( ( scrmode == HERCMONO ) && ( herc_align == 0 ) ) ? 88 : 78;
 
 	switch ( scrmode ) {
 	case VGA:
@@ -374,12 +378,18 @@ void initscrn( void ) {
 
 	setgraph( );              /* set to graphic mode */
 	clsall( );
-	_rectangle( 0, 0, ( scrmode == HERCMONO ) ? 719 : 639,
-		( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 : ( scrmode == ATT400 ) ? 399 :
-		( scrmode == CGA ) ? 199 : 347 );
+
+	_rectangle( 0, 0,
+		( ( scrmode == HERCMONO ) && ( herc_align == 0 ) ) ? 719 : 639,
+		( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 :
+		( scrmode == ATT400 ) ? 399 :
+		( scrmode == CGA ) ? 199 :
+		347 );
+
 	prakeaw( );
 	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
-	dispstrhgc( "– ESC<->MENU", ( scrmode == HERCMONO ) ? 76 : 66, 1, BOLDATTR );
+	dispstrhgc( "– ESC<->MENU", ( ( scrmode == HERCMONO ) && ( herc_align == 0 ) ) ? 76 : 66, 1, BOLDATTR );
+
 	for ( countcol = 1; countcol <= 10; countcol++ ) {
 		headmenu( countcol, NORMALATTR );
 	}

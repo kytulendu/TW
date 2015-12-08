@@ -151,7 +151,7 @@ void framebox( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd, int p_attr ) 
 }
 
 void blockmsg( int p_linePos ) {
-	framebox( 11, p_linePos - 1, ( 11 + 60 ) + shrink_factor, p_linePos + 1, REVERSEATTR );
+	framebox( 5, p_linePos - 1, ( 5 + 69 ) + shrink_factor, p_linePos + 1, REVERSEATTR );
 }
 
 void showerrno( void ) {

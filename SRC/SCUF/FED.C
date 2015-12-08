@@ -80,6 +80,7 @@ int( *writech )( int x, int y, char ch );
 *   init_cursor
 */
 void setup_screen( void ) {
+
 	registerfarbgidriver( EGAVGA_driver_far );
 	registerfarbgidriver( Herc_driver_far );
 
@@ -93,6 +94,9 @@ void setup_screen( void ) {
 
 	if ( scrmode == HERCMONO ) {
 		writech = hgcwritech;
+		/*if ( herc_align == 0 ) {
+			align = 40;
+		}*/
 	} else {
 		writech = ewritech;
 	}
@@ -100,11 +104,15 @@ void setup_screen( void ) {
 	init_graph_and_cursor( );
 
 	clsall( );
-	_rectangle( 0, 0, ( scrmode == HERCMONO ) ? 719 : 639,
-		( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 : ( scrmode == ATT400 ) ? 399 : 347 );
+	_rectangle( 0, 0,
+		( ( scrmode == HERCMONO ) && ( herc_align == 0 ) ) ? 719 : 639,
+		( ( scrmode == VGA ) || ( scrmode == MCGA ) ) ? 479 :
+		( scrmode == ATT400 ) ? 399 :
+		( scrmode == CGA ) ? 199 :
+		347 );
 	prakeaw( );
 	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", 6, 0, BOLDATTR );
-	_line( 0, 24, ( scrmode == HERCMONO ) ? 719 : 639, 24 );
+	_line( 0, 24, ( ( scrmode == HERCMONO ) && ( herc_align == 0 ) ) ? 719 : 639, 24 );
 }
 
 /*

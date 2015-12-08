@@ -494,8 +494,8 @@ void headmenu( unsigned int topmenu, font_attr attr ) {
 		_line( 440, 43, 512, 43 );
 		break;
 	case 10: dispstrhgc( " ตัวเลือก ", 63, 1, attr );
-		_line( 504, 24, ( scrmode == HERCMONO ) ? 719 : 639, 24 );
-		_line( 504, 43, ( scrmode == HERCMONO ) ? 719 : 639, 43 );
+		_line( 504, 24, ( ( scrmode == HERCMONO ) && ( herc_align == 0 ) ) ? 719 : 639, 24 );
+		_line( 504, 43, ( ( scrmode == HERCMONO ) && ( herc_align == 0 ) ) ? 719 : 639, 43 );
 		break;
 #else
 	case 8: dispstrhgc( " คำสั่งอื่นๆ ", 49, 1, attr );
@@ -503,8 +503,8 @@ void headmenu( unsigned int topmenu, font_attr attr ) {
 		_line( 392, 43, 464, 43 );
 		break;
 	case 9: dispstrhgc( " ตัวเลือก ", 57, 1, attr );
-		_line( 456, 24, ( scrmode == HERCMONO ) ? 719 : 639, 24 );
-		_line( 456, 43, ( scrmode == HERCMONO ) ? 719 : 639, 43 );
+		_line( 456, 24, ( ( scrmode == HERCMONO ) && ( herc_align == 0 ) ) ? 719 : 639, 24 );
+		_line( 456, 43, ( ( scrmode == HERCMONO ) && ( herc_align == 0 ) ) ? 719 : 639, 43 );
 		break;
 #endif
 	}

@@ -32,6 +32,8 @@ EXTERN unsigned char ditalicfont[20 * 256];
 EXTERN unsigned char *screen_buffptr;
 EXTERN unsigned char far *vram;
 
+extern int herc_align; /* from COMMON\HERC.ASM */
+
 /* ===================================================================== */
 
 typedef void( Prchar_func )( unsigned char p_char, int p_attr, int p_x, int p_y );

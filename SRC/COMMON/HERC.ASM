@@ -21,6 +21,9 @@ EXTRN _chulalogo1:WORD, _chulalogo2:WORD
 EXTRN _dfont:BYTE, _ditalicfont:BYTE
 EXTRN _screen_buffptr:DWORD
 
+	PUBLIC _herc_align
+_herc_align		dw   0
+
 HGC_Address		dw   0B000h				; Beginning of HGC frame buffer
 
 ; Hercules port address
@@ -276,6 +279,7 @@ nochangefont:
 	ADD     DI,OFFSET DGROUP:screenoffset
 	MOV     DI,DS:[DI]
 	ADD     DI,[BP+10]                  ; add column
+	ADD     DI,_herc_align
 
 ; we will write character now (using standard code)
 	MOV     AL,[BP+6]                   ; get character
@@ -503,6 +507,7 @@ _herc_prblank PROC FAR
 	ADD     DI,OFFSET DGROUP:screenoffset
 	MOV     DI,DS:[DI]
 	ADD     DI,[BP+6]                   ; add column
+	ADD     DI,_herc_align
 	XOR     AL,AL
 	MOV     ES:[DI],AL
 	MOV     ES:[DI+2000h],AL
@@ -556,6 +561,7 @@ _herc_setcurpos PROC FAR
 	ADD     DI,OFFSET DGROUP:screenoffset
 	MOV     DI,DS:[DI]                  ; get offset of row from table
 	ADD     DI,[BP+6]                   ; add column
+	ADD     DI,_herc_align
 
 ; xor 12 byte only by ignore first-four & last-four byte
 	CMP     BYTE PTR [BP+10],1          ; thai mode ?
@@ -639,6 +645,7 @@ plotnext:
 	MOV     CL,3						; divide by 8
 	SHR     AX,CL						; AL = integer(x/8)
 	ADD     DI,AX						; now DI point at byte wanted
+	ADD     DI,_herc_align
 	MOV     AL,[BP+6]					; get dot x
 	AND     AL,007h						; now , al = x mod 8
 	MOV     CL,7
@@ -913,6 +920,7 @@ _herc_clsgraph PROC FAR
 	ADD     DI,OFFSET DGROUP:screenoffset
 	MOV     DI,DS:[DI]                  ; get row offset from table
 	ADD     DI,[BP+6]                   ; add x1
+	ADD     DI,_herc_align
 	MOV     CX,[BP+12]                  ; get y2
 	SUB     CX,[BP+8]                   ; sub with y1
 	INC     CX                          ; CX = no. of row to clear
@@ -992,6 +1000,7 @@ _herc_clrline PROC FAR
 	ADD     DI,OFFSET DGROUP:screenoffset
 	MOV     DI,DS:[DI]
 	ADD     DI,[BP+6]                   ; add x1
+	ADD     DI,_herc_align
 	MOV     AX,0
 	MOV     BX,[BP+10]                  ; get x2
 	SUB     BX,[BP+6]                   ; sub with x1
@@ -1056,6 +1065,7 @@ _herc_prakeaw PROC FAR
 
 	MOV     SI,OFFSET DS:_chulalogo1
 	MOV     DI,1
+	ADD     DI,_herc_align
 
 	MOV     AX,DS:[SI]
 	MOV     ES:[DI+4000h],AX
@@ -1105,6 +1115,7 @@ _herc_prakeaw PROC FAR
 
 	MOV     SI,OFFSET DS:_chulalogo2
 	MOV     DI,3
+	ADD     DI,_herc_align
 
 	MOV     AX,DS:[SI]
 	MOV     ES:[DI+4000h],AX
@@ -1194,6 +1205,7 @@ _herc_getwind PROC FAR
 	ADD     DI,OFFSET DGROUP:screenoffset
 	MOV     AX,DS:[DI]
 	ADD     AX,[BP].x1_9
+	ADD     AX,_herc_align
 
 	MOV     DS,HGC_Address
 	LES     DI,[BP].buffptr_9
@@ -1253,6 +1265,7 @@ _herc_putwind PROC FAR
 	ADD     DI,OFFSET DGROUP:screenoffset
 	MOV     AX,DS:[DI]
 	ADD     AX,[BP].x1_10
+	ADD     AX,_herc_align
 
 	MOV     ES,HGC_Address
 	LDS     SI,[BP].buffptr_10

@@ -7,6 +7,8 @@
 #include <graphics.h>
 #include <stdlib.h>
 
+#include "..\common\cwgrphc.h"
+
 #include "fed.h"
 
 #include "write.h"
@@ -29,9 +31,10 @@ void variable_blink( unsigned int x, unsigned int y ) {
 }
 
 void hgcwritech( int x, int y, char ch ) {
-	int i, j;
+	int i;
+	int j;
 
-	char far *pos = ( char far * )( ( 0xb0000000L ) + x + y * 90 );
+	char far *pos = ( char far * )( ( 0xb0000000L ) + x + y * 90 + herc_align );
 	char *chr = all_font + ch*BYTE*Y;
 	for ( i = 0; i < Y / 4; i++ ) {
 		for ( j = 0; j < BYTE; j++ ) {
