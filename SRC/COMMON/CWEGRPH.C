@@ -72,14 +72,6 @@ void ega_setgraph( void ) {
 	}
 }
 
-/** Set EGA/VGA/MCGA Graphic Card to text mode */
-void ega_settext( void ) {
-	union REGS inregs, outregs;
-
-	inregs.x.ax = 3;					/* 80x25 16 color text mode */
-	int86( 0x10, &inregs, &outregs );
-}
-
 void ega_savepic( void ) {
 	memcpy( screen_buffptr, vram, 38400U );	/* 38400 = (640*480)/8 */
 }

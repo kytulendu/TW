@@ -28,9 +28,9 @@ int center_factor = 0;	/* Shifting left factor. 90 column : 5, 80 column : 0) */
 
 EXTERN unsigned char dfont[20 * 256];
 EXTERN unsigned char ditalicfont[20 * 256];
-
 EXTERN unsigned char *screen_buffptr;
 EXTERN unsigned char far *vram;
+EXTERN int original_videomode;
 
 extern int herc_align; /* from COMMON\HERC.ASM */
 
@@ -72,14 +72,14 @@ typedef void ( Voidvoid_func )( void );
 typedef Voidvoid_func *Voidvoid_ptr;
 
 EXTERN Voidvoid_func herc_setgraph, ega_setgraph, att_setgraph,
-herc_settext, ega_settext, att_settext;
+herc_settext;
 EXTERN Voidvoid_func herc_savepic, ega_savepic, att_savepic,
 herc_retpic, ega_retpic, att_retpic;
 EXTERN Voidvoid_func herc_clsall, ega_clsall, att_clsall,
 herc_prakeaw, ega_prakeaw, att_prakeaw;
 
-EXTERN Voidvoid_ptr  setgraph_ptr, settext_ptr, savepic_ptr, retpic_ptr;
-EXTERN Voidvoid_ptr  clsall_ptr, prakeaw_ptr;
+EXTERN Voidvoid_ptr setgraph_ptr, savepic_ptr, retpic_ptr;
+EXTERN Voidvoid_ptr clsall_ptr, prakeaw_ptr;
 
 /* --------------------------------------------------------------------- */
 
@@ -140,6 +140,10 @@ void setcurpos( int p_x, int p_y, int p_thaimode );
 *  \param[in]  p_x				Horizontal position.
 *  \param[in]  p_y				Vertical position. */
 void _putpixel( int p_x, int p_y );
+
+/** Get current video mode through int 10, function 0Fh.
+*  \return int					Current video mode. */
+int getcurrentmode( void );
 
 /** Set graphic mode. */
 void setgraph( void );

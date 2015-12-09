@@ -17,6 +17,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <dos.h>
 
 #include "cwtype.h"
 #include "common.h"
@@ -45,7 +46,14 @@ void _putpixel( int p_x, int p_y ) {
 }
 
 void settext( void ) {
-	( *settext_ptr )( );
+	union REGS inregs, outregs;
+
+	if ( scrmode == HERCMONO ) {
+		herc_settext( );
+	} else {
+		inregs.x.ax = original_videomode;
+		int86( 0x10, &inregs, &outregs );
+	}
 }
 
 void savepic( void ) {
@@ -70,6 +78,14 @@ void clrline( int x1, int y1, int x2 ) {
 
 void prakeaw( void ) {
 	( *prakeaw_ptr )( );
+}
+
+int getcurrentmode( ) {
+	union REGS inregs, outregs;
+
+	inregs.h.ah = 0x0F;
+	int86( 0x10, &inregs, &outregs );
+	return( outregs.h.al );
 }
 
 void setgraph( void ) {
@@ -111,7 +127,6 @@ void setgraph( void ) {
 		setcurpos_ptr = ega_setcurpos;
 		putpixel_ptr = ega_putpixel;
 		setgraph_ptr = ega_setgraph;
-		settext_ptr = ega_settext;
 		savepic_ptr = ega_savepic;
 		retpic_ptr = ega_retpic;
 		clsall_ptr = ega_clsall;
@@ -136,7 +151,6 @@ void setgraph( void ) {
 		setcurpos_ptr = herc_setcurpos;
 		putpixel_ptr = herc_putpixel;
 		setgraph_ptr = herc_setgraph;
-		settext_ptr = herc_settext;
 		savepic_ptr = herc_savepic;
 		retpic_ptr = herc_retpic;
 		clsall_ptr = herc_clsall;
@@ -153,7 +167,6 @@ void setgraph( void ) {
 		setcurpos_ptr = att_setcurpos;
 		putpixel_ptr = att_putpixel;
 		setgraph_ptr = att_setgraph;
-		settext_ptr = att_settext;
 		savepic_ptr = att_savepic;
 		retpic_ptr = att_retpic;
 		clsall_ptr = att_clsall;
@@ -168,5 +181,6 @@ void setgraph( void ) {
 		fputs( "This software run on Hercules/EGA/VGA/MCGA/AT&T display card only.", stderr );
 		exit( EXIT_FAILURE );
 	}
+	original_videomode = getcurrentmode( );
 	( *setgraph_ptr )( );
 }

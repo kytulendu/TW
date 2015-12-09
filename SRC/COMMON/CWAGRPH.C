@@ -18,14 +18,6 @@ void att_setgraph( void ) {
 	int86( 0x10, &inregs, &outregs );
 }
 
-/** AT&T 6300 / Olivetti M24 Graphic Card to text mode */
-void att_settext( void ) {
-	union REGS inregs, outregs;
-
-	inregs.x.ax = 3;					/* 80x25 16 color text mode */
-	int86( 0x10, &inregs, &outregs );
-}
-
 /** Find offset of pixel x, y by use the following formula
 *   0x2000 * ( y % 4 ) + 80 * ( y / 4 ) + ( x / 8 ) ) */
 int att_offset( register int x, register int y ) {

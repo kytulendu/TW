@@ -7,7 +7,6 @@ May change over time.
 - More Comment
 - Cleanup
 - Removal of gotos in rdfiletospace function in SCUW\BLOCK.C.
-- read what display mode used before enter graphic mode and return to the original text mode.
 - Convert most of assembly language function to C.
 - Redo all dialog and text position.
 
