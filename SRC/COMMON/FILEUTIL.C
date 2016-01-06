@@ -8,8 +8,6 @@
 */
 
 #include <dos.h>
-#include <io.h>
-#include <fcntl.h>
 #include <dir.h>
 #include <stdio.h>
 #include <stdlib.h>
