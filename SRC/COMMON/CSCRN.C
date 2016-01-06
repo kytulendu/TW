@@ -159,7 +159,7 @@ void showerrno( void ) {
 	blockmsg( 5 );
 	switch ( errno ) {
 	case ENOENT:
-		dispstrhgc( "หาแฟ้มข้อมูลไม่พบ ! กดปุ่มใดๆเพื่อทำงานต่อ...", ( 14 + center_factor ) + 8, 5, REVERSEATTR );
+		dispstrhgc( "หาแฟ้มข้อมูลไม่พบ ! กดปุ่มใดๆเพื่อทำงานต่อ...", ( 7 + center_factor ) + 15, 5, REVERSEATTR );
 		break;
 	case ENOMEM:
 		dispstrhgc( "หน่วยความจำไม่พอ ! กดปุ่มใดๆเพื่อทำงานต่อ...", ( 14 + center_factor ) + 8, 6, REVERSEATTR );

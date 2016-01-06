@@ -193,8 +193,8 @@ void gotoline( void ) {
 	register int linetogo;
 	st[0] = '\0';
 	blockmsg( 5 );
-	dispstrhgc( "ต้องการไปที่บรรทัดที่เท่าไร ? (นับจากต้นแฟ้มข้อมูล)", ( 14 + center_factor ) + 7, 6, REVERSEATTR );
-	if ( getstring( st, ( 16 + center_factor ) + 47, 5, 3, REVERSEATTR, NUMBER ) ) {
+	dispstrhgc( "ต้องการไปที่บรรทัดที่เท่าไร ? (นับจากต้นแฟ้มข้อมูล)", ( 14 + center_factor ) + 2, 5, REVERSEATTR );
+	if ( getstring( st, ( 14 + center_factor ) + 42, 5, 5, REVERSEATTR, NUMBER ) ) {
 		linetogo = atoi( st );
 		if ( linetogo >= 1 ) {
 			goline( linetogo );

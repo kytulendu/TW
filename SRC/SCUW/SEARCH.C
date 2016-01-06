@@ -29,13 +29,13 @@
 
 int searchonlyinfo( void ) {
 	int i;
-	framebox( 8 + center_factor, 4, ( 21 + center_factor ) + 60, 10, REVERSEATTR );
-	dispstrhgc( "ใส่คำที่ต้องการค้นหา :", 11 + center_factor, 5, REVERSEATTR );
-	dispstrhgc( "ค้นหาแบบไหน (ใส่ตัวอักษรของตัวเลือกที่ต้องการ) :", 11 + center_factor, 6, REVERSEATTR );
-	dispstrhgc( "ตัวเลือก : G = เริ่มค้นหาตั้งแต่ต้นแฟ้มข้อมูล", 11 + center_factor, 7, REVERSEATTR );
-	dispstrhgc( "U = ไม่สนใจตัวเล็กหรือตัวใหญ่ (เช่น a กับ A)", 20 + center_factor, 8, REVERSEATTR );
-	dispstrhgc( "W = ค้นหาเป็นคำ (หรือเป็นประโยคในภาษาไทย)", 20 + center_factor, 9, REVERSEATTR );
-	dispstrhgc( "<ESC> ยกเลิก", 11 + center_factor, 10, 2 );
+	framebox( 4 + center_factor, 4, ( 21 + center_factor ) + 60, 10, REVERSEATTR );
+	dispstrhgc( "ใส่คำที่ต้องการค้นหา :", 7 + center_factor, 5, REVERSEATTR );
+	dispstrhgc( "ค้นหาแบบไหน (ใส่ตัวอักษรของตัวเลือกที่ต้องการ) :", 7 + center_factor, 6, REVERSEATTR );
+	dispstrhgc( "ตัวเลือก : G = เริ่มค้นหาตั้งแต่ต้นแฟ้มข้อมูล", 7 + center_factor, 7, REVERSEATTR );
+	dispstrhgc( "U = ไม่สนใจตัวเล็กหรือตัวใหญ่ (เช่น a กับ A)", 16 + center_factor, 8, REVERSEATTR );
+	dispstrhgc( "W = ค้นหาเป็นคำ (หรือเป็นประโยคในภาษาไทย)", 16 + center_factor, 9, REVERSEATTR );
+	dispstrhgc( "<ESC> ยกเลิก", 7 + center_factor, 10, 2 );
 	dispstrhgc( source, 29 + center_factor, 5, REVERSEATTR );
 	dispstrhgc( option, 51 + center_factor, 6, REVERSEATTR );
 	pagecomplete = NO;

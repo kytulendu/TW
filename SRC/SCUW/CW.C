@@ -104,11 +104,11 @@ void splashscreen( void ) {
 #ifdef EDA_VERSION
 
 	framebox( 17 + center_factor, 5, ( 17 + center_factor ) + 46, 11, REVERSEATTR );
-	dispstrhgc( "CU  WRITER", ( 21 + center_factor ) + 10, 6, REVERSEATTR );
-	dispstrhgc( "Version 1.2", ( 21 + center_factor ) + 13, 7, REVERSEATTR );
-	dispstrhgc( "EDA version", ( 21 + center_factor ) + 12, 8, REVERSEATTR );
-	dispstrhgc( "อภินันทนาการจาก จุฬาลงกรณ์มหาวิทยาลัย", ( 21 + center_factor ) + 4, 9, REVERSEATTR );
-	dispstrhgc( "มอบแด่ กระทรวงต่างประเทศ", ( 21 + center_factor ) + 8, 10, REVERSEATTR );
+	dispstrhgc( "CU  WRITER", ( 19 + center_factor ) + 12, 6, REVERSEATTR );
+	dispstrhgc( "Version 1.2", ( 19 + center_factor ) + 15, 7, REVERSEATTR );
+	dispstrhgc( "EDA version", ( 19 + center_factor ) + 15, 8, REVERSEATTR );
+	dispstrhgc( "อภินันทนาการจาก จุฬาลงกรณ์มหาวิทยาลัย", ( 19 + center_factor ) + 6, 9, REVERSEATTR );
+	dispstrhgc( "มอบแด่  กระทรวงต่างประเทศ", ( 19 + center_factor ) + 10, 10, REVERSEATTR );
 
 #else
 #ifdef CW_VERSION
@@ -117,28 +117,28 @@ void splashscreen( void ) {
 	/*
 	framebox( 17 + center_factor, 5, ( 17 + center_factor ) + 46, 14, REVERSEATTR );
 	*/
-	dispstrhgc( "CU  WRITER", ( 21 + center_factor ) + 10, 6, REVERSEATTR );
-	dispstrhgc( "Version 1.41", ( 21 + center_factor ) + 13, 7, REVERSEATTR );
-	dispprintf( ( 21 + center_factor ) + 8, 8, REVERSEATTR, "%11s   %8s", prog_date, prog_time );
-	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 21 + center_factor ) + 6, 9, REVERSEATTR );
-	dispstrhgc( "พัฒนาโดย สถาบันบริการคอมพิวเตอร์ ร่วมกับ", ( 21 + center_factor ) + 3, 10, REVERSEATTR );
-	dispstrhgc( "ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์", ( 21 + center_factor ), 11, REVERSEATTR );
+	dispstrhgc( "CU  WRITER", ( 19 + center_factor ) + 12, 6, REVERSEATTR );
+	dispstrhgc( "Version 1.41", ( 19 + center_factor ) + 15, 7, REVERSEATTR );
+	dispprintf( ( 19 + center_factor ) + 10, 8, REVERSEATTR, "%11s   %8s", prog_date, prog_time );
+	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 19 + center_factor ) + 8, 9, REVERSEATTR );
+	dispstrhgc( "พัฒนาโดย สถาบันบริการคอมพิวเตอร์ ร่วมกับ", ( 19 + center_factor ) + 5, 10, REVERSEATTR );
+	dispstrhgc( "ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์", ( 19 + center_factor ) + 2, 11, REVERSEATTR );
 	/*
-	dispstrhgc( "และ ชมรมคอมพิวเตอร์ อบจ.", ( 21 + center_factor ) + 8, 12, REVERSEATTR );
-	dispstrhgc("จุฬาลงกรณ์มหาวิทยาลัย", ( 21 + center_factor ) + 10, 13, REVERSEATTR );
+	dispstrhgc( "และ ชมรมคอมพิวเตอร์ อบจ.", ( 19 + center_factor ) + 10, 12, REVERSEATTR );
+	dispstrhgc("จุฬาลงกรณ์มหาวิทยาลัย", ( 19 + center_factor ) + 12, 13, REVERSEATTR );
 	*/
-	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", ( 21 + center_factor ) + 10, 12, REVERSEATTR );
+	dispstrhgc( "จุฬาลงกรณ์มหาวิทยาลัย", ( 19 + center_factor ) + 12, 12, REVERSEATTR );
 
 #else
 
-	framebox( 17 + center_factor, 5, ( 17 + center_factor ) + 46, 14, REVERSEATTR );
-	dispstrhgc( "THAI  WRITE", ( 21 + center_factor ) + 9, 6, REVERSEATTR );
-	dispstrhgc( "Version 1.0.0", ( 21 + center_factor ) + 13, 7, REVERSEATTR );
-	dispprintf( ( 21 + center_factor ) + 8, 8, REVERSEATTR, "%11s   %8s", prog_date, prog_time );
-	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 21 + center_factor ) + 6, 9, REVERSEATTR );
-	dispstrhgc( "Khral Steelforge", ( 21 + center_factor ) + 11, 10, REVERSEATTR );
-	dispstrhgc( "The Forge Warband,  Iron Legion", ( 21 + center_factor ) + 4, 11, REVERSEATTR );
-	dispstrhgc( "พัฒนาจาก เวิร์ดจุฬา โดย มหาวิทยาลัยจุฬาลงกรณ์", ( 21 + center_factor ) + 1, 13, REVERSEATTR );
+	framebox( ( 17 + center_factor ), 5, ( 17 + center_factor ) + 46, 14, REVERSEATTR );
+	dispstrhgc( "THAI  WRITE", ( 19 + center_factor ) + 11, 6, REVERSEATTR );
+	dispstrhgc( "Version  1.0.0", ( 19 + center_factor ) + 14, 7, REVERSEATTR );
+	dispprintf( ( 19 + center_factor ) + 11, 8, REVERSEATTR, "%11s %8s", prog_date, prog_time );
+	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 19 + center_factor ) + 8, 9, REVERSEATTR );
+	dispstrhgc( "Khral Steelforge", ( 19 + center_factor ) + 13, 10, REVERSEATTR );
+	dispstrhgc( "The Forge Warband, Iron Legion", ( 19 + center_factor ) + 6, 11, REVERSEATTR );
+	dispstrhgc( "พัฒนาจาก เวิร์ดจุฬา โดย มหาวิทยาลัยจุฬาลงกรณ์", ( 19 + center_factor ) + 3, 13, REVERSEATTR );
 
 #endif
 #endif
