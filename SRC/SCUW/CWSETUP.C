@@ -279,7 +279,7 @@ void saveoption( search_file_mode p_mode ) {
 		return;
 	}
 	for ( op = option_setup; op < option_setup + NELEM_OPTION; op++ ) {
-		fprintf( fp, "%d ", *op->p_option_value );
+		fprintf( fp, "%u ", *op->p_option_value );
 	}
 	fprintf( fp, "\n" );
 	fclose( fp );

@@ -6,6 +6,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <dir.h>
 
 #include "..\common\cwtype.h"
 #include "..\common\cscrn.h"
@@ -50,7 +51,7 @@ void writeline( void ) {
 void writelineno( void ) {
 	char st2[6];
 	dispstrhgc( "     บรรทัด       ", 4, 2, NORMALATTR );
-	sprintf( st2, "%d", lineno );
+	sprintf( st2, "%u", lineno );
 	arabictothai( st2 );
 	dispstrhgc( st2, 15, 2, NORMALATTR );
 }
@@ -67,7 +68,7 @@ void writepageline( void ) {
 void writecolno( unsigned int p_xCursorPos ) {
 	char st2[5];
 	dispstrhgc( "คอลัมน์", 21, 2, NORMALATTR );
-	sprintf( st2, "%d", p_xCursorPos + 1 );
+	sprintf( st2, "%u", p_xCursorPos + 1 );
 	dispstrhgc( "    ", 27, 2, NORMALATTR );
 	arabictothai( st2 );
 	dispstrhgc( st2, 27, 2, NORMALATTR );

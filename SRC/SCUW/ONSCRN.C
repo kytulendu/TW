@@ -96,7 +96,7 @@ void doonscrn( register unsigned p_key, unsigned int p_xCursorPos, unsigned int 
 	p_key &= 0x1f;
 	switch ( p_key ) {
 	case 'l' - 'a' + 1:
-		sprintf( st, "%d", leftmar );
+		sprintf( st, "%u", leftmar );
 		blockmsg( 5 );
 		dispstrhgc( "ต้องการตั้งกั้นซ้ายที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
 		if ( getstring( st, ( 14 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
@@ -118,7 +118,7 @@ void doonscrn( register unsigned p_key, unsigned int p_xCursorPos, unsigned int 
 		}
 		break;
 	case 'r' - 'a' + 1:
-		sprintf( st, "%d", rightmar );
+		sprintf( st, "%u", rightmar );
 		blockmsg( 5 );
 		dispstrhgc( "ต้องการตั้งกั้นขวาที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
 		if ( getstring( st, ( 14 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
@@ -140,7 +140,7 @@ void doonscrn( register unsigned p_key, unsigned int p_xCursorPos, unsigned int 
 		}
 		break;
 	case 'i' - 'a' + 1:
-		sprintf( st, "%d", p_xCursorPos + 1 );
+		sprintf( st, "%u", p_xCursorPos + 1 );
 		blockmsg( 5 );
 		dispstrhgc( "ต้องการตั้ง TAB ที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
 		if ( getstring( st, ( 16 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
@@ -168,7 +168,7 @@ void doonscrn( register unsigned p_key, unsigned int p_xCursorPos, unsigned int 
 		}
 		break;
 	case 'p' - 'a' + 1:
-		sprintf( st, "%d", lineperpage );
+		sprintf( st, "%u", lineperpage );
 		blockmsg( 5 );
 		dispstrhgc( "ต้องการตั้งจำนวนบรรทัดต่อหน้าเท่าไหร่ ?", ( 14 + center_factor ) + 11, 5, REVERSEATTR );
 		if ( getstring( st, ( 16 + center_factor ) + 43, 5, 3, REVERSEATTR, NUMBER ) ) {
