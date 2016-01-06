@@ -12,6 +12,7 @@ May change over time.
 
 ## Version 2.0.0
 - OpenWatcom port?
+- SDL port?
 
 ## Version 2.1.0
 - Some re-factoring/re-architect
