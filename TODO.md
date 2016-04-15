@@ -10,6 +10,9 @@ May change over time.
 - Convert most of assembly language function to C.
 - Redo all dialog and text position.
 
+##Version 1.0.1
+- Release
+
 ## Version 2.0.0
 - OpenWatcom port?
 - SDL port?
