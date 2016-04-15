@@ -36,15 +36,19 @@ unsigned char *SaraARtn( unsigned char *TempIndx ) {
 
 	switch ( *TempIndxm1 ) {
 	case SoreSeo:
-		for ( i = 0; i <= SoreSeoAlen; ++i )
-			if ( !( nstrcmp( SoreSeoTableA[i], TempIndxm1 ) ) )
+		for ( i = 0; i <= SoreSeoAlen; ++i ) {
+			if ( !( nstrcmp( SoreSeoTableA[i], TempIndxm1 ) ) ) {
 				return( TempIndxm2 ); /* found cut before leading-consonant */
+			}
+		}
 		break;
 
 	case OrAng:
-		for ( i = 0; i <= OrAngAlen; ++i )
-			if ( !( nstrcmp( OrAngTableA[i], TempIndxm1 ) ) )
+		for ( i = 0; i <= OrAngAlen; ++i ) {
+			if ( !( nstrcmp( OrAngTableA[i], TempIndxm1 ) ) ) {
 				return( TempIndxm2 ); /*found cut before leading-consonant */
+			}
+		}
 		break;
 
 	case MoreMar:

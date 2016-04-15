@@ -29,25 +29,25 @@
 
 int searchonlyinfo( void ) {
 	int i;
-	framebox( 4 + center_factor, 4, ( 21 + center_factor ) + 60, 10, REVERSEATTR );
-	dispstrhgc( "ใส่คำที่ต้องการค้นหา :", 7 + center_factor, 5, REVERSEATTR );
-	dispstrhgc( "ค้นหาแบบไหน (ใส่ตัวอักษรของตัวเลือกที่ต้องการ) :", 7 + center_factor, 6, REVERSEATTR );
-	dispstrhgc( "ตัวเลือก : G = เริ่มค้นหาตั้งแต่ต้นแฟ้มข้อมูล", 7 + center_factor, 7, REVERSEATTR );
-	dispstrhgc( "U = ไม่สนใจตัวเล็กหรือตัวใหญ่ (เช่น a กับ A)", 16 + center_factor, 8, REVERSEATTR );
-	dispstrhgc( "W = ค้นหาเป็นคำ (หรือเป็นประโยคในภาษาไทย)", 16 + center_factor, 9, REVERSEATTR );
-	dispstrhgc( "<ESC> ยกเลิก", 7 + center_factor, 10, 2 );
-	dispstrhgc( source, 29 + center_factor, 5, REVERSEATTR );
-	dispstrhgc( option, 51 + center_factor, 6, REVERSEATTR );
+	framebox( 4 + center_factor, 4, ( 7 + center_factor ) + 69, 10, REVERSEATTR );
+	dispstrhgc( "ใส่คำที่ต้องการค้นหา :", ( 7 + center_factor ), 5, REVERSEATTR );
+	dispstrhgc( "ค้นหาแบบไหน (ใส่ตัวอักษรของตัวเลือกที่ต้องการ) :", ( 7 + center_factor ), 6, REVERSEATTR );
+	dispstrhgc( "ตัวเลือก : G = เริ่มค้นหาตั้งแต่ต้นแฟ้มข้อมูล", ( 7 + center_factor ), 7, REVERSEATTR );
+	dispstrhgc( "U = ไม่สนใจตัวเล็กหรือตัวใหญ่ (เช่น a กับ A)", ( 7 + center_factor ), 8, REVERSEATTR );
+	dispstrhgc( "W = ค้นหาเป็นคำ (หรือเป็นประโยคในภาษาไทย)", ( 7 + center_factor ), 9, REVERSEATTR );
+	dispstrhgc( "<ESC> ยกเลิก", ( 7 + center_factor ), 10, 2 );
+	dispstrhgc( source, ( 7 + center_factor ), 5, REVERSEATTR );
+	dispstrhgc( option, ( 7 + center_factor ), 6, REVERSEATTR );
 	pagecomplete = NO;
 	for ( ;; ) {
-		i = getstring( source, 29 + center_factor, 5, 50, REVERSEATTR, THAIENG );
+		i = getstring( source, ( 7 + center_factor ) + 18, 5, 49, REVERSEATTR, THAIENG );
 		switch ( i ) {
 		case ESCKEY:
 			return( ESCKEY );
 		case DNKEY:
 		case YES:
 			do {
-				i = getstring( option, 51 + center_factor, 6, 3, REVERSEATTR, ENGLISH );
+				i = getstring( option, ( 7 + center_factor ) + 40, 6, 3, REVERSEATTR, ENGLISH );
 				switch ( i ) {
 				case ESCKEY:
 					return( ESCKEY );
@@ -64,35 +64,35 @@ int searchonlyinfo( void ) {
 int searchreplaceinfo( void ) {
 	int i;
 	int j;
-	framebox( 8 + center_factor, 4, ( 21 + center_factor ) + 60, 12, REVERSEATTR );
-	dispstrhgc( "ใส่คำที่ต้องการค้นหา :", 11 + center_factor, 5, REVERSEATTR );
-	dispstrhgc( "ใส่คำที่ต้องการแทนที่ :", 11 + center_factor, 6, REVERSEATTR );
-	dispstrhgc( "ค้นหาแบบไหน (ใส่ตัวอักษรของตัวเลือกที่ต้องการ) :", 11 + center_factor, 7, REVERSEATTR );
-	dispstrhgc( "ตัวเลือก : G = ค้นหา/แทนที่ทั้งหมดตั้งแต่ต้นจนจบ", 11 + center_factor, 8, REVERSEATTR );
-	dispstrhgc( "U = ไม่สนใจตัวเล็กหรือตัวใหญ่ (เช่น a กับ A)", 20 + center_factor, 9, REVERSEATTR );
-	dispstrhgc( "W = ค้นหาเป็นคำ (หรือเป็นประโยคในภาษาไทย)", 20 + center_factor, 10, REVERSEATTR );
-	dispstrhgc( "N = ไม่ต้องหยุดถามว่าจะแทนที่หรือไม่", 20 + center_factor, 11, REVERSEATTR );
-	dispstrhgc( "<ESC> ยกเลิก", 11 + center_factor, 12, REVERSEATTR );
-	dispstrhgc( source, 29 + center_factor, 5, REVERSEATTR );
-	dispstrhgc( replace, 29 + center_factor, 6, REVERSEATTR );
-	dispstrhgc( option, 51 + center_factor, 7, REVERSEATTR );
+	framebox( 4 + center_factor, 4, ( 7 + center_factor ) + 69, 12, REVERSEATTR );
+	dispstrhgc( "ใส่คำที่ต้องการค้นหา :", ( 7 + center_factor ), 5, REVERSEATTR );
+	dispstrhgc( "ใส่คำที่ต้องการแทนที่ :", ( 7 + center_factor ), 6, REVERSEATTR );
+	dispstrhgc( "ค้นหาแบบไหน (ใส่ตัวอักษรของตัวเลือกที่ต้องการ) :", ( 7 + center_factor ), 7, REVERSEATTR );
+	dispstrhgc( "ตัวเลือก : G = เริ่มค้นหาตั้งแต่ต้นแฟ้มข้อมูล", ( 7 + center_factor ), 8, REVERSEATTR );
+	dispstrhgc( "U = ไม่สนใจตัวเล็กหรือตัวใหญ่ (เช่น a กับ A)", ( 7 + center_factor ), 9, REVERSEATTR );
+	dispstrhgc( "W = ค้นหาเป็นคำ (หรือเป็นประโยคในภาษาไทย)", ( 7 + center_factor ), 10, REVERSEATTR );
+	dispstrhgc( "N = ไม่ต้องหยุดถามว่าจะแทนที่หรือไม่", ( 7 + center_factor ), 11, REVERSEATTR );
+	dispstrhgc( "<ESC> ยกเลิก", ( 7 + center_factor ), 12, REVERSEATTR );
+	dispstrhgc( source, ( 7 + center_factor ), 5, REVERSEATTR );
+	dispstrhgc( replace, ( 7 + center_factor ), 6, REVERSEATTR );
+	dispstrhgc( option, ( 7 + center_factor ), 7, REVERSEATTR );
 	pagecomplete = NO;
 	for ( ;; ) {
-		i = getstring( source, 29 + center_factor, 5, 50, REVERSEATTR, THAIENG );
+		i = getstring( source, ( 7 + center_factor ) + 18, 5, 49, REVERSEATTR, THAIENG );
 		switch ( i ) {
 		case ESCKEY:
 			return( ESCKEY );
 		case DNKEY:
 		case YES:
 			do {
-				i = getstring( replace, 29 + center_factor, 6, 50, REVERSEATTR, THAIENG );
+				i = getstring( replace, ( 7 + center_factor ) + 18, 6, 49, REVERSEATTR, THAIENG );
 				switch ( i ) {
 				case ESCKEY:
 					return( ESCKEY );
 				case DNKEY:
 				case YES:
 					do {
-						j = getstring( option, 51 + center_factor, 7, 3, REVERSEATTR, ENGLISH );
+						j = getstring( option, ( 7 + center_factor ) + 40, 7, 3, REVERSEATTR, ENGLISH );
 						switch ( j ) {
 						case ESCKEY:
 							return( ESCKEY );
@@ -203,6 +203,7 @@ void wordnotfound( void ) {
 	while ( ebioskey( 0 ) != ESCKEY );
 	pagecomplete = NO;
 }
+
 int searchfwd( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 	struct line_node *savepage, *templine;
 	boolean enlargeflag;
