@@ -12,9 +12,7 @@ by Computer Service Center and Faculty of Engineering, Chulalongkorn University.
 
 The original source code for CU Writer is found found on a ftp server
 ftp://ftp.cs.washington.edu/pub/thaisys/software/dos/cu-writer/
-and also on [here](https://github.com/kytulendu/CW141) which is the same as found on ftp server,
-but with change a function name in \COMMON\CSCR.C from line to _line to make it not conflict with
-Borland Graphics Interface (BGI) when linking CUFONT and some edit in MAKEFILE and TURBOC.CFG.
+and also on [here](https://github.com/kytulendu/CW141).
 
 My current goal is restructure, re-format, clean up, add comment,
 make self document code to the source code for easy to understand what the code do
@@ -29,13 +27,14 @@ System requirement may change in the future.
   * IBM PC or Compatible, 8086 or 8088 CPU, 512 KB RAM or better
   * DOS 3.3 or better
   * Hercules, EGA, VGA, MCGA or AT&T 400 (Graphic card in AT&T PC 6300/Olivetti M24)
-  * Two 5.25" 360Kb floppy disk drive
-  * 700Kb free hard drive space (Optional)
+  * Two 5.25" 360KB or one 5.25" 1.2MB or one 3.5" 720KB or one 3.5" 1.44MB floppy disk drive.
+  * 700KB free hard drive space (Optional)
   * 9 pin or 24 pin Dot-Matrix printer (Optional)
 
 Download
 --------
 All downloads is in my Google drive, which can be found [here](http://goo.gl/aMYPds)
+or on [GitHub](https://github.com/kytulendu/TW/releases) page.
 Include all version of CU Writer, both DOS and Win16 version that I can find.
 
 Compiling the source code
@@ -52,6 +51,14 @@ This code have been build using Borland C++ 3.1 and OpenWatcom 1.9.
 3. Change directory to C:\TW\SRC
 4. Run MAKE.BAT
 5. Binary will go to C:\TW\
+
+Available preprocessor
+
+1. -DWANT_TO_USE_GRAPH Enable unfinished graphic cupport.
+2. -DEDA_VERSION for compile special version for use with ATi EGA Wonder?
+(detect as EGA but display Hercules graphic mode)
+3. -DCW_VERSION for compile with CU-Writer 1.41 version information.
+4. -DCUSTOM_FONT
 
 Note
 ----
@@ -97,13 +104,14 @@ Khral MacCharrver / Khral Steelforge aka. Kytulendu Rrit
 
 Credits
 -------
-Stone Soup Group for [Fractint](http://www.fractint.org/) 20.0 source code
+Stone Soup Group's [Fractint](http://www.fractint.org/) 20.0 source code
 that help me to studies how to do graphic in DOS.
 
 Bresenham's line algorithm by [Alois Zingl](http://members.chello.at/~easyfilter/bresenham.html)
 
 License
 -------
+
     Thai Write, A DOS word processor.
     Copyright (C) 2014 Khral Steelforge <https://github.com/kytulendu>.
 
