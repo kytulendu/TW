@@ -5,7 +5,8 @@
 #include "routine.h"
 
 unsigned char *SaraURtn( register unsigned char *TempIndx ) {
-	register unsigned char *plus1 = TempIndx + 1, *minus2 = TempIndx - 2;
+	register unsigned char *plus1 = TempIndx + 1;
+	register unsigned char *minus2 = TempIndx - 2;
 
 	if ( findchar( *( plus1 ), "¦©«¬±¶¼½ÄÇÍÎ" ) ||
 		*plus1 == PoreSumpao && nstrcmp( "ÍÊ", minus2 ) ||

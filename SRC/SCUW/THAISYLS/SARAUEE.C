@@ -21,7 +21,7 @@ unsigned char *SaraUeeFC( unsigned char *TempIndx );
 
 unsigned char *SaraUeeRtn( register unsigned char *TempIndx ) {
 	/* if ( findchar( *( TempIndx + 1 ), "¨±¿À" ) ) {
-	return(FAIL);
+		return(FAIL);
 	} */    /* corrected by Subun */
 
 	if ( isttnl( *( TempIndx + 1 ) ) ) {

@@ -5,7 +5,9 @@
 #include "routine.h"
 
 unsigned char *HunAkadRtn( register unsigned char *TempIndx ) {
-	register unsigned char *plus1 = TempIndx + 1, *minus2 = TempIndx - 2;
+	register unsigned char *plus1 = TempIndx + 1;
+	register unsigned char *minus2 = TempIndx - 2;
+
 	if ( plus1 <= RightMargin ) {
 		switch ( *( plus1 ) ) {
 		case KoreGai:

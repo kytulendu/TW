@@ -5,7 +5,8 @@
 #include "routine.h"
 
 unsigned char *WoreWaanRtn( register unsigned char *TempIndx ) {
-	register unsigned char *plus1 = TempIndx + 1, *minus3 = TempIndx - 3;
+	register unsigned char *plus1 = TempIndx + 1;
+	register unsigned char *minus3 = TempIndx - 3;
 
 	if ( istcon( *( TempIndx - 1 ) ) ) {
 		if ( istlvwl( *( TempIndx - 2 ) ) ) {
