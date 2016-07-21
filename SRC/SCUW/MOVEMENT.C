@@ -61,6 +61,7 @@ void cursor_down( unsigned int p_yCursorPos ) {
 
 void cursor_left( unsigned int *p_xCursorPos ) {
 	unsigned int i = *p_xCursorPos + firstcol;
+
 	if ( i != 0 ) {    /* Home of line ? */
 		gocol( i - 1, p_xCursorPos );
 	} else {
@@ -94,7 +95,9 @@ void cursor_right( unsigned int *p_xCursorPos, unsigned int p_yCursorPos ) {
 
 void page_up( void ) {
 	int count;
+
 	storeline( curline );
+
 	if ( curpage->previous != sentinel ) {  /* top of file ? */
 		count = wind.width - 1;
 		while ( ( count > 0 ) && ( curpage->previous != sentinel ) ) {
@@ -113,6 +116,7 @@ void page_up( void ) {
 
 void page_down( void ) {
 	int count;
+
 	if ( curpage->next != sentinel ) { /* bottom of file ? */
 		storeline( curline );
 		count = wind.width - 1;

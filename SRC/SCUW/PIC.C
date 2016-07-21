@@ -27,9 +27,11 @@
 
 #ifdef WANT_TO_USE_GRAPH
 char *readgraph( char *filename ) {
-	size_t filelen, namelen;
+	size_t filelen;
+	size_t namelen;
 	int handle;
 	char *buffer;
+
 	if ( ( handle = open( filename, O_RDONLY || O_BINARY ) ) == -1 ) {
 		return( NULL );
 	}

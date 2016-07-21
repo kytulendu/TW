@@ -31,10 +31,10 @@ void justify_right( void ) {
 	register size_t i;
 	register size_t j;
 	register size_t k;
+
 	boolean already = NO;
 	for ( i = strlen( workline.middle ) - 1;
-		( ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ) ) &&
-		( i > 0 );
+		( ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ) ) && ( i > 0 );
 		i-- );
 	if ( ( i < rightmar ) && ( i > 0 ) ) {
 		for ( j = 1;
@@ -43,8 +43,7 @@ void justify_right( void ) {
 		k = j;
 		count = rightmar - i;
 		while ( count > 0 ) {
-			while ( ( k < i ) && ( workline.middle[k] != ' ' ) &&
-				( workline.middle[k] != WRAPBLANK ) ) {
+			while ( ( k < i ) && ( workline.middle[k] != ' ' ) && ( workline.middle[k] != WRAPBLANK ) ) {
 				k++;
 			}
 			if ( k < i ) {
@@ -53,8 +52,7 @@ void justify_right( void ) {
 				i++;
 				already = YES;
 			}
-			while ( ( ( workline.middle[k] == ' ' ) || ( workline.middle[k] == WRAPBLANK ) )
-				&& ( k < i ) ) {
+			while ( ( ( workline.middle[k] == ' ' ) || ( workline.middle[k] == WRAPBLANK ) ) && ( k < i ) ) {
 				k++;
 			}
 			if ( k >= i ) {

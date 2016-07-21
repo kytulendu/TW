@@ -57,6 +57,7 @@ void setupnode( void ) {
 	sentinel->graph = NULL;
 #endif
 	sentinel->wrap = NO;
+
 	curline = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 	curline->wrap = NO;
 	curline->text = ( char * ) malloc( 1 );
@@ -64,6 +65,7 @@ void setupnode( void ) {
 #ifdef WANT_TO_USE_GRAPH
 	curline->graph = NULL;
 #endif
+
 	insert_line( sentinel, curline );
 	curpage = curline;
 	loadtoline( curline->text );
@@ -75,6 +77,7 @@ void destroynode( void ) {
 
 	blockmsg( 5 );
 	dispstrhgc( "กำลังทำการยกเลิกแฟ้มข้อมูลเดิมอยู่ กรุณารอสักครู่...", 26 + center_factor, 5, REVERSEATTR );
+
 	currentline = sentinel->next;
 	while ( currentline != sentinel ) {
 		templine = currentline;
@@ -640,8 +643,10 @@ int main( int argc, char *argv[] ) {
 	} while ( !quitprog );
 
 	if ( changeflag ) {
+
 		blockmsg( 5 );
 		dispstrhgc( "ยังไม่ได้จัดเก็บแฟ้มข้อมูล ต้องการจัดเก็บหรือไม่ (Y/N)?", ( 16 + center_factor ) + 7, 5, REVERSEATTR );
+
 		keymain = 0;
 		while ( ( keymain != 'n' ) && ( keymain != 'N' )
 			&& ( keymain != 'y' ) && ( keymain != 'Y' ) ) {

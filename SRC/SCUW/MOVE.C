@@ -92,6 +92,7 @@ void topfile( unsigned int *p_xCursorPos ) {
 void endfile( unsigned int *p_xCursorPos ) {
 	int count;
 	int linenum;
+
 	storeline( curline );
 	curline = sentinel->previous;
 	curpage = curline;
@@ -118,6 +119,7 @@ void endfile( unsigned int *p_xCursorPos ) {
 
 void backword( unsigned int *p_xCursorPos ) {
 	int i;
+
 	i = *p_xCursorPos + firstcol + 1;
 	if ( i != 1 ) {   /* first column ? */
 		if ( ( !ISBLANK( workline.middle[i] ) ) && ( !ISBLANK( workline.middle[i - 1] ) ) ) {
@@ -150,6 +152,7 @@ void backword( unsigned int *p_xCursorPos ) {
 void nextword( unsigned int *p_xCursorPos, unsigned int p_yCursorPos ) {
 	int i;
 	unsigned int j;
+
 	i = *p_xCursorPos + firstcol + 1;
 	j = i;
 	while ( !ISBLANK( workline.middle[i] ) && ( i != MAXCOL ) ) {
@@ -176,9 +179,12 @@ void nextword( unsigned int *p_xCursorPos, unsigned int p_yCursorPos ) {
 void gotopage( void ) {
 	char st[4];
 	int linetogo;
+
 	st[0] = '\0';
+
 	blockmsg( 5 );
 	dispstrhgc( "ต้องการไปที่หน้าที่เท่าไร ?", ( 14 + center_factor ) + 17, 5, REVERSEATTR );
+
 	if ( getstring( st, ( 16 + center_factor ) + 37, 5, 3, REVERSEATTR, NUMBER ) ) {
 		linetogo = ( atoi( st ) * lineperpage ) - lineperpage + 1;
 		if ( linetogo >= 1 ) {
@@ -192,8 +198,10 @@ void gotoline( void ) {
 	char st[5];
 	register int linetogo;
 	st[0] = '\0';
+
 	blockmsg( 5 );
 	dispstrhgc( "ต้องการไปที่บรรทัดที่เท่าไร ? (นับจากต้นแฟ้มข้อมูล)", ( 14 + center_factor ) + 2, 5, REVERSEATTR );
+
 	if ( getstring( st, ( 14 + center_factor ) + 42, 5, 5, REVERSEATTR, NUMBER ) ) {
 		linetogo = atoi( st );
 		if ( linetogo >= 1 ) {

@@ -114,6 +114,7 @@ int inblock( unsigned int p_line, unsigned int p_col ) {
 
 struct line_node *copytospace( struct line_node *p_firstLine, struct line_node *p_lastLine,
 	unsigned int p_firstCol, unsigned int p_lastCol ) {
+
 	struct line_node *firstline;
 	struct line_node *templine;
 	struct line_node *newline;
@@ -172,6 +173,7 @@ struct line_node *copytospace( struct line_node *p_firstLine, struct line_node *
 
 void insertlinklist( struct line_node *p_sourceLine, struct line_node *p_destLine,
 	unsigned int p_destCol ) {
+
 	unsigned int i;
 	struct line_node *lastline;
 	font_attr font;
@@ -215,6 +217,7 @@ void insertlinklist( struct line_node *p_sourceLine, struct line_node *p_destLin
 
 void deletelinklist( struct line_node *p_firstLine, struct line_node *p_lastLine,
 	unsigned int p_firstCol, unsigned int p_lastCol ) {
+
 	struct line_node *templine;
 	struct line_node *freeline;
 
@@ -341,7 +344,8 @@ struct line_node *rdfiletospace( char *p_filename ) {
 	struct line_node *freeline;
 	unsigned char *text_str;
 
-	if ( ( fip = fopen( p_filename, "rt" ) ) != NULL ) {
+	fip = fopen( p_filename, "rt" );
+	if ( fip ) {
 		blockmsg( 5 );
 		dispstrhgc( "กำลังอ่านข้อมูลจากแผ่นจานแม่เหล็กอยู่ กรุณารอสักครู่...", ( 14 + center_factor ) + 6, 5, REVERSEATTR );
 
@@ -630,8 +634,8 @@ int chkspace( char *p_filename ) {
 	}
 	diskspace = diskfree( i );
 
-	if ( !create_bak && file_exist( p_filename ) ) {			/* If .BAK is not necessary */
-		findfirst( p_filename, &fdat, 0 );					/* DiskSpace can be increased */
+	if ( !create_bak && file_exist( p_filename ) ) {	/* If .BAK is not necessary */
+		findfirst( p_filename, &fdat, 0 );				/* DiskSpace can be increased */
 		diskspace += ( unsigned long ) fdat.ff_fsize;	/* By old file size */
 	}
 
@@ -647,7 +651,8 @@ int chkspace( char *p_filename ) {
 }
 
 void writeblk( char *p_filename, struct line_node *p_firstLine, unsigned int p_firstCol,
-struct line_node *p_lastLine, unsigned int p_lastCol ) {
+	struct line_node *p_lastLine, unsigned int p_lastCol ) {
+
 	FILE *fip;
 	struct line_node *currentline;
 	int key;

@@ -29,6 +29,7 @@
 
 int searchonlyinfo( void ) {
 	int i;
+
 	framebox( 4 + center_factor, 4, ( 7 + center_factor ) + 69, 10, REVERSEATTR );
 	dispstrhgc( "ใส่คำที่ต้องการค้นหา :", ( 7 + center_factor ), 5, REVERSEATTR );
 	dispstrhgc( "ค้นหาแบบไหน (ใส่ตัวอักษรของตัวเลือกที่ต้องการ) :", ( 7 + center_factor ), 6, REVERSEATTR );
@@ -38,9 +39,12 @@ int searchonlyinfo( void ) {
 	dispstrhgc( "<ESC> ยกเลิก", ( 7 + center_factor ), 10, 2 );
 	dispstrhgc( source, ( 7 + center_factor ), 5, REVERSEATTR );
 	dispstrhgc( option, ( 7 + center_factor ), 6, REVERSEATTR );
+
 	pagecomplete = NO;
+
 	for ( ;; ) {
 		i = getstring( source, ( 7 + center_factor ) + 18, 5, 49, REVERSEATTR, THAIENG );
+
 		switch ( i ) {
 		case ESCKEY:
 			return( ESCKEY );
@@ -48,6 +52,7 @@ int searchonlyinfo( void ) {
 		case YES:
 			do {
 				i = getstring( option, ( 7 + center_factor ) + 40, 6, 3, REVERSEATTR, ENGLISH );
+
 				switch ( i ) {
 				case ESCKEY:
 					return( ESCKEY );
@@ -55,7 +60,9 @@ int searchonlyinfo( void ) {
 					strupr( option );    /* to upper case   */
 					return( YES );
 				}
+
 			} while ( i != UPKEY );
+
 			break;
 		}
 	}
@@ -64,6 +71,7 @@ int searchonlyinfo( void ) {
 int searchreplaceinfo( void ) {
 	int i;
 	int j;
+
 	framebox( 4 + center_factor, 4, ( 7 + center_factor ) + 69, 12, REVERSEATTR );
 	dispstrhgc( "ใส่คำที่ต้องการค้นหา :", ( 7 + center_factor ), 5, REVERSEATTR );
 	dispstrhgc( "ใส่คำที่ต้องการแทนที่ :", ( 7 + center_factor ), 6, REVERSEATTR );
@@ -76,9 +84,12 @@ int searchreplaceinfo( void ) {
 	dispstrhgc( source, ( 7 + center_factor ), 5, REVERSEATTR );
 	dispstrhgc( replace, ( 7 + center_factor ), 6, REVERSEATTR );
 	dispstrhgc( option, ( 7 + center_factor ), 7, REVERSEATTR );
+
 	pagecomplete = NO;
+
 	for ( ;; ) {
 		i = getstring( source, ( 7 + center_factor ) + 18, 5, 49, REVERSEATTR, THAIENG );
+
 		switch ( i ) {
 		case ESCKEY:
 			return( ESCKEY );
@@ -86,6 +97,7 @@ int searchreplaceinfo( void ) {
 		case YES:
 			do {
 				i = getstring( replace, ( 7 + center_factor ) + 18, 6, 49, REVERSEATTR, THAIENG );
+
 				switch ( i ) {
 				case ESCKEY:
 					return( ESCKEY );
@@ -93,6 +105,7 @@ int searchreplaceinfo( void ) {
 				case YES:
 					do {
 						j = getstring( option, ( 7 + center_factor ) + 40, 7, 3, REVERSEATTR, ENGLISH );
+
 						switch ( j ) {
 						case ESCKEY:
 							return( ESCKEY );
@@ -100,10 +113,12 @@ int searchreplaceinfo( void ) {
 							strupr( option );
 							return( YES );
 						}
+
 					} while ( j != UPKEY );
 					break;
 				}
 			} while ( i != UPKEY );
+
 			break;
 		}
 	}
@@ -173,16 +188,21 @@ unsigned char *searchline( unsigned char *p_textline, unsigned int p_startpos ) 
 		p_textline++;
 		p_startpos--;
 	}
+
 	textaddr = p_textline;
 	i = 0;
+
 	while ( *p_textline != '\0' ) {
 		buffer[i++] = *( p_textline++ );
 	}
+
 	buffer[i] = ' ';
 	buffer[i + 1] = '\0';
+
 	if ( optionupper( ) ) {
 		strupr( buffer );
 	}
+
 	if ( ( point = strstr( buffer, source ) ) != NULL ) {
 		buffaddr = buffer;
 		while ( buffaddr++ != point ) {
@@ -207,32 +227,42 @@ void wordnotfound( void ) {
 int searchfwd( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 	struct line_node *savepage, *templine;
 	boolean enlargeflag;
-	unsigned int linecount, savecol, startpos;
+	unsigned int linecount;
+	unsigned int savecol;
+	unsigned int startpos;
 	size_t i;
 	font_attr font = NORMALATTR;
-	char *foundpoint, *addr;
+	char *foundpoint;
+	char *addr;
 
 	savecol = firstcol;
 	savepage = curpage;
 	storeline( curline );
 	templine = curpage;
 	linecount = wind.width - 1;
+
 	while ( templine != curline ) {
 		linecount--;
 		templine = templine->next;
 	}
+
 	startpos = linearcolumn( curline->text, *p_xCursorPos + firstcol, &font );
 	foundpoint = NULL;
+
 	while ( ( foundpoint == NULL ) && ( curline != sentinel ) ) {
 		foundpoint = searchline( curline->text, startpos );
+
 		if ( foundpoint != NULL ) {		/* found */
+
 			while ( ( *y_CursorPos = findrow( ) ) >= wind.width ) {
 				curpage = curpage->next;
 			}
+
 			*p_xCursorPos = 0;
 			firstcol = 0;
 			addr = curline->text;
 			enlargeflag = NO;
+
 			while ( addr != foundpoint ) {
 				if ( ( whatlevel( *addr ) == MIDDLE ) && ( *addr >= 32 ) ) {
 					if ( enlargeflag ) {
@@ -246,6 +276,7 @@ int searchfwd( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 				}
 				addr++;
 			}
+
 			for ( i = 0; source[i] != '\0'; i++ ) {
 				if ( whatlevel( source[i] ) == MIDDLE ) {
 					if ( enlargeflag ) {
@@ -254,10 +285,12 @@ int searchfwd( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 					( *p_xCursorPos )++;
 				}
 			}
+
 			while ( *p_xCursorPos >= wind.length ) {
 				firstcol = firstcol + wind.length;
 				*p_xCursorPos = *p_xCursorPos - wind.length;
 			}
+
 		} else {
 			if ( linecount > 0 ) {
 				linecount--;
@@ -272,13 +305,16 @@ int searchfwd( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 			startpos = 0;
 		}
 	}
+
 	if ( foundpoint == NULL ) {
 		curline = sentinel->previous;
 		curpage = curline;
 		loadtoline( curline->text );
 		endline( p_xCursorPos );
 	}
+
 	loadtoline( curline->text );
+
 	if ( savepage != curpage ) {
 		showpageall( );
 	} else {
@@ -286,19 +322,23 @@ int searchfwd( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 			showpageall( );
 		}
 	}
+
 	if ( foundpoint != NULL ) {
 		return( YES );
 	} else {
 		return( NO );
 	}
+
 }
 
 void addblank( void ) {
 	int i = 79;
+
 	while ( i != 0 ) {
 		source[i] = source[i - 1];
 		i--;
 	}
+
 	source[0] = ' ';
 	i = strlen( source );
 	source[i] = ' ';
@@ -307,9 +347,11 @@ void addblank( void ) {
 
 void searching( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 	storeline( curline );
+
 	if ( searchonlyinfo( ) == YES ) {
 		showpageall( );
 		replaceflag = NO;
+
 		if ( optionword( ) ) {
 			addblank( );
 		}
@@ -328,18 +370,26 @@ void searching( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 
 void replaceword( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 	int i;
+
 	for ( i = strlen( source ); i != 0; i-- ) {
 		backspace( p_xCursorPos );
 	}
+
 	while ( replace[i] != '\0' ) {
 		insert_char( replace[i], p_xCursorPos, y_CursorPos );
 		i++;
 	}
+
 	refreshline( 0, *y_CursorPos );
 }
 
 int searchreplace( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
-	int ok = 0, i, ask = YES, global = NO, found = NO;
+	int ok = 0;
+	int i;
+	int ask = YES;
+	int global = NO;
+	int found = NO;
+
 	if ( optionnoask( ) ) {
 		ok = 'y';
 		ask = NO;
@@ -349,13 +399,16 @@ int searchreplace( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 		showpageall( );
 		global = YES;
 	}
+
 	do {
 		if ( searchfwd( p_xCursorPos, y_CursorPos ) ) {
 			found = YES;
 			if ( ask ) {
 				dispstrhgc( "แทนที่หรือไม่ ? (Y/N) ", 1, 2, BOLDATTR );
+
 				while ( ( ok != 'y' ) && ( ok != 'n' ) &&
 					( ok != 'Y' ) && ( ok != 'N' ) ) {
+
 					while ( !keypressed( ) ) {
 						setcurpos( 19, 2, thaimode );
 						for ( i = 0; i < 15000; i++ );
@@ -366,13 +419,17 @@ int searchreplace( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 						setcurpos( wind.col + *p_xCursorPos, wind.row + *y_CursorPos, thaimode );
 						for ( i = 0; i < 15000; i++ );
 					} /* while !keypressed */
+
 					ok = ebioskey( 0 );
+
 					if ( ( ok != CNTRL_U ) && ( ok != ESCKEY ) ) {
 						ok = ok & 0xff;
 					} else {
 						return( CNTRL_U );
 					}
+
 				} /* while ok */
+
 			} else {
 				if ( keypressed( ) ) {
 					ok = ebioskey( 0 );
@@ -382,14 +439,19 @@ int searchreplace( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 				}
 				ok = 'y';
 			}
+
 			if ( ( ok == 'y' ) || ( ok == 'Y' ) ) {
 				replaceword( p_xCursorPos, y_CursorPos );
 			}
+
 			ok = 0;
+
 		} else {
 			global = NO;
 		}
+
 	} while ( global );
+
 	return( found );
 }
 

@@ -36,6 +36,7 @@
 
 void writetab( void ) {
 	unsigned int i = 0;
+
 	prblank( wind.col, 3 );
 
 	while ( ( ( i + firstcol + 1 ) < leftmar ) && ( i < wind.length ) ) {
@@ -67,7 +68,11 @@ void writetab( void ) {
 }
 
 void centerline( unsigned int p_yCursorPos ) {
-	int i, j, k, count;
+	int i;
+	int j;
+	int k;
+	int count;
+
 	for ( i = 1; ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ); i++ );
 	for ( j = strlen( workline.middle ) - 1; ( workline.middle[j] == ' ' ) || ( workline.middle[j] == WRAPBLANK ); j-- );
 	if ( ( rightmar - leftmar ) > ( j - i ) ) {
@@ -87,12 +92,14 @@ void centerline( unsigned int p_yCursorPos ) {
 
 void doonscrn( register unsigned p_key, unsigned int p_xCursorPos, unsigned int p_yCursorPos ) {
 	register unsigned int j;
-	char st[4], invmsg[60];
+	char st[4];
+	char invmsg[60];
 
 	p_key &= 0xff;
 	if ( !isalpha( p_key ) && !iscntrl( p_key ) ) {
 		return;
 	}
+
 	p_key &= 0x1f;
 	switch ( p_key ) {
 	case 'l' - 'a' + 1:
@@ -192,11 +199,13 @@ void doonscrn( register unsigned p_key, unsigned int p_xCursorPos, unsigned int 
 
 void movetotab( unsigned int *p_xCursorPos, unsigned int p_yCursorPos ) {
 	size_t i, count;
+
 	if ( ( *p_xCursorPos + firstcol ) >= ( leftmar - 1 ) ) {
 		i = *p_xCursorPos + firstcol + 1;
 	} else {
 		i = leftmar - 1;
 	}
+
 	for ( ; ( i < ( rightmar - 1 ) && ( tab[i] != YES ) ); i++ );
 	if ( i < ( rightmar - 1 ) ) {
 		count = i - ( *p_xCursorPos + firstcol );

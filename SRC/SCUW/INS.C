@@ -39,6 +39,7 @@
 
 void insertblank( unsigned int p_col, unsigned char p_blankchar ) {
 	register size_t i;
+
 	i = strlen( workline.middle );
 	while ( i >= p_col ) {
 		workline.middle[i + 1] = workline.middle[i];  /* shift right */
@@ -87,8 +88,10 @@ void shiftscrn( unsigned int p_count, unsigned int *p_x ) {
 
 void linetoolong( void ) {
 	errorsound( );
+
 	blockmsg( 5 );
 	dispstrhgc( "บรรทัดยาวเกินไป ! กด <ESC> เพื่อทำงานต่อ", ( 14 + center_factor ) + 9, 5, REVERSEATTR );
+
 	while ( ebioskey( 0 ) != ESCKEY );
 	pagecomplete = NO;
 }
@@ -96,6 +99,7 @@ void linetoolong( void ) {
 void inscntrl( unsigned char p_ctrlChar, unsigned int p_xCursorPos, unsigned int p_yCursorPos ) {
 	register unsigned int i = MAXCOL;
 	register unsigned int j = p_xCursorPos + firstcol + 1;
+
 	while ( i >= j ) {
 		workline.middle[i + 1] = workline.middle[i];  /* shift right */
 		workline.upper[i + 1] = workline.upper[i];    /*  by ignore  */
@@ -151,6 +155,7 @@ void printcntrl( register unsigned int p_xCursorPos, register unsigned int p_yCu
 int insert_char( unsigned char p_char, unsigned int *p_xCursorPos, unsigned int *p_yCursorPos ) {
 	register unsigned int i;
 	unsigned int j;
+
 	if ( ( *p_xCursorPos + firstcol + 1 ) <= MAXCOL ) {   /* if out of line , not insert */
 		if ( wordwrap && ( ( *p_xCursorPos + firstcol + 1 ) >= ( rightmar + 5 ) ) ) {
 			if ( relmargin == NO ) {
@@ -295,6 +300,7 @@ int insert_char( unsigned char p_char, unsigned int *p_xCursorPos, unsigned int 
 int ovrwrite_char( unsigned char p_char, unsigned int *p_xCursorPos, unsigned int *p_yCursorPos ) {
 	register unsigned int i;
 	unsigned int j;
+
 	if ( ( *p_xCursorPos + firstcol + 1 ) <= MAXCOL ) {   /* no write at last column */
 		if ( wordwrap && ( ( *p_xCursorPos + firstcol + 1 ) >= ( rightmar + 5 ) ) ) {
 			if ( relmargin == NO ) {
@@ -566,6 +572,7 @@ void dispmacro( register int p_macro ) {
 void editmacro( void ) {
 	register int i;
 	register int c;
+
 	pagecomplete = NO;
 	framebox( 19 + center_factor, 4, ( 19 + center_factor ) + 51, 15, REVERSEATTR );
 	for ( i = 0; i < 10; i++ ) {
