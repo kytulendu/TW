@@ -6,7 +6,6 @@ May change over time.
 - Remove unused stuff
 - More Comment
 - Cleanup
-- Removal of gotos in rdfiletospace function in SCUW\BLOCK.C.
 - Convert most of assembly language function to C.
 - Redo all dialog and text position.
 
