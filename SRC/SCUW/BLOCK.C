@@ -45,6 +45,8 @@
 
 #include "block.h"
 
+void freeblk( FILE *p_file, struct line_node *p_space, struct line_node *p_currentline, struct line_node *p_freeline, unsigned char *p_textstr );
+
 void toggleblk( void ) {
 	dispblock = !dispblock;
 	pagecomplete = NO;
@@ -351,12 +353,14 @@ struct line_node *rdfiletospace( char *p_filename ) {
 
 		text_str = ( unsigned char * ) malloc( MAXCOL * sizeof( unsigned char ) );
 		if ( text_str == NULL ) {
-			goto no_mem_avail;
+			freeblk( fip, space, currentline, freeline, text_str );
+			return( NULL );
 		}
 
 		space = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 		if ( space == NULL ) {
-			goto no_mem_avail;
+			freeblk( fip, space, currentline, freeline, text_str );
+			return( NULL );
 		}
 
 		space->next = space;
@@ -368,7 +372,8 @@ struct line_node *rdfiletospace( char *p_filename ) {
 		space->text = ( unsigned char * ) malloc( 1 );
 
 		if ( space->text == NULL ) {
-			goto no_mem_avail;
+			freeblk( fip, space, currentline, freeline, text_str );
+			return( NULL );
 		}
 
 		*( space->text ) = '\0';
@@ -396,7 +401,8 @@ struct line_node *rdfiletospace( char *p_filename ) {
 				space->text = ( unsigned char * ) malloc( strlen( text_str ) + 1 );
 
 				if ( space->text == NULL ) {
-					goto no_mem_avail;
+					freeblk( fip, space, currentline, freeline, text_str );
+					return( NULL );
 				}
 
 				if ( !stdcode ) {
@@ -416,7 +422,8 @@ struct line_node *rdfiletospace( char *p_filename ) {
 					newline = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 
 					if ( newline == NULL ) {
-						goto no_mem_avail;
+						freeblk( fip, space, currentline, freeline, text_str );
+						return( NULL );
 					}
 
 					newline->text = NULL;
@@ -446,7 +453,8 @@ struct line_node *rdfiletospace( char *p_filename ) {
 					newline->text = ( unsigned char * ) malloc( strlen( text_str ) + 1 );
 
 					if ( newline->text == NULL ) {
-						goto no_mem_avail;
+						freeblk( fip, space, currentline, freeline, text_str );
+						return( NULL );
 					}
 
 					if ( !stdcode ) {
@@ -466,50 +474,55 @@ struct line_node *rdfiletospace( char *p_filename ) {
 		return( space );
 	} else {
 		errorsound( );
+
 		blockmsg( 5 );
 		dispstrhgc( "ไม่พบแฟ้มข้อมูลนี้ ! กด <ESC> เพื่อทำงานต่อ", ( 14 + center_factor ) + 10, 5, REVERSEATTR );
+
 		while ( ebioskey( 0 ) != ESCKEY );
 		return( NULL );
 	}
+}
 
-no_mem_avail:
-	fclose( fip );
+/* Free memory for rdfiletospace() if no memory available. */
+void freeblk( FILE *p_file, struct line_node *p_space, struct line_node *p_currentline, struct line_node *p_freeline, unsigned char *p_textstr ) {
+	fclose( p_file );
+
 	errorsound( );
+
 	blockmsg( 5 );
 	dispstrhgc( "หน่วยความจำไม่พอ ! กด <ESC> เพื่อทำงานต่อ", ( 14 + center_factor ) + 8, 5, REVERSEATTR );
+
 	while ( ebioskey( 0 ) != ESCKEY );
 	dispstrhgc( "กำลังคืนหน่วยความจำให้ระบบ กรุณารอสักครู่ ...", ( 14 + center_factor ) + 8, 6, REVERSEATTR );
-	if ( space != NULL ) {
-		currentline = space->next;
-		while ( currentline != space ) {
-			freeline = currentline;
-			currentline = currentline->next;
-			if ( freeline->text != NULL ) {
-				free( freeline->text );
+	if ( p_space != NULL ) {
+		p_currentline = p_space->next;
+		while ( p_currentline != p_space ) {
+			p_freeline = p_currentline;
+			p_currentline = p_currentline->next;
+			if ( p_freeline->text != NULL ) {
+				free( p_freeline->text );
 			}
 #ifdef WANT_TO_USE_GRAPH
-			if ( freeline->graph != NULL ) {
-				free( freeline->graph );
+			if ( p_freeline->graph != NULL ) {
+				free( p_freeline->graph );
 			}
 #endif
-			free( freeline );
+			free( p_freeline );
 		}
-		if ( space->text != NULL ) {
-			free( space->text );
+		if ( p_space->text != NULL ) {
+			free( p_space->text );
 		}
 #ifdef WANT_TO_USE_GRAPH
-		if ( space->graph != NULL ) {
-			free( space->graph );
+		if ( p_space->graph != NULL ) {
+			free( p_space->graph );
 		}
 #endif
-		free( space );
+		free( p_space );
 	}
 
-	if ( text_str != NULL ) {
-		free( text_str );
+	if ( p_textstr != NULL ) {
+		free( p_textstr );
 	}
-
-	return( NULL );
 }
 
 unsigned int spacesize( struct line_node *p_space ) {
