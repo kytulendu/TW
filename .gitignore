@@ -4,6 +4,8 @@
 *.user
 *.EXE
 *.ERR
+*.db
+*.opendb
 SRC/COMMON/*.OBJ
 SRC/SCUW/*.OBJ
 SRC/SCUW/THAISYLS/*.OBJ
