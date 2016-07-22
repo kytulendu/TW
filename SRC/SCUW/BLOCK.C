@@ -575,7 +575,7 @@ unsigned long getfilesize( void ) {
 	struct line_node *templine = sentinel->next;
 
 	unsigned long fsize = 0;
-	unsigned int lineno = 0;
+	unsigned int line = 0;
 
 	keepline = templine;
 	if ( templine == NULL ) {
@@ -583,19 +583,19 @@ unsigned long getfilesize( void ) {
 		dispstrhgc( "getfilesize() error", 1, 1, REVERSEATTR );
 		ebioskey( 0 );
 	}
-	++lineno;
+	++line;
 	while ( templine->next != sentinel ) {
 		fsize = fsize + strlen( templine->text ) + 2;
 		if ( templine->wrap == YES ) {
 			fsize++;
 		}
 		templine = templine->next;
-		++lineno;
+		++line;
 
 		if ( templine == NULL ) {
 			dispstrhgc( "getfilesize() error", 1, 1, REVERSEATTR );
 			dispstrhgc( keepline->text, 1, 2, REVERSEATTR );
-			dispprintf( 1, 3, REVERSEATTR, "Line no = %u", lineno );
+			dispprintf( 1, 3, REVERSEATTR, "Line no = %u", line );
 			ebioskey( 0 );
 			settext( );
 			exit( EXIT_FAILURE );
