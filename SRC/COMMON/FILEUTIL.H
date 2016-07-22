@@ -21,14 +21,14 @@ search_file_mode find_file( char *p_filename, char *p_searchpath );
 *								1 (YES), have wildcard. */
 int havewild( char *p_filename );
 
-/** Read screen font from current dir first, if not found try reading from searchpath
+/** Read screen font from current dir first, if not found try reading from searchpath.
 *   Tue  08-01-1989  13:52:17
 *   \param[in]  p_fontbuffer	Font buffer array.
 *   \param[in]  p_fontname		Font file name to load.
 *   \param[in]  p_searchpath	Path to search for given font file. */
 void readscrfont( void *p_fontbuffer, char *p_fontname, char *p_searchpath );
 
-/** Error handler */
+/** Error handler. */
 int handler( int errval, int ax, int bp, int si );
 
 #endif /* COMMON_FILEUTIL_H_INCLUDED */

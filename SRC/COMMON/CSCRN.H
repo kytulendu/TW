@@ -80,7 +80,7 @@ void showerrno( void );
 *  \return unsigned char		Pointer to content of screen. */
 unsigned char *savescrn( int p_xStart, int p_yStart, int p_xEnd, int  p_yEnd );
 
-/** Restore content of screen..
+/** Restore content of screen.
 *  \param[in]  p_scrnindex		Pointer to saved screen.
 *  \param[in]  p_xStart			Vertical position of start point.
 *  \param[in]  p_yStart			Horizontal position of start point.
