@@ -45,7 +45,7 @@
 
 #include "block.h"
 
-void freeblk( FILE *p_file, struct line_node *p_space, struct line_node *p_currentline, struct line_node *p_freeline, unsigned char *p_textstr );
+void freeblk( FILE *p_file, struct line_node *p_space, struct line_node *p_currentline, unsigned char *p_textstr );
 
 void toggleblk( void ) {
 	dispblock = !dispblock;
@@ -343,7 +343,6 @@ struct line_node *rdfiletospace( char *p_filename ) {
 	struct line_node *space;
 	struct line_node *newline;
 	struct line_node *currentline;
-	struct line_node *freeline;
 	unsigned char *text_str;
 
 	fip = fopen( p_filename, "rt" );
@@ -353,13 +352,13 @@ struct line_node *rdfiletospace( char *p_filename ) {
 
 		text_str = ( unsigned char * ) malloc( MAXCOL * sizeof( unsigned char ) );
 		if ( text_str == NULL ) {
-			freeblk( fip, space, currentline, freeline, text_str );
+			freeblk( fip, NULL, NULL, text_str );
 			return( NULL );
 		}
 
 		space = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 		if ( space == NULL ) {
-			freeblk( fip, space, currentline, freeline, text_str );
+			freeblk( fip, NULL, NULL, text_str );
 			return( NULL );
 		}
 
@@ -372,7 +371,7 @@ struct line_node *rdfiletospace( char *p_filename ) {
 		space->text = ( unsigned char * ) malloc( 1 );
 
 		if ( space->text == NULL ) {
-			freeblk( fip, space, currentline, freeline, text_str );
+			freeblk( fip, space, NULL, text_str );
 			return( NULL );
 		}
 
@@ -401,7 +400,7 @@ struct line_node *rdfiletospace( char *p_filename ) {
 				space->text = ( unsigned char * ) malloc( strlen( text_str ) + 1 );
 
 				if ( space->text == NULL ) {
-					freeblk( fip, space, currentline, freeline, text_str );
+					freeblk( fip, space, NULL, text_str );
 					return( NULL );
 				}
 
@@ -422,7 +421,7 @@ struct line_node *rdfiletospace( char *p_filename ) {
 					newline = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 
 					if ( newline == NULL ) {
-						freeblk( fip, space, currentline, freeline, text_str );
+						freeblk( fip, space, currentline, text_str );
 						return( NULL );
 					}
 
@@ -453,7 +452,7 @@ struct line_node *rdfiletospace( char *p_filename ) {
 					newline->text = ( unsigned char * ) malloc( strlen( text_str ) + 1 );
 
 					if ( newline->text == NULL ) {
-						freeblk( fip, space, currentline, freeline, text_str );
+						freeblk( fip, space, currentline, text_str );
 						return( NULL );
 					}
 
@@ -484,7 +483,9 @@ struct line_node *rdfiletospace( char *p_filename ) {
 }
 
 /* Free memory for rdfiletospace() if no memory available. */
-void freeblk( FILE *p_file, struct line_node *p_space, struct line_node *p_currentline, struct line_node *p_freeline, unsigned char *p_textstr ) {
+void freeblk( FILE *p_file, struct line_node *p_space, struct line_node *p_currentline, unsigned char *p_textstr ) {
+	struct line_node *freeline;
+
 	fclose( p_file );
 
 	errorsound( );
@@ -497,17 +498,17 @@ void freeblk( FILE *p_file, struct line_node *p_space, struct line_node *p_curre
 	if ( p_space != NULL ) {
 		p_currentline = p_space->next;
 		while ( p_currentline != p_space ) {
-			p_freeline = p_currentline;
+			freeline = p_currentline;
 			p_currentline = p_currentline->next;
-			if ( p_freeline->text != NULL ) {
-				free( p_freeline->text );
+			if ( freeline->text != NULL ) {
+				free( freeline->text );
 			}
 #ifdef WANT_TO_USE_GRAPH
-			if ( p_freeline->graph != NULL ) {
-				free( p_freeline->graph );
+			if ( freeline->graph != NULL ) {
+				free( freeline->graph );
 			}
 #endif
-			free( p_freeline );
+			free( freeline );
 		}
 		if ( p_space->text != NULL ) {
 			free( p_space->text );
