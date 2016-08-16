@@ -447,7 +447,8 @@ int ovrwrite_char( unsigned char p_char, unsigned int *p_xCursorPos, unsigned in
 
 void insertreturn( struct line_node *p_line, unsigned int p_col ) {
 	font_attr font = NORMALATTR;
-	unsigned char fontcode[9], *text;
+	unsigned char fontcode[9];
+	unsigned char *text;
 	struct line_node *line2;
 	register int i;
 

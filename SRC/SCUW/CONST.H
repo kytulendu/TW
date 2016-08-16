@@ -10,8 +10,12 @@
 #ifndef SCUW_CONST_H_INCLUDED
 #define SCUW_CONST_H_INCLUDED
 
+/* Max Character per line.
+*  For 4 level Thai word, ( 4 * 256 character ) = 1024. */
 #define MAXCOL 1024
+/* Maximum right margin. */
 #define MAXRMAR 256
+
 #define ERROR 1
 
 #define WRAPCODE 0x8d
