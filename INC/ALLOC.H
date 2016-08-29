@@ -6,9 +6,13 @@
 	All Rights Reserved.
 */
 
+#ifndef far
+#define far
+#endif
+
 #if !defined(__ALLOC_H)
 #define __ALLOC_H
 
-unsigned long  farcoreleft( void );
+unsigned long farcoreleft( void );
 
 #endif  /* __ALLOC_H */

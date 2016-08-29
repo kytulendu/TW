@@ -16,6 +16,13 @@
 #define EXTERN extern
 #endif
 
+/* Just a thing for test compile with Visual Studio :P */
+#ifdef _WIN32
+#ifndef far
+#define far
+#endif
+#endif
+
 #ifndef DEFINE_VAR
 extern int scrmode;				/* Graphic mode. */
 extern int shrink_factor;		/* Columns decreased. 90 column : 10, 80 column : 0 ) */
