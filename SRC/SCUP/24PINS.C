@@ -47,21 +47,6 @@ FONTSCR *cp_lqscr_italic_comb;
 /* define control byte for character attribute */
 unsigned char cp_control;
 
-void execerror( char *s, char *t ) {
-	char se[80];
-	strcpy( se, s );
-	strcat( se, t );
-	disperror( se );
-	/* settext();              *//* Change to text mode */
-	/*
-	fprintf( stderr, "%s", s );
-	if ( t ) {
-		fprintf( stderr, "%s", t );
-	}*/
-	settext( );
-	exit( EXIT_FAILURE );
-}
-
 void cp_clearbuf( ) {
 	memset( cp_buf.uppest, CP_BLANK, CP_MAX_TEXTBUF );
 	memset( cp_buf.upper, CP_BLANK, CP_MAX_TEXTBUF );

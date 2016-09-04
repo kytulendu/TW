@@ -142,14 +142,6 @@ extern unsigned char cp_control;
 
 /* ----- define prototype of function in 24pins.c module ----- */
 
-/** Function      : execerror
-*   Description   : report error and terminate program
-*   Parameters    : s - general error
-*                   t - extended error
-*   Return values : NONE
-*   Remark        : This function causes the program to stop */
-void execerror( char *s, char *t );
-
 /** Function      : cp_clearbuf
 *   Description   : clear 4 lines buffer
 *   Parameters    : NONE
