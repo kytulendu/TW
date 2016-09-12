@@ -54,13 +54,14 @@ void graph_detecthardware( graphics_hardware *mode_ptr ) {
 		}
 		if ( is_mcga( ) ) {
 			*mode_ptr = MCGA;
-		} else {								/* CGA or ATT400 */
-			/* AT&T 6300 / Olivetti M24 test */
-			if ( is_att400( ) ) {
-				*mode_ptr = ATT400;
-			} else {
-				*mode_ptr = CGA;
-			}
+			return;
+		}
+
+		/* CGA or ATT400 */
+		if ( is_att400( ) ) {					/* AT&T 6300 / Olivetti M24 test */
+			*mode_ptr = ATT400;
+		} else {
+			*mode_ptr = CGA;
 		}
 		return;
 	}
