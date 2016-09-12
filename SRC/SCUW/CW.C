@@ -93,7 +93,7 @@ void destroynode( void ) {
 	free( sentinel );
 }
 
-unsigned menu_to_key( register unsigned int p_curmenu ) {
+unsigned int menu_to_key( register unsigned int p_curmenu ) {
 	register int i;
 
 	for ( i = 0; ( command_tab[i] != p_curmenu ) && ( command_tab[i] != 0 ); i += 2 );
