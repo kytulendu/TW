@@ -90,6 +90,7 @@ int getcurrentmode( ) {
 
 void setgraph( void ) {
 	static int first = 1;
+	size_t buffersize = 0;
 
 	if ( !first ) {
 		( *setgraph_ptr )( );
@@ -100,13 +101,28 @@ void setgraph( void ) {
 #ifdef EDA_VERSION
 	scrmode = DETECT;
 #endif
-	if ( ( screen_buffptr = malloc( ( size_t ) 38400L ) ) == NULL ) {
-		fputs( "Not enough memory\n", stderr );
-		exit( EXIT_FAILURE );
-	}
 
 	if ( scrmode == DETECT ) {
 		graph_detecthardware( ( graphics_hardware * ) &scrmode );
+	}
+
+	switch ( scrmode ) {
+	case HERCMONO:
+		buffersize = 31320L;
+		break;
+	case ATT400:
+		buffersize = 32000L;
+		break;
+	case CGA:
+		buffersize = 16000L;
+		break;
+	default:
+		buffersize = 38400L;
+	}
+
+	if ( ( screen_buffptr = malloc( buffersize ) ) == NULL ) {
+		fputs( "Not enough memory\n", stderr );
+		exit( EXIT_FAILURE );
 	}
 
 #ifdef EDA_VERSION
