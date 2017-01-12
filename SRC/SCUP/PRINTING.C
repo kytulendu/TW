@@ -48,25 +48,25 @@
 void initializebufferandfont( void );
 
 /**  */
-void strfilter( char *s, char cutout );
+void strfilter( char *p_s, char p_cutout );
 
 /**  */
 void seekbeginline( void );
 
 /**  */
-void printtitle( char *str, int loc );
+void printtitle( char *p_str, int p_loc );
 
 /**  */
-char *adjust( char *c, int k );
+char *adjust( char *p_c, int p_k );
 
 /**  */
-void pagewait( register int i );
+void pagewait( register int p_i );
 
 /**  */
-void linewait( int *printquit );
+void linewait( int *p_printquit );
 
 /**  */
-void preprinterloadline( char *s );
+void preprinterloadline( char *p_s );
 
 /* Modified: Suttipong Kanakakorn Tue  08-15-1989  00:28:34 */
 void initializebufferandfont( void ) {
@@ -104,7 +104,8 @@ void printing( void ) {
 #ifdef WANT_TO_USE_GRAPH
 	extern int pic_print;
 #endif
-	int i, j;
+	int i;
+	int j;
 	int printquit;
 	char st[5];
 	char s[500];
@@ -141,10 +142,10 @@ void printing( void ) {
 				dotcommand( &p[j] );						/* do dotcommand then read next */
 				if ( newpage == YES ) {						/* page break dotcmd (.pa ,.cp) found */
 					newpage = NO;							/* reset pagebreak status */
-					/*
-					PrinterSkipLine( ( ( 29 + 1 ) - ( locpagetitle != 0 ) - ( locheading != 0 )
-						- ( locfooting != 0 ) - curline ) * 2 );
-					*/
+															/*
+															PrinterSkipLine( ( ( 29 + 1 ) - ( locpagetitle != 0 ) - ( locheading != 0 )
+															- ( locfooting != 0 ) - curline ) * 2 );
+															*/
 					skip_line( ( userlineperpage + 1 ) - curline );
 					curline = 0;
 					printtitle( footing, locfooting );
@@ -197,7 +198,7 @@ void printing( void ) {
 		if ( curline != 0 ) {
 			/*
 			PrinterSkipLine( ( ( 29 + 1 ) - ( locpagetitle != 0 ) - ( locheading != 0 )
-				- ( locfooting != 0 ) - curline ) * 2 ); */ /* skip to bottom */
+			- ( locfooting != 0 ) - curline ) * 2 ); */ /* skip to bottom */
 			skip_line( ( userlineperpage + 1 ) - curline );
 			printtitle( footing, locfooting );
 			PrinterFormFeed( );
@@ -215,64 +216,55 @@ void printing( void ) {
 	fieldnameexist = NO;									/* .rv successful           flag Reset  */
 }
 
-void marginset( char *t ) {
+void marginset( char *p_t ) {
 	int cw = 1;											/* 2 for enlarge attr, 1 for another */
 	char p[500];
-	int left, i, k;
+	int left;
+	int i;
+	int k;
 	k = ( leftmargin == 1 ) ? 0 : leftmargin;				/* user remind start at 1 not 0 */
 	left = k;												/* k is pointer , left is counter */
 	for ( i = 0; i < 500; i++ ) { p[i] = ' '; }				/* set all blank  */
 	i = 0;
-	while ( t[i] != '\0' ) {
-		if ( t[i] < 0x20 ) {
-			if ( t[i] == ENLARGE ) {
-				cw = ( cw == 2 ) ? 1 : 2; 
+	while ( p_t[i] != '\0' ) {
+		if ( p_t[i] < 0x20 ) {
+			if ( p_t[i] == ENLARGE ) {
+				cw = ( cw == 2 ) ? 1 : 2;
 			}
 		} else {
-			if ( whatlevel( t[i] ) == 0 ) {
+			if ( whatlevel( p_t[i] ) == 0 ) {
 				left += cw;									/* increment if normal level */
 				if ( left > rightmargin ) {
 					break;
 				}
 			}
 		}
-		p[k++] = t[i++];
+		p[k++] = p_t[i++];
 	}
 	p[k] = '\0';
-	strcpy( t, p );
+	strcpy( p_t, p );
 }
 
 /* modified by Suttipong Kanakakorn */
-void contostd( char *t ) {
-	while ( *t ) {
-		*t = kutostd( *t );
-		t++;
+void contostd( char *p_t ) {
+	while ( *p_t ) {
+		*p_t = kutostd( *p_t );
+		p_t++;
 	}
 }
 
 /* modified by Suttipong Kanakakorn */
-void strfilter( char *s, char cutout ) {
+void strfilter( char *p_s, char p_cutout ) {
 	char *r;
 
-	r = s;
-	while ( *s ) {
-		if ( *s != cutout ) {
-			*r++ = *s;
+	r = p_s;
+	while ( *p_s ) {
+		if ( *p_s != p_cutout ) {
+			*r++ = *p_s;
 		}
-		s++;
+		p_s++;
 	}
 	*r = '\0';
-	/*
-	int i, j;
-	i = j = 0;
-	while ( s[i] != '\0' ) {
-		if ( s[i] != cutout ) {
-			s[j++] = s[i];
-		}
-		i++;
-	}
-	s[j] = s[i];
-	*/
 }
 
 void seekbeginline( void ) {
@@ -293,7 +285,7 @@ void seekbeginline( void ) {
 						strcpy( temp, &temp[blankskip( temp )] );
 						temp[strlen( temp ) - 1] = '\0';
 						cdtpgbrk = ( atoi( temp ) > userlineperpage ) ?
-						userlineperpage : atoi( temp );
+							userlineperpage : atoi( temp );
 						if ( linecount + cdtpgbrk > userlineperpage ) {
 							pagecount++;
 							linecount = 0;
@@ -307,7 +299,7 @@ void seekbeginline( void ) {
 					linecount = 0;
 				}
 			}
-			if ( pagecount >= pagebegin ) { 
+			if ( pagecount >= pagebegin ) {
 				break;
 			}
 		}
@@ -315,11 +307,11 @@ void seekbeginline( void ) {
 }
 
 /* modify by Suttipong Kanakakorn Wed  08-30-1989  00:32:38 */
-void printtitle( char *str, int loc ) {
+void printtitle( char *p_str, int p_loc ) {
 	int newloc;
 	char s[500];
-	if ( loc != 0 ) {
-		switch ( loc ) {
+	if ( p_loc != 0 ) {
+		switch ( p_loc ) {
 		case 4:												/* odd <-> right  even <-> left  */
 			newloc = ( curpage % 2 == 0 ) ? 1 : 3;
 			break;
@@ -327,43 +319,43 @@ void printtitle( char *str, int loc ) {
 			newloc = ( curpage % 2 == 0 ) ? 3 : 1;
 			break;
 		default:
-			newloc = loc;
+			newloc = p_loc;
 			break;
 		}
-		strcpy( s, adjust( str, newloc ) );					/* adjust location LEFT,RIGHT,MIDDLE */
+		strcpy( s, adjust( p_str, newloc ) );					/* adjust location LEFT,RIGHT,MIDDLE */
 		dispprintf( 2, 13, REVERSEATTR, "%-77.77s", s );
 		preprinterloadline( s );
 	}
 }
 
-char *setpageformat( char *form, int max ) {
+char *setpageformat( char *p_form, int p_max ) {
 	char s[500];
-	int i, j;
-	i = 0;
-	j = 0;
-	while ( max-- > 0 ) {
-		if ( form[i] == '\0' ) {
+	int i = 0;
+	int j = 0;
+
+	while ( p_max-- > 0 ) {
+		if ( p_form[i] == '\0' ) {
 			s[j++] = ' ';
 			s[j++] = '%';
 			s[j++] = 'd';
 			s[j] = '\0';
 			return ( s );
 		} else {
-			if ( form[i] == '%' ) {
-				s[j++] = form[i++];
+			if ( p_form[i] == '%' ) {
+				s[j++] = p_form[i++];
 				s[j++] = 'd';
-				while ( form[i] != '\0' ) {
-					if ( form[i] == '%' ) {
+				while ( p_form[i] != '\0' ) {
+					if ( p_form[i] == '%' ) {
 						s[j++] = ' ';  /* ignore the %  */
 						i++;
 					} else {
-						s[j++] = form[i++];
+						s[j++] = p_form[i++];
 					}
 				}
 				s[j] = '\0';
 				return ( s );
 			} else {
-				s[j++] = form[i++];
+				s[j++] = p_form[i++];
 			}
 		}
 	}
@@ -371,50 +363,50 @@ char *setpageformat( char *form, int max ) {
 	return ( s );
 }
 
-char *adjust( char *c, int k ) {
+char *adjust( char *p_c, int p_k ) {
 	int maxpaper;
-	int len, i, j;
+	int len = 0;
+	int i = 0;
+	int j;
 	char s[500];
-	maxpaper = ( smallpaper ) ? 80 : 136;
-	i = 0;
-	len = 0;												/* find actual thai string length */
-	while ( c[i] != '\0' ) {
-		len = ( whatlevel( c[i++] ) == 0 ) ? len + 1 : len; 
+	maxpaper = ( smallpaper ) ? 80 : 136;			/* find actual thai string length */
+	while ( p_c[i] != '\0' ) {
+		len = ( whatlevel( p_c[i++] ) == 0 ) ? len + 1 : len;
 	}
 	for ( i = 0; i < maxpaper; i++ ) {
 		s[i] = ' ';
 	}
 	s[maxpaper] = '\0';
-	switch ( k ) {
+	switch ( p_k ) {
 	case 1:											/* left   justify */
-		return( c );
+		return( p_c );
 	case 2:											/* center justify */
 		j = ( maxpaper - 1 - len ) / 2;
 		i = 0;
-		while ( c[i] != '\0' ) {
-			s[j++] = c[i++];
+		while ( p_c[i] != '\0' ) {
+			s[j++] = p_c[i++];
 		}
 		s[j] = '\0';
 		return( s );
 	case 3:											/* right  justify */
 		j = ( maxpaper - 1 - len );
 		i = 0;
-		while ( c[i] != '\0' ) {
-			s[j++] = c[i++];
+		while ( p_c[i] != '\0' ) {
+			s[j++] = p_c[i++];
 		}
 		s[j] = '\0';
 		return ( s );
 	default:
-		return ( c );
+		return ( p_c );
 	}
 }
 
 /* modify by Suttipong Kanakakorn Mon  08-28-1989  23:36:26 */
-void pagewait( register int i ) {
+void pagewait( register int p_i ) {
 	if ( pagebreak == YES ) {
-		if ( i == 0 || i == 1 ) {
+		if ( p_i == 0 || p_i == 1 ) {
 			clear_message( );
-			if ( i == 0 ) {
+			if ( p_i == 0 ) {
 				dispstrhgc( "กดปุ่มใด ๆ เมื่อหน้ากระดาษพร้อม ...", 30, 13, 2 );
 			} else {
 				dispstrhgc( "สิ้นสุดการพิมพ์แต่ละชุด กดปุ่มใด ๆ ...", 30, 13, 2 );
@@ -427,15 +419,15 @@ void pagewait( register int i ) {
 }
 
 /* modify by Suttipong Kanakakorn Mon  08-28-1989  23:36:41 */
-void linewait( int *printquit ) {
+void linewait( int *p_printquit ) {
 	char i;
 	if ( keypressed( ) ) {
 		while ( keypressed( ) ) {
 			i = tolower( ebioskey( 0 ) & 0x00ff );
 			switch ( i ) {
 			case 'p':
-				while ( keypressed( ) ) { 
-					ebioskey( 0 );							/* clear KBD buffer */ 
+				while ( keypressed( ) ) {
+					ebioskey( 0 );							/* clear KBD buffer */
 				}
 				clear_message( );
 				dispstrhgc( "กดปุ่ม < P > เพื่อพิมพ์ต่อ, < Q > เลิกพิมพ์...",
@@ -445,11 +437,11 @@ void linewait( int *printquit ) {
 				} while ( i != 'p' && i != 'q' );
 				clear_message( );
 				if ( i == 'q' ) {
-					*printquit = YES;
+					*p_printquit = YES;
 				}
 				break;
 			case 'q':
-				*printquit = YES;							/* quit printing */
+				*p_printquit = YES;							/* quit printing */
 				while ( keypressed( ) ) { ebioskey( 0 ); }	/* clear KBD buffer */
 				break;
 			}
@@ -458,13 +450,15 @@ void linewait( int *printquit ) {
 }
 
 /*
-void findthreeindex( char *s, int *uindex, int *mindex, int *lindex ) {
-	int i, j, cadjust;
-	cadjust = 1;
-	i = *uindex = *mindex = *lindex = 0;
-	while ( s[i] != '\0' ) {
-		if ( s[i] < ' ' ) {
-			if ( s[i] == ENLARGE ) { // if enlarge col to add = 2 //
+void findthreeindex( char *p_s, int *p_uindex, int *p_mindex, int *p_lindex ) {
+	int i;
+	int j;
+	int cadjust = 1;
+
+	i = *p_uindex = *p_mindex = *p_lindex = 0;
+	while ( p_s[i] != '\0' ) {
+		if ( p_s[i] < ' ' ) {
+			if ( p_s[i] == ENLARGE ) { // if enlarge col to add = 2 //
 				if ( cadjust == 1 ) {
 					cadjust = 2;
 				} else {
@@ -472,16 +466,16 @@ void findthreeindex( char *s, int *uindex, int *mindex, int *lindex ) {
 				}
 			}
 		} else {
-			j = s[i];
+			j = p_s[i];
 			switch ( islevel( &j ) ) {
 			case 1:
-				*uindex = *mindex;
+				*p_uindex = *p_mindex;
 				break;
 			case 2:
-				*mindex += cadjust;
+				*p_mindex += cadjust;
 				break;
 			case 3:
-				*lindex = *mindex;
+				*p_lindex = *p_mindex;
 				break;
 			}
 		}
@@ -490,7 +484,7 @@ void findthreeindex( char *s, int *uindex, int *mindex, int *lindex ) {
 }
 */
 
-void preprinterloadline( char *s ) {
+void preprinterloadline( char *p_s ) {
 #ifdef WANT_TO_USE_GRAPH
 	extern int pic_print;
 #endif
@@ -498,29 +492,29 @@ void preprinterloadline( char *s ) {
 	int mindex;
 	if ( graphicprint == YES ) {
 		if ( printer24pin == YES ) {
-			/* findthreeindex( s, &uindex, &mindex, &lindex ); */
+			/* findthreeindex( p_s, &uindex, &mindex, &lindex ); */
 			cp_clearbuf( );
-			cp_split4level( s );
+			cp_split4level( p_s );
 			mindex = cp_printlq( );
 			PrintThree24pin( mindex, mindex, mindex );
 		} else {
-			PrinterLoadLine9pin( s );
+			PrinterLoadLine9pin( p_s );
 		}
 	} else {
 #ifdef WANT_TO_USE_GRAPH
 		if ( pic_print == NO ) {
 #endif
-			PrinterLoadLineText( s );
+			PrinterLoadLineText( p_s );
 #ifdef WANT_TO_USE_GRAPH
 		} else {
 			if ( printer24pin == YES ) {
-				/* findthreeindex( s, &uindex, &mindex, &lindex ); */
+				/* findthreeindex( p_s, &uindex, &mindex, &lindex ); */
 				cp_clearbuf( );
-				cp_split4level( s );
+				cp_split4level( p_s );
 				mindex = cp_printlq( );
 				PrintThree24pin( mindex, mindex, mindex );
 			} else {
-				PrinterLoadLine9pin( s );
+				PrinterLoadLine9pin( p_s );
 			}
 		}
 #endif

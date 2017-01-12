@@ -69,23 +69,23 @@ void cp_init_grpbuf( ) {
 	}
 }
 
-void cp_combine_fontlq( FONT *combcode, FONT *sara, FONT *wannayok ) {
+void cp_combine_fontlq( FONT *p_combcode, FONT *p_sara, FONT *p_wannayok ) {
 	int index;
 
 	/* copy wannayok to combcode */
-	memcpy( combcode, ( ( char * ) wannayok ) + 1, CP_LQ_FONTSIZE );
+	memcpy( p_combcode, ( ( char * ) p_wannayok ) + 1, CP_LQ_FONTSIZE );
 
 	/* clear byte #2 in every column */
 	for ( index = 0; index < CP_LQCOL; index++ ) {
-		combcode->font[index][2] = 0;
+		p_combcode->font[index][2] = 0;
 	}
 	/* COMBINE SARA AND COMBCODE */
 	for ( index = 0; index < CP_LQ_FONTSIZE; index++ ) {
-		combcode->font[0][index] |= sara->font[0][index];
+		p_combcode->font[0][index] |= p_sara->font[0][index];
 	}
 }
 
-FONT *cp_create_lqcombine( FONT *fntable ) {
+FONT *cp_create_lqcombine( FONT *p_fntable ) {
 	int x, y;												/* index to lq combine code table */
 	int index;												/* index to address in lq combine */
 	static unsigned char *sara = "—”‘’÷◊";					/* sara set */
@@ -97,14 +97,14 @@ FONT *cp_create_lqcombine( FONT *fntable ) {
 		for ( y = 0; y < 5; y++ ) {
 			index = 5 * x + y;
 			cp_combine_fontlq( fontptr + index,
-				cp_lq_font( fntable, sara[x] ),
-				cp_lq_font( fntable, wannayok[y] ) );
+				cp_lq_font( p_fntable, sara[x] ),
+				cp_lq_font( p_fntable, wannayok[y] ) );
 		};
 	};
 	return ( fontptr );
 }
 
-FONTSCR *cp_loadfont_lqscr( char *fname ) {
+FONTSCR *cp_loadfont_lqscr( char *p_filename ) {
 	FONTSCR *p;
 	int  fd;
 
@@ -112,34 +112,32 @@ FONTSCR *cp_loadfont_lqscr( char *fname ) {
 	if ( p == NULL ) {
 		execerror( "Insufficient memory\n", "" );
 	}
-	fd = open( fname, O_RDONLY | O_BINARY );
+	fd = open( p_filename, O_RDONLY | O_BINARY );
 	if ( fd < 0 ) {
-		execerror( "Printer font file not found : ", fname );
+		execerror( "Printer font file not found : ", p_filename );
 	}
 	read( fd, p, CP_LQSCR_TABSIZE );
 	close( fd );
 	return ( p );
 }
 
-void cp_combine_fontlqscr( FONTSCR *combcode, FONTSCR *sara, FONTSCR *wannayok ) {
+void cp_combine_fontlqscr( FONTSCR *p_combcode, FONTSCR *p_sara, FONTSCR *p_wannayok ) {
 	int index;
 
 	/* clear combcode */
-	memset( combcode, 0, CP_LQSCR_FONTSIZE );
+	memset( p_combcode, 0, CP_LQSCR_FONTSIZE );
 
 	/* combine sara and wannayok with shifting up wannayok 6 bits
 	and or with sara */
 	for ( index = 0; index < CP_LQCOL; index++ ) {
-		combcode->font[index][0] = 0x0F &
-			( ( wannayok->font[index][1] >> 3 ) |
-			( sara->font[index][0] ) );
-		combcode->font[index][1] = ( ( wannayok->font[index][1] << 5 ) |
-			( sara->font[index][1] ) );
+		p_combcode->font[index][0] = 0x0F & ( ( p_wannayok->font[index][1] >> 3 ) | ( p_sara->font[index][0] ) );
+		p_combcode->font[index][1] = ( ( p_wannayok->font[index][1] << 5 ) | ( p_sara->font[index][1] ) );
 	};
 }
 
-FONTSCR *cp_create_lqscrcombine( FONTSCR *fntable ) {
-	int x, y;												/* index to lq combine code table */
+FONTSCR *cp_create_lqscrcombine( FONTSCR *p_fntable ) {
+	int x;
+	int y;												/* index to lq combine code table */
 	static unsigned char *sara = "—”‘’÷◊";					/* sara set */
 	static unsigned char *wannayok = "ËÈÍÎÏ";				/* wannayok */
 	int index;												/* index to address in lq combine */
@@ -150,8 +148,8 @@ FONTSCR *cp_create_lqscrcombine( FONTSCR *fntable ) {
 		for ( y = 0; y < 5; y++ ) {
 			index = 5 * x + y;
 			cp_combine_fontlqscr( fontptr + index,
-				cp_lqscr_font( fntable, sara[x] ),
-				cp_lqscr_font( fntable, wannayok[y] ) );
+				cp_lqscr_font( p_fntable, sara[x] ),
+				cp_lqscr_font( p_fntable, wannayok[y] ) );
 		};
 	};
 	return ( fontptr );

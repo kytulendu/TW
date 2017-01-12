@@ -14,13 +14,13 @@ int find_max_line_perpage( void );
 int find_max_userline_perpage( void );
 
 /**  */
-void set_all_lineperpage( set_linespace_mode mode );
+void set_all_lineperpage( set_linespace_mode p_mode );
 
-/** feed n/216 inche or n/180 inch depend on printer, n can be any integer */
-void line_feed( unsigned int n );
+/** Feed n/216 inche or n/180 inch depend on printer, n can be any integer */
+void line_feed( unsigned int p_lines );
 
-/** skip n lines */
-void skip_line( unsigned int n );
+/** Skip n lines */
+void skip_line( unsigned int p_lines );
 
 /**  */
 char *find_lineperinch( void );

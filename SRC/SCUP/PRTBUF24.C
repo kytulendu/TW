@@ -23,30 +23,34 @@
 
 #include "prtbuf24.h"
 
-void ClearTempBuffer( int memclear ) {
-	memclear = ( memclear>maxdot * 2 ) ? maxdot * 2 : memclear;
-	memset( bupper1, 0, memclear );
-	memset( bupper2, 0, memclear );
-	memset( bupper3, 0, memclear );
-	memset( bmiddle1, 0, memclear );
-	memset( bmiddle2, 0, memclear );
-	memset( bmiddle3, 0, memclear );
-	memset( bbelow1, 0, memclear );
-	memset( bbelow2, 0, memclear );
-	memset( bbelow3, 0, memclear );
+void ClearTempBuffer( int p_memclear ) {
+	p_memclear = ( p_memclear>maxdot * 2 ) ? maxdot * 2 : p_memclear;
+	memset( bupper1, 0, p_memclear );
+	memset( bupper2, 0, p_memclear );
+	memset( bupper3, 0, p_memclear );
+	memset( bmiddle1, 0, p_memclear );
+	memset( bmiddle2, 0, p_memclear );
+	memset( bmiddle3, 0, p_memclear );
+	memset( bbelow1, 0, p_memclear );
+	memset( bbelow2, 0, p_memclear );
+	memset( bbelow3, 0, p_memclear );
 	if ( extbarprinting ) {
-		memset( extbar1, 0, memclear );
-		memset( extbar2, 0, memclear );
-		memset( extbar3, 0, memclear );
+		memset( extbar1, 0, p_memclear );
+		memset( extbar2, 0, p_memclear );
+		memset( extbar3, 0, p_memclear );
 	}
 }
 
 /*
-void TransformBuffer( int cindex ) {
-	int i, j, k, memclear;
-	ClearTempBuffer( cindex * 18 );
-	for ( i = 0, k = 0; i<cindex; i++ ) {
-		for ( j = 0; j<18; j++, k++ ) {
+void TransformBuffer( int p_cindex ) {
+	int i;
+	int j;
+	int k
+	int memclear;
+
+	ClearTempBuffer( p_cindex * 18 );
+	for ( i = 0, k = 0; i < p_cindex; i++ ) {
+		for ( j = 0; j < 18; j++, k++ ) {
 			bupper1[k] = ( cp_lqbuf.upper + i )->font[j][0];
 			bupper2[k] = ( cp_lqbuf.upper + i )->font[j][1];
 			bupper3[k] = ( cp_lqbuf.upper + i )->font[j][2];
@@ -62,14 +66,16 @@ void TransformBuffer( int cindex ) {
 */
 
 /** Use to transfrom data structure cp_lqbuf to nine one dimension array.
-*   Input parameter:  cindex = number of character to transform.
-*   Return value   :  none. */
-void TransformBuffer( int cindex ) {
-	register int i, j, k;
-	/*int memclear;*/
+*  \param[in]  p_cindex			number of character to transform. */
+void TransformBuffer( int p_cindex ) {
+	register int i;
+	register int j;
+	register int k;
+
 	FONT *p10, *p20, *p30, *p40;
 	char *p11, *p21, *p31, *p41;
-	for ( i = 0, k = 0; i<cindex; i++ ) {
+
+	for ( i = 0, k = 0; i < p_cindex; i++ ) {
 		p10 = ( cp_lqbuf.upper + i );
 		p20 = ( cp_lqbuf.middle + i );
 		p30 = ( cp_lqbuf.lower + i );
@@ -125,8 +131,11 @@ int Rtrim24( char *buf1, char *buf2, char *buf3, int left, int right ) {
 }
 
 void PrintBuffer24pin( char *buf1, char *buf2, char *buf3, int maxscan ) {
-	int left, right, length;
-	register int i, j;
+	int left;
+	int right;
+	int length;
+	register int i;
+	register int j;
 	left = Ltrim24( buf1, buf2, buf3, 0, maxscan );
 	if ( left != maxscan ) {
 		right = Rtrim24( buf1, buf2, buf3, 0, maxscan );

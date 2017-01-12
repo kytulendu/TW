@@ -94,7 +94,7 @@ char mask242[8][3] = {
 };
 */
 
-FILE *fp, *fopen( );
+FILE *fp;
 
 int fileready = NO;
 char oldfilename[MAXPATH];

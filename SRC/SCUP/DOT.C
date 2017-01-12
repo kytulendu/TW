@@ -29,39 +29,38 @@
 
 #include "dot.h"
 
-void getfieldname( char *rvstring );
-void getfieldcontent( char *string );
-int getfield( char *s1, char *s2, int pin );
-void lookup( char *field, char *content );
+void getfieldname( char *p_rvstring );
+void getfieldcontent( char *p_string );
+int getfield( char *p_s1, char *p_s2, int p_pin );
+void lookup( char *p_field, char *p_content );
 
 #define MAXNUM        20									/* number of mergefields */
 #define MAXLENGTH     80									/* maxlength of each field content */
 #define MAXNAMELENGTH 20									/* maxlength of each field name */
 
 /** Global area already defined in pmenu.c */
-extern FILE *mfp, *fopen( );
+extern FILE *mfp;
 extern char *fieldname[MAXNUM];								/* define array of fieldnames */
 extern char *fieldcontent[MAXNUM];							/* define array of strings */
 extern int fieldcount;										/* define number of fields */
 extern int stdcode;											/* define data file code used */
 
-/** Global area already defined in printvar.h */
+															/** Global area already defined in printvar.h */
 
-/** Routine to identify fieldnames  and
-*   allocate corresponding field content
-*   after get .RV command and it's parms. */
-/* Suttipong Kanakakorn Tue  11-07-1989  01:13:34
-someone forget to freemem I just avoid alloc it again only */
-void getfieldname( char *rvstring ) {
+															/** Identify fieldnames and allocate corresponding field content
+															*   after get .RV command and it's parms. */
+															/* Suttipong Kanakakorn Tue  11-07-1989  01:13:34
+															*  someone forget to freemem I just avoid alloc it again only */
+void getfieldname( char *p_rvstring ) {
 	char s[MAXNAMELENGTH];									/* field name tempolary area */
 	int pin = 0;											/* point through strings */
 	int n = 0;												/* number of fields */
 	int i = 0;
-	while ( rvstring[i] != 0 ) { i++; }
-	while ( rvstring[i] <= ' ' ) { i--; }
-	rvstring[++i] = '\0';
+	while ( p_rvstring[i] != 0 ) { i++; }
+	while ( p_rvstring[i] <= ' ' ) { i--; }
+	p_rvstring[++i] = '\0';
 	do {
-		pin = getfield( s, rvstring, pin );
+		pin = getfield( s, p_rvstring, pin );
 		if ( fieldname[n] == NULL ) {						/* avoid alloc again */
 			fieldname[n] = ( char * ) calloc( MAXNAMELENGTH, sizeof( char ) );
 			fieldcontent[n] = ( char * ) calloc( MAXLENGTH, sizeof( char ) );
@@ -72,88 +71,92 @@ void getfieldname( char *rvstring ) {
 	fieldcount = n;
 }
 
-/** Routine to collect fieldcontents
-*   after read merge file. */
-void getfieldcontent( char *string ) {
+/** Collect fieldcontents after read merge file. */
+void getfieldcontent( char *p_string ) {
 	char s[MAXLENGTH];										/* field name tempolary area */
 	int pin = 0;											/* point through strings */
 	int n = 0;												/* number of fields */
 	do {
-		pin = getfield( s, string, pin );
+		pin = getfield( s, p_string, pin );
 		strcpy( fieldcontent[n], s );						/* store in array */
 		n++;
 	} while ( pin != NULL && n < fieldcount );
 }
 
-int getfield( char *s1, char *s2, int pin ) {
+int getfield( char *p_s1, char *p_s2, int p_pin ) {
 	int i = 0;
-	while ( s2[pin] == ',' ) { pin++; }						/* skip comma */
-	while ( ( s2[pin] != ',' ) && ( s2[pin] != '\0' ) ) {
-		if ( s2[pin] >= ' ' ) {
-			s1[i] = s2[pin];
-			pin++; i++;
+	while ( p_s2[p_pin] == ',' ) { p_pin++; }						/* skip comma */
+	while ( ( p_s2[p_pin] != ',' ) && ( p_s2[p_pin] != '\0' ) ) {
+		if ( p_s2[p_pin] >= ' ' ) {
+			p_s1[i] = p_s2[p_pin];
+			p_pin++;
+			i++;
 		} else {
-			pin++;
+			p_pin++;
 		}
 	}
-	s1[i] = '\0';											/* terminate */
-	if ( s2[pin] == ',' ) {
-		return( ++pin );									/* skip comma and return */
+	p_s1[i] = '\0';											/* terminate */
+	if ( p_s2[p_pin] == ',' ) {
+		return( ++p_pin );									/* skip comma and return */
 	} else {
 		return( 0 );										/* last field reached */
 	}
 }
 
-void mailmerge( char *stringin, char *stringout ) {
-	int i, j, k, m, n;
+void mailmerge( char *p_stringin, char *p_stringout ) {
+	int i;
+	int j;
+	int k;
+	int m;
+	int n;
 	char field[20];
 	char content[40];
 	i = m = 0;
-	while ( stringin[i] != '\0' ) {
-		if ( stringin[i] == '&' ) {
+	while ( p_stringin[i] != '\0' ) {
+		if ( p_stringin[i] == '&' ) {
 			j = ++i;										/* testing string initial */
 			k = 0;											/* start merge field */
-			while ( stringin[j] != '\0' && stringin[j] != '&' ) {
-				if ( stringin[j] >= ' ' ) {
-					field[k++] = stringin[j++];
+			while ( p_stringin[j] != '\0' && p_stringin[j] != '&' ) {
+				if ( p_stringin[j] >= ' ' ) {
+					field[k++] = p_stringin[j++];
 				} else {
 					j++;
 				}
 			}
-			if ( stringin[j] == '&' ) {						/* case of merge field ( &field& ) */
+			if ( p_stringin[j] == '&' ) {						/* case of merge field ( &field& ) */
 				i = ++j;									/* mailmerge success the field comsumed */
 				field[k] = '\0';							/* terminate string */
 				lookup( field, content );					/* get field content */
 				n = 0;
 				while ( content[n] != '\0' ) {
-					stringout[m++] = content[n++];			/* store content */
+					p_stringout[m++] = content[n++];			/* store content */
 				}
 			} else {
-				stringout[m++] = '&';						/* just normal alphasan character */
+				p_stringout[m++] = '&';						/* just normal alphasan character */
 				i++;										/* consume one character ('&'). */
 			}
 		} else {
-			stringout[m++] = stringin[i++];					/* normal character */
+			p_stringout[m++] = p_stringin[i++];					/* normal character */
 		}
 	}
-	stringout[m] = '\0';
+	p_stringout[m] = '\0';
 }
 
-void lookup( char field[], char content[] ) {
+void lookup( char *p_field, char *p_content ) {
 	int i = 0;
 	int j = 0;
 	int k = 0;
-	while ( ( i < fieldcount ) && ( strcmp( field, fieldname[i] ) != 0 ) ) {
+	while ( ( i < fieldcount ) && ( strcmp( p_field, fieldname[i] ) != 0 ) ) {
 		i++;
 	}
 	if ( i != fieldcount ) {								/* found */
-		while ( ( content[j++] = fieldcontent[i][k++] ) != '\0' );
+		while ( ( p_content[j++] = fieldcontent[i][k++] ) != '\0' );
 	} else {
-		content[0] = '\0';									/* not found return null string */
+		p_content[0] = '\0';									/* not found return null string */
 	}
 }
 
-void dotcommand( char *string ) {
+void dotcommand( char *p_string ) {
 	/* ----- changeable global area ----- */
 	extern char *setpageformat( );
 	extern int mailmergeflag;
@@ -197,14 +200,14 @@ void dotcommand( char *string ) {
 	char arg[10][40];
 #endif
 
-	strcpy( temp, &string[3] );								/* text begin at 4th */
+	strcpy( temp, &p_string[3] );								/* text begin at 4th */
 	strcpy( temp, &temp[blankskip( temp )] );				/* parse to nonblank */
 	temp[strlen( temp ) - 1] = '\0';
-	command = ( tolower( string[1] ) << 8 ) + tolower( string[2] ); /* store 2 chars in one integer */
+	command = ( tolower( p_string[1] ) << 8 ) + tolower( p_string[2] ); /* store 2 chars in one integer */
 	switch ( command ) {
 #ifdef CUSTOM_FONT
 	case ( 'l' << 8 ) + 'f':
-		get_argument( arg, string, &no_arg );			/* get_argument() in PIC.C */
+		get_argument( arg, p_string, &no_arg );			/* get_argument() in PIC.C */
 		if ( no_arg == 2 ) {
 			if ( ( handle = open( &arg[1][0], O_RDONLY ) ) >= 0 ) {
 				_read( handle, font[0], 11264 );
@@ -330,9 +333,9 @@ void dotcommand( char *string ) {
 	}
 }
 
-int blankskip( char *s ) {
+int blankskip( char *p_string ) {
 	register int i = 0;
-	while ( *s++ == ' ' ) {
+	while ( *p_string++ == ' ' ) {
 		i++;
 	}
 	return( i );

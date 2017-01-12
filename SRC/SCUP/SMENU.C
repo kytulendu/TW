@@ -17,62 +17,53 @@
 
 #include "smenu.h"
 
-/** Select menu
-*   popup menu for user to select, programmer must save and restore the screen
-*
-*   - input x, y, number of messege, messege, curmenu
-*   - output curmenu
-*   - return ESCKEY or RETKEY
-*
-*   Written: Suttipong Kanakakorn
-*   Date: Fri  08-18-1989  09:16:37 */
-int smenu( register int x, register int y, int number, char *message[], int *curmenu ) {
+int smenu( register int p_x, register int p_y, int p_number, char *p_message[], int *p_curmenu ) {
 	int i;
 	int c, length;
 	char fmt[7];
 
-	length = find_menu_len( number, message );
+	length = find_menu_len( p_number, p_message );
 	sprintf( fmt, "%%-%ds", length );
 	/*
-	scrndx = savescrn( x - 1, y - 1, x + 1 + length, y + number + 1 );
+	scrndx = savescrn( p_x - 1, p_y - 1, p_x + 1 + length, p_y + p_number + 1 );
 	*/
-	for ( i = 0; i < number; i++ ) {
-		dispprintf( x, y + i, NORMALATTR, fmt, message[i] );
+	for ( i = 0; i < p_number; i++ ) {
+		dispprintf( p_x, p_y + i, NORMALATTR, fmt, p_message[i] );
 	}
-	i = *curmenu - 1;
-	dispprintf( x, y + i, REVERSEATTR, fmt, message[i] );
-	_rectangle( x * 8 - 2, y * 20 + 2, ( x + length - 1 ) * 8 + 9, ( y + number ) * 20 + 5 );
+	i = *p_curmenu - 1;
+	dispprintf( p_x, p_y + i, REVERSEATTR, fmt, p_message[i] );
+	_rectangle( p_x * 8 - 2, p_y * 20 + 2, ( p_x + length - 1 ) * 8 + 9, ( p_y + p_number ) * 20 + 5 );
 	for ( ;; ) {
 		c = ebioskey( 0 );
 		switch ( c ) {
 		case UPKEY:
-			dispprintf( x, y + i, NORMALATTR, fmt, message[i] );
-			i = ( i ) ? i - 1 : number - 1;
-			dispprintf( x, y + i, REVERSEATTR, fmt, message[i] );
+			dispprintf( p_x, p_y + i, NORMALATTR, fmt, p_message[i] );
+			i = ( i ) ? i - 1 : p_number - 1;
+			dispprintf( p_x, p_y + i, REVERSEATTR, fmt, p_message[i] );
 			break;
 		case DNKEY:
-			dispprintf( x, y + i, NORMALATTR, fmt, message[i] );
-			i = ( i != number - 1 ) ? i + 1 : 0;
-			dispprintf( x, y + i, REVERSEATTR, fmt, message[i] );
+			dispprintf( p_x, p_y + i, NORMALATTR, fmt, p_message[i] );
+			i = ( i != p_number - 1 ) ? i + 1 : 0;
+			dispprintf( p_x, p_y + i, REVERSEATTR, fmt, p_message[i] );
 			break;
 		case ESCKEY:
 		case RETKEY:
 			/*
-			resscrn( scrndx, x - 1, y - 1, x + 1 + length, y + number + 1 );
+			resscrn( scrndx, p_x - 1, p_y - 1, p_x + 1 + length, p_y + p_number + 1 );
 			*/
-			*curmenu = i + 1;
+			*p_curmenu = i + 1;
 			return( c );
 		}
 	}
 }
 
-unsigned int find_menu_len( register int number, char *message[] ) {
+unsigned int find_menu_len( register int p_number, char *p_message[] ) {
 	register unsigned int length;
-	int i;
+	size_t i;
 	char **m;
 
-	length = thaistrlen( message[0] );
-	for ( m = message + 1; m < message + number; m++ ) {
+	length = thaistrlen( p_message[0] );
+	for ( m = p_message + 1; m < p_message + p_number; m++ ) {
 		if ( ( i = thaistrlen( *m ) ) > length ) {
 			length = i;
 		}

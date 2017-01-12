@@ -28,6 +28,6 @@
 *   18            13            -11          13/24
 *   19            12            -12           1/2
 *   20            12            -12           1/2 */
-void charwidth( char *buf1 );
+void charwidth( char *p_buffer );
 
 #endif /* SCUP_CPI_H_INCLUDED */

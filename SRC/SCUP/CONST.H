@@ -40,6 +40,7 @@
 #define EPSON24PIN136COL        4
 #define NEC24PIN80COL           5
 #define NEC24PIN136COL          6
+
 #define FX                      0
 #define LX                      1
 #define LQ                      2

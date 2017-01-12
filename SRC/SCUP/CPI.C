@@ -3,15 +3,19 @@
 
 #include "cpi.h"
 
-void charwidth( char *buf1 ) {
+void charwidth( char *p_buffer ) {
     extern int maxdot;                                      /* already defined in prt.c and pmenu.c */
     extern int maxbuffer;                                   /* already defined in pmenu.c */
     extern int cpi;                                         /* already defined in prt.c and pmenu.c */
 
-    char *buf2;
+    char *buffer;
     char cf[21];
-    register int i, j, k, m;
-    buf2 = ( char * ) calloc( maxdot + 100, sizeof( char ) );
+    register int i;
+    register int j;
+    register int k;
+    register int m;
+
+    buffer = ( char * ) calloc( maxdot + 100, sizeof( char ) );
     i = 0;
     j = 0;
     switch ( cpi ) {
@@ -20,74 +24,74 @@ void charwidth( char *buf1 ) {
     case 1:                                             /* term '10/cpi' generate number */
     case 2:                                         /* of times the same dot appears */
     case 5:
-        while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
+        while ( ( i < maxbuffer ) && ( j < maxdot ) ) {
             k = j + 10 / cpi;
-            for ( ; j < k; j++ ) { buf2[j] = buf1[i]; }
+            for ( ; j < k; j++ ) { buffer[j] = p_buffer[i]; }
             i++;
         }
-        memmove( buf1, buf2, maxdot );
+        memmove( p_buffer, buffer, maxdot );
         break;
     case 3:
-        while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
+        while ( ( i < maxbuffer ) && ( j < maxdot ) ) {
             k = j + 3;  /* 3 times repeat */
-            for ( ; j < k; j++ ) { buf2[j] = buf1[i]; }
+            for ( ; j < k; j++ ) { buffer[j] = p_buffer[i]; }
             i++;
             k = j + 3;  /* 3 times repeat */
-            for ( ; j < k; j++ ) { buf2[j] = buf1[i]; }
+            for ( ; j < k; j++ ) { buffer[j] = p_buffer[i]; }
             i++;
             k = j + 4;  /* 4 times repeat */
-            for ( ; j < k; j++ ) { buf2[j] = buf1[i]; }
+            for ( ; j < k; j++ ) { buffer[j] = p_buffer[i]; }
             i++;
         }
-        memmove( buf1, buf2, maxdot );
+        memmove( p_buffer, buffer, maxdot );
         break;
     case 4:
-        while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
+        while ( ( i < maxbuffer ) && ( j < maxdot ) ) {
             k = j + 2;  /* 2 times repeat */
-            for ( ; j < k; j++ ) { buf2[j] = buf1[i]; }
+            for ( ; j < k; j++ ) { buffer[j] = p_buffer[i]; }
             i++;
             k = j + 3;  /* 3 times repeat */
-            for ( ; j < k; j++ ) { buf2[j] = buf1[i]; }
+            for ( ; j < k; j++ ) { buffer[j] = p_buffer[i]; }
             i++;
         }
-        memmove( buf1, buf2, maxdot );
+        memmove( p_buffer, buffer, maxdot );
         break;
     case 6:
         while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
             k = j + 2;  /* 2 times repeat */
-            for ( ; j < k; j++ ) { buf2[j] = buf1[i]; }
+            for ( ; j < k; j++ ) { buffer[j] = p_buffer[i]; }
             i++;
             k = j + 2;  /* 2 times repeat */
-            for ( ; j < k; j++ ) { buf2[j] = buf1[i]; }
+            for ( ; j < k; j++ ) { buffer[j] = p_buffer[i]; }
             i++;
             k = j + 1;  /* 1 times repeat */
-            for ( ; j < k; j++ ) { buf2[j] = buf1[i]; }
+            for ( ; j < k; j++ ) { buffer[j] = p_buffer[i]; }
             i++;
         }
-        memmove( buf1, buf2, maxdot );
+        memmove( p_buffer, buffer, maxdot );
         break;
     case 7:
-        while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
+        while ( ( i < maxbuffer ) && ( j < maxdot ) ) {
             for ( m = 0; m<5; m++ ) {
                 k = i + 1;  /* 1 times iteration */
-                for ( ; i < k; ) { buf2[j++] = buf1[i++]; }
-                buf2[j++] = buf1[i];
-                buf2[j++] = buf1[i++]; /* 1 dot repeat */
+                for ( ; i < k; ) { buffer[j++] = p_buffer[i++]; }
+                buffer[j++] = p_buffer[i];
+                buffer[j++] = p_buffer[i++]; /* 1 dot repeat */
             }
-            buf2[j++] = buf1[i++];
-            buf2[j++] = buf1[i++];
+            buffer[j++] = p_buffer[i++];
+            buffer[j++] = p_buffer[i++];
         }
-        memmove( buf1, buf2, maxdot );
+        memmove( p_buffer, buffer, maxdot );
         break;
     case 8:                                                 /* term '3+4*(cpi-8)' refer to 3,7 accordingly */
     case 9:
-        while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
+        while ( ( i < maxbuffer ) && ( j < maxdot ) ) {
             k = i + 3 + 4 * ( cpi - 8 );  /* 3,7 times iteration */
-            for ( ; i < k; ) { buf2[j++] = buf1[i++]; }
-            buf2[j++] = buf1[i];
-            buf2[j++] = buf1[i++]; /* 1 dot repeat */
+            for ( ; i < k; ) { buffer[j++] = p_buffer[i++]; }
+            buffer[j++] = p_buffer[i];
+            buffer[j++] = p_buffer[i++]; /* 1 dot repeat */
         }
-        memmove( buf1, buf2, maxdot );
+        memmove( p_buffer, buffer, maxdot );
         break;
     case 10:
         break;
@@ -98,72 +102,72 @@ void charwidth( char *buf1 ) {
     case 19: cf[19] = 2;                                    /* refer to 12,6,4,3,2,2 accordingly               */
     case 20: cf[20] = 2;
         /*
-        while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
+        while ( ( i < maxbuffer ) && ( j < maxdot ) ) {
             k = i - 1 + cf[cpi];
-            for ( ; i < k; ) { buf2[j++] = buf1[i++]; }
+            for ( ; i < k; ) { buffer[j++] = p_buffer[i++]; }
             j--;
-            buf2[j++] |= buf1[i++]; *//* 1 dot deplete */
+            buffer[j++] |= p_buffer[i++]; *//* 1 dot deplete */
         /*}
         */
-        while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
+        while ( ( i < maxbuffer ) && ( j < maxdot ) ) {
             k = i - 1 + cf[cpi];
-            for ( ; i < k; ) { buf2[j++] |= buf1[i++]; }
+            for ( ; i < k; ) { buffer[j++] |= p_buffer[i++]; }
             j--;
-            buf2[j++] |= buf1[i];
-            buf2[j] |= buf1[i++]; /* 1 dot deplete */
+            buffer[j++] |= p_buffer[i];
+            buffer[j] |= p_buffer[i++]; /* 1 dot deplete */
         }
-        memmove( buf1, buf2, maxdot );
+        memmove( p_buffer, buffer, maxdot );
         break;
     case 14:
-        while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
+        while ( ( i < maxbuffer ) && ( j < maxdot ) ) {
             for ( m = 0; m<7; m++ ) {
                 k = i + 2;
-                for ( ; i < k; ) { buf2[j++] = buf1[i++]; }
+                for ( ; i < k; ) { buffer[j++] = p_buffer[i++]; }
                 i++;  /* ignore 1 dot of 3 */
             }
             k = i + 3;
-            for ( ; i<k; ) buf2[j++] = buf1[i++];
+            for ( ; i<k; ) buffer[j++] = p_buffer[i++];
         }
-        memmove( buf1, buf2, maxdot );
+        memmove( p_buffer, buffer, maxdot );
         break;
     case 16:
-        while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
+        while ( ( i < maxbuffer ) && ( j < maxdot ) ) {
             for ( m = 0; m<7; m++ ) {
                 k = i + 2;
-                for ( ; i < k; ) { buf2[j++] = buf1[i++]; }
+                for ( ; i < k; ) { buffer[j++] = p_buffer[i++]; }
                 i++;  /* ignore 1 dot of 3 */
             }
             i++; i++;
-            buf2[j++] = buf1[i++];
+            buffer[j++] = p_buffer[i++];
         }
-        memmove( buf1, buf2, maxdot );
+        memmove( p_buffer, buffer, maxdot );
         break;
     case 17:
-        while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
+        while ( ( i < maxbuffer ) && ( j < maxdot ) ) {
             for ( m = 0; m<5; m++ ) {
                 k = i + 1;
-                for ( ; i < k; ) { buf2[j++] = buf1[i++]; }
+                for ( ; i < k; ) { buffer[j++] = p_buffer[i++]; }
                 i++;  /* ignore 1 dot of 2 */
             }
             k = i + 2;
-            for ( ; i<k; ) buf2[j++] = buf1[i++];
+            for ( ; i<k; ) buffer[j++] = p_buffer[i++];
         }
-        memmove( buf1, buf2, maxdot );
+        memmove( p_buffer, buffer, maxdot );
         break;
     case 18:
-        while ( ( i<maxbuffer ) && ( j<maxdot ) ) {
-            for ( m = 0; m<11; m++ ) {
+        while ( ( i < maxbuffer ) && ( j < maxdot ) ) {
+            for ( m = 0; m < 11; m++ ) {
                 k = i + 1;
-                for ( ; i < k; ) { buf2[j++] = buf1[i++]; }
+                for ( ; i < k; ) { buffer[j++] = p_buffer[i++]; }
                 i++;  /* ignore 1 dot of 2 */
             }
             k = i + 2;
-            for ( ; i<k; ) buf2[j++] = buf1[i++];
+            for ( ; i < k; ) buffer[j++] = p_buffer[i++];
         }
-        memmove( buf1, buf2, maxdot );
+        memmove( p_buffer, buffer, maxdot );
         break;
     default:
         break;
     }
-    free( buf2 );
+    free( buffer );
 }

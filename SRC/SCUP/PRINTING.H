@@ -5,13 +5,13 @@
 void printing( void );
 
 /**  */
-void marginset( char *t );
+void marginset( char *p_t );
 
 /**  */
-void contostd( char *t );
+void contostd( char *p_t );
 
 /**  */
-char *setpageformat( char *form, int max );
+char *setpageformat( char *p_form, int p_max );
 
 /**  */
 void clear_message( void );

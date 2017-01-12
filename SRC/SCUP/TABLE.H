@@ -1,6 +1,8 @@
 #ifndef SCUP_TABLE_H_INCLUDED
 #define SCUP_TABLE_H_INCLUDED
 
+/* Define character code, for table. */
+
 #define CP_MIDMIDDLE    0x8F
 #define CP_BOTTOMMIDDLE 0x90
 #define CP_TOPMIDDLE    0x91

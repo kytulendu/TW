@@ -69,7 +69,8 @@ void cupsetup( int argc, char *argv[] ) {
 			case 'W':
 			case 'P':
 				break;
-			default:  usage( );
+			default:
+				usage( );
 			}
 		}
 	}
@@ -106,7 +107,10 @@ void usage( void ) {
 }
 
 void set_directory( void ) {
-	char drive[MAXDRIVE], dir[MAXDIR], name[MAXFILE], ext[MAXEXT];
+	char drive[MAXDRIVE];
+	char dir[MAXDIR];
+	char name[MAXFILE];
+	char ext[MAXEXT];
 
 	/* build cup_dir like this -> c:\edit\cuwriter */
 	fnsplit( progname, drive, dir, name, ext );
@@ -154,10 +158,11 @@ each_option_setup option_setup[] = {
 /* number of element of option_setup */
 #define NELEM_OPTION (sizeof(option_setup)/sizeof(option_setup[0]))
 
-void readoption( search_file_mode mode ) {
+void readoption( search_file_mode p_mode ) {
 	FILE *fp;
 	char fname[MAXPATH];
-	int  field, temp;
+	int field;
+	int temp;
 	char opname[25];
 	char tstr[60];
 	each_option_setup *op;
@@ -165,12 +170,12 @@ void readoption( search_file_mode mode ) {
 	set_all_lineperpage( BATCH );
 
 	sprintf( fname, "%s\\TWPRINT.CFG", cup_dir );
-	if ( mode == CUR_DIR || mode == AUTO_FIND ) {
+	if ( p_mode == CUR_DIR || p_mode == AUTO_FIND ) {
 		fp = fopen( "TWPRINT.CFG", "rt" );
 	} else {
 		fp = fopen( fname, "rt" );
 	}
-	if ( fp == NULL && mode == AUTO_FIND ) {
+	if ( fp == NULL && p_mode == AUTO_FIND ) {
 		/* fopen file not success */
 		/* continue searching in cup_dir */
 		if ( ( fp = fopen( fname, "rt" ) ) == NULL ) {
@@ -203,12 +208,12 @@ void readoption( search_file_mode mode ) {
 	set_all_lineperpage( BATCH );
 }
 
-void saveoption( search_file_mode mode ) {
+void saveoption( search_file_mode p_mode ) {
 	FILE *fp;
 	char config_file[MAXPATH];
 	each_option_setup *op;
 
-	if ( mode == CUR_DIR || mode == AUTO_FIND ) {
+	if ( p_mode == CUR_DIR || p_mode == AUTO_FIND ) {
 		fp = fopen( "TWPRINT.CFG", "wt" );
 	} else {
 		sprintf( config_file, "%s\\TWPRINT.CFG", cup_dir );
@@ -227,24 +232,24 @@ void saveoption( search_file_mode mode ) {
 	fclose( fp );
 }
 
-void *cp_loadfont( char *fname, unsigned font_size ) {
+void *cp_loadfont( char *p_filename, size_t p_fontsize ) {
 	void *p;
 	int handle;
 	char fn[80];
 
-	p = ( void * ) malloc( font_size );
+	p = ( void * ) malloc( p_fontsize );
 	if ( p == NULL ) {
 		execerror( "Insufficient memory\n", "" );
 	}
-	if ( ( handle = open( fname, O_RDONLY | O_BINARY ) ) == -1 ) {
-		sprintf( fn, "%s\\%s", cup_dir, fname );
+	if ( ( handle = open( p_filename, O_RDONLY | O_BINARY ) ) == -1 ) {
+		sprintf( fn, "%s\\%s", cup_dir, p_filename );
 		handle = open( fn, O_RDONLY | O_BINARY );
 	}
 	if ( handle != -1 ) {
-		read( handle, p, font_size );
+		read( handle, p, p_fontsize );
 		close( handle );
 	} else {
-		execerror( "Printer font file not found : ", fname );
+		execerror( "Printer font file not found : ", p_filename );
 	}
 	return ( p );
 }

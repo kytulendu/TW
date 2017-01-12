@@ -18,16 +18,16 @@
 
 #include "prncntrl.h"
 
-void putp( unsigned c ) {
+void putp( unsigned int p_character ) {
 	/*
 	union REGS regs;
 	regs.h.ah = 0;
-	regs.h.al = c;
+	regs.h.al = p_character;
 	regs.h.dh = 0;
 	regs.h.dl = 0;
 	intr( 0x17, &regs, &regs );
 	*/
-	biosprint( 0, c, 0 );
+	biosprint( 0, p_character, 0 );
 }
 
 int PrinterReadstatus( void ) {
@@ -47,15 +47,15 @@ void PrinterInitialize( void ) {
 	putp( '@' );
 }
 
-void PrinterSetFormLenghtInch( register unsigned n ) {
+void PrinterSetFormLenghtInch( register unsigned int p_lenght ) {
 	putp( ESC );
 	putp( 'C' );
 	putp( 0 );
-	putp( n );
+	putp( p_lenght );
 }
 
-void PrinterSkipLine( register int n ) {
-	for ( ; n > 0; n-- ) {
+void PrinterSkipLine( register int p_lines ) {
+	for ( ; p_lines > 0; p_lines-- ) {
 		putp( CR );
 		putp( LF );
 	}
@@ -65,35 +65,35 @@ void PrinterFormFeed( void ) {
 	putp( FF );
 }
 
-void PrinterLineFeed( register unsigned n ) {
+void PrinterLineFeed( register unsigned int p_lines ) {
 	putp( CR );
-	if ( n == 0 ) {
+	if ( p_lines == 0 ) {
 		return;
 	}
 	putp( ESC );
 	putp( 'J' );
-	putp( n );
+	putp( p_lines );
 }
 
-void PrinterMasterSelectMode( register unsigned n ) {
+void PrinterMasterSelectMode( register unsigned int p_mode ) {
 	putp( ESC );
 	putp( '!' );
-	putp( n );
+	putp( p_mode );
 }
 
-void PrinterSetGraphicMode9pinQuadrupleDensity( register unsigned n ) {
+void PrinterSetGraphicMode9pinQuadrupleDensity( register unsigned int p_density ) {
 	putp( ESC );
 	putp( 'Z' );
-	putp( n % 256 );
-	putp( n / 256 );
+	putp( p_density % 256 );
+	putp( p_density / 256 );
 }
 
-void PrinterSetGraphicMode24pinTripleDensity( register unsigned n ) {
+void PrinterSetGraphicMode24pinTripleDensity( register unsigned int p_density ) {
 	putp( ESC );
 	putp( '*' );
 	putp( 39 );
-	putp( n % 256 );
-	putp( n / 256 );
+	putp( p_density % 256 );
+	putp( p_density / 256 );
 }
 
 void PrinterSet10cpi( void ) {

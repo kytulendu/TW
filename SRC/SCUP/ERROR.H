@@ -1,7 +1,8 @@
 #ifndef SCUP_ERROR_H_INCLUDED
 #define SCUP_ERROR_H_INCLUDED
 
-/** Display error message. */
+/** Display error message.
+*  \param[in]  p_string			Error message string. */
 void disperror( char *p_string );
 
 /** Report error and terminate program.

@@ -36,7 +36,9 @@ extern int locfooting;
 extern int extbarprinting;
 
 int find_line_space( void ) {
-	register unsigned int i, j, k;
+	register unsigned int i;
+	register unsigned int j;
+	register unsigned int k;
 	/*
 	[ i = Feeding resolution ( Dots / Inch )     ]
 	[ j = Minimum number of dots need for 1 line ]
@@ -73,7 +75,7 @@ int find_max_userline_perpage( void ) {
 		( ( locpagetitle != 0 ) + ( locheading != 0 ) + ( locfooting != 0 ) );
 }
 
-void set_all_lineperpage( set_linespace_mode mode ) {
+void set_all_lineperpage( set_linespace_mode p_mode ) {
 	char *find_lineperinch( void );
 
 	static char m1[] = "จำนวนบรรทัดต่อหน้าไม่พอ "
@@ -82,7 +84,7 @@ void set_all_lineperpage( set_linespace_mode mode ) {
 
 	if ( userlineperpage > find_max_userline_perpage( ) ) {
 		userlineperpage = find_max_userline_perpage( );
-		if ( mode == INTERACTIVE ) {
+		if ( p_mode == INTERACTIVE ) {
 			savepic( );
 			framebox( 10, 8, 10 + thaistrlen( m1 ) + 4, 11, REVERSEATTR );
 			dispstrhgc( m1, 10 + 2, 9, REVERSEATTR );
@@ -94,7 +96,7 @@ void set_all_lineperpage( set_linespace_mode mode ) {
 		}
 	}
 	lineperpage = find_line_perpage( );
-	if ( mode == INTERACTIVE ) {
+	if ( p_mode == INTERACTIVE ) {
 		savepic( );        /*"                             "*/
 		dispprintf( 19, 12, NORMALATTR,
 			"จำนวนบรรทัดต่อกระดาษ 1 นิ้ว คือ : %s บรรทัด/นิ้ว",
@@ -104,21 +106,22 @@ void set_all_lineperpage( set_linespace_mode mode ) {
 	}
 }
 
-void line_feed( unsigned int n ) {
-	register int i, j;
+void line_feed( unsigned int p_lines ) {
+	register int i;
+	register int j;
 
 	j = ( printer24pin ) ? 180 : 216;
-	i = n / j;
+	i = p_lines / j;
 
 	/* optimize by feed 1 inch */
 	for ( ; i > 0; i-- ) {
 		PrinterLineFeed( j );
 	}
-	PrinterLineFeed( n % j );
+	PrinterLineFeed( p_lines % j );
 }
 
-void skip_line( unsigned int n ) {
-	for ( ; n > 0; n-- ) {
+void skip_line( unsigned int p_lines ) {
+	for ( ; p_lines > 0; p_lines-- ) {
 		if ( graphicprint ) {
 			line_feed( ( printer24pin ) ? IPL_GRPH_24 + linespace
 				: IPL_GRPH_9 + linespace );

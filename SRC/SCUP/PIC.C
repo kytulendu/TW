@@ -41,20 +41,21 @@ int past_printer_data;       /* use to save old printer data */
 int dot_per_line;            /* use in update base positon */
 int dot_per_mode;            /* save number of dot in bit image mode */
 
-int is_command( char *st ) {
+int is_command( char *p_string ) {
 	int i;
+
 	i = 0;
-	if ( st[i] == BLANK ) {
-		while ( ( st[i] == BLANK ) && ( st[i] != NULL ) ) {
+	if ( p_string[i] == BLANK ) {
+		while ( ( p_string[i] == BLANK ) && ( p_string[i] != NULL ) ) {
 			i++;
 		}
-		if ( st[i] == '.' ) {
+		if ( p_string[i] == '.' ) {
 			return( YES );
 		} else {
 			return( NO );
 		}
 	} else {
-		if ( st[i] == '.' ) {
+		if ( p_string[i] == '.' ) {
 			return( YES );
 		} else {
 			return( NO );
@@ -62,20 +63,24 @@ int is_command( char *st ) {
 	}
 }
 
-void get_argument( char arg[][40], char *st, int *no_arg ) {
-	int i, j, k, spflg;
+void get_argument( char *arg[40], char *p_string, int *no_arg ) {
+	int i;
+	int j;
+	int k;
+	int spflg;
+
 	i = j = k = 0;
 	memset( arg, 0, 400 );
-	if ( st[i] == BLANK ) {
+	if ( p_string[i] == BLANK ) {
 		spflg = NO;
 	} else {
 		spflg = YES;
 	}
-	while ( st[i] != NULL ) {
+	while ( p_string[i] != NULL ) {
 		if ( spflg == YES ) {
 			k = 0;
-			while ( ( st[i] > BLANK ) && ( st[i] != 0xa0 ) ) {
-				arg[j][k] = st[i];
+			while ( ( p_string[i] > BLANK ) && ( p_string[i] != 0xa0 ) ) {
+				arg[j][k] = p_string[i];
 				i++;
 				k++;
 			}
@@ -83,7 +88,7 @@ void get_argument( char arg[][40], char *st, int *no_arg ) {
 			spflg = NO;
 			j++;
 		} else {
-			while ( ( ( st[i] <= BLANK ) || ( st[i] == 0xa0 ) ) && ( st[i] != NULL ) ) {
+			while ( ( ( p_string[i] <= BLANK ) || ( p_string[i] == 0xa0 ) ) && ( p_string[i] != NULL ) ) {
 				i++;
 			}
 			spflg = YES;
@@ -108,8 +113,13 @@ int getpr( void ) {
 void get_graphic_data( void ) {
 	extern int pic_offset;
 	char *buffer;
-	int number_dot, number_dot_lo, number_dot_high;
-	int i, j, base;
+	int number_dot;
+	int number_dot_lo;
+	int number_dot_high;
+	int i;
+	int j;
+	int base;
+
 	number_dot_lo = getpr( );
 	number_dot_high = getpr( );
 	number_dot = number_dot_high * 256 + number_dot_lo;
@@ -146,8 +156,8 @@ void get_graphic_data( void ) {
 	free( buffer );
 }
 
-void process_command_0( int printer_data ) {
-	switch ( printer_data ) {
+void process_command_0( int p_printerData ) {
+	switch ( p_printerData ) {
 	case ESC:
 		command_level = 1;
 		break;
@@ -157,12 +167,13 @@ void process_command_0( int printer_data ) {
 	}
 }
 
-void process_command_1( int printer_data ) {
+void process_command_1( int p_printerData ) {
 	extern int command_level;
 	extern int bit_image_mode;
 	extern int dot_per_mode;
 	extern int line_spacing;
-	switch ( printer_data ) {
+
+	switch ( p_printerData ) {
 	case BIT_IMAGE_COMMAND:
 		switch ( getpr( ) ) {
 		case 0:
@@ -292,37 +303,39 @@ void process_command_1( int printer_data ) {
 	}
 }
 
-void process_command( int printer_data ) {
+void process_command( int p_printerData ) {
 	extern int past_printer_data;
-	past_printer_data = printer_data;
+
+	past_printer_data = p_printerData;
 	switch ( command_level ) {
 	case 0:
-		process_command_0( printer_data );
+		process_command_0( p_printerData );
 		break;
 	case 1:
-		process_command_1( printer_data );
+		process_command_1( p_printerData );
 		break;
 	}
 }
 
-void analyze_picture_file( char *st ) {
+void analyze_picture_file( char *p_string ) {
 	extern int dot_per_line;
+
 	dot_per_line = 1;
 	command_level = 0;
 	p_fileready = NO;
 	analyze_mode = YES;
-	prd_handle = open( st, O_RDONLY | O_BINARY );
+	prd_handle = open( p_string, O_RDONLY | O_BINARY );
 	while ( p_fileready == NO ) {
 		process_command( getpr( ) );
 	}
 	close( prd_handle );
 }
 
-void initialize_read( char *st ) {
+void initialize_read( char *p_string ) {
 	command_level = 0;
 	p_fileready = NO;
 	analyze_mode = NO;
-	prd_handle = open( st, O_RDONLY | O_BINARY );
+	prd_handle = open( p_string, O_RDONLY | O_BINARY );
 }
 
 void read_picture_file( void ) {
