@@ -2,12 +2,11 @@
 May change over time.
 
 ##Version 1.0.0
-- Bugs fix
-- Remove unused stuff
-- More Comment
-- Cleanup
 - Convert most of assembly language function to C.
 - Redo all dialog and text position.
+- Thai-English menu and text message.
+- Detect ATT400 internal plasma monitor for old portable and laptop that have CGA 640x400 mode.
+Like Compaq Portable III, GridCase 286, GridCase 386.
 
 ##Version 1.0.1
 - Release
@@ -29,7 +28,6 @@ May change over time.
 
 ###Hardware support
 - EMS/XMS
-- Mouse support for select menu and select text
 - Colors?
 - CGA, 640x200 pixel, monochrome
 - Wyse 700, 1280x800 pixel, monochrome, can config to display how many column (80+) like old Hercules driver, see herc_align.patch
@@ -47,7 +45,6 @@ May change over time.
 ###Feature
 
 Editing
-- New English word wrap algorithm based on Knuth's algorithm (use in TeX)?
 - New Thai word separator algorithm by dictionary and by rule (like old one if not enough memory), CTTEX, load dictionary to EMS/XMS
 - Typographic alignment : left, Center, right, and justified
 - Use `<Shift><Arrow Key>` to select word (blocks)
@@ -63,22 +60,16 @@ Editing
 - Delete from cursor position to end of line
 
 Proofing
-- Hyphenation
 - Spell checker/word suggestion, Thai/English, use Thai word separator dictionary
 - Thesaurus (English only)
 
 Interface
 - Re-made menu to like WS7 or modern software
-- Thai-English menu but likely all English menu
 - Heelllppp!!!!
 - `<Alt><F1>` system status, remaining memory, etc.
 - Better about dialog (may use picture)
-- More beautiful UI?
 
 Misc
 - Multi Thai character encoding/converter, RW KU code, Thai EBDIC, etc.
 - Change Thai encoding CW KU / CW TIS-620 by use `<Ctrl><\>`
-- Invert character
-- Double-high character?
-- Strike through character
-- Print a character over other character
+
