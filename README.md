@@ -69,34 +69,34 @@ The source code use Thai Industrial Standard 620-2533 (TIS-620) for character en
 
 CU Writer developers
 --------------------
-`สถาบันบริการคอมพิวเตอร์ จุฬาลงกรณ์มหาวิทยาลัย และ ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย`
+From CU-Writer 1.2 manual and CU-Writer 1.41 source code.
 
-`Computer Service Centre and Faculty of Engineering, Chulalongkorn University`
+* สถาบันบริการคอมพิวเตอร์ จุฬาลงกรณ์มหาวิทยาลัย และ ภาควิชาวิศวกรรมคอมพิวเตอร์ คณะวิศวกรรมศาสตร์ จุฬาลงกรณ์มหาวิทยาลัย
+(Computer Service Centre and Faculty of Engineering, Chulalongkorn University)
+* สำนวน หิรัญวงษ์
+(Sumnuan Hirunwong)
+* ไกรศร เลียนษี
+(Kraisorn  Liansee)
+* ดำเกิง ธรรมเถกิงกิจ
+* ทศพล อภิกุลวณิช
+(Thotsapol Aphikulvanich)
+* ธณัฎฐ์ จิระกาล
+(Tanat Chirakarn)
+* ประสาท โตปิตุมาตุคุณ
+(Prasart Topitumatukhun)
+* ลักษณ์ชัย ลือชัยชนะกุล
+* วิชัย ปฏิภาภรณ์
+(Wichai Patipaporn)
+* วิทยา วงศ์อนวัช
+(Wittaya Wonganawat)
+* สุทธิพงษ์ คนาคกร
+(Suttipong Kanakakorn)
+* สุบรรณ เย็นใจชน
+(Subun Yenjaichon)
+* สุวพจน์ จันทโรจนวงศ์
 
-`สำนวน หิรัญวงษ์		Sumnuan Hirunwong`
-
-`ไกรศร เลียนษี		Kraisorn  Liansee`
-
-`ดำเกิง ธรรมเถกิงกิจ`
-
-`ทศพล อภิกุลวณิช		Thotsapol Aphikulvanich`
-
-`ธณัฎฐ์ จิระกาล		Tanat Chirakarn`
-
-`ประสาท โตปิตุมาตุคุณ	Prasart Topitumatukhun`
-
-`ลักษณ์ชัย ลือชัยชนะกุล`
-
-`วิทยา วงศ์อนวัช		Wittaya Wonganawat`
-
-`สุทธิพงษ์ คนาคกร		Suttipong Kanakakorn`
-
-`สุบรรณ เย็นใจชน		Subun Yenjaichon`
-
-`สุวพจน์ จันทโรจนวงศ์`
-
-If you know any one who is in CU Writer project that isn't in this list,
-please in inform me. ;)
+If you know any one who is in CU-Writer project that isn't in this list,
+please in inform me. :)
 
 Thai Write developer
 --------------------
