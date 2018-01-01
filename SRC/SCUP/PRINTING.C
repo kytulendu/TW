@@ -496,7 +496,7 @@ void preprinterloadline( char *p_s ) {
 			cp_clearbuf( );
 			cp_split4level( p_s );
 			mindex = cp_printlq( );
-			PrintThree24pin( mindex, mindex, mindex );
+			PrintThree24pin( mindex );
 		} else {
 			PrinterLoadLine9pin( p_s );
 		}
@@ -512,7 +512,7 @@ void preprinterloadline( char *p_s ) {
 				cp_clearbuf( );
 				cp_split4level( p_s );
 				mindex = cp_printlq( );
-				PrintThree24pin( mindex, mindex, mindex );
+				PrintThree24pin( mindex );
 			} else {
 				PrinterLoadLine9pin( p_s );
 			}

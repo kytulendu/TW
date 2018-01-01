@@ -35,6 +35,7 @@
 #include "global.h"
 
 #include "cupsetup.h"
+#include "error.h"
 #include "prtg.h"
 
 #include "prt.h"
@@ -42,7 +43,6 @@
 /* constant area */
 #define WIDTH 24
 #define ADJUST(x) (x>=0) ? x : 256+x
-#define ASCII_NO 256
 
 typedef struct buffer24pin {
 	char byte1;
@@ -52,113 +52,115 @@ typedef struct buffer24pin {
 
 buffer24pin *print24buffer;
 
-/** จัดแบ่งรหัสอักษรเช่น ำ ป ฏ ฐ เป็น 2 รหัส */
-void converse( char *s );
+/** จัดแบ่งรหัสอักษร เช่น ำ ป ฏ ฐ เป็น 2 รหัส */
+void converse( char *p_string );
 
-/** swap wanayuk and upper wovel */
-void swapwanayuk( char *s );
+/** Swap wanayuk and upper wovel. */
+void swapwanayuk( char *p_string );
 
-/**  */
+/** Clear the font buffer. */
 void clearbuffer( void );
 
 /** This module operate on all attribute
 *   Some attributes are tokkle to itself
 *   Some, effect to the others
 *   Example ,superscript attr, sets itself and also resets subscript attribute. */
-int adj_attr( font_attr *attr, int *ch );
+int adj_attr( font_attr *p_attr, int *p_char );
 
 /** Checking type of character appearance
 *   e.g. block, boldface, enlarge, normal ect. */
-void pretobuffer( font_attr *attr, int *ch, int *current );
+void pretobuffer( font_attr *p_attr, int *p_char, int *p_p_current );
 
 /** Invention of graphic blocks to build tables
 *   this include both single and double lineblock
 *   such as  ‘  “ – ’    •                  */
-void blockgraphic( int *pch, int *pcurrent );
+void blockgraphic( int *p_char, int *p_p_current );
 
 /**  */
-void normal_normal( int *pch, int *pcurrent, int pf, int pu );
+void normal_normal( int *p_char, int *p_p_current, int p_font, int p_u );
 
 /**  */
-void normal_bold( int *pch, int *pcurrent, int pf, int pu );
+void normal_bold( int *p_char, int *p_p_current, int p_font, int p_u );
 
 /**  */
-void normal_enlarge( int *pch, int *pcurrent, int pf, int pu );
+void normal_enlarge( int *p_char, int *p_p_current, int p_font, int p_u );
 
 /**  */
-void normal_bold_enlarge( int *pch, int *pcurrent, int pf, int pu );
+void normal_bold_enlarge( int *p_char, int *p_p_current, int p_font, int p_u );
 
 /**  */
-void subscript_normal( int *pch, int *pcurrent, int pu );
+void subscript_normal( int *p_char, int *p_p_current, int p_u );
 
 /**  */
-void subscript_bold( int *pch, int *pcurrent, int pu );
+void subscript_bold( int *p_char, int *p_p_current, int p_u );
 
 /**  */
-void subscript_enlarge( int *pch, int *pcurrent, int pu );
+void subscript_enlarge( int *p_char, int *p_p_current, int p_u );
 
 /**  */
-void subscript_bold_enlarge( int *pch, int *pcurrent, int pu );
+void subscript_bold_enlarge( int *p_char, int *p_p_current, int p_u );
 
 /**  */
-void superscript_normal( int *pch, int *pcurrent, int pu );
+void superscript_normal( int *p_char, int *p_p_current, int p_u );
 
 /**  */
-void superscript_bold( int *pch, int *pcurrent, int pu );
+void superscript_bold( int *p_char, int *p_p_current, int p_u );
 
 /**  */
-void superscript_enlarge( int *pch, int *pcurrent, int pu );
+void superscript_enlarge( int *p_char, int *p_p_current, int p_u );
 
 /**  */
-void superscript_bold_enlarge( int *pch, int *pcurrent, int pu );
+void superscript_bold_enlarge( int *p_char, int *p_p_current, int p_u );
 
-void converse( char *s ) {
-	int i, j, p;
-	char c[500];
+void converse( char *p_string ) {
+	int i, j;
+	char p;
+	char temp[500];
 	int r;
 	i = j = 0;
-	while ( ( p = s[i++] ) != '\0' ) {
+	while ( ( p = p_string[i++] ) != '\0' ) {
 		p = ADJUST( p );
 		if ( p < 0xa0 ) {
-			c[j++] = p;
+			temp[j++] = p;
 		} else {
 			r = table[p - 0xa0];
 			if ( r == 0x00 ) {
-				c[j++] = p;
+				temp[j++] = p;
 			} else {
 				if ( ( r & 0x80 ) != 0x00 ) {
-					c[j++] = p;
-					c[j++] = r;
+					temp[j++] = p;
+					temp[j++] = r;
 				} else {
-					c[j++] = r | 0x80;
-					c[j++] = p;
+					temp[j++] = r | 0x80;
+					temp[j++] = p;
 				}
 			}
 		}
 	}
-	c[j] = '\0';
-	strcpy( s, c );
+	temp[j] = '\0';
+	strcpy( p_string, temp );
 }
 
-void swapwanayuk( char *s ) {
-	int i, j, p;
-	char c[500];
+void swapwanayuk( char *p_string ) {
+	int i, j;
+	char p;
+	char temp[500];
 	i = j = 0;
-	while ( ( p = s[i++] ) != '\0' ) {
+	while ( ( p = p_string[i++] ) != '\0' ) {
 		p = ADJUST( p );
 		if ( p < 0xe8 || p > 0xec ) {						/* not wanayuk */
-			c[j++] = p;
+			temp[j++] = p;
 		} else {
-			if ( s[i] == 0xd1 || ( s[i]>0xd2 && s[i]<0xd8 ) ) {
-				c[j++] = s[i++];							/* exchange position */
-				c[j++] = p;									/* ----------------- */
+			if ( p_string[i] == 0xd1 || ( p_string[i] > 0xd2 && p_string[i] < 0xd8 ) ) {
+				temp[j++] = p_string[i++];						/* exchange position */
+				temp[j++] = p;									/* ----------------- */
 			} else {
-				c[j++] = p;
+				temp[j++] = p;
 			}
 		}
 	}
-	c[j] = '\0';
-	strcpy( s, c );
+	temp[j] = '\0';
+	strcpy( p_string, temp );
 }
 
 int PrinterLoadFont9pin( void ) {
@@ -168,24 +170,24 @@ int PrinterLoadFont9pin( void ) {
 	return 0;
 }
 
-void PrinterLoadLine9pin( char *line ) {
-	extern int printer24pin;								/* define in pmenu.c */
+void PrinterLoadLine9pin( char *p_line ) {
 	font_attr attr;
-	auto int current;										/* current dot position */
+	auto int p_current;										/* p_current dot position */
 	int ch;
-	current = 0;
+
+	p_current = 0;
 	attr = 0;
 	clearbuffer( );
-	converse( line );
-	swapwanayuk( line );
-	while ( *line != '\0' ) {
-		ch = ADJUST( *line );								/* adjust to positive  */
+	converse( p_line );
+	swapwanayuk( p_line );
+	while ( *p_line != '\0' ) {
+		ch = ADJUST( *p_line );								/* adjust to positive  */
 		if ( ch < 24 ) {									/* codes under 24 are control or attribute */
 			attr = adj_attr( &attr, &ch );
 		} else {
-			pretobuffer( &attr, &ch, &current );
+			pretobuffer( &attr, &ch, &p_current );
 		}
-		line++;
+		p_line++;
 	}
 	PrintThree9pin( );
 }
@@ -193,21 +195,17 @@ void PrinterLoadLine9pin( char *line ) {
 void AllocateBuffer9pin( void ) {
 	char *b[12];
 	int i;
-	static int done = 0;									/* Avoid re-alloc mem */
 
-	if ( !done ) {
-		for ( i = 0; i<12; i++ ) {
-			b[i] = ( char * ) calloc( 6600, sizeof( char ) );
-			if ( b[i] == NULL ) {
-				execerror( " หน่วยความจำไม่พอ ! กดปุ่มใดๆเพื่อทำงานต่อ ", "" );
-			}
+	for ( i = 0; i < 12; i++ ) {
+		b[i] = ( char * ) calloc( 6600, sizeof( char ) );
+		if ( b[i] == NULL ) {
+			execerror( " หน่วยความจำไม่พอ ! กดปุ่มใดๆเพื่อทำงานต่อ ", "" );
 		}
-		bupper1 = b[0]; bupper2 = b[1]; bupper3 = b[2];
-		bmiddle1 = b[3]; bmiddle2 = b[4]; bmiddle3 = b[5];
-		bbelow1 = b[6]; bbelow2 = b[7]; bbelow3 = b[8];
-		extbar1 = b[9]; extbar2 = b[10]; extbar3 = b[11];
-		done = 1;
 	}
+	bupper1 = b[0]; bupper2 = b[1]; bupper3 = b[2];
+	bmiddle1 = b[3]; bmiddle2 = b[4]; bmiddle3 = b[5];
+	bbelow1 = b[6]; bbelow2 = b[7]; bbelow3 = b[8];
+	extbar1 = b[9]; extbar2 = b[10]; extbar3 = b[11];
 }
 
 void clearbuffer( void ) {
@@ -224,110 +222,110 @@ void clearbuffer( void ) {
 	}
 }
 
-int adj_attr( font_attr *attr, int *ch ) {
+int adj_attr( font_attr *p_attr, int *p_char ) {
 	int  s, ns, na, nb, xx, yy;
-	switch ( *ch ) {
+	switch ( *p_char ) {
 	case ITALIC:
-		return( *attr ^ 0x20 );
+		return( *p_attr ^ 0x20 );
 	case UNDERLINE:
 		s = 1;
 		ns = s ^ 0x01;
-		nb = ( ~( *attr ) & 0x40 ) >> 6;
-		na = ( ~( *attr ) & 0x10 ) >> 4;
+		nb = ( ~( *p_attr ) & 0x40 ) >> 6;
+		na = ( ~( *p_attr ) & 0x10 ) >> 4;
 		yy = ( s & nb ) << 6;
 		xx = ( ns & na ) << 4;
-		return( ( *attr & 0xaf ) | xx | yy );
+		return( ( *p_attr & 0xaf ) | xx | yy );
 	case DOUBLEUNDERLINE:
 		s = 0;
 		ns = s ^ 0x01;
-		nb = ( ~( *attr ) & 0x40 ) >> 6;
-		na = ( ~( *attr ) & 0x10 ) >> 4;
+		nb = ( ~( *p_attr ) & 0x40 ) >> 6;
+		na = ( ~( *p_attr ) & 0x10 ) >> 4;
 		yy = ( s & nb ) << 6;
 		xx = ( ns & na ) << 4;
-		return( ( *attr & 0xaf ) | xx | yy );
+		return( ( *p_attr & 0xaf ) | xx | yy );
 	case SUBSCRIPT:
 		s = 0;
 		ns = s ^ 0x01;
-		nb = ( ~( *attr ) & 0x04 ) >> 2;
-		na = ( ~( *attr ) & 0x08 ) >> 3;
+		nb = ( ~( *p_attr ) & 0x04 ) >> 2;
+		na = ( ~( *p_attr ) & 0x08 ) >> 3;
 		yy = ( s & nb ) << 2;
 		xx = ( ns & na ) << 3;
-		return( ( *attr & 0xf3 ) | xx | yy );
+		return( ( *p_attr & 0xf3 ) | xx | yy );
 	case SUPER:
 		s = 1;
 		ns = s ^ 0x01;
-		nb = ( ~( *attr ) & 0x04 ) >> 2;
-		na = ( ~( *attr ) & 0x08 ) >> 3;
+		nb = ( ~( *p_attr ) & 0x04 ) >> 2;
+		na = ( ~( *p_attr ) & 0x08 ) >> 3;
 		yy = ( s & nb ) << 2;
 		xx = ( ns & na ) << 3;
-		return( ( *attr & 0xf3 ) | xx | yy );
+		return( ( *p_attr & 0xf3 ) | xx | yy );
 	case ENLARGE:
-		return( *attr ^ 0x02 );
+		return( *p_attr ^ 0x02 );
 	case BOLD:
-		return( *attr ^ 0x01 );
+		return( *p_attr ^ 0x01 );
 	default:
-		return( *attr );
+		return( *p_attr );
 	}
 }
 
-void pretobuffer( font_attr *attr, int *ch, int *current ) {
+void pretobuffer( font_attr *p_attr, int *p_char, int *p_current ) {
 	int cont, f, u;
-	/* ......gned)*ch > 0x7e)...  when need to include double line block */
+	/* ......gned ) * p_char > 0x7e )...  when need to include double line block */
 
-	if ( ( ( unsigned ) *ch > 0x8e ) && ( ( unsigned ) *ch < 0x9e ) ) {
-		blockgraphic( ch, current );
+	if ( ( ( unsigned ) *p_char > 0x8e ) && ( ( unsigned ) *p_char < 0x9e ) ) {
+		blockgraphic( p_char, p_current );
 	} else {
-		cont = *attr & 0x0f;
-		f = ( *attr & 0x20 ) >> 5;
-		u = ( *attr & 0x40 ) | ( *attr & 0x10 ) | ( ( *attr & 0x10 ) << 2 );
+		cont = *p_attr & 0x0f;
+		f = ( *p_attr & 0x20 ) >> 5;
+		u = ( *p_attr & 0x40 ) | ( *p_attr & 0x10 ) | ( ( *p_attr & 0x10 ) << 2 );
 		switch ( cont ) {
 		case 0x00:
-			normal_normal( ch, current, f, u );
+			normal_normal( p_char, p_current, f, u );
 			break;
 		case 0x01:
-			normal_bold( ch, current, f, u );
+			normal_bold( p_char, p_current, f, u );
 			break;
 		case 0x02:
-			normal_enlarge( ch, current, f, u );
+			normal_enlarge( p_char, p_current, f, u );
 			break;
 		case 0x03:
-			normal_bold_enlarge( ch, current, f, u );
+			normal_bold_enlarge( p_char, p_current, f, u );
 			break;
 		case 0x04:
-			superscript_normal( ch, current, u );
+			superscript_normal( p_char, p_current, u );
 			break;
 		case 0x05:
-			superscript_bold( ch, current, u );
+			superscript_bold( p_char, p_current, u );
 			break;
 		case 0x06:
-			superscript_enlarge( ch, current, u );
+			superscript_enlarge( p_char, p_current, u );
 			break;
 		case 0x07:
-			superscript_bold_enlarge( ch, current, u );
+			superscript_bold_enlarge( p_char, p_current, u );
 			break;
 		case 0x08:
-			subscript_normal( ch, current, u );
+			subscript_normal( p_char, p_current, u );
 			break;
 		case 0x09:
-			subscript_bold( ch, current, u );
+			subscript_bold( p_char, p_current, u );
 			break;
 		case 0x0a:
-			subscript_enlarge( ch, current, u );
+			subscript_enlarge( p_char, p_current, u );
 			break;
 		case 0x0b:
-			subscript_bold_enlarge( ch, current, u );
+			subscript_bold_enlarge( p_char, p_current, u );
 			break;
 		default:
-			normal_normal( ch, current, f, u );
+			normal_normal( p_char, p_current, f, u );
 			break;
 		}
 	}
 }
 
-void blockgraphic( int *ch, int *current ) {
+void blockgraphic( int *p_char, int *p_current ) {
 	int g, u, m, b, i, pos;
 	int a;
-	a = *ch;
+	a = *p_char;
 	if ( a < 0x8f ) {										/* Case of double line block */
 		g = tgtable[a - 0x7f];								/* Actually, due to the two codes */
 		u = 0x86 * ( ( g & 0x02 ) >> 1 );					/* '8a','8d'(reform code) is */
@@ -339,7 +337,7 @@ void blockgraphic( int *ch, int *current ) {
 		m = a;
 		b = ( g & 0x01 ) ? 0x96 : 0x20;
 	}
-	pos = *current * WIDTH;
+	pos = *p_current * WIDTH;
 	for ( i = 0; i<22; i++ ) {
 		bupper1[pos] = font[0][( u * 44 ) + i];
 		bupper2[pos] = font[0][( u * 44 ) + i + 22];
@@ -366,335 +364,336 @@ void blockgraphic( int *ch, int *current ) {
 	bmiddle2[pos] = bmiddle1[pos - 1];
 	bbelow1[pos] = bbelow1[pos - 1];
 	bbelow2[pos] = bbelow2[pos - 1]; pos++;
-	( *current )++;
+	( *p_current )++;
 }
 
-void normal_normal( int *ch, int *current, int f, int u ) {
+void normal_normal( int *p_char, int *p_current, int p_font, int p_u ) {
 	int sh = 0;
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
-	level = islevel( ch );									/* get its type of 3-level */
+	unsigned char a = *p_char;
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current * WIDTH;
-		for ( i = 0; i<22; i++ ) {
-			bmiddle1[pos] = font[f][( ( a ) * 44 ) + i];
-			bbelow2[pos] = u;
-			bmiddle2[pos++] = font[f][( ( a ) * 44 ) + i + 22];
+		pos = *p_current * WIDTH;
+		for ( i = 0; i < 22; i++ ) {
+			bmiddle1[pos] = font[p_font][( ( a ) * 44 ) + i];
+			bbelow2[pos] = p_u;
+			bmiddle2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22];
 		}
 		bmiddle1[pos] = 0;
-		bbelow2[pos] = u;
+		bbelow2[pos] = p_u;
 		bmiddle2[pos++] = 0;
 		bmiddle1[pos] = 0;
-		bbelow2[pos] = u;
+		bbelow2[pos] = p_u;
 		bmiddle2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	case 1:
-		pos = --( *current ) * WIDTH;
-		sh = ( ( a>0xe7 ) & ( a<0xed ) & ( ( bupper1[pos + 15] | bupper2[pos + 15] ) != 0 ) ) ? 4 : 0;
-		for ( i = 0; i<22; i++ ) {
-			bupper1[pos] |= font[f][( ( a ) * 44 ) + i] << sh;
-			bupper2[pos++] |= font[f][( ( a ) * 44 ) + i + 22] << sh;
+		pos = --( *p_current ) * WIDTH;
+		sh = ( ( a > 0xe7 ) & ( a < 0xed ) & ( ( bupper1[pos + 15] | bupper2[pos + 15] ) != 0 ) ) ? 4 : 0;
+		for ( i = 0; i < 22; i++ ) {
+			bupper1[pos] |= font[p_font][( ( a ) * 44 ) + i] << sh;
+			bupper2[pos++] |= font[p_font][( ( a ) * 44 ) + i + 22] << sh;
 		}
 		bupper1[pos] |= 0;
 		bupper2[pos++] |= 0;
 		bupper1[pos] |= 0;
 		bupper2[pos++] |= 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		pos = --( *current ) * WIDTH;
-		for ( i = 0; i<22; i++ ) {
-			bbelow1[pos] = font[f][( ( a ) * 44 ) + i];
-			bbelow2[pos++] = font[f][( ( a ) * 44 ) + i + 22];
+		pos = --( *p_current ) * WIDTH;
+		for ( i = 0; i < 22; i++ ) {
+			bbelow1[pos] = font[p_font][( ( a ) * 44 ) + i];
+			bbelow2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22];
 		}
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-void normal_bold( int *ch, int *current, int f, int u ) {
+void normal_bold( int *p_char, int *p_current, int p_font, int p_u ) {
 	int sh;
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
-	level = islevel( ch );									/* get its type of 3-level */
+	unsigned char a = *p_char;
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current * WIDTH;
-		bmiddle1[pos] = font[f][( ( a ) * 44 )];
-		bbelow2[pos] = u;
-		bmiddle2[pos++] = font[f][( ( a ) * 44 ) + 22];
-		for ( i = 1; i<22; i++ ) {
-			bmiddle1[pos] = font[f][( ( a ) * 44 ) + i] |
-				font[f][( ( a ) * 44 ) + i - 1];
-			bbelow2[pos] = u;
-			bmiddle2[pos++] = font[f][( ( a ) * 44 ) + i + 22] |
-				font[f][( ( a ) * 44 ) + i + 21];
+		pos = *p_current * WIDTH;
+		bmiddle1[pos] = font[p_font][( ( a ) * 44 )];
+		bbelow2[pos] = p_u;
+		bmiddle2[pos++] = font[p_font][( ( a ) * 44 ) + 22];
+		for ( i = 1; i < 22; i++ ) {
+			bmiddle1[pos] = font[p_font][( ( a ) * 44 ) + i] |
+				font[p_font][( ( a ) * 44 ) + i - 1];
+			bbelow2[pos] = p_u;
+			bmiddle2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22] |
+				font[p_font][( ( a ) * 44 ) + i + 21];
 		}
 		bmiddle1[pos] = 0;
-		bbelow2[pos] = u;
+		bbelow2[pos] = p_u;
 		bmiddle2[pos++] = 0;
 		bmiddle1[pos] = 0;
-		bbelow2[pos] = u;
+		bbelow2[pos] = p_u;
 		bmiddle2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	case 1:
-		pos = --( *current ) * WIDTH;
-		sh = ( ( a>0xe7 ) & ( a<0xed ) & ( ( bupper1[pos + 15] | bupper2[pos + 15] ) != 0 ) ) ? 4 : 0;
-		bupper1[pos] |= font[f][( ( a ) * 44 )] << sh;
-		bupper2[pos++] |= font[f][( ( a ) * 44 ) + 22] << sh;
-		for ( i = 1; i<22; i++ ) {
-			bupper1[pos] |= ( font[f][( ( a ) * 44 ) + i] |
-				font[f][( ( a ) * 44 ) + i - 1] ) << sh;
-			bupper2[pos++] |= ( font[f][( ( a ) * 44 ) + i + 22] |
-				font[f][( ( a ) * 44 ) + i + 21] ) << sh;
+		pos = --( *p_current ) * WIDTH;
+		sh = ( ( a > 0xe7 ) & ( a < 0xed ) & ( ( bupper1[pos + 15] | bupper2[pos + 15] ) != 0 ) ) ? 4 : 0;
+		bupper1[pos] |= font[p_font][( ( a ) * 44 )] << sh;
+		bupper2[pos++] |= font[p_font][( ( a ) * 44 ) + 22] << sh;
+		for ( i = 1; i < 22; i++ ) {
+			bupper1[pos] |= ( font[p_font][( ( a ) * 44 ) + i] |
+				font[p_font][( ( a ) * 44 ) + i - 1] ) << sh;
+			bupper2[pos++] |= ( font[p_font][( ( a ) * 44 ) + i + 22] |
+				font[p_font][( ( a ) * 44 ) + i + 21] ) << sh;
 		}
 		bupper1[pos] |= 0;
 		bupper2[pos++] |= 0;
 		bupper1[pos] |= 0;
 		bupper2[pos++] |= 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		pos = --( *current ) * WIDTH;
-		bbelow1[pos] = font[f][( ( a ) * 44 )];
-		bbelow2[pos++] = font[f][( ( a ) * 44 ) + 22];
-		for ( i = 1; i<22; i++ ) {
-			bbelow1[pos] = font[f][( ( a ) * 44 ) + i] |
-				font[f][( ( a ) * 44 ) + i - 1];
-			bbelow2[pos++] = font[f][( ( a ) * 44 ) + i + 22] |
-				font[f][( ( a ) * 44 ) + i + 21];
+		pos = --( *p_current ) * WIDTH;
+		bbelow1[pos] = font[p_font][( ( a ) * 44 )];
+		bbelow2[pos++] = font[p_font][( ( a ) * 44 ) + 22];
+		for ( i = 1; i < 22; i++ ) {
+			bbelow1[pos] = font[p_font][( ( a ) * 44 ) + i] |
+				font[p_font][( ( a ) * 44 ) + i - 1];
+			bbelow2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22] |
+				font[p_font][( ( a ) * 44 ) + i + 21];
 		}
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-void normal_enlarge( int *ch, int *current, int f, int u ) {
+void normal_enlarge( int *p_char, int *p_current, int p_font, int p_u ) {
 	int sh;
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
-	level = islevel( ch );									/* get its type of 3-level */
+	unsigned char a = *p_char;
+
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current * WIDTH;
-		for ( i = 0; i<22; i++ ) {
-			bmiddle1[pos] = font[f][( ( a ) * 44 ) + i];
-			bbelow2[pos] = u;
-			bmiddle2[pos++] = font[f][( ( a ) * 44 ) + i + 22];
-			bmiddle1[pos] = font[f][( ( a ) * 44 ) + i];
-			bbelow2[pos] = u;
-			bmiddle2[pos++] = font[f][( ( a ) * 44 ) + i + 22];
+		pos = *p_current * WIDTH;
+		for ( i = 0; i < 22; i++ ) {
+			bmiddle1[pos] = font[p_font][( ( a ) * 44 ) + i];
+			bbelow2[pos] = p_u;
+			bmiddle2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22];
+			bmiddle1[pos] = font[p_font][( ( a ) * 44 ) + i];
+			bbelow2[pos] = p_u;
+			bmiddle2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22];
 		}
-		bmiddle1[pos] = font[f][( ( a ) * 44 ) + 21];
-		bbelow2[pos] = u;
-		bmiddle2[pos++] = font[f][( ( a ) * 44 ) + 43];
+		bmiddle1[pos] = font[p_font][( ( a ) * 44 ) + 21];
+		bbelow2[pos] = p_u;
+		bmiddle2[pos++] = font[p_font][( ( a ) * 44 ) + 43];
 		bmiddle1[pos] = 0;
-		bbelow2[pos] = u;
+		bbelow2[pos] = p_u;
 		bmiddle2[pos++] = 0;
 		bmiddle1[pos] = 0;
-		bbelow2[pos] = u;
+		bbelow2[pos] = p_u;
 		bmiddle2[pos++] = 0;
 		bmiddle1[pos] = 0;
-		bbelow2[pos] = u;
+		bbelow2[pos] = p_u;
 		bmiddle2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 1:
-		--( *current );
-		pos = --( *current ) * WIDTH;
-		sh = ( ( a>0xe7 ) & ( a<0xed ) & ( ( bupper1[pos + 30] | bupper2[pos + 30] ) != 0 ) ) ? 4 : 0;
-		for ( i = 0; i<22; i++ ) {
-			bupper1[pos] |= font[f][( ( a ) * 44 ) + i] << sh;
-			bupper2[pos++] |= font[f][( ( a ) * 44 ) + i + 22] << sh;
-			bupper1[pos] |= font[f][( ( a ) * 44 ) + i] << sh;
-			bupper2[pos++] |= font[f][( ( a ) * 44 ) + i + 22] << sh;
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
+		sh = ( ( a > 0xe7 ) & ( a < 0xed ) & ( ( bupper1[pos + 30] | bupper2[pos + 30] ) != 0 ) ) ? 4 : 0;
+		for ( i = 0; i < 22; i++ ) {
+			bupper1[pos] |= font[p_font][( ( a ) * 44 ) + i] << sh;
+			bupper2[pos++] |= font[p_font][( ( a ) * 44 ) + i + 22] << sh;
+			bupper1[pos] |= font[p_font][( ( a ) * 44 ) + i] << sh;
+			bupper2[pos++] |= font[p_font][( ( a ) * 44 ) + i + 22] << sh;
 		}
-		bupper1[pos] |= font[f][( ( a ) * 44 ) + 21] << sh;
-		bupper2[pos++] |= font[f][( ( a ) * 44 ) + 43] << sh;
+		bupper1[pos] |= font[p_font][( ( a ) * 44 ) + 21] << sh;
+		bupper2[pos++] |= font[p_font][( ( a ) * 44 ) + 43] << sh;
 		bupper1[pos] |= 0;
 		bupper2[pos++] |= 0;
 		bupper1[pos] |= 0;
 		bupper2[pos++] |= 0;
 		bupper1[pos] |= 0;
 		bupper2[pos++] |= 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		--( *current );
-		pos = --( *current ) * WIDTH;
-		for ( i = 0; i<22; i++ ) {
-			bbelow1[pos] = font[f][( ( a ) * 44 ) + i];
-			bbelow2[pos++] = font[f][( ( a ) * 44 ) + i + 22];
-			bbelow1[pos] = font[f][( ( a ) * 44 ) + i];
-			bbelow2[pos++] = font[f][( ( a ) * 44 ) + i + 22];
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
+		for ( i = 0; i < 22; i++ ) {
+			bbelow1[pos] = font[p_font][( ( a ) * 44 ) + i];
+			bbelow2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22];
+			bbelow1[pos] = font[p_font][( ( a ) * 44 ) + i];
+			bbelow2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22];
 		}
-		bbelow1[pos] = font[f][( ( a ) * 44 ) + 21];
-		bbelow2[pos++] = font[f][( ( a ) * 44 ) + 43];
+		bbelow1[pos] = font[p_font][( ( a ) * 44 ) + 21];
+		bbelow2[pos++] = font[p_font][( ( a ) * 44 ) + 43];
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-void normal_bold_enlarge( int *ch, int *current, int f, int u ) {
+void normal_bold_enlarge( int *p_char, int *p_current, int p_font, int p_u ) {
 	int sh;
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
-	level = islevel( ch );									/* get its type of 3-level */
+	unsigned char a = *p_char;
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current * WIDTH;
-		bmiddle1[pos] = font[f][( ( a ) * 44 )];
-		bbelow2[pos] = u;
-		bmiddle2[pos++] = font[f][( ( a ) * 44 ) + 22];
-		bmiddle1[pos] = font[f][( ( a ) * 44 )];
-		bbelow2[pos] = u;
-		bmiddle2[pos++] = font[f][( ( a ) * 44 ) + 22];
-		for ( i = 1; i<22; i++ ) {
-			bmiddle1[pos] = font[f][( ( a ) * 44 ) + i] |
-				font[f][( ( a ) * 44 ) + i - 1];
-			bbelow2[pos] = u;
-			bmiddle2[pos++] = font[f][( ( a ) * 44 ) + i + 22] |
-				font[f][( ( a ) * 44 ) + i + 21];
-			bmiddle1[pos] = font[f][( ( a ) * 44 ) + i] |
-				font[f][( ( a ) * 44 ) + i - 1];
-			bbelow2[pos] = u;
-			bmiddle2[pos++] = font[f][( ( a ) * 44 ) + i + 22] |
-				font[f][( ( a ) * 44 ) + i + 21];
+		pos = *p_current * WIDTH;
+		bmiddle1[pos] = font[p_font][( ( a ) * 44 )];
+		bbelow2[pos] = p_u;
+		bmiddle2[pos++] = font[p_font][( ( a ) * 44 ) + 22];
+		bmiddle1[pos] = font[p_font][( ( a ) * 44 )];
+		bbelow2[pos] = p_u;
+		bmiddle2[pos++] = font[p_font][( ( a ) * 44 ) + 22];
+		for ( i = 1; i < 22; i++ ) {
+			bmiddle1[pos] = font[p_font][( ( a ) * 44 ) + i] |
+				font[p_font][( ( a ) * 44 ) + i - 1];
+			bbelow2[pos] = p_u;
+			bmiddle2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22] |
+				font[p_font][( ( a ) * 44 ) + i + 21];
+			bmiddle1[pos] = font[p_font][( ( a ) * 44 ) + i] |
+				font[p_font][( ( a ) * 44 ) + i - 1];
+			bbelow2[pos] = p_u;
+			bmiddle2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22] |
+				font[p_font][( ( a ) * 44 ) + i + 21];
 		}
-		bmiddle1[pos] = font[f][( ( a ) * 44 ) + 21] |
-			font[f][( ( a ) * 44 ) + 20];
-		bbelow2[pos] = u;
-		bmiddle2[pos++] = font[f][( ( a ) * 44 ) + 43] |
-			font[f][( ( a ) * 44 ) + 42];
+		bmiddle1[pos] = font[p_font][( ( a ) * 44 ) + 21] |
+			font[p_font][( ( a ) * 44 ) + 20];
+		bbelow2[pos] = p_u;
+		bmiddle2[pos++] = font[p_font][( ( a ) * 44 ) + 43] |
+			font[p_font][( ( a ) * 44 ) + 42];
 		bmiddle1[pos] = 0;
-		bbelow2[pos] = u;
+		bbelow2[pos] = p_u;
 		bmiddle2[pos++] = 0;
 		bmiddle1[pos] = 0;
-		bbelow2[pos] = u;
+		bbelow2[pos] = p_u;
 		bmiddle2[pos++] = 0;
 		bmiddle1[pos] = 0;
-		bbelow2[pos] = u;
+		bbelow2[pos] = p_u;
 		bmiddle2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 1:
-		--( *current );
-		pos = --( *current ) * WIDTH;
-		sh = ( ( a>0xe7 ) & ( a<0xed ) & ( ( bupper1[pos + 30] | bupper2[pos + 30] ) != 0 ) ) ? 4 : 0;
-		bupper1[pos] |= font[f][( ( a ) * 44 )] << sh;
-		bupper2[pos++] |= font[f][( ( a ) * 44 ) + 22] << sh;
-		bupper1[pos] |= font[f][( ( a ) * 44 )] << sh;
-		bupper2[pos++] |= font[f][( ( a ) * 44 ) + 22] << sh;
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
+		sh = ( ( a > 0xe7 ) & ( a < 0xed ) & ( ( bupper1[pos + 30] | bupper2[pos + 30] ) != 0 ) ) ? 4 : 0;
+		bupper1[pos] |= font[p_font][( ( a ) * 44 )] << sh;
+		bupper2[pos++] |= font[p_font][( ( a ) * 44 ) + 22] << sh;
+		bupper1[pos] |= font[p_font][( ( a ) * 44 )] << sh;
+		bupper2[pos++] |= font[p_font][( ( a ) * 44 ) + 22] << sh;
 		for ( i = 1; i<22; i++ ) {
-			bupper1[pos] |= ( font[f][( ( a ) * 44 ) + i] |
-				font[f][( ( a ) * 44 ) + i - 1] ) << sh;
-			bupper2[pos++] |= ( font[f][( ( a ) * 44 ) + i + 22] |
-				font[f][( ( a ) * 44 ) + i + 21] ) << sh;
-			bupper1[pos] |= ( font[f][( ( a ) * 44 ) + i] |
-				font[f][( ( a ) * 44 ) + i - 1] ) << sh;
-			bupper2[pos++] |= ( font[f][( ( a ) * 44 ) + i + 22] |
-				font[f][( ( a ) * 44 ) + i + 21] ) << sh;
+			bupper1[pos] |= ( font[p_font][( ( a ) * 44 ) + i] |
+				font[p_font][( ( a ) * 44 ) + i - 1] ) << sh;
+			bupper2[pos++] |= ( font[p_font][( ( a ) * 44 ) + i + 22] |
+				font[p_font][( ( a ) * 44 ) + i + 21] ) << sh;
+			bupper1[pos] |= ( font[p_font][( ( a ) * 44 ) + i] |
+				font[p_font][( ( a ) * 44 ) + i - 1] ) << sh;
+			bupper2[pos++] |= ( font[p_font][( ( a ) * 44 ) + i + 22] |
+				font[p_font][( ( a ) * 44 ) + i + 21] ) << sh;
 		}
-		bupper1[pos] |= ( font[f][( ( a ) * 44 ) + 21] |
-			font[f][( ( a ) * 44 ) + 20] ) << sh;
-		bupper2[pos++] |= ( font[f][( ( a ) * 44 ) + 43] |
-			font[f][( ( a ) * 44 ) + 42] ) << sh;
+		bupper1[pos] |= ( font[p_font][( ( a ) * 44 ) + 21] |
+			font[p_font][( ( a ) * 44 ) + 20] ) << sh;
+		bupper2[pos++] |= ( font[p_font][( ( a ) * 44 ) + 43] |
+			font[p_font][( ( a ) * 44 ) + 42] ) << sh;
 		bupper1[pos] |= 0;
 		bupper2[pos++] |= 0;
 		bupper1[pos] |= 0;
 		bupper2[pos++] |= 0;
 		bupper1[pos] |= 0;
 		bupper2[pos++] |= 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		--( *current );
-		pos = --( *current ) * WIDTH;
-		bbelow1[pos] = font[f][( ( a ) * 44 )];
-		bbelow2[pos++] = font[f][( ( a ) * 44 ) + 22];
-		bbelow1[pos] = font[f][( ( a ) * 44 )];
-		bbelow2[pos++] = font[f][( ( a ) * 44 ) + 22];
-		for ( i = 1; i<22; i++ ) {
-			bbelow1[pos] = font[f][( ( a ) * 44 ) + i] |
-				font[f][( ( a ) * 44 ) + i - 1];
-			bbelow2[pos++] = font[f][( ( a ) * 44 ) + i + 22] |
-				font[f][( ( a ) * 44 ) + i + 21];
-			bbelow1[pos] = font[f][( ( a ) * 44 ) + i] |
-				font[f][( ( a ) * 44 ) + i - 1];
-			bbelow2[pos++] = font[f][( ( a ) * 44 ) + i + 22] |
-				font[f][( ( a ) * 44 ) + i + 21];
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
+		bbelow1[pos] = font[p_font][( ( a ) * 44 )];
+		bbelow2[pos++] = font[p_font][( ( a ) * 44 ) + 22];
+		bbelow1[pos] = font[p_font][( ( a ) * 44 )];
+		bbelow2[pos++] = font[p_font][( ( a ) * 44 ) + 22];
+		for ( i = 1; i < 22; i++ ) {
+			bbelow1[pos] = font[p_font][( ( a ) * 44 ) + i] |
+				font[p_font][( ( a ) * 44 ) + i - 1];
+			bbelow2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22] |
+				font[p_font][( ( a ) * 44 ) + i + 21];
+			bbelow1[pos] = font[p_font][( ( a ) * 44 ) + i] |
+				font[p_font][( ( a ) * 44 ) + i - 1];
+			bbelow2[pos++] = font[p_font][( ( a ) * 44 ) + i + 22] |
+				font[p_font][( ( a ) * 44 ) + i + 21];
 		}
-		bbelow1[pos] = font[f][( ( a ) * 44 ) + 21] |
-			font[f][( ( a ) * 44 ) + 20];
-		bbelow2[pos++] = font[f][( ( a ) * 44 ) + 43] |
-			font[f][( ( a ) * 44 ) + 42];
+		bbelow1[pos] = font[p_font][( ( a ) * 44 ) + 21] |
+			font[p_font][( ( a ) * 44 ) + 20];
+		bbelow2[pos++] = font[p_font][( ( a ) * 44 ) + 43] |
+			font[p_font][( ( a ) * 44 ) + 42];
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-void superscript_normal( int *ch, int *current, int u ) {
+void superscript_normal( int *p_char, int *p_current, int p_u ) {
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
-	level = islevel( ch );									/* get its type of 3-level */
+	unsigned char a = *p_char;
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current *  WIDTH;
-		for ( i = 0; i<22; i++ ) {
+		pos = *p_current *  WIDTH;
+		for ( i = 0; i < 22; i++ ) {
 			bupper1[pos] = fonts[( ( a ) * 44 ) + i];
-			bmiddle2[pos] = u;
+			bmiddle2[pos] = p_u;
 			bupper2[pos++] = fonts[( ( a ) * 44 ) + i + 22];
 		}
 		bupper1[pos] = 0;
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = 0;
 		bupper1[pos] = 0;
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	case 1:
-		pos = --( *current ) * WIDTH;
-		for ( i = 0; i<22; i++ ) {
+		pos = --( *p_current ) * WIDTH;
+		for ( i = 0; i < 22; i++ ) {
 			bupper1[pos] |= fonts[( ( a ) * 44 ) + i];
 			bupper2[pos++] |= fonts[( ( a ) * 44 ) + i + 22];
 		}
@@ -702,11 +701,11 @@ void superscript_normal( int *ch, int *current, int u ) {
 		bupper2[pos++] = 0;
 		bupper1[pos] = 0;
 		bupper2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		pos = --( *current ) * WIDTH;
-		for ( i = 0; i<22; i++ ) {
+		pos = --( *p_current ) * WIDTH;
+		for ( i = 0; i < 22; i++ ) {
 			bmiddle1[pos] |= fonts[( ( a ) * 44 ) + i];
 			bmiddle2[pos++] |= fonts[( ( a ) * 44 ) + i + 22];
 		}
@@ -714,43 +713,44 @@ void superscript_normal( int *ch, int *current, int u ) {
 		bmiddle2[pos++] = 0;
 		bmiddle1[pos] = 0;
 		bmiddle2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-void superscript_bold( int *ch, int *current, int u ) {
+void superscript_bold( int *p_char, int *p_current, int p_u ) {
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
-	level = islevel( ch );									/* get its type of 3-level */
+	unsigned char a = *p_char;
+
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current *  WIDTH;
+		pos = *p_current *  WIDTH;
 		bupper1[pos] = fonts[( ( a ) * 44 )];
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = fonts[( ( a ) * 44 ) + 22];
-		for ( i = 0; i<21; i++ ) {
+		for ( i = 0; i < 21; i++ ) {
 			bupper1[pos] = fonts[( ( a ) * 44 ) + i] |
 				fonts[( ( a ) * 44 ) + i + 1];
-			bmiddle2[pos] = u;
+			bmiddle2[pos] = p_u;
 			bupper2[pos++] = fonts[( ( a ) * 44 ) + i + 22] |
 				fonts[( ( a ) * 44 ) + i + 23];
 		}
 		bupper1[pos] = 0;
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = 0;
 		bupper1[pos] = 0;
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	case 1:
-		pos = --( *current ) * WIDTH;
+		pos = --( *p_current ) * WIDTH;
 		bupper1[pos] |= fonts[( ( a ) * 44 )];
 		bupper2[pos++] |= fonts[( ( a ) * 44 ) + 22];
-		for ( i = 0; i<21; i++ ) {
+		for ( i = 0; i < 21; i++ ) {
 			bupper1[pos] |= fonts[( ( a ) * 44 ) + i] | fonts[( ( a ) * 44 ) + i + 1];
 			bupper2[pos++] |= fonts[( ( a ) * 44 ) + i + 22] | fonts[( ( a ) * 44 ) + i + 23];
 		}
@@ -758,13 +758,13 @@ void superscript_bold( int *ch, int *current, int u ) {
 		bupper2[pos++] = 0;
 		bupper1[pos] = 0;
 		bupper2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		pos = --( *current ) * WIDTH;
+		pos = --( *p_current ) * WIDTH;
 		bmiddle1[pos] |= fonts[( ( a ) * 44 )];
 		bmiddle2[pos++] |= fonts[( ( a ) * 44 ) + 22];
-		for ( i = 0; i<21; i++ ) {
+		for ( i = 0; i < 21; i++ ) {
 			bmiddle1[pos] |= fonts[( ( a ) * 44 ) + i] | fonts[( ( a ) * 44 ) + i + 1];
 			bmiddle2[pos++] |= fonts[( ( a ) * 44 ) + i + 22] | fonts[( ( a ) * 44 ) + i + 23];
 		}
@@ -772,41 +772,42 @@ void superscript_bold( int *ch, int *current, int u ) {
 		bmiddle2[pos++] = 0;
 		bmiddle1[pos] = 0;
 		bmiddle2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-void superscript_enlarge( int *ch, int *current, int u ) {
+void superscript_enlarge( int *p_char, int *p_current, int p_u ) {
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
-	level = islevel( ch );									/* get its type of 3-level */
+	unsigned char a = *p_char;
+
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current *  WIDTH;
-		for ( i = 0; i<22; i++ ) {
+		pos = *p_current *  WIDTH;
+		for ( i = 0; i < 22; i++ ) {
 			bupper1[pos] = fonts[( ( a ) * 44 ) + i];
-			bmiddle2[pos] = u;
+			bmiddle2[pos] = p_u;
 			bupper2[pos++] = fonts[( ( a ) * 44 ) + i + 22];
 			bupper1[pos] = fonts[( ( a ) * 44 ) + i];
-			bmiddle2[pos] = u;
+			bmiddle2[pos] = p_u;
 			bupper2[pos++] = fonts[( ( a ) * 44 ) + i + 22];
 		}
 		bupper1[pos] = fonts[( ( a ) * 44 ) + 21];
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = fonts[( ( a ) * 44 ) + 43];
 		bupper1[pos] = 0;
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 1:
-		--( *current );
-		pos = --( *current ) * WIDTH;
-		for ( i = 0; i<22; i++ ) {
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
+		for ( i = 0; i < 22; i++ ) {
 			bupper1[pos] |= fonts[( ( a ) * 44 ) + i];
 			bupper2[pos++] |= fonts[( ( a ) * 44 ) + i + 22];
 			bupper1[pos] |= fonts[( ( a ) * 44 ) + i];
@@ -816,13 +817,13 @@ void superscript_enlarge( int *ch, int *current, int u ) {
 		bupper2[pos++] = fonts[( ( a ) * 44 ) + 43];
 		bupper1[pos] = 0;
 		bupper2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		--( *current );
-		pos = --( *current ) * WIDTH;
-		for ( i = 0; i<22; i++ ) {
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
+		for ( i = 0; i < 22; i++ ) {
 			bmiddle1[pos] |= fonts[( ( a ) * 44 ) + i];
 			bmiddle2[pos++] |= fonts[( ( a ) * 44 ) + i + 22];
 			bmiddle1[pos] |= fonts[( ( a ) * 44 ) + i];
@@ -832,64 +833,65 @@ void superscript_enlarge( int *ch, int *current, int u ) {
 		bmiddle2[pos++] = fonts[( ( a ) * 44 ) + 43];
 		bmiddle1[pos] = 0;
 		bmiddle2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-void superscript_bold_enlarge( int *ch, int *current, int u ) {
+void superscript_bold_enlarge( int *p_char, int *p_current, int p_u ) {
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
-	level = islevel( ch );									/* get its type of 3-level */
+	unsigned char a = *p_char;
+
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current *  WIDTH;
+		pos = *p_current *  WIDTH;
 		bupper1[pos] = fonts[( ( a ) * 44 )];
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = fonts[( ( a ) * 44 ) + 22];
 		bupper1[pos] = fonts[( ( a ) * 44 )];
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = fonts[( ( a ) * 44 ) + 22];
-		for ( i = 0; i<21; i++ ) {
+		for ( i = 0; i < 21; i++ ) {
 			bupper1[pos] = fonts[( ( a ) * 44 ) + i] |
 				fonts[( ( a ) * 44 ) + i + 1];
-			bmiddle2[pos] = u;
+			bmiddle2[pos] = p_u;
 			bupper2[pos++] = fonts[( ( a ) * 44 ) + i + 22] |
 				fonts[( ( a ) * 44 ) + i + 23];
 			bupper1[pos] = fonts[( ( a ) * 44 ) + i] |
 				fonts[( ( a ) * 44 ) + i + 1];
-			bmiddle2[pos] = u;
+			bmiddle2[pos] = p_u;
 			bupper2[pos++] = fonts[( ( a ) * 44 ) + i + 22] |
 				fonts[( ( a ) * 44 ) + i + 23];
 		}
 		bupper1[pos] = fonts[( ( a ) * 44 ) + 21] |
 			fonts[( ( a ) * 44 ) + 20];
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = fonts[( ( a ) * 44 ) + 43] |
 			fonts[( ( a ) * 44 ) + 42];
 		bupper1[pos] = 0;
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = 0;
 		bupper1[pos] = 0;
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = 0;
 		bupper1[pos] = 0;
-		bmiddle2[pos] = u;
+		bmiddle2[pos] = p_u;
 		bupper2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 1:
-		--( *current );
-		pos = --( *current ) * WIDTH;
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
 		bupper1[pos] |= fonts[( ( a ) * 44 )];
 		bupper2[pos++] |= fonts[( ( a ) * 44 ) + 22];
 		bupper1[pos] |= fonts[( ( a ) * 44 )];
 		bupper2[pos++] |= fonts[( ( a ) * 44 ) + 22];
-		for ( i = 0; i<21; i++ ) {
+		for ( i = 0; i < 21; i++ ) {
 			bupper1[pos] |= fonts[( ( a ) * 44 ) + i] | fonts[( ( a ) * 44 ) + i + 1];
 			bupper2[pos++] |= fonts[( ( a ) * 44 ) + i + 22] | fonts[( ( a ) * 44 ) + i + 23];
 			bupper1[pos] |= fonts[( ( a ) * 44 ) + i] | fonts[( ( a ) * 44 ) + i + 1];
@@ -903,17 +905,17 @@ void superscript_bold_enlarge( int *ch, int *current, int u ) {
 		bupper2[pos++] = 0;
 		bupper1[pos] = 0;
 		bupper2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		--( *current );
-		pos = --( *current ) * WIDTH;
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
 		bmiddle1[pos] |= fonts[( ( a ) * 44 )];
 		bmiddle2[pos++] |= fonts[( ( a ) * 44 ) + 22];
 		bmiddle1[pos] |= fonts[( ( a ) * 44 )];
 		bmiddle2[pos++] |= fonts[( ( a ) * 44 ) + 22];
-		for ( i = 0; i<21; i++ ) {
+		for ( i = 0; i < 21; i++ ) {
 			bmiddle1[pos] |= fonts[( ( a ) * 44 ) + i] | fonts[( ( a ) * 44 ) + i + 1];
 			bmiddle2[pos++] |= fonts[( ( a ) * 44 ) + i + 22] | fonts[( ( a ) * 44 ) + i + 23];
 			bmiddle1[pos] |= fonts[( ( a ) * 44 ) + i] | fonts[( ( a ) * 44 ) + i + 1];
@@ -927,37 +929,38 @@ void superscript_bold_enlarge( int *ch, int *current, int u ) {
 		bmiddle2[pos++] = 0;
 		bmiddle1[pos] = 0;
 		bmiddle2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-void subscript_normal( int *ch, int *current, int u ) {
+void subscript_normal( int *p_char, int *p_current, int p_u ) {
 	int sh;
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
-	u >>= 5;
-	level = islevel( ch );									/* get its type of 3-level */
+	unsigned char a = *p_char;
+
+	p_u >>= 5;
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current *  WIDTH;
-		for ( i = 0; i<22; i++ ) {
+		pos = *p_current *  WIDTH;
+		for ( i = 0; i < 22; i++ ) {
 			bbelow1[pos] = ( fonts[( ( a ) * 44 ) + i] << 4 );
-			bbelow2[pos++] = ( fonts[( ( a ) * 44 ) + i + 22] << 4 ) | u;
+			bbelow2[pos++] = ( fonts[( ( a ) * 44 ) + i + 22] << 4 ) | p_u;
 		}
 		bbelow1[pos] = 0;
-		bbelow2[pos++] = u;
+		bbelow2[pos++] = p_u;
 		bbelow1[pos] = 0;
-		bbelow2[pos++] = u;
-		( *current )++;
+		bbelow2[pos++] = p_u;
+		( *p_current )++;
 		break;
 	case 1:
-		pos = --( *current ) * WIDTH;
-		sh = ( ( a>0xe7 ) & ( a<0xed ) & ( ( bmiddle1[pos + 15] | bmiddle2[pos + 15] ) != 0 ) ) ? 2 : 0;
-		for ( i = 0; i<22; i++ ) {
+		pos = --( *p_current ) * WIDTH;
+		sh = ( ( a > 0xe7 ) & ( a < 0xed ) & ( ( bmiddle1[pos + 15] | bmiddle2[pos + 15] ) != 0 ) ) ? 2 : 0;
+		for ( i = 0; i < 22; i++ ) {
 			bmiddle1[pos] |= ( fonts[( ( a ) * 44 ) + i] ) >> ( 4 - sh );
 			bmiddle2[pos++] |= ( fonts[( ( a ) * 44 ) + i + 22] ) >> ( 4 - sh );
 		}
@@ -965,11 +968,11 @@ void subscript_normal( int *ch, int *current, int u ) {
 		bmiddle2[pos++] |= 0;
 		bmiddle1[pos] |= 0;
 		bmiddle2[pos++] |= 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		pos = --( *current ) * WIDTH;
-		for ( i = 0; i<22; i++ ) {
+		pos = --( *p_current ) * WIDTH;
+		for ( i = 0; i < 22; i++ ) {
 			bbelow1[pos] |= ( fonts[( ( a ) * 44 ) + i] ) >> 3;
 			bbelow2[pos++] |= ( fonts[( ( a ) * 44 ) + i + 22] ) >> 3;
 		}
@@ -977,42 +980,43 @@ void subscript_normal( int *ch, int *current, int u ) {
 		bbelow2[pos++] = 0;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-void subscript_bold( int *ch, int *current, int u ) {
+void subscript_bold( int *p_char, int *p_current, int p_u ) {
 	int sh;
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
-	u >>= 5;
-	level = islevel( ch );									/* get its type of 3-level */
+	unsigned char a = *p_char;
+
+	p_u >>= 5;
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current *  WIDTH;
+		pos = *p_current *  WIDTH;
 		bbelow1[pos] = ( fonts[( ( a ) * 44 )] << 4 );
-		bbelow2[pos++] = ( fonts[( ( a ) * 44 ) + 22] << 4 ) | u;
-		for ( i = 0; i<21; i++ ) {
+		bbelow2[pos++] = ( fonts[( ( a ) * 44 ) + 22] << 4 ) | p_u;
+		for ( i = 0; i < 21; i++ ) {
 			bbelow1[pos] = ( ( fonts[( ( a ) * 44 ) + i] |
 				fonts[( ( a ) * 44 ) + i + 1] ) << 4 );
 			bbelow2[pos++] = ( ( fonts[( ( a ) * 44 ) + i + 22] |
-				fonts[( ( a ) * 44 ) + i + 23] ) << 4 ) | u;
+				fonts[( ( a ) * 44 ) + i + 23] ) << 4 ) | p_u;
 		}
 		bbelow1[pos] = 0;
-		bbelow2[pos++] = u;
+		bbelow2[pos++] = p_u;
 		bbelow1[pos] = 0;
-		bbelow2[pos++] = u;
-		( *current )++;
+		bbelow2[pos++] = p_u;
+		( *p_current )++;
 		break;
 	case 1:
-		pos = --( *current ) * WIDTH;
-		sh = ( ( a>0xe7 ) & ( a<0xed ) & ( ( bmiddle1[pos + 15] | bmiddle2[pos + 15] ) != 0 ) ) ? 2 : 0;
+		pos = --( *p_current ) * WIDTH;
+		sh = ( ( a > 0xe7 ) & ( a < 0xed ) & ( ( bmiddle1[pos + 15] | bmiddle2[pos + 15] ) != 0 ) ) ? 2 : 0;
 		bmiddle1[pos] |= ( fonts[( ( a ) * 44 )] ) >> ( 4 - sh );
 		bmiddle2[pos++] |= ( fonts[( ( a ) * 44 ) + 22] ) >> ( 4 - sh );
-		for ( i = 0; i<21; i++ ) {
+		for ( i = 0; i < 21; i++ ) {
 			bmiddle1[pos] |= ( fonts[( ( a ) * 44 ) + i] |
 				fonts[( ( a ) * 44 ) + i + 1] ) >> ( 4 - sh );
 			bmiddle2[pos++] |= ( fonts[( ( a ) * 44 ) + i + 22] |
@@ -1022,13 +1026,13 @@ void subscript_bold( int *ch, int *current, int u ) {
 		bmiddle2[pos++] |= 0;
 		bmiddle1[pos] |= 0;
 		bmiddle2[pos++] |= 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		pos = --( *current ) * WIDTH;
+		pos = --( *p_current ) * WIDTH;
 		bbelow1[pos] |= ( fonts[( ( a ) * 44 )] ) >> 3;
 		bbelow2[pos++] |= ( fonts[( ( a ) * 44 ) + 22] ) >> 3;
-		for ( i = 0; i<21; i++ ) {
+		for ( i = 0; i < 21; i++ ) {
 			bbelow1[pos] |= ( fonts[( ( a ) * 44 ) + i] |
 				fonts[( ( a ) * 44 ) + i + 1] ) >> 3;
 			bbelow2[pos++] |= ( fonts[( ( a ) * 44 ) + i + 22] |
@@ -1038,23 +1042,24 @@ void subscript_bold( int *ch, int *current, int u ) {
 		bbelow2[pos++] = 0;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
-		( *current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-void subscript_enlarge( int *ch, int *current, int u ) {
+void subscript_enlarge( int *p_char, int *p_current, int u ) {
 	int sh;
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
+	unsigned char a = *p_char;
+
 	u >>= 5;
-	level = islevel( ch );									/* get its type of 3-level */
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current *  WIDTH;
-		for ( i = 0; i<22; i++ ) {
+		pos = *p_current *  WIDTH;
+		for ( i = 0; i < 22; i++ ) {
 			bbelow1[pos] = ( fonts[( ( a ) * 44 ) + i] << 4 );
 			bbelow2[pos++] = ( fonts[( ( a ) * 44 ) + i + 22] << 4 ) | u;
 			bbelow1[pos] = ( fonts[( ( a ) * 44 ) + i] << 4 );
@@ -1068,14 +1073,14 @@ void subscript_enlarge( int *ch, int *current, int u ) {
 		bbelow2[pos++] = u;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = u;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 1:
-		--( *current );
-		pos = --( *current ) * WIDTH;
-		sh = ( ( a>0xe7 ) & ( a<0xed ) & ( ( bmiddle1[pos + 30] | bmiddle2[pos + 30] ) != 0 ) ) ? 2 : 0;
-		for ( i = 0; i<22; i++ ) {
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
+		sh = ( ( a > 0xe7 ) & ( a < 0xed ) & ( ( bmiddle1[pos + 30] | bmiddle2[pos + 30] ) != 0 ) ) ? 2 : 0;
+		for ( i = 0; i < 22; i++ ) {
 			bmiddle1[pos] |= ( fonts[( ( a ) * 44 ) + i] ) >> ( 4 - sh );
 			bmiddle2[pos++] |= ( fonts[( ( a ) * 44 ) + i + 22] ) >> ( 4 - sh );
 			bmiddle1[pos] |= ( fonts[( ( a ) * 44 ) + i] ) >> ( 4 - sh );
@@ -1089,13 +1094,13 @@ void subscript_enlarge( int *ch, int *current, int u ) {
 		bmiddle2[pos++] |= 0;
 		bmiddle1[pos] |= 0;
 		bmiddle2[pos++] |= 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		--( *current );
-		pos = --( *current ) * WIDTH;
-		for ( i = 0; i<22; i++ ) {
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
+		for ( i = 0; i < 22; i++ ) {
 			bbelow1[pos] |= ( fonts[( ( a ) * 44 ) + i] ) >> 3;
 			bbelow2[pos++] |= ( fonts[( ( a ) * 44 ) + i + 22] ) >> 3;
 			bbelow1[pos] |= ( fonts[( ( a ) * 44 ) + i] ) >> 3;
@@ -1109,28 +1114,29 @@ void subscript_enlarge( int *ch, int *current, int u ) {
 		bbelow2[pos++] = 0;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-void subscript_bold_enlarge( int *ch, int *current, int u ) {
+void subscript_bold_enlarge( int *p_char, int *p_current, int u ) {
 	int sh;
 	int level;
 	int i;
 	int pos;
-	unsigned char a = *ch;
+	unsigned char a = *p_char;
+
 	u >>= 5;
-	level = islevel( ch );									/* get its type of 3-level */
+	level = islevel( p_char );									/* get its type of 3-level */
 	switch ( level ) {
 	case 2:
-		pos = *current *  WIDTH;
+		pos = *p_current *  WIDTH;
 		bbelow1[pos] = ( fonts[( ( a ) * 44 )] << 4 );
 		bbelow2[pos++] = ( fonts[( ( a ) * 44 ) + 22] << 4 ) | u;
 		bbelow1[pos] = ( fonts[( ( a ) * 44 )] << 4 );
 		bbelow2[pos++] = ( fonts[( ( a ) * 44 ) + 22] << 4 ) | u;
-		for ( i = 0; i<21; i++ ) {
+		for ( i = 0; i < 21; i++ ) {
 			bbelow1[pos] = ( ( fonts[( ( a ) * 44 ) + i] |
 				fonts[( ( a ) * 44 ) + i + 1] ) << 4 );
 			bbelow2[pos++] = ( ( fonts[( ( a ) * 44 ) + i + 22] |
@@ -1150,18 +1156,18 @@ void subscript_bold_enlarge( int *ch, int *current, int u ) {
 		bbelow2[pos++] = u;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = u;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 1:
-		--( *current );
-		pos = --( *current ) * WIDTH;
-		sh = ( ( a>0xe7 ) & ( a<0xed ) & ( ( bmiddle1[pos + 30] | bmiddle2[pos + 30] ) != 0 ) ) ? 2 : 0;
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
+		sh = ( ( a > 0xe7 ) & ( a < 0xed ) & ( ( bmiddle1[pos + 30] | bmiddle2[pos + 30] ) != 0 ) ) ? 2 : 0;
 		bmiddle1[pos] |= ( fonts[( ( a ) * 44 )] ) >> 4;
 		bmiddle2[pos++] |= ( fonts[( ( a ) * 44 ) + 22] ) >> 4;
 		bmiddle1[pos] |= ( fonts[( ( a ) * 44 )] ) >> 4;
 		bmiddle2[pos++] |= ( fonts[( ( a ) * 44 ) + 22] ) >> 4;
-		for ( i = 0; i<21; i++ ) {
+		for ( i = 0; i < 21; i++ ) {
 			bmiddle1[pos] |= ( fonts[( ( a ) * 44 ) + i] |
 				fonts[( ( a ) * 44 ) + i + 1] ) >> ( 4 - sh );
 			bmiddle2[pos++] |= ( fonts[( ( a ) * 44 ) + i + 22] |
@@ -1181,17 +1187,17 @@ void subscript_bold_enlarge( int *ch, int *current, int u ) {
 		bmiddle2[pos++] |= 0;
 		bmiddle1[pos] |= 0;
 		bmiddle2[pos++] |= 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	case 3:
-		--( *current );
-		pos = --( *current ) * WIDTH;
+		--( *p_current );
+		pos = --( *p_current ) * WIDTH;
 		bbelow1[pos] |= ( fonts[( ( a ) * 44 )] ) >> 3;
 		bbelow2[pos++] |= ( fonts[( ( a ) * 44 ) + 22] ) >> 3;
 		bbelow1[pos] |= ( fonts[( ( a ) * 44 )] ) >> 3;
 		bbelow2[pos++] |= ( fonts[( ( a ) * 44 ) + 22] ) >> 3;
-		for ( i = 0; i<21; i++ ) {
+		for ( i = 0; i < 21; i++ ) {
 			bbelow1[pos] |= ( fonts[( ( a ) * 44 ) + i] |
 				fonts[( ( a ) * 44 ) + i + 1] ) >> 3;
 			bbelow2[pos++] |= ( fonts[( ( a ) * 44 ) + i + 22] |
@@ -1211,17 +1217,17 @@ void subscript_bold_enlarge( int *ch, int *current, int u ) {
 		bbelow2[pos++] = 0;
 		bbelow1[pos] = 0;
 		bbelow2[pos++] = 0;
-		( *current )++;
-		( *current )++;
+		( *p_current )++;
+		( *p_current )++;
 		break;
 	}
 }
 
-int islevel( int *line ) {
+int islevel( int *p_line ) {
 	register int index;
 
-	index = *line;
-	if ( *line < 0x00d0 ) {
+	index = *p_line;
+	if ( *p_line < 0x00d0 ) {
 		return( 2 );
 	} else {
 		return( tablev[index - 0xd0] );

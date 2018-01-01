@@ -35,13 +35,12 @@
 #include "prtt.h"
 
 /* constant area */
-#define ASCII_NO 256
 #define BUFFERSIZE 500
 
 /* function prototype */
 
 /**  */
-void loadline( unsigned char *line );
+void loadline( unsigned char *p_line );
 
 /**  */
 void tclearbuffer( void );
@@ -84,30 +83,30 @@ void subscript( int *ch, int *current );
 *   middle level "     "    2
 *   below  level "     "    3 */
 /* Modify: Suttipong Kanakakorn Sat  10-28-1989  10:54:49 */
-int tislevel( int *line );
+int tislevel( int *p_line );
 
 /**  */
 void tprint_three( void );
 
 /**  */
-void putpstring( unsigned char *s );
+void putpstring( unsigned char *p_string );
 
 /** global area. */
 extern int cpi;												/* from pmenu.c */
 int underlineactive = 0;									/* 0 -> normal,1 -> subscript or superscript */
-char tnortop[500];
-char tnorupp[500];
-char tnormid[500];
-char tnorbel[500];
-char tsuptop[500];
-char tsupupp[500];
-char tsupmid[500];
-char tsupbel[500];
-char tsubtop[500];
-char tsubupp[500];
-char tsubmid[500];
-char tsubbel[500];
-char textbar[500];
+char tnortop[BUFFERSIZE];
+char tnorupp[BUFFERSIZE];
+char tnormid[BUFFERSIZE];
+char tnorbel[BUFFERSIZE];
+char tsuptop[BUFFERSIZE];
+char tsupupp[BUFFERSIZE];
+char tsupmid[BUFFERSIZE];
+char tsupbel[BUFFERSIZE];
+char tsubtop[BUFFERSIZE];
+char tsubupp[BUFFERSIZE];
+char tsubmid[BUFFERSIZE];
+char tsubbel[BUFFERSIZE];
+char textbar[BUFFERSIZE];
 
 /* add by Suttipong Kanakakorn Tue  09-05-1989  01:03:36 */
 unsigned char prt_linedraw_tab[] = {						/* offset == 0x8f */
@@ -116,34 +115,34 @@ unsigned char prt_linedraw_tab[] = {						/* offset == 0x8f */
 	0x9d, 0x9e
 };
 
-void PrinterLoadLineText( unsigned char *line ) {
+void PrinterLoadLineText( unsigned char *p_line ) {
 	tclearbuffer( );
-	loadline( line );
+	loadline( p_line );
 	tprint_three( );
 }
 
-void loadline( unsigned char *line ) {
+void loadline( unsigned char *p_line ) {
 	unsigned int attr = 0;
 	int current = 0;									/* current dot position */
 	int ch;
 	current = current ^ current;
 	attr = attr ^ attr;
-	while ( *line != '\0' ) {
-		ch = *line;
+	while ( *p_line != '\0' ) {
+		ch = *p_line;
 		if ( ch < 32 ) {									/* codes under 32 are control or attribute */
 			attr = tadj_attr( &attr, &ch );
 			putattr( &attr, &current );
 		} else {
 			tpretobuffer( &attr, &ch, &current );
 		}
-		line++;
+        p_line++;
 	}
 	endstring( &current );
 }
 
 void tclearbuffer( void ) {
 	int i;
-	for ( i = 0; i<500; ) {
+	for ( i = 0; i < BUFFERSIZE; ) {
 		tnortop[i] = ' ';
 		tnorupp[i] = ' ';
 		tnormid[i] = ' ';
@@ -430,11 +429,11 @@ void subscript( int *ch, int *current ) {
 	}
 }
 
-int tislevel( int *line ) {
-	if ( *line < 0x80 ) {
+int tislevel( int *p_line ) {
+	if ( *p_line < 0x80 ) {
 		return( CP_MIDDLE );
 	} else {
-		return( cp_thaitable[*line - 0x80] );
+		return( cp_thaitable[*p_line - 0x80] );
 	}
 }
 
@@ -465,11 +464,11 @@ void tprint_three( void ) {
 		putpstring( tnorbel ); PrinterLineFeed180inch( 9 );
 		putpstring( tsubbel ); PrinterLineFeed180inch( 00 );
 
-		if ( linespace>14 ) {
+		if ( linespace > 14 ) {
 			PrinterLineFeed180inch( 14 );
 			spleft = linespace - 14;
 			putpstring( textbar );
-			while ( spleft>24 ) {
+			while ( spleft > 24 ) {
 				PrinterLineFeed180inch( 24 );
 				putpstring( textbar );
 				spleft -= 24;
@@ -496,11 +495,11 @@ void tprint_three( void ) {
 		underlineactive = 0;
 		putpstring( tnorbel ); PrinterLineFeed216inch( 10 );
 		putpstring( tsubbel ); PrinterLineFeed216inch( 00 );
-		if ( linespace>14 ) {
+		if ( linespace > 14 ) {
 			PrinterLineFeed216inch( 14 );
 			spleft = linespace - 14;
 			putpstring( textbar );
-			while ( spleft>24 ) {
+			while ( spleft > 24 ) {
 				PrinterLineFeed216inch( 24 );
 				putpstring( textbar );
 				spleft -= 24;
@@ -546,7 +545,7 @@ void tprint_three( void ) {
 	*/
 }
 
-void putpstring( unsigned char s[] ) {
+void putpstring( unsigned char *p_string ) {
 	extern int nlqmode;
 	extern int prtcodestd;									/* code of print set in pmenu. */
 	int i = 0;
@@ -556,14 +555,14 @@ void putpstring( unsigned char s[] ) {
 		putp( ESC ); putp( 'x' ); putp( 1 );
 	}
 	printattr( 0 );											/* set to normal print */
-	while ( s[i] != '\0' ) {
-		if ( s[i] == ESC ) {
-			printattr( s[++i] ); i++;						/* print followed attribute. */
+	while ( p_string[i] != '\0' ) {
+		if ( p_string[i] == ESC ) {
+			printattr( p_string[++i] ); i++;						/* print followed attribute. */
 		} else {
 			if ( prtcodestd == 0 ) {
-				putp( stdtoku( s[i++] ) );
+				putp( stdtoku( p_string[i++] ) );
 			} else {
-				putp( s[i++] );
+				putp( p_string[i++] );
 			}
 		}
 	}

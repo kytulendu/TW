@@ -23,8 +23,21 @@
 
 #include "prtbuf24.h"
 
+/* function prototype */
+
+/**  */
+void ClearTempBuffer( int p_memclear );
+/**  */
+void TransformBuffer( int p_cindex );
+/**  */
+int Ltrim24( char *p_buffer1, char *p_buffer2, char *p_buffer3, int p_left, int p_right );
+/**  */
+int Rtrim24( char *p_buffer1, char *p_buffer2, char *p_buffer3, int p_left, int p_right );
+/**  */
+void PrintBuffer24pin( char *p_buffer1, char *p_buffer2, char *p_buffer3, int p_maxscan );
+
 void ClearTempBuffer( int p_memclear ) {
-	p_memclear = ( p_memclear>maxdot * 2 ) ? maxdot * 2 : p_memclear;
+	p_memclear = ( p_memclear > maxdot * 2 ) ? maxdot * 2 : p_memclear;
 	memset( bupper1, 0, p_memclear );
 	memset( bupper2, 0, p_memclear );
 	memset( bupper3, 0, p_memclear );
@@ -82,7 +95,7 @@ void TransformBuffer( int p_cindex ) {
 		if ( extbarprinting ) {
 			p40 = ( cp_lqbuf.extbar + i );
 		}
-		for ( j = 0; j<18; j++, k++ ) {
+		for ( j = 0; j < 18; j++, k++ ) {
 			p11 = &( p10->font[j][0] );
 			p21 = &( p20->font[j][0] );
 			p31 = &( p30->font[j][0] );
@@ -105,40 +118,39 @@ void TransformBuffer( int p_cindex ) {
 	}
 }
 
-int Ltrim24( char *buf1, char *buf2, char *buf3, int left, int right ) {
+int Ltrim24( char *p_buffer1, char *p_buffer2, char *p_buffer3, int p_left, int p_right ) {
 	register int i;
-	i = left;
-	while ( ( buf1[i] == 0 ) && ( buf2[i] == 0 ) && ( buf3[i] == 0 ) ) {
+	i = p_left;
+	while ( ( p_buffer1[i] == 0 ) && ( p_buffer2[i] == 0 ) && ( p_buffer3[i] == 0 ) ) {
 		i++;
-		if ( i > right ) {
-			return( right );
+		if ( i > p_right ) {
+			return( p_right );
 		}
 	}
 	return( ( int ) ( i / 18 ) );
 }
 
-
-int Rtrim24( char *buf1, char *buf2, char *buf3, int left, int right ) {
+int Rtrim24( char *p_buffer1, char *p_buffer2, char *p_buffer3, int p_left, int p_right ) {
 	register int i;
-	i = right - 1;
-	while ( ( buf1[i] == 0 ) && ( buf2[i] == 0 ) && ( buf3[i] == 0 ) ) {
+	i = p_right - 1;
+	while ( ( p_buffer1[i] == 0 ) && ( p_buffer2[i] == 0 ) && ( p_buffer3[i] == 0 ) ) {
 		i--;
-		if ( i < left ) {
-			return( left );
+		if ( i < p_left ) {
+			return( p_left );
 		}
 	}
 	return( i + 1 );
 }
 
-void PrintBuffer24pin( char *buf1, char *buf2, char *buf3, int maxscan ) {
+void PrintBuffer24pin( char *p_buffer1, char *p_buffer2, char *p_buffer3, int p_maxscan ) {
 	int left;
 	int right;
 	int length;
 	register int i;
 	register int j;
-	left = Ltrim24( buf1, buf2, buf3, 0, maxscan );
-	if ( left != maxscan ) {
-		right = Rtrim24( buf1, buf2, buf3, 0, maxscan );
+	left = Ltrim24( p_buffer1, p_buffer2, p_buffer3, 0, p_maxscan );
+	if ( left != p_maxscan ) {
+		right = Rtrim24( p_buffer1, p_buffer2, p_buffer3, 0, p_maxscan );
 		for ( i = 0; i < left; i++ ) {
 			putp( ' ' );									/* print in text mode */
 		}
@@ -146,22 +158,22 @@ void PrintBuffer24pin( char *buf1, char *buf2, char *buf3, int maxscan ) {
 		if ( length > 0 ) {
 			PrinterSetGraphicMode24pinTripleDensity( length );
 			for ( i = 0, j = left * 18; i < length; i++, j++ ) {
-				putp( buf1[j] );
-				putp( buf2[j] );
-				putp( buf3[j] );
+				putp( p_buffer1[j] );
+				putp( p_buffer2[j] );
+				putp( p_buffer3[j] );
 			}
 		}
 	}
 }
 
-void PrintThree24pin( int uindex, int mindex, int lindex ) {
+void PrintThree24pin( int p_mindex ) {
 	long maxprint;											/* max byte to print */
 	int spleft;
 
-	maxprint = ( cpi >= 10 ) ? ( ( long ) ( mindex ) * 18 * 1000 ) / ( cpi * 100 ) : maxdot;
+	maxprint = ( cpi >= 10 ) ? ( ( long ) ( p_mindex ) * 18 * 1000 ) / ( cpi * 100 ) : maxdot;
 	maxprint = ( maxprint>maxdot ) ? maxdot : maxprint;
-	ClearTempBuffer( mindex * 18 );
-	TransformBuffer( mindex );
+	ClearTempBuffer( p_mindex * 18 );
+	TransformBuffer( p_mindex );
 
 	charwidth( bupper1 );
 	charwidth( bupper2 );
@@ -180,12 +192,12 @@ void PrintThree24pin( int uindex, int mindex, int lindex ) {
 	charwidth( bbelow3 );
 	PrintBuffer24pin( bbelow1, bbelow2, bbelow3, ( int ) ( maxprint ) );
 
-	if ( linespace>23 ) {
+	if ( linespace > 23 ) {
 		spleft = linespace;
 		charwidth( extbar1 );
 		charwidth( extbar2 );
 		charwidth( extbar3 );
-		while ( spleft>23 ) {
+		while ( spleft > 23 ) {
 			PrinterLineFeed180inch( 23 );
 			PrintBuffer24pin( extbar1, extbar2, extbar3, ( int ) ( maxprint ) );
 			spleft -= 23;

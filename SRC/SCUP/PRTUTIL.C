@@ -97,7 +97,7 @@ void set_all_lineperpage( set_linespace_mode p_mode ) {
 	}
 	lineperpage = find_line_perpage( );
 	if ( p_mode == INTERACTIVE ) {
-		savepic( );        /*"                             "*/
+		savepic( );
 		dispprintf( 19, 12, NORMALATTR,
 			"จำนวนบรรทัดต่อกระดาษ 1 นิ้ว คือ : %s บรรทัด/นิ้ว",
 			find_lineperinch( ) );

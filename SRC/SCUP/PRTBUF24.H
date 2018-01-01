@@ -2,9 +2,6 @@
 #define SCUP_PRTBUF24__H_INCLUDED
 
 /**  */
-void PrintThree24pin( int uindex, int mindex, int lindex );
-
-/**  */
-void PrintBuffer24pin( char *buf1, char *buf2, char *buf3, int maxscan );
+void PrintThree24pin( int p_mindex );
 
 #endif /* SCUP_PRTBUF24__H_INCLUDED */

@@ -28,46 +28,41 @@
 
 /* function prototype */
 
-void print_picture( char *point );
+void print_picture( char *p_buffer );
 
-/** function PrintBuffer9pin().print  data  in buffer.
-*   include left-right trim  functions to  fasten
+/** Print data in buffer.
+*   include left-right trim functions to fasten
 *   graphic print. In text mode the printer print
 *   nothing when it reaches blank (' '). */
-void PrintBuffer9pin( unsigned char *c );
-int ltrim( unsigned char *line, int left, int right );
-int rtrim( unsigned char *line, int left, int right );
-
-/* constant area */
-#define WIDTH 24
-#define ADJUST(x) (x>=0) ? x : 256+x
-#define ASCII_NO 256
+void PrintBuffer9pin( unsigned char *p_buffer );
+int ltrim( unsigned char *p_line, int p_left, int p_right );
+int rtrim( unsigned char *p_line, int p_left, int p_right );
 
 #ifdef WANT_TO_USE_GRAPH
-void print_picture( char *point ) {
+void print_picture( char *p_buffer ) {
 	extern int grp_ready;
 	extern char *print_buffer_pointer;
 	grp_ready = NO;
-	print_buffer_pointer = point;
+	print_buffer_pointer = p_buffer;
 	read_picture_file( );
 }
 #endif
 
-void PrintBuffer9pin( unsigned char *c ) {
+void PrintBuffer9pin( unsigned char *p_buffer ) {
 	extern int maxdot;
 	register int i;
 	int left, right, length;
-	charwidth( c );											/* alternate character width in cpi.obj */
-	left = ltrim( c, 0, maxdot );
-	right = rtrim( c, 0, maxdot );
+	charwidth( p_buffer );              /* alternate character width in cpi.obj */
+	left = ltrim( p_buffer, 0, maxdot );
+	right = rtrim( p_buffer, 0, maxdot );
 	for ( i = 0; i < left; i++ ) {
-		putp( ' ' );										/* text mode */
+		putp( ' ' );                    /* text mode */
 	}
 	length = right - ( left * 24 );
 	if ( length != 0 ) {
 		PrinterSetGraphicMode9pinQuadrupleDensity( length );
-		for ( i = 0; i< length; i++ ) {
-			putp( c[( left * 24 ) + i] );					/* graphic (bit image) print */
+		for ( i = 0; i < length; i++ ) {
+			putp( p_buffer[( left * 24 ) + i] );    /* graphic (bit image) print */
 		}
 	}
 }
@@ -90,7 +85,6 @@ void PrintThree9pin( void ) {
 	extern int pic_print;
 	extern int grp_ready;
 	extern int dot_per_line;
-	extern char *print_buffer_pointer;
 	char *temp_buffer;
 #endif
 	int i, j, spleft;
@@ -171,7 +165,7 @@ void PrintThree9pin( void ) {
 #endif
 		}
 	} else {
-		for ( i = 1; i<6; i += 2 ) {
+		for ( i = 1; i < 6; i += 2 ) {
 			for ( j = 0; j < maxdot; j++ ) {
 				*( print_pointer[i] + j ) |= *( print_pointer[i - 1] + j );
 			}
@@ -190,25 +184,25 @@ void PrintThree9pin( void ) {
 	}
 }
 
-int ltrim( unsigned char *line, int left, int right ) {
+int ltrim( unsigned char *p_line, int p_left, int p_right ) {
 	register int i;
-	i = left;
-	while ( line[i] == 0 ) {
+	i = p_left;
+	while ( p_line[i] == 0 ) {
 		i++;
-		if ( i >= right - 1 ) {
-			return( left );
+		if ( i >= p_right - 1 ) {
+			return( p_left );
 		}
 	}
 	return( ( int ) ( i / 24 ) );
 }
 
-int rtrim( unsigned char *line, int left, int right ) {
+int rtrim( unsigned char *p_line, int p_left, int p_right ) {
 	register int i;
-	i = right - 1;
-	while ( line[i] == 0 ) {
+	i = p_right - 1;
+	while ( p_line[i] == 0 ) {
 		i--;
-		if ( i <= left ) {
-			return( left );
+		if ( i <= p_left ) {
+			return( p_left );
 		}
 	}
 	return( i + 1 );

@@ -175,7 +175,7 @@ void writemenu( int p_row, int p_col, font_attr p_attr ) {
 			break;
 		case 3:
 			dispstrhgc( " ขอบขวา                 ", mcol[p_col], 6, p_attr );
-			/* rightmargin = ( ( rightmargin>leftmargin ) && ( rightmargin<maxcol ) ) ? rightmargin : maxcol; */
+			/* rightmargin = ( ( rightmargin > leftmargin ) && ( rightmargin < maxcol ) ) ? rightmargin : maxcol; */
 			itoa( rightmargin, st, 10 );
 			dispstrhgc( st, smcol[p_col] - strlen( st ), 6, p_attr );
 			break;

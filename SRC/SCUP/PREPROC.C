@@ -18,6 +18,7 @@
 #include "..\common\cwtype.h"
 
 #include "24pins.h"
+#include "error.h"
 #include "global.h"
 
 #include "preproc.h"
