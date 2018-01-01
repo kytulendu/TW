@@ -89,7 +89,6 @@ unsigned char *SaraUeeFC( unsigned char *TempIndx ) {
 		} else {
 			return( TempIndx - 3 );		/* cut before HorHeeb */
 		}
-		break;
 	case RoreReo:
 		if ( !findchar( *TempIndxm2, "¤»Ë" ) ) {
 			return( TempIndxm2 );

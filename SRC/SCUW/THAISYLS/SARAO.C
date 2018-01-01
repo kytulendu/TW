@@ -79,7 +79,6 @@ unsigned char *SaraORtn( register unsigned char *TempIndx ) {
 		} else {
 			return( TempIndx - 2 );							/* cut before consonant that before Sara O */
 		}
-		break;
 
 	case RoreReo:											/* √‚À∞“π */
 		if ( nstrcmp( RoreReoWord, TempIndxm1 ) ) {
@@ -87,7 +86,6 @@ unsigned char *SaraORtn( register unsigned char *TempIndx ) {
 		} else {
 			return( TempIndx - 2 );							/* cut before consonant that before Sara O */
 		}
-		break;
 
 	case YoreYak:											/* ¬‚  */
 		if ( nstrcmp( YoreYakWord, TempIndxm1 ) ) {
@@ -95,7 +93,6 @@ unsigned char *SaraORtn( register unsigned char *TempIndx ) {
 		} else {
 			return( TempIndx - 2 );							/* cut before consonant that before Sara O */
 		}
-		break;
 
 	case KorKai:											/* ¢‚¡¬ */
 		if ( nstrcmp( KorKaiWord, TempIndxm1 ) ) {
@@ -103,7 +100,6 @@ unsigned char *SaraORtn( register unsigned char *TempIndx ) {
 		} else {
 			return( TempIndx - 2 );							/* cut before consonant that before Sara O */
 		}
-		break;
 /*
 	default:
 		return( TempIndx - 1 );

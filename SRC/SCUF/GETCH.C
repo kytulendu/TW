@@ -67,17 +67,11 @@ int get_pos( unsigned int *x, unsigned int *y, unsigned int block_x, unsigned in
 		return( key );
 	}
 
-	if ( *x > width_x*block_x ) {
+	if ( *x > width_x * block_x ) {
 		*x -= width_x;
-	}
-	if ( *x < 0 ) {
-		*x += width_x;
 	}
 	if ( *y > width_y * block_y ) {
 		*y -= width_y;
-	}
-	if ( *y < 0 ) {
-		*y += width_y;
 	}
 
 	return( 0 );
