@@ -47,12 +47,12 @@ int menu_height( ) {
 	return height;
 }
 
-int remove_menu( char **p ) {
+void remove_menu( char **p ) {
 	putimage( menu_left, menu_top, *p, COPY_PUT );
 	free( *p );
 }
 
-int popup_message( char *item[] ) {
+void popup_message( char *item[] ) {
 	int amount = 0, i = 0, oldmode;
 	char key, *buff;
 	struct viewporttype tmp;

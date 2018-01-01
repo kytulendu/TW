@@ -1,5 +1,5 @@
-#ifndef INT_H_INCLUDED
-#define INT_H_INCLUDED
+#ifndef SCUF_INT_H_INCLUDED
+#define SCUF_INT_H_INCLUDED
 
 /**  */
 void start_clock( int func );
@@ -16,4 +16,4 @@ void init_clock( );
 /**  */
 void flush_clock( void );
 
-#endif /* INT_H_INCLUDED */
+#endif /* SCUF_INT_H_INCLUDED */

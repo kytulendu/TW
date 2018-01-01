@@ -74,7 +74,7 @@ int main( int argc, char *argv[] ) {
 	return 0;
 }
 
-int( *writech )( int x, int y, char ch );
+void ( *writech )( int x, int y, char ch );
 
 /** setvideomode
 *   init_cursor
@@ -128,7 +128,10 @@ void init_graph_and_cursor( void ) {
 	} else if ( scrmode == EGAMONO ) {
 		graphdriver = EGAMONO;
 		graphmode = EGAMONOHI;
-	} else {
+	} else if ( scrmode == VGA ) {
+        graphdriver = VGA;
+        graphmode = VGAHI;
+    } else {
 		graphdriver = HERCMONO;
 		graphmode = HERCMONOHI;
 	}
@@ -535,10 +538,10 @@ int select_font( int *page, char *status ) {
 	cur_char = ch;
 	while ( !( ( key = get_pos( &sel_x, &sel_y, maxx, maxy - 1, 1, 1 ) ) == RET ||
 		key == 3 ) ) {
-		ch = sel_y + sel_x*char_per_col( );
+		ch = sel_y + sel_x * char_per_col( );
 		if ( ch>255 ) {
 			sel_x = maxx;
-			sel_y = char_per_col( ) - ( ( char_per_col( )*( 1 + sel_x ) ) - 255 );
+			sel_y = char_per_col( ) - ( ( char_per_col( ) * ( 1 + sel_x ) ) - 255 );
 			ch = 255;
 		};
 		cur_char = ch;

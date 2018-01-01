@@ -1,7 +1,7 @@
-#ifndef CUFSETUP_H_INCLUDED
-#define CUFSETUP_H_INCLUDED
+#ifndef SCUF_CUFSETUP_H_INCLUDED
+#define SCUF_CUFSETUP_H_INCLUDED
 
 /** Parse the argument and setup the program. */
 void cufsetup( int argc, char *argv[] );
 
-#endif /* CUFSETUP_H_INCLUDED */
+#endif /* SCUF_CUFSETUP_H_INCLUDED */

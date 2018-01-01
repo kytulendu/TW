@@ -42,7 +42,7 @@ int existfile( char *pname ) {
 	return !0;
 }
 
-int put_box( int x1, int y1, int x2, int y2 ) {
+void put_box( int x1, int y1, int x2, int y2 ) {
 	char *buff;
 	x1 += align; x2 += align;
 	if ( ( buff = ( char* ) malloc( imagesize( x1, y1, x2, y2 ) ) ) == NULL ) {
@@ -78,7 +78,7 @@ int fontnamebox( char *pname, int creat ) {
 	return ret;
 }
 
-int error_message( char *prompt ) {
+void error_message( char *prompt ) {
 	savepic( );
 
 	put_box( center_x - 16 * thaistrlen( prompt ) / 2 - 5, 8 * 20 - 20,

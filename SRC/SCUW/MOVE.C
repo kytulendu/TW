@@ -91,7 +91,7 @@ void topfile( unsigned int *p_xCursorPos ) {
 
 void endfile( unsigned int *p_xCursorPos ) {
 	int count;
-	int linenum;
+	int linenum = 0;
 
 	storeline( curline );
 	curline = sentinel->previous;
