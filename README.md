@@ -26,7 +26,7 @@ System requirement may change in the future.
 
   * IBM PC or Compatible, 8086 or 8088 CPU, 512 KB RAM or better
   * DOS 3.3 or better
-  * Hercules, EGA, VGA, MCGA or AT&T 400 (Graphic card in AT&T PC 6300/Olivetti M24)
+  * Hercules, EGA, VGA, MCGA or AT&T 400 (Graphic card in AT&T PC 6300/Olivetti M24, Compaq Portable III)
   * Two 5.25" 360KB or one 5.25" 1.2MB or one 3.5" 720KB or one 3.5" 1.44MB floppy disk drive.
   * 700KB free hard drive space (Optional)
   * 9 pin or 24 pin Dot-Matrix printer (Optional)
