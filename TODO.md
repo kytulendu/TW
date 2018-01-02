@@ -7,8 +7,6 @@ May change over time.
 - Convert most of assembly language function to C.
 - Thai-English menu and text message.
 - Redo all dialog and text position.
-- Detect ATT400 internal plasma monitor for old portable and laptop that have CGA 640x400 mode.
-Like Compaq Portable III, GridCase 286, GridCase 386.
 - Write an error handler.
 - Check for error when allocate memory, open directory, read/write file, etc.
 - Two graphic card for debuging (Hercules as program display and textmode CGA as debug output)
@@ -59,10 +57,11 @@ Printing
 
 Hardware support
 - EMS/XMS
-- CGA, 640x200 pixel, monochrome, might require smaller sccreen font
+- CGA, 640x200 pixel, monochrome, require smaller sccreen font
 - Wyse 700, 1280x800 pixel, monochrome, can config to display how many column (80+) like old Hercules driver, see herc_align.patch
 - SVGA
 - VESA
+- Thai 8 line and 25 line text mode
 
 Interface
 - Re-made menu to like Word Star 7 or modern software
@@ -74,3 +73,4 @@ Misc
 - Multi Thai character encoding/converter, RW KU code, Thai EBDIC, etc.
 - Change Thai encoding CW KU / CW TIS-620 by use `<Ctrl><\>` key
 - Find a way to reduce memory usuage
+- Multi font like CU-Writer 1.6
