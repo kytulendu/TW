@@ -35,7 +35,7 @@ void egavga_class( graphics_hardware *mode_ptr );
 /** check if the equipped adapter is MCGA */
 int is_mcga( void );
 
-/** check if the equipped adapter is AT&T 6300 / Olivetti M24. */
+/** check if the equipped adapter is AT&T 6300 / Olivetti M24 or Compaq Portable III. */
 int is_att400( void );
 
 /** check if there is any transition on 0x3BF port. */

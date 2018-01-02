@@ -58,7 +58,7 @@ void graph_detecthardware( graphics_hardware *mode_ptr ) {
 		}
 
 		/* CGA or ATT400 */
-		if ( is_att400( ) ) {					/* AT&T 6300 / Olivetti M24 test */
+		if ( is_att400( ) ) {					/* CGA 400 line test */
 			*mode_ptr = ATT400;
 		} else {
 			*mode_ptr = CGA;
@@ -136,25 +136,54 @@ int is_mcga( void ) {
 
 int is_att400( void ) {
 	union REGS reg_pack;
+    struct SREGS sreg_pack;
 
-	/* Use AT&T 6300 specific BIOS int */
-	/* Idea from https://github.com/MobyGamer/TOPBENCH */
-	/** Int 1A/AH=FEh
-	*		AT&T 6300 - READ TIME AND DATE
-	*		AH = FEh
-	*	Return:
-	*		BX = day count (0 = Jan 1, 1984)
-	*		CH = hour
-	*		CL = minute
-	*		DH = second
-	*		DL = hundredths */
-	reg_pack.x.ax = 0xFE00;
-	int86( 0x1a, &reg_pack, &reg_pack );
-	if ( reg_pack.x.cx != 0 ) {			/* if any bits are set, we have AT&T 6300 */
-		return ( 1 );
-	} else {
-		return ( 0 );
-	}
+    unsigned char ret;
+    unsigned int far *idWord;
+    unsigned char far *idByte;
+
+    /* Ideas are from https://github.com/MobyGamer/TOPBENCH */
+
+    /* AT&T 6300 have no int15 support in BIOS. */
+    reg_pack.h.ah = 0xC0;
+    int86x( 0x15, &reg_pack, &reg_pack, &sreg_pack );
+
+    /* AT&T 6300 found! */
+    if ( reg_pack.x.cflag ) {
+        /* Use AT&T 6300 specific BIOS int */
+        /** Int 1A/AH=FEh
+        *		AT&T 6300 - READ TIME AND DATE
+        *		AH = FEh
+        *	Return:
+        *		BX = day count (0 = Jan 1, 1984)
+        *		CH = hour
+        *		CL = minute
+        *		DH = second
+        *		DL = hundredths */
+        reg_pack.x.ax = 0xFE00;
+        int86( 0x1a, &reg_pack, &reg_pack );
+        if ( reg_pack.x.cx != 0 ) {			/* if any bits are set, we have AT&T 6300 */
+            return ( 1 );
+        }
+    } else if ( ( ( reg_pack.x.flags && reg_pack.x.cflag ) == 0 ) && ( reg_pack.h.ah == 0 ) ) {
+        /* Check for Compaq */
+        /* Since I don't have this computer and there are no emulator as the date of writing
+        *  This code is untested! */
+        idWord = ( unsigned int far * ) MK_FP( sreg_pack.es, ( reg_pack.x.bx + 2 ) );
+        idByte = ( unsigned char far * ) MK_FP( sreg_pack.es, ( reg_pack.x.bx + 4 ) );
+
+        if ( *idWord == 0x01FC ) {
+            if ( *idByte == 0 ) {
+                /* Detect Compaq Portable III internal plasma flat panel monitor */
+                ret = inportb( 0x1BC6 );
+                if ( ( ret >> 4 ) == 4 ) {  /* 4 if have internal plasma monitor */
+                    return ( 1 );
+                }
+            }
+        }
+    }
+
+    return ( 0 );
 }
 
 int check_vretrace( void ) {

@@ -104,14 +104,15 @@ void hardretn( int __retn );
 unsigned char inportb( unsigned __portid );
 
 int  int86( int __intno, union REGS  *__inregs, union REGS  *__outregs );
+int  int86x( int __intno, union REGS  *__inregs,  union REGS  *__outregs, struct SREGS  *__segregs );
 int  intdos( union REGS  *__inregs, union REGS  *__outregs );
 int  intdosx( union REGS  *__inregs, union REGS  *__outregs, struct SREGS  *__segregs );
 void intr( int __intno, struct REGPACK  *__preg );
 
 void outportb( unsigned __portid, unsigned char __value_d );
 
-#define MK_FP( seg,ofs )( (void _seg * )( seg ) +( void * )( ofs ))
-#define FP_SEG( fp )( (unsigned )( void _seg * )( void * )( fp ))
+#define MK_FP( seg,ofs )( (void  * )( seg ) +( void  * )( ofs ))
+#define FP_SEG( fp )( (unsigned )( void  * )( void * )( fp ))
 #define FP_OFF( fp )( (unsigned )( fp ))
 
 void nosound( void );
