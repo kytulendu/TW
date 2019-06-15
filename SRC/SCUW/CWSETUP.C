@@ -39,6 +39,7 @@ static char cup_option[16]; /* assume that only 16 char max for argument */
 
 typedef struct each_option_setup {
 	char *option_name;
+	char *label;
 	unsigned int *p_option_value;
 	unsigned int p_option_default;
 	unsigned char maxlen;
@@ -46,14 +47,14 @@ typedef struct each_option_setup {
 } each_option_setup;
 
 each_option_setup option_setup[] = {
-		{ "รหัส (1.สมอ. 2.เกษตร)", ( unsigned int * ) &stdcode, YES, 1, ONEORTWO },
-		{ "แบ่งหน้า (1.แบ่ง 2.ไม่แบ่ง)", ( unsigned int * ) &pagebreak, YES, 1, ONEORTWO },
-		{ "ตัดคำอัตโนมัติ (1.ตัด 2.ไม่ตัด)", ( unsigned int * ) &wordwrap, YES, 1, ONEORTWO },
-		{ "สร้างไฟล์สำรองทุกครั้งที่มีการเก็บข้อมูล (1.สร้าง 2.ไม่สร้าง)", ( unsigned int * ) &create_bak, YES, 1, ONEORTWO },
-		{ "มีเพลง (1. มี 2. ไม่มี) ", ( unsigned int * ) &cu_song, YES, 1, ONEORTWO },
-		{ "กั้นหน้าซ้าย", &leftmar, 1, 3, NUMBER },
-		{ "กั้นหน้าขวา (ไม่เกิน 256)", &rightmar, 65, 3, NUMBER },
-		{ "จำนวนบรรทัดต่อหน้า", &lineperpage, 33, 3, NUMBER },
+		{ "thaicode", "รหัส (1.สมอ. 2.เกษตร)", ( unsigned int * ) &stdcode, YES, 1, ONEORTWO },
+		{ "pagebreak", "แบ่งหน้า (1.แบ่ง 2.ไม่แบ่ง)", ( unsigned int * ) &pagebreak, YES, 1, ONEORTWO },
+		{ "wordwrap", "ตัดคำอัตโนมัติ (1.ตัด 2.ไม่ตัด)", ( unsigned int * ) &wordwrap, YES, 1, ONEORTWO },
+		{ "createbackup", "สร้างไฟล์สำรองทุกครั้งที่มีการเก็บข้อมูล (1.สร้าง 2.ไม่สร้าง)", ( unsigned int * ) &create_bak, YES, 1, ONEORTWO },
+		{ "song", "มีเพลง (1. มี 2. ไม่มี) ", ( unsigned int * ) &cu_song, YES, 1, ONEORTWO },
+		{ "leftmargin", "กั้นหน้าซ้าย", &leftmar, 1, 3, NUMBER },
+		{ "rightmargin", "กั้นหน้าขวา (ไม่เกิน 256)", &rightmar, 65, 3, NUMBER },
+		{ "lineperpage", "จำนวนบรรทัดต่อหน้า", &lineperpage, 33, 3, NUMBER },
 };
 
 /* number of element of option_setup */
@@ -227,6 +228,7 @@ int readoption( search_file_mode p_mode ) {
 	char fname[MAXPATH];
 	int field;
 	int temp;
+	char opname[15];
 	each_option_setup *op;
 
 
@@ -250,8 +252,8 @@ int readoption( search_file_mode p_mode ) {
 	}
 	/* If we reach here we successfully open cfg file */
 	for ( op = option_setup; op < option_setup + NELEM_OPTION; op++ ) {
-		field = fscanf( fp, "%d", &temp );
-		if ( field == 1 ) { /* successfully scan */
+		field = fscanf( fp, "%s %u", opname, &temp );
+		if ( field == 2 ) { /* succesfully scan */
 			if ( *op->p_option_value == -1 ) { /* not set from command line */
 				*op->p_option_value = temp; /* so set it */
 			}
@@ -279,7 +281,7 @@ void saveoption( search_file_mode p_mode ) {
 		return;
 	}
 	for ( op = option_setup; op < option_setup + NELEM_OPTION; op++ ) {
-		fprintf( fp, "%u ", *op->p_option_value );
+		fprintf( fp, "%s %u\n", op->option_name, *op->p_option_value );
 	}
 	fprintf( fp, "\n" );
 	fclose( fp );
@@ -287,8 +289,8 @@ void saveoption( search_file_mode p_mode ) {
 
 /** Display options on screen. */
 void dispoption( int i ) {
-	dispstrhgc( option_setup[i].option_name,
-		65 - thaistrlen( option_setup[i].option_name ), i + 6, NORMALATTR );
+	dispstrhgc( option_setup[i].label,
+		65 - thaistrlen( option_setup[i].label ), i + 6, NORMALATTR );
 	dispprintf( 65, i + 6, NORMALATTR, " :%d", *option_setup[i].p_option_value );
 }
 
