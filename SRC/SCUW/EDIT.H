@@ -21,17 +21,6 @@ unsigned int findlineno( struct line_node *p_line );
 *  \return struct line_node		Line pointer. */
 struct line_node *linepointer( unsigned int p_linenum );
 
-/** Display line from link list at row given. First column to be displayed
-*   is in global variable "firstcol".
-*  \param[in]  p_line			linenode to display.
-*  \param[in]  p_row			Row position.
-*  \param[in]  p_linenum		Line number. */
-void displine( struct line_node *p_line, unsigned int p_row, unsigned int p_linenum );
-
-/** Display page break line at row given.
-*  \param[in]  p_row			Row to display page break. */
-void disppagebreak( unsigned int p_row );
-
 /** Display all line in page from linked list. Stop display if keyboard is
 *  pressed,then set flag "pagecomplete" to NO,else "pagecomplete" is set to YES. */
 void showpage( void );

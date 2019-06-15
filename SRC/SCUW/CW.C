@@ -48,6 +48,9 @@
 
 #include "cw.h"
 
+/** Menu selection to keyboard shortcut command. */
+unsigned menu_to_key( register unsigned int p_curmenu );
+
 void setupnode( void ) {
 	sentinel = ( struct line_node * ) malloc( sizeof( struct line_node ) );
 	sentinel->next = sentinel;
@@ -94,7 +97,7 @@ void destroynode( void ) {
 }
 
 unsigned int menu_to_key( register unsigned int p_curmenu ) {
-	register int i;
+	register size_t i;
 
 	for ( i = 0; ( command_tab[i] != p_curmenu ) && ( command_tab[i] != 0 ); i += 2 );
 	return( command_tab[i + 1] );

@@ -9,9 +9,6 @@ void delete_char( unsigned int p_xCursorPos );
 *  \param[in]  p_line			line_node to delete, usually is pointer to current line. */
 void deletereturn( struct line_node *p_line );
 
-/** Delete a return. */
-void del_return( void );
-
 /** Backspace. delete a character at the left of cursor, include any attribute, return, etc.
 *  \param[in]  p_xCursorPos		Column cursor position in editing window. */
 void backspace( unsigned int *p_xCursorPos );

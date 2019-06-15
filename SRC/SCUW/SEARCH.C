@@ -57,7 +57,7 @@ int optionupper( void );
 int optionword( void );
 int optionnoask( void );
 
-unsigned char *searchline( unsigned char *p_textline, unsigned int p_startpos );
+unsigned char *searchline( unsigned char *p_textline, size_t p_startpos );
 void addblank( void );
 void replaceword( unsigned int *p_xCursorPos, unsigned int *y_CursorPos );
 
@@ -160,7 +160,7 @@ int searchreplaceinfo( void ) {
 }
 
 int optionglobal( void ) {
-	int i = 0;
+	size_t i = 0;
 	while ( option[i] != '\0' ) {
 		if ( option[i] == 'G' ) {
 			return( YES );
@@ -171,7 +171,7 @@ int optionglobal( void ) {
 }
 
 int optionupper( void ) {
-	int i = 0;
+	size_t i = 0;
 	while ( option[i] != '\0' ) {
 		if ( option[i] == 'U' ) {
 			return( YES );
@@ -182,7 +182,7 @@ int optionupper( void ) {
 }
 
 int optionword( void ) {
-	int i = 0;
+	size_t i = 0;
 	while ( option[i] != '\0' ) {
 		if ( option[i] == 'W' ) {
 			return( YES );
@@ -193,7 +193,7 @@ int optionword( void ) {
 }
 
 int optionnoask( void ) {
-	int i = 0;
+	size_t i = 0;
 	while ( option[i] != '\0' ) {
 		if ( option[i] == 'N' ) {
 			return( YES );
@@ -203,7 +203,7 @@ int optionnoask( void ) {
 	return( NO );
 }
 
-unsigned char *searchline( unsigned char *p_textline, unsigned int p_startpos ) { /* startpos origin 0 */
+unsigned char *searchline( unsigned char *p_textline, size_t p_startpos ) { /* startpos origin 0 */
 	size_t i;
 	unsigned char *buffer;
 	unsigned char *buffaddr;
@@ -264,11 +264,11 @@ int searchfwd( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 	boolean enlargeflag;
 	unsigned int linecount;
 	unsigned int savecol;
-	unsigned int startpos;
+	size_t startpos;
 	size_t i;
 	font_attr font = NORMALATTR;
-	char *foundpoint;
-	char *addr;
+	unsigned char *foundpoint;
+	unsigned char *addr;
 
 	savecol = firstcol;
 	savepage = curpage;
@@ -367,7 +367,7 @@ int searchfwd( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 }
 
 void addblank( void ) {
-	int i = 79;
+	size_t i = 79;
 
 	while ( i != 0 ) {
 		source[i] = source[i - 1];
@@ -404,7 +404,7 @@ void searching( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 }
 
 void replaceword( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
-	int i;
+	size_t i;
 
 	for ( i = strlen( source ); i != 0; i-- ) {
 		backspace( p_xCursorPos );
@@ -420,7 +420,7 @@ void replaceword( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 
 int searchreplace( unsigned int *p_xCursorPos, unsigned int *y_CursorPos ) {
 	int ok = 0;
-	int i;
+	size_t i;
 	int ask = YES;
 	int global = NO;
 	int found = NO;

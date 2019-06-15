@@ -19,9 +19,12 @@
 
 #include "del.h"
 
+/** Delete a return. */
+void del_return( void );
+
 void delete_char( unsigned int p_xCursorPos ) {
-	register unsigned int i = p_xCursorPos + firstcol + 1;
-	unsigned int j = strlen( workline.middle );
+	register size_t i = p_xCursorPos + firstcol + 1;
+	size_t j = strlen( workline.middle );
 
 	if ( i != j ) {
 		if ( ( workline.attr[i] & ENLARGEATTR ) == ENLARGEATTR ) {
@@ -238,8 +241,8 @@ void delete_word( unsigned int p_xCursorPos ) {
 }
 
 void deltoendline( unsigned int p_xCursorPos, unsigned int p_yCursorPos ) {
-	register unsigned int i = MAXCOL + 1;
-	unsigned int j = p_xCursorPos + firstcol + 1;
+	register size_t i = MAXCOL + 1;
+	size_t j = p_xCursorPos + firstcol + 1;
 
 	while ( i <= j ) {
 		workline.topest[i] = ' ';

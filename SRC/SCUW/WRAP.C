@@ -73,8 +73,8 @@ void reform( void ) {
 	unsigned char *temp2;
 	unsigned char *temp3;
 	unsigned char *cuthere;
-	unsigned int i;
-	unsigned int j;
+	size_t i;
+	size_t j;
 	font_attr font = NORMALATTR;
 	unsigned char fontcode[9];
 

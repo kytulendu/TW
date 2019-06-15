@@ -230,6 +230,10 @@ unsigned char *cntrlpmenu[] = {
 	"  ตัวห้อย          ^PV  ",
 };
 
+int selectmenu( unsigned int x, unsigned int y, unsigned int number, unsigned char *message[], unsigned int *curmenu );
+unsigned int findcurmenu( unsigned int lev1, unsigned int lev2, unsigned int lev3, unsigned int lev4 );
+void findcurlevel( unsigned int curmenu, unsigned int *lev1, unsigned int *lev2, unsigned int *lev3, unsigned int *lev4 );
+
 /** Change code from keyboard to code of menu. */
 unsigned int key_to_menu( unsigned int key ) {
 	int i;
@@ -237,10 +241,15 @@ unsigned int key_to_menu( unsigned int key ) {
 	return( command_tab[i - 1] );
 }
 
+/** Select menu.
+
+*   input : number origin 1
+*           *curmenu origin 1 */
 int selectmenu( unsigned int x, unsigned int y, unsigned int number,
 	unsigned char *message[], unsigned int *curmenu ) {
 	int c;
-	size_t length, i;
+	size_t length;
+	unsigned int i;
 	boolean out;
 	int special_base;
 
@@ -510,6 +519,7 @@ void headmenu( unsigned int topmenu, font_attr attr ) {
 	}
 }
 
+/** Find current menu. */
 unsigned int findcurmenu( unsigned int lev1, unsigned int lev2, unsigned int lev3,
 	unsigned int lev4 ) {
 	return( ( lev1 * 16 * 16 * 16 ) +
@@ -518,6 +528,7 @@ unsigned int findcurmenu( unsigned int lev1, unsigned int lev2, unsigned int lev
 		lev4 );
 }
 
+/** Find current level. */
 void findcurlevel( unsigned int curmenu, unsigned int *lev1, unsigned int *lev2,
 	unsigned int *lev3, unsigned int *lev4 ) {
 	*lev1 = ( curmenu / ( 16 * 16 * 16 ) ) % 16;
@@ -536,7 +547,7 @@ unsigned int pulled_down_menu( unsigned int *curmenu, unsigned int *x, unsigned 
 
 	int i;
 	int key;
-	int quit;
+	boolean quit;
 	char cur_dir[50];
 
 	unsigned char *scrnndx;

@@ -45,7 +45,84 @@
 
 #include "block.h"
 
+/** Hide/display block. It cause the visual marking of a block to be
+*   alternately switched off and on. Block manipulation commands (copy, move,
+*   delete, and write to a file) work only when the block is displayed.
+*   Block related cursor movements (jump to beginning/end of block) work
+*   whether the block is hidden or displayed). */
+void toggleblk( void );
+
+/** Mark the beginning of a block. The marker itself is not visible on the
+*   screen, and the block only becomes visibly marked when the End block
+*   marker is set.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window to mark. */
+void markbegin( unsigned int p_xCursorPos );
+
+/** Mark the end of a block. The marker itself is not visible on the screen
+*   and the block only becomes visibly marked when the Begin block marker
+*   is set.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window to mark. */
+void markend( unsigned int p_xCursorPos );
+
+/** Copy linked list from assigned line & column (first & last) to space
+*   allocated from MS-DOS. Data structure of space is circular linked list,
+*   previous pointer of first line point to last line & next pointer of
+*   last line point to first line. Return value is pointer to first line
+*   of space. Text is copied only, no graphic image is.
+*  \param[in]  p_firstLine		First line to be copied.
+*  \param[in]  p_lastLine		Last line to be copied.
+*  \param[in]  p_firstCol		First column (physical) in 1'st line, column is origin 0.
+*  \param[in]  p_lastCol		Last column (physical) in last line, column is origin 0.
+*  \return struct line_node		Pointer to line copied. */
+struct line_node *copytospace( struct line_node *p_firstLine, struct line_node *p_lastLine, unsigned int p_firstCol, unsigned int p_lastCol );
+
+/** Delete part of linked list from structure from assigned parameter.
+*  \param[in]  p_firstLine		First line to be deleted.
+*  \param[in]  p_lastLine		Last line to be deleted.
+*  \param[in]  p_firstCol		First column (physical) in 1'st line, column is origin 0.
+*  \param[in]  p_lastCol		Last column (physical) in last line, column is origin 0. */
+void deletelinklist( struct line_node *p_firstLine, struct line_node *p_lastLine, unsigned int p_firstCol, unsigned int p_lastCol );
+
+/** Insert block at current cursor position.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+void copyblk( unsigned int *p_xCursorPos );
+
+/** Delete selected block. */
+void deleteblk( void );
+
 void freeblk( FILE *p_file, struct line_node *p_space, struct line_node *p_currentline, unsigned char *p_textstr );
+
+/** Move block to insert to current cursor position.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+void moveblk( unsigned int *p_xCursorPos );
+
+/** Find size of space that allocated form MS-DOS. Data structure of space
+*   is circular linked list, previous pointer of first line point to last
+*   line & next pointer of last line point to first line.
+*  \param[in]  p_space			linenode to find it's size.
+*  \return size_t				Number of line of p_space. */
+size_t spacesize( struct line_node *p_space );
+
+/** Read block from file to insert to current cursor position.
+*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+void readblk( unsigned int *p_xCursorPos );
+
+/** Get file size. */
+unsigned long getfilesize( void );
+
+/** Get disk free space of given drive.
+*  \param[in]  p_driveno		Drive to get free space.
+*  \return unsigned long		Free space. */
+unsigned long diskfree( char p_driveno );
+
+/** Check for size of given file and free disk space.
+*  \param[in]  p_filename		File name want to check it's size.
+*  \return int					0 if no error, 1 if not enough space. */
+int chkspace( char *p_filename );
+
+/** Write block to file. */
+void writeblock( void );
+
 
 void toggleblk( void ) {
 	dispblock = !dispblock;
@@ -120,8 +197,8 @@ struct line_node *copytospace( struct line_node *p_firstLine, struct line_node *
 	struct line_node *firstline;
 	struct line_node *templine;
 	struct line_node *newline;
-	unsigned int i;
-	unsigned int j;
+	size_t i;
+	size_t j;
 	font_attr font;
 	unsigned char fontcode[9];
 	unsigned char *temp;
@@ -176,7 +253,7 @@ struct line_node *copytospace( struct line_node *p_firstLine, struct line_node *
 void insertlinklist( struct line_node *p_sourceLine, struct line_node *p_destLine,
 	unsigned int p_destCol ) {
 
-	unsigned int i;
+	size_t i;
 	struct line_node *lastline;
 	font_attr font;
 	unsigned char fontcode[9];
@@ -339,7 +416,7 @@ void moveblk( unsigned int *p_xCursorPos ) {
 
 struct line_node *rdfiletospace( char *p_filename ) {
 	FILE *fip;
-	register int i;
+	register size_t i;
 	struct line_node *space;
 	struct line_node *newline;
 	struct line_node *currentline;
@@ -526,9 +603,9 @@ void freeblk( FILE *p_file, struct line_node *p_space, struct line_node *p_curre
 	}
 }
 
-unsigned int spacesize( struct line_node *p_space ) {
+size_t spacesize( struct line_node *p_space ) {
 	struct line_node *temp;
-	unsigned int size = 0;
+	size_t size = 0;
 
 	temp = p_space;
 	while ( temp->next != p_space ) {
@@ -670,10 +747,11 @@ void writeblk( char *p_filename, struct line_node *p_firstLine, unsigned int p_f
 	FILE *fip;
 	struct line_node *currentline;
 	int key;
-	int i;
-	int j;
-	int firstround;
-	int count;
+	int get;
+	size_t i;
+	size_t j;
+	size_t firstround;
+	size_t count;
 	unsigned char *templine;
 	unsigned char fontcode[9];
 	font_attr font;
@@ -697,8 +775,8 @@ void writeblk( char *p_filename, struct line_node *p_firstLine, unsigned int p_f
 
 	blockmsg( 5 );
 	dispstrhgc( "ใส่ชื่อแฟ้มข้อมูลที่ต้องการจัดเก็บ :", ( 14 + center_factor ) + 3, 5, REVERSEATTR );
-	i = getname( p_filename, ( 14 + center_factor ) + 29, 5, 22, REVERSEATTR );
-	if ( ( i != YES ) || ( p_filename[0] == '\0' ) ) {
+	get = getname( p_filename, ( 14 + center_factor ) + 29, 5, 22, REVERSEATTR );
+	if ( ( get != YES ) || ( p_filename[0] == '\0' ) ) {
 		free( text_str );
 		return;
 	}
@@ -817,7 +895,7 @@ void writeblk( char *p_filename, struct line_node *p_firstLine, unsigned int p_f
 }
 
 void writeblock( void ) {
-	int linenum;
+	unsigned int linenum;
 	char file_name[22];
 	struct line_node *firstline;
 	struct line_node *lastline;
@@ -838,7 +916,7 @@ void writeblock( void ) {
 	}
 }
 
-void blkcmd( register unsigned int p_key, unsigned int *p_xCursorPos ) {
+void blkcmd( register int p_key, unsigned int *p_xCursorPos ) {
 	p_key &= 0xff;
 	if ( !isalpha( p_key ) && !iscntrl( p_key ) ) {
 		return;
@@ -879,7 +957,7 @@ void blkcmd( register unsigned int p_key, unsigned int *p_xCursorPos ) {
 }
 
 void blockcommand( unsigned int *p_xCursorPos ) {
-	unsigned int key;
+	int key;
 
 	dispkey( CNTRL_K );
 	waitkbd( 3, 2 );

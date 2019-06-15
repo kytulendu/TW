@@ -74,9 +74,9 @@ EXTERN char *progname;   /* point to argv[0] */
 EXTERN char cw_dir[MAXDRIVE + MAXDIR];  /* which directory is cw.exe in */
 EXTERN char filename[MAXPATH]; /* filename that is currently edited */
 
-EXTERN char source[80];  /* source of string to find */
-EXTERN char replace[80]; /* string to replace the souce text */
-EXTERN char option[10];  /* replace option */
+EXTERN unsigned char source[80];  /* source of string to find */
+EXTERN unsigned char replace[80]; /* string to replace the souce text */
+EXTERN unsigned char option[10];  /* replace option */
 EXTERN int keymain;
 
 EXTERN int tab[MAXCOL];  /* tab set */

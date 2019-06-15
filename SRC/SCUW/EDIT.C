@@ -24,6 +24,17 @@
 
 #include "edit.h"
 
+/** Display line from link list at row given. First column to be displayed
+*   is in global variable "firstcol".
+*  \param[in]  p_line			linenode to display.
+*  \param[in]  p_row			Row position.
+*  \param[in]  p_linenum		Line number. */
+void displine( struct line_node *p_line, unsigned int p_row, unsigned int p_linenum );
+
+/** Display page break line at row given.
+*  \param[in]  p_row			Row to display page break. */
+void disppagebreak( unsigned int p_row );
+
 #ifdef WANT_TO_USE_GRAPH
 void set_graphic_buffer( void ) {
 	unsigned int count;
@@ -134,7 +145,7 @@ void set_graphic_buffer( void ) {
 #endif
 
 void findstrcode( unsigned char *p_fontcode, font_attr p_attr ) {
-	int i = 0;
+	size_t i = 0;
 
 	if ( ( p_attr & ONELINEATTR ) != 0 ) {
 		p_fontcode[i] = ONELINECODE;
@@ -389,7 +400,7 @@ void adjustcol( unsigned int *p_col ) {
 }
 
 void loadtoline( unsigned char *p_text ) {
-	register unsigned int index = 1;
+	register size_t index = 1;
 	font_attr curfont;
 	font_attr oldfont;
 
@@ -446,7 +457,7 @@ void loadtoline( unsigned char *p_text ) {
 }
 
 void storeline( struct line_node *p_line ) {
-	unsigned int count = 0;
+	size_t count = 0;
 	unsigned int col = 1;
 	unsigned char *oneline;
 	unsigned char oldfont = 0;

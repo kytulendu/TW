@@ -67,14 +67,6 @@ void ret_with_ins( unsigned int *p_xCursorPos, unsigned int p_yCursorPos );
 *  \param[in]  p_yCursorPos		Line cursor position in editing window. */
 void insertmacro( unsigned char *p_macro, unsigned int *p_xCursorPos, unsigned int *p_yCursorPos );
 
-/** Display blank macro dialog at given line.
-*  \param[in]  p_yPos			Line to display the dialog. */
-void blankmaro( int p_yPos );
-
-/** Display given macro number.
-*  \param[in]  p_macro			Macro no. to display. */
-void dispmacro( int p_macro );
-
 /** Display dialog to edit macro word. */
 void editmacro( void );
 

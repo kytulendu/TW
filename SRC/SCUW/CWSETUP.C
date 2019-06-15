@@ -39,7 +39,7 @@ static char cup_option[16]; /* assume that only 16 char max for argument */
 
 typedef struct each_option_setup {
 	char *option_name;
-	char *label;
+	unsigned char *label;
 	unsigned int *p_option_value;
 	unsigned int p_option_default;
 	unsigned char maxlen;
@@ -62,7 +62,7 @@ each_option_setup option_setup[] = {
 
 void usage( void );
 void set_directory( void );
-void dispoption( int i );
+void dispoption( size_t i );
 void set_option_to_default( void );
 void offbreak( void );
 
@@ -227,7 +227,7 @@ int readoption( search_file_mode p_mode ) {
 	FILE *fp;
 	char fname[MAXPATH];
 	int field;
-	int temp;
+	unsigned int temp;
 	char opname[15];
 	each_option_setup *op;
 
@@ -288,14 +288,14 @@ void saveoption( search_file_mode p_mode ) {
 }
 
 /** Display options on screen. */
-void dispoption( int i ) {
+void dispoption( size_t i ) {
 	dispstrhgc( option_setup[i].label,
 		65 - thaistrlen( option_setup[i].label ), i + 6, NORMALATTR );
 	dispprintf( 65, i + 6, NORMALATTR, " :%d", *option_setup[i].p_option_value );
 }
 
 void setoption( void ) {
-	int i;
+	size_t i;
 	int c;
 	char st[5];
 
@@ -376,7 +376,7 @@ void initvalue( unsigned int *xCursorPos, unsigned int *yCursorPos ) {
 }
 
 void initscrn( void ) {
-	int countcol;
+	unsigned int countcol;
 
 	setgraph( );              /* set to graphic mode */
 	clsall( );

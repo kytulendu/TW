@@ -37,6 +37,14 @@
 
 #include "ins.h"
 
+/** Display blank macro dialog at given line.
+*  \param[in]  p_yPos			Line to display the dialog. */
+void blankmaro( int p_yPos );
+
+/** Display given macro number.
+*  \param[in]  p_macro			Macro no. to display. */
+void dispmacro( int p_macro );
+
 void insertblank( unsigned int p_col, unsigned char p_blankchar ) {
 	register size_t i;
 
@@ -97,8 +105,8 @@ void linetoolong( void ) {
 }
 
 void inscntrl( unsigned char p_ctrlChar, unsigned int p_xCursorPos, unsigned int p_yCursorPos ) {
-	register unsigned int i = MAXCOL;
-	register unsigned int j = p_xCursorPos + firstcol + 1;
+	register size_t i = MAXCOL;
+	register size_t j = p_xCursorPos + firstcol + 1;
 
 	while ( i >= j ) {
 		workline.middle[i + 1] = workline.middle[i];  /* shift right */
@@ -153,8 +161,8 @@ void printcntrl( register unsigned int p_xCursorPos, register unsigned int p_yCu
 }
 
 int insert_char( unsigned char p_char, unsigned int *p_xCursorPos, unsigned int *p_yCursorPos ) {
-	register unsigned int i;
-	unsigned int j;
+	register size_t i;
+	size_t j;
 
 	if ( ( *p_xCursorPos + firstcol + 1 ) <= MAXCOL ) {   /* if out of line , not insert */
 		if ( wordwrap && ( ( *p_xCursorPos + firstcol + 1 ) >= ( rightmar + 5 ) ) ) {
@@ -298,8 +306,8 @@ int insert_char( unsigned char p_char, unsigned int *p_xCursorPos, unsigned int 
 }
 
 int ovrwrite_char( unsigned char p_char, unsigned int *p_xCursorPos, unsigned int *p_yCursorPos ) {
-	register unsigned int i;
-	unsigned int j;
+	register size_t i;
+	size_t j;
 
 	if ( ( *p_xCursorPos + firstcol + 1 ) <= MAXCOL ) {   /* no write at last column */
 		if ( wordwrap && ( ( *p_xCursorPos + firstcol + 1 ) >= ( rightmar + 5 ) ) ) {
@@ -450,7 +458,7 @@ void insertreturn( struct line_node *p_line, unsigned int p_col ) {
 	unsigned char fontcode[9];
 	unsigned char *text;
 	struct line_node *line2;
-	register int i;
+	register size_t i;
 
 	i = linearcolumn( p_line->text, p_col, &font );
 	findstrcode( fontcode, font );

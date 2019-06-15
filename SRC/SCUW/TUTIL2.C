@@ -16,8 +16,8 @@
 
 #include "tutil2.h"
 
-unsigned int linearcolumn( unsigned char *p_textstream, unsigned int p_thaiCol, font_attr *p_attr ) {
-	register unsigned int logiccol = 0;	/* logical column (physical), column is origin 0. */
+size_t linearcolumn( unsigned char *p_textstream, unsigned int p_thaiCol, font_attr *p_attr ) {
+	register size_t logiccol = 0;	/* logical column (physical), column is origin 0. */
 	*p_attr = NORMALATTR;
 	while ( ( p_thaiCol > 0 ) && ( *p_textstream != '\0' ) ) {
 		if ( whatlevel( *p_textstream ) == MIDDLE ) {
@@ -43,7 +43,7 @@ unsigned int linearcolumn( unsigned char *p_textstream, unsigned int p_thaiCol, 
 	return( logiccol );
 }
 
-void arabictothai( char *p_string ) {
+void arabictothai( unsigned char *p_string ) {
 	while ( *p_string != '\0' ) {
 		if ( ( *p_string >= '0' ) && ( *p_string <= '9' ) ) {
 			*p_string = *p_string | 0xf0;
