@@ -424,7 +424,7 @@ void print_file( void ) {
 		strcat( ncup, cup );
 		if ( spawnl( P_WAIT, ncup, ncup, cup_option, filename, NULL ) == -1 ) {
 			printf( "\n\nCannot find file : TWPRINT.EXE\nPress any key\n\007" );
-			getchar( );
+			ebioskey( 0 );
 		}
 	}
 	initscrn( );

@@ -518,7 +518,7 @@ void storeline( struct line_node *p_line ) {
 	} else {
 		p_line->text = keep_ptr;
 		dispstrhgc( "Internal error in storeline", 1, 1, REVERSEATTR );
-		getchar( );
+		ebioskey( 0 );
 	}
 
 	free( oneline );
