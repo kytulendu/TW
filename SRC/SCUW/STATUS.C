@@ -13,6 +13,8 @@
 #include "..\common\cwgrphc.h"
 #include "..\common\var.h"
 
+#include "tutil2.h"
+
 #include "var.h"
 
 void relmarstatus( void ) {
@@ -20,15 +22,6 @@ void relmarstatus( void ) {
 		dispstrhgc( "ปล่อยขอบ", 65 - 3, 2, BOLDATTR );
 	} else {
 		dispstrhgc( "       ", 65 - 3, 2, NORMALATTR );
-	}
-}
-
-void arabictothai( char *p_string ) {
-	while ( *p_string != '\0' ) {
-		if ( ( *p_string >= '0' ) && ( *p_string <= '9' ) ) {
-			*p_string = *p_string | 0xf0;
-		}
-		p_string++;
 	}
 }
 

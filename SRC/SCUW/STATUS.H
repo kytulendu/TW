@@ -4,10 +4,6 @@
 /** Display release margin status. */
 void relmarstatus( void );
 
-/** Convert Arabic number to Thai number.
-*  \param[in]  p_string			Number string to convert. */
-void arabictothai( char *p_string );
-
 /** Display page number. */
 void writepage( void );
 

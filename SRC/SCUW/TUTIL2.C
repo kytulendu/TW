@@ -42,3 +42,12 @@ unsigned int linearcolumn( unsigned char *p_textstream, unsigned int p_thaiCol, 
 	}
 	return( logiccol );
 }
+
+void arabictothai( char *p_string ) {
+	while ( *p_string != '\0' ) {
+		if ( ( *p_string >= '0' ) && ( *p_string <= '9' ) ) {
+			*p_string = *p_string | 0xf0;
+		}
+		p_string++;
+	}
+}
