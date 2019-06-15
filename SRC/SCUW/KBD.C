@@ -85,7 +85,7 @@ int changekey( int p_key ) {
 }
 
 int readkbd( void ) {
-	unsigned int c;
+	int c;
 	c = ebioskey( 0 );
 	if ( thaimode && ( ( c & 0xff00 ) < 0x4700 ) ) {       /* Ignore Keypad */
 		c = thaikey( c );

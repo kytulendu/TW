@@ -28,7 +28,7 @@ void waitkbd( int p_xcurpos, int p_ycurpos ) {
 }
 
 int readkbd( void ) {
-	register unsigned int c;
+	register int c;
 
 	c = ebioskey( 0 );
 	if ( thaimode && ( ( c & 0xff00 ) < 0x4700 ) ) {       /* Ignore Keypad */

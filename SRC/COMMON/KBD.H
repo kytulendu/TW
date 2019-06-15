@@ -7,7 +7,7 @@
 void waitkbd( int p_xcurpos, int p_ycurpos );
 
 /** Read keyboard.
-*   \return int					*/
+*   \return unsigned int		Keyboard code. */
 int readkbd( void );
 
 #endif /* SCUP_KBD_H_INCLUDED */

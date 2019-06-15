@@ -10,7 +10,7 @@ void waitkbd( int p_xcurpos, int p_ycurpos );
 int changekey( int p_key );
 
 /** Read keyboard.
-*   \return int					*/
+*   \return int					Keyboard code. */
 int readkbd( void );
 
 /** Remap alternate character.

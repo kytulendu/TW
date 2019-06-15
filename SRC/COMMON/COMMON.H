@@ -13,9 +13,9 @@ unsigned char kutostd( unsigned char p_kucode );
 
 /** Change ascii value of key from english to Thai.
 *   From ACOMMON.ASM
-*  \param[in]  p_key			KU code character.
-*  \return unsigned char		Kedmanee keyboard code. */
-int thaikey( register unsigned int p_key );
+*  \param[in]  p_key			BIOS keyboard code.
+*  \return int					Kedmanee keyboard code. */
+int thaikey( register int p_key );
 
 /** Check if keyboard is pressed.
 *   From ACOMMON.ASM
@@ -29,7 +29,7 @@ int asm_keypressed( void );
 *	0 : Ordinary (middle) level
 *	1 : Lower level (สระอุ, สระอู)
 *	2 : Upper level (สระอิ, สระอี)
-*	3 : Top level (วรรณยุกต์) */
+*	3 : Top level (วรรณยุกต์) */
 int whatlevel( unsigned char p_char );
 
 #endif /* COMMON_COMMON_H_INCLUDED */
