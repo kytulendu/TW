@@ -1,7 +1,7 @@
 Thai Write
 ==========
 
-![Thai Write](http://i.imgur.com/FdUmE8p.png)
+![Thai Write](screen.png)
 
 Descriptions
 ------------
