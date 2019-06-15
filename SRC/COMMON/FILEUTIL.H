@@ -28,7 +28,7 @@ int havewild( char *p_filename );
 *   \param[in]  p_searchpath	Path to search for given font file. */
 void readscrfont( void *p_fontbuffer, char *p_fontname, char *p_searchpath );
 
-/** Error handler. */
+/** Hardware error handler, for use with harderr function. */
 int handler( int errval, int ax, int bp, int si );
 
 #endif /* COMMON_FILEUTIL_H_INCLUDED */
