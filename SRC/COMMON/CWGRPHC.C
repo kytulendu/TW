@@ -98,9 +98,6 @@ void setgraph( void ) {
 	}
 
 	first = 0;
-#ifdef EDA_VERSION
-	scrmode = DETECT;
-#endif
 
 	if ( scrmode == DETECT ) {
 		graph_detecthardware( ( graphics_hardware * ) &scrmode );
