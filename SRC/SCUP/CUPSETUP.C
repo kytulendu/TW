@@ -186,7 +186,7 @@ void readoption( search_file_mode p_mode ) {
 		showerrno( );
 		return;
 	}
-	/* If we reach here we succesfully open cw.cfg file */
+	/* If we reach here we successfully open cfg file */
 	for ( op = option_setup; op->option_name != NULL; op++ ) {
 		field = fscanf( fp, "%s %d", opname, &temp );
 		if ( field == 2 ) { /* succesfully scan */
