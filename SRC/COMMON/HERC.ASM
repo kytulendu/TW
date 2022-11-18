@@ -485,10 +485,10 @@ out_write:
 _herc_prchar  ENDP
 
 ;=============================================================================;
-; _att_prblank                                                                ;
+; _herc_prblank                                                                ;
 ;     Put a blank character at given position.                                ;
 ; Usage :                                                                     ;
-; _att_prblank( int p_x, int p_y )                                            ;
+; _herc_prblank( int p_x, int p_y )                                            ;
 ;  \param[in]  p_x				Horizontal position.                          ;
 ;  \param[in]  p_y				Vertical position.                            ;
 ;=============================================================================;
@@ -593,12 +593,12 @@ outsetcurpos:
 _herc_setcurpos ENDP
 
 ;=============================================================================;
-; _att_putpixel                                                               ;
+; _herc_putpixel                                                               ;
 ;     Put a pixel at given position.                                          ;
 ;     find byte position from formula                                         ;
 ;         2000h*(Y mod 4) + 90*integer(Y/4) + integer(X/8)                    ;
 ; Usage :                                                                     ;
-; _att_putpixel( int p_x, int p_y )                                           ;
+; _herc_putpixel( int p_x, int p_y )                                           ;
 ;  \param[in]  p_x				Horizontal position.                          ;
 ;  \param[in]  p_y				Vertical position.                            ;
 ;=============================================================================;
