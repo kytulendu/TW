@@ -59,6 +59,7 @@ Hardware support
 - EMS/XMS
 - CGA, 640x200 pixel, monochrome, require smaller sccreen font
 - Wyse 700, 1280x800 pixel, monochrome, can config to display how many column (80+) like old Hercules driver, see herc_align.patch
+- MDSI Genius VHR, 728x1008 pixels, monochrome, http://www.seasip.info/VintagePC/mdsi_genius.html
 - SVGA
 - VESA
 - Thai 8 line and 25 line text mode

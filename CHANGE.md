@@ -18,7 +18,7 @@ idea from https://github.com/MobyGamer/TOPBENCH/blob/master/TOPB_DET.PAS
 ### Fix
 - Fix memory leak in SCUW on open file routine.
 - Fix when line longer than MAXCOL, type in that line, the edit window will display at line 1
-instead of line 5 by increase max column from 266 to 1024.
+instead of line 5, increase max character per line from 266 to 1024.
 - Fix when use "delete character to end of line" function key it insert a special character instread.
 
 ### Misc
