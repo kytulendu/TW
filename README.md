@@ -33,9 +33,7 @@ System requirement may change in the future.
 
 Download
 --------
-All downloads is in my Google drive, which can be found [here](http://goo.gl/aMYPds)
-or on [GitHub](https://github.com/kytulendu/TW/releases) page.
-Include all version of CU Writer, both DOS and Win16 version that I can find.
+All downloads can be found [here](https://github.com/kytulendu/TW/releases).
 
 Compiling the source code
 -------------------------
@@ -100,7 +98,7 @@ please in inform me. :)
 
 Thai Write developer
 --------------------
-Khral MacCharrver / Khral Steelforge aka. Kytulendu Rrit
+Khralkatorrix
 
 Credits
 -------
@@ -113,7 +111,7 @@ License
 -------
 
     Thai Write, A DOS word processor.
-    Copyright (C) 2014 Khral Steelforge <https://github.com/kytulendu>.
+    Copyright (C) 2014-2022 Khralkatorrix <https://github.com/kytulendu>.
 
     CU Writer
     Copyright (C) 1989-1993 Chulalongkorn University.

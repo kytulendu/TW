@@ -137,14 +137,13 @@ void splashscreen( void ) {
 
 #else
 
-	framebox( ( 17 + center_factor ), 5, ( 17 + center_factor ) + 46, 14, REVERSEATTR );
+	framebox( ( 17 + center_factor ), 5, ( 17 + center_factor ) + 46, 13, REVERSEATTR );
 	dispstrhgc( "THAI  WRITE", ( 19 + center_factor ) + 11, 6, REVERSEATTR );
 	dispstrhgc( "Version  1.0.0", ( 19 + center_factor ) + 14, 7, REVERSEATTR );
 	dispprintf( ( 19 + center_factor ) + 11, 8, REVERSEATTR, "%11s %8s", prog_date, prog_time );
 	dispstrhgc( "Hercules/EGA/VGA/MCGA/AT&T", ( 19 + center_factor ) + 8, 9, REVERSEATTR );
-	dispstrhgc( "Khral Steelforge", ( 19 + center_factor ) + 13, 10, REVERSEATTR );
-	dispstrhgc( "The Forge Warband, Iron Legion", ( 19 + center_factor ) + 6, 11, REVERSEATTR );
-	dispstrhgc( "พัฒนาจาก เวิร์ดจุฬา โดย มหาวิทยาลัยจุฬาลงกรณ์", ( 19 + center_factor ) + 3, 13, REVERSEATTR );
+	dispstrhgc( "Khralkatorrix", ( 19 + center_factor ) + 14, 10, REVERSEATTR );
+	dispstrhgc( "พัฒนาจาก เวิร์ดจุฬา โดย มหาวิทยาลัยจุฬาลงกรณ์", ( 19 + center_factor ) + 3, 12, REVERSEATTR );
 
 #endif
 #endif

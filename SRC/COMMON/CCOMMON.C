@@ -1,7 +1,7 @@
 /*
 * ============================================================================
 * Thai related function.
-* Copyright (C) 2014 Khral Steelforge <https://github.com/kytulendu>.
+* Copyright (C) 2014 Khralkatorrix <https://github.com/kytulendu>.
 *
 * Permission is hereby granted, free of charge, to any person obtaining a
 * copy of this software and associated documentation files (the "Software"),
