@@ -14,10 +14,10 @@
 */
 
 unsigned char *ThaiEngCutRtn( unsigned char *TempIndx ) {
-	unsigned char *TempIndxm1 = TempIndx - 1;
+    unsigned char *TempIndxm1 = TempIndx - 1;
 
-	if ( ( isthai( *TempIndx ) && isalpha( *TempIndxm1 ) ) || ( isthai( *TempIndxm1 ) && isalpha( *TempIndx ) ) ) {
-		return( TempIndxm1 ); /* cut before thai and after English */
-	}
-	return ( FAIL );
+    if ( ( isthai( *TempIndx ) && isalpha( *TempIndxm1 ) ) || ( isthai( *TempIndxm1 ) && isalpha( *TempIndx ) ) ) {
+        return( TempIndxm1 ); /* cut before thai and after English */
+    }
+    return ( FAIL );
 }

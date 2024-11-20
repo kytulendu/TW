@@ -35,195 +35,195 @@
 #include "onscrn.h"
 
 void writetab( void ) {
-	unsigned int i = 0;
+    unsigned int i = 0;
 
-	prblank( wind.col, 3 );
+    prblank( wind.col, 3 );
 
-	while ( ( ( i + firstcol + 1 ) < leftmar ) && ( i < wind.length ) ) {
-		prblank( wind.col + i, 3 );
-		i++;
-	}
-	if ( ( i < wind.length ) && ( ( i + firstcol + 1 ) == leftmar ) ) {
-		prchar( 'L', NORMALATTR, wind.col + i, 3 );
-		i++;
-	}
+    while ( ( ( i + firstcol + 1 ) < leftmar ) && ( i < wind.length ) ) {
+        prblank( wind.col + i, 3 );
+        i++;
+    }
+    if ( ( i < wind.length ) && ( ( i + firstcol + 1 ) == leftmar ) ) {
+        prchar( 'L', NORMALATTR, wind.col + i, 3 );
+        i++;
+    }
 
-	while ( ( ( i + firstcol + 1 ) < rightmar ) && ( i < wind.length ) ) {
-		if ( tab[i + firstcol] == NO ) {
-			prchar( '-', NORMALATTR, wind.col + i, 3 );
-		} else {
-			prchar( '|', NORMALATTR, wind.col + i, 3 );
-		}
-		i++;
-	}
-	if ( ( rightmar - 1 - firstcol ) < wind.length ) {
-		prchar( 'R', NORMALATTR, wind.col + rightmar - 1 - firstcol, 3 );
-	}
+    while ( ( ( i + firstcol + 1 ) < rightmar ) && ( i < wind.length ) ) {
+        if ( tab[i + firstcol] == NO ) {
+            prchar( '-', NORMALATTR, wind.col + i, 3 );
+        } else {
+            prchar( '|', NORMALATTR, wind.col + i, 3 );
+        }
+        i++;
+    }
+    if ( ( rightmar - 1 - firstcol ) < wind.length ) {
+        prchar( 'R', NORMALATTR, wind.col + rightmar - 1 - firstcol, 3 );
+    }
 
-	i++;
-	while ( i < wind.length ) {
-		prblank( wind.col + i, 3 );
-		i++;
-	}
+    i++;
+    while ( i < wind.length ) {
+        prblank( wind.col + i, 3 );
+        i++;
+    }
 }
 
 void centerline( unsigned int p_yCursorPos ) {
-	int i;
-	int j;
-	int k;
-	int count;
+    int i;
+    int j;
+    int k;
+    int count;
 
-	for ( i = 1; ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ); i++ );
-	for ( j = strlen( workline.middle ) - 1; ( workline.middle[j] == ' ' ) || ( workline.middle[j] == WRAPBLANK ); j-- );
-	if ( ( rightmar - leftmar ) > ( j - i ) ) {
-		k = leftmar + ( ( rightmar - leftmar ) - ( j - i ) ) / 2;
-		if ( k < i ) {
-			for ( count = i - k; count > 0; count-- ) {
-				delete_char( 0 );
-			}
-		} else {
-			for ( count = k - i; count > 0; count-- ) {
-				insertblank( 1, ' ' );
-			}
-		}
-		refreshline( 0, p_yCursorPos );
-	}
+    for ( i = 1; ( workline.middle[i] == ' ' ) || ( workline.middle[i] == WRAPBLANK ); i++ );
+    for ( j = strlen( workline.middle ) - 1; ( workline.middle[j] == ' ' ) || ( workline.middle[j] == WRAPBLANK ); j-- );
+    if ( ( rightmar - leftmar ) > ( j - i ) ) {
+        k = leftmar + ( ( rightmar - leftmar ) - ( j - i ) ) / 2;
+        if ( k < i ) {
+            for ( count = i - k; count > 0; count-- ) {
+                delete_char( 0 );
+            }
+        } else {
+            for ( count = k - i; count > 0; count-- ) {
+                insertblank( 1, ' ' );
+            }
+        }
+        refreshline( 0, p_yCursorPos );
+    }
 }
 
 void doonscrn( register unsigned p_key, unsigned int p_xCursorPos, unsigned int p_yCursorPos ) {
-	register unsigned int j;
-	char st[4];
-	char invmsg[60];
+    register unsigned int j;
+    char st[4];
+    char invmsg[60];
 
-	p_key &= 0xff;
-	if ( !isalpha( p_key ) && !iscntrl( p_key ) ) {
-		return;
-	}
+    p_key &= 0xff;
+    if ( !isalpha( p_key ) && !iscntrl( p_key ) ) {
+        return;
+    }
 
-	p_key &= 0x1f;
-	switch ( p_key ) {
-	case 'l' - 'a' + 1:
-		sprintf( st, "%u", leftmar );
-		blockmsg( 5 );
-		dispstrhgc( "ต้องการตั้งกั้นซ้ายที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
-		if ( getstring( st, ( 14 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
-			j = atoi( st );
-			if ( ( j < rightmar ) && ( j > 0 ) ) {
-				leftmar = j;
-			} else {                                   /* Invalid Left Margin */
-				if ( j < 1 ) {
-					strcpy( invmsg, "กั้นซ้ายน้อยกว่า 1 !   " );
-				} else {
-					strcpy( invmsg, "กั้นซ้ายมากกว่ากั้นขวา !" );
-				}
-				strcat( invmsg, " กดปุ่มใดๆ เพื่อทำงานต่อ ..." );
-				blockmsg( 5 );
-				dispstrhgc( invmsg, ( 14 + center_factor ) + 6, 5, REVERSEATTR );
-				errorsound( );
-				ebioskey( 0 );
-			}
-		}
-		break;
-	case 'r' - 'a' + 1:
-		sprintf( st, "%u", rightmar );
-		blockmsg( 5 );
-		dispstrhgc( "ต้องการตั้งกั้นขวาที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
-		if ( getstring( st, ( 14 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
-			j = atoi( st );
-			if ( ( j > leftmar ) && ( j <= MAXRMAR ) ) {
-				rightmar = j;
-			} else {            			 /* Invalid Right Margin */
-				if ( j <= leftmar ) {
-					strcpy( invmsg, "กั้นขวาน้อยกว่ากั้นซ้าย !  " );
-				} else {
-					sprintf( invmsg, "กั้นขวาสูงสุดไม่เกิน %d !", MAXRMAR );
-				}
-				strcat( invmsg, " กดปุ่มใดๆ เพื่อทำงานต่อ ..." );
-				blockmsg( 5 );
-				dispstrhgc( invmsg, ( 14 + center_factor ) + 5, 5, REVERSEATTR );
-				errorsound( );
-				ebioskey( 0 );
-			}
-		}
-		break;
-	case 'i' - 'a' + 1:
-		sprintf( st, "%u", p_xCursorPos + 1 );
-		blockmsg( 5 );
-		dispstrhgc( "ต้องการตั้ง TAB ที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
-		if ( getstring( st, ( 16 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
-			j = atoi( st );
-			if ( ( j <= MAXCOL ) && ( j > 0 ) ) {
-				tab[j - 1] = YES;
-			}
-		}
-		break;
-	case 'n' - 'a' + 1:
-		strcpy( st, "ALL" );
-		blockmsg( 5 );
-		dispstrhgc( "ต้องการลบ TAB ที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
-		if ( getstring( st, ( 16 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
-			if ( strcmp( st, "ALL" ) == 0 ) {
-				for ( j = 0; j < MAXCOL; ++j ) {
-					tab[j] = NO;
-				}
-			} else {
-				j = atoi( st );
-				if ( ( j <= MAXCOL ) && ( j > 0 ) ) {
-					tab[j - 1] = NO;
-				}
-			}
-		}
-		break;
-	case 'p' - 'a' + 1:
-		sprintf( st, "%u", lineperpage );
-		blockmsg( 5 );
-		dispstrhgc( "ต้องการตั้งจำนวนบรรทัดต่อหน้าเท่าไหร่ ?", ( 14 + center_factor ) + 11, 5, REVERSEATTR );
-		if ( getstring( st, ( 16 + center_factor ) + 43, 5, 3, REVERSEATTR, NUMBER ) ) {
-			if ( atoi( st ) > 0 ) {
-				lineperpage = atoi( st );
-				writepageline( );
-			}
-		}
-		break;
-	case 'c' - 'a' + 1:
-		centerline( p_yCursorPos );
-		break;
-	case 'x' - 'a' + 1:
-		relmargin = !relmargin;
-		relmarstatus( );
-		break;
-	}
-	pagecomplete = NO;
-	writestatus( p_xCursorPos );
+    p_key &= 0x1f;
+    switch ( p_key ) {
+    case 'l' - 'a' + 1:
+        sprintf( st, "%u", leftmar );
+        blockmsg( 5 );
+        dispstrhgc( "ต้องการตั้งกั้นซ้ายที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
+        if ( getstring( st, ( 14 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
+            j = atoi( st );
+            if ( ( j < rightmar ) && ( j > 0 ) ) {
+                leftmar = j;
+            } else {                                   /* Invalid Left Margin */
+                if ( j < 1 ) {
+                    strcpy( invmsg, "กั้นซ้ายน้อยกว่า 1 !   " );
+                } else {
+                    strcpy( invmsg, "กั้นซ้ายมากกว่ากั้นขวา !" );
+                }
+                strcat( invmsg, " กดปุ่มใดๆ เพื่อทำงานต่อ ..." );
+                blockmsg( 5 );
+                dispstrhgc( invmsg, ( 14 + center_factor ) + 6, 5, REVERSEATTR );
+                errorsound( );
+                ebioskey( 0 );
+            }
+        }
+        break;
+    case 'r' - 'a' + 1:
+        sprintf( st, "%u", rightmar );
+        blockmsg( 5 );
+        dispstrhgc( "ต้องการตั้งกั้นขวาที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
+        if ( getstring( st, ( 14 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
+            j = atoi( st );
+            if ( ( j > leftmar ) && ( j <= MAXRMAR ) ) {
+                rightmar = j;
+            } else {                         /* Invalid Right Margin */
+                if ( j <= leftmar ) {
+                    strcpy( invmsg, "กั้นขวาน้อยกว่ากั้นซ้าย !  " );
+                } else {
+                    sprintf( invmsg, "กั้นขวาสูงสุดไม่เกิน %d !", MAXRMAR );
+                }
+                strcat( invmsg, " กดปุ่มใดๆ เพื่อทำงานต่อ ..." );
+                blockmsg( 5 );
+                dispstrhgc( invmsg, ( 14 + center_factor ) + 5, 5, REVERSEATTR );
+                errorsound( );
+                ebioskey( 0 );
+            }
+        }
+        break;
+    case 'i' - 'a' + 1:
+        sprintf( st, "%u", p_xCursorPos + 1 );
+        blockmsg( 5 );
+        dispstrhgc( "ต้องการตั้ง TAB ที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
+        if ( getstring( st, ( 16 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
+            j = atoi( st );
+            if ( ( j <= MAXCOL ) && ( j > 0 ) ) {
+                tab[j - 1] = YES;
+            }
+        }
+        break;
+    case 'n' - 'a' + 1:
+        strcpy( st, "ALL" );
+        blockmsg( 5 );
+        dispstrhgc( "ต้องการลบ TAB ที่คอลัมน์ที่เท่าไหร่ ?", ( 14 + center_factor ) + 12, 5, REVERSEATTR );
+        if ( getstring( st, ( 16 + center_factor ) + 41, 5, 3, REVERSEATTR, NUMBER ) ) {
+            if ( strcmp( st, "ALL" ) == 0 ) {
+                for ( j = 0; j < MAXCOL; ++j ) {
+                    tab[j] = NO;
+                }
+            } else {
+                j = atoi( st );
+                if ( ( j <= MAXCOL ) && ( j > 0 ) ) {
+                    tab[j - 1] = NO;
+                }
+            }
+        }
+        break;
+    case 'p' - 'a' + 1:
+        sprintf( st, "%u", lineperpage );
+        blockmsg( 5 );
+        dispstrhgc( "ต้องการตั้งจำนวนบรรทัดต่อหน้าเท่าไหร่ ?", ( 14 + center_factor ) + 11, 5, REVERSEATTR );
+        if ( getstring( st, ( 16 + center_factor ) + 43, 5, 3, REVERSEATTR, NUMBER ) ) {
+            if ( atoi( st ) > 0 ) {
+                lineperpage = atoi( st );
+                writepageline( );
+            }
+        }
+        break;
+    case 'c' - 'a' + 1:
+        centerline( p_yCursorPos );
+        break;
+    case 'x' - 'a' + 1:
+        relmargin = !relmargin;
+        relmarstatus( );
+        break;
+    }
+    pagecomplete = NO;
+    writestatus( p_xCursorPos );
 }
 
 void movetotab( unsigned int *p_xCursorPos, unsigned int p_yCursorPos ) {
-	size_t i, count;
+    size_t i, count;
 
-	if ( ( *p_xCursorPos + firstcol ) >= ( leftmar - 1 ) ) {
-		i = *p_xCursorPos + firstcol + 1;
-	} else {
-		i = leftmar - 1;
-	}
+    if ( ( *p_xCursorPos + firstcol ) >= ( leftmar - 1 ) ) {
+        i = *p_xCursorPos + firstcol + 1;
+    } else {
+        i = leftmar - 1;
+    }
 
-	for ( ; ( i < ( rightmar - 1 ) && ( tab[i] != YES ) ); i++ );
-	if ( i < ( rightmar - 1 ) ) {
-		count = i - ( *p_xCursorPos + firstcol );
-		while ( count-- != 0 ) {
-			if ( insertmode ) {
-				insertblank( *p_xCursorPos + firstcol + 1, ' ' );
-			}
-		}
-		gocol( i, p_xCursorPos );
-		refreshline( 0, p_yCursorPos );
-	}
+    for ( ; ( i < ( rightmar - 1 ) && ( tab[i] != YES ) ); i++ );
+    if ( i < ( rightmar - 1 ) ) {
+        count = i - ( *p_xCursorPos + firstcol );
+        while ( count-- != 0 ) {
+            if ( insertmode ) {
+                insertblank( *p_xCursorPos + firstcol + 1, ' ' );
+            }
+        }
+        gocol( i, p_xCursorPos );
+        refreshline( 0, p_yCursorPos );
+    }
 }
 
 void onscreen( unsigned int p_xCursorPos, unsigned int p_yCursorPos ) {
-	int key;
-	dispkey( CNTRL_O );
-	waitkbd( 3, 2 );
-	key = ebioskey( 0 );
-	prchar( key, NORMALATTR, 3, 2 );
-	doonscrn( key, p_xCursorPos, p_yCursorPos );
+    int key;
+    dispkey( CNTRL_O );
+    waitkbd( 3, 2 );
+    key = ebioskey( 0 );
+    prchar( key, NORMALATTR, 3, 2 );
+    doonscrn( key, p_xCursorPos, p_yCursorPos );
 }

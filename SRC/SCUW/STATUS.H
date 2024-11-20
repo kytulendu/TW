@@ -17,7 +17,7 @@ void writelineno( void );
 void writepageline( void );
 
 /** Display column number.
-*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+*  \param[in]  p_xCursorPos     Column cursor position in editing window. */
 void writecolno( unsigned int p_xCursorPos );
 
 /** Display insert mode status. */
@@ -36,7 +36,7 @@ void writefilename( void );
 void writedriveno( void );
 
 /** Display status.
-*  \param[in]  p_xCursorPos		Column cursor position in editing window. */
+*  \param[in]  p_xCursorPos     Column cursor position in editing window. */
 void writestatus( unsigned int p_xCursorPos );
 
 #endif /* SCUW_STATUS_H_INCLUDED */

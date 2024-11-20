@@ -13,14 +13,14 @@
 #include "global.h"
 
 int nstrcmp( register unsigned char *source, register unsigned char *destination ) {
-	if ( source != destination ) {
-		while ( *source ) {
-			if ( *source++ != *destination++ ) {
-				return( *--source - *--destination );
-			}
-			/* return negative if source less than dest.
-			else positive will be returned */
-		}
-	}
-	return( 0 ); /* when same return zero */
+    if ( source != destination ) {
+        while ( *source ) {
+            if ( *source++ != *destination++ ) {
+                return( *--source - *--destination );
+            }
+            /* return negative if source less than dest.
+            else positive will be returned */
+        }
+    }
+    return( 0 ); /* when same return zero */
 }

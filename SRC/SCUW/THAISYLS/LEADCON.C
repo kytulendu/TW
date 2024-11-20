@@ -10,11 +10,11 @@
 */
 
 unsigned char *LeadConRtn( register unsigned char *TempIndx ) {
-	unsigned char *TempIndxm1 = TempIndx - 1;
+    unsigned char *TempIndxm1 = TempIndx - 1;
 
-	if ( istlvwl( *( TempIndxm1 ) ) ) {
-		return( TempIndx - 2 ); /* cut before leading vowel */
-	} else {
-		return( TempIndxm1 ); /* cut before leading Consonant */
-	}
+    if ( istlvwl( *( TempIndxm1 ) ) ) {
+        return( TempIndx - 2 ); /* cut before leading vowel */
+    } else {
+        return( TempIndxm1 ); /* cut before leading Consonant */
+    }
 }

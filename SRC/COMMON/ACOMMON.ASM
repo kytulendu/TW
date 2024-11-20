@@ -2,35 +2,35 @@
 ;                                 Thai Driver                                 ;
 ;=============================================================================;
 
-	DGROUP		GROUP	_DATA,_BSS
-	_DATA		SEGMENT	WORD PUBLIC 'DATA'
+    DGROUP      GROUP   _DATA,_BSS
+    _DATA       SEGMENT WORD PUBLIC 'DATA'
 
 EXTRN _kedmanee_table:BYTE
 
-	_DATA		ENDS
+    _DATA       ENDS
 
-	_BSS		SEGMENT WORD PUBLIC 'BSS'
-	_BSS		ENDS
+    _BSS        SEGMENT WORD PUBLIC 'BSS'
+    _BSS        ENDS
 
-	ACOMMON_TEXT	SEGMENT BYTE PUBLIC 'CODE'
-				ASSUME  CS:ACOMMON_TEXT, DS:DGROUP
-				
+    ACOMMON_TEXT    SEGMENT BYTE PUBLIC 'CODE'
+                ASSUME  CS:ACOMMON_TEXT, DS:DGROUP
+
 ;=============================================================================;
 ; _thaikey -  Change ASCII value of key from English to Thai.                 ;
 ;                                                                             ;
 ;     USAGE : thaikey(unsigned key)                                           ;
 ;=============================================================================;
-	PUBLIC _thaikey
+    PUBLIC _thaikey
 _thaikey PROC FAR
-	PUSH    BP
-	MOV     BP,SP
+    PUSH    BP
+    MOV     BP,SP
 
-	MOV     BX,OFFSET DGROUP:_kedmanee_table
-	MOV     AX,[BP+6]                   ; get ASCII code & scan code
-	XLAT                                ; look up table for changing ASCII code only
+    MOV     BX,OFFSET DGROUP:_kedmanee_table
+    MOV     AX,[BP+6]                   ; get ASCII code & scan code
+    XLAT                                ; look up table for changing ASCII code only
 
-	POP     BP
-	RET
+    POP     BP
+    RET
 
 _thaikey ENDP
 
@@ -42,24 +42,24 @@ _thaikey ENDP
 ;                keyboard scan code of the keypressed                         ;
 ;=============================================================================;
 
-	PUBLIC _asm_keypressed
+    PUBLIC _asm_keypressed
 _asm_keypressed PROC FAR
-	PUSHF
+    PUSHF
 
-	MOV     AH,1
-	INT     16h
-	JZ      notpress
-	JMP     nextpress
+    MOV     AH,1
+    INT     16h
+    JZ      notpress
+    JMP     nextpress
 
 notpress:
-	XOR      AX,AX
+    XOR      AX,AX
 
 nextpress:
-	POPF
-	RET
+    POPF
+    RET
 
 _asm_keypressed ENDP
 
-	ACOMMON_TEXT	ENDS
+    ACOMMON_TEXT    ENDS
 
 END

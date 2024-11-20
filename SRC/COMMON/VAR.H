@@ -8,10 +8,10 @@
 #endif
 
 #ifndef DEFINE_VAR
-EXTERN boolean thaimode;		/* current mode is Thai or English */
+EXTERN boolean thaimode;        /* current mode is Thai or English */
 #else
 /* EXTERN will be declared as null already */
-EXTERN boolean thaimode = NO;	/* default is English mode */
+EXTERN boolean thaimode = NO;   /* default is English mode */
 #endif
 
 #undef EXTERN /* restore it */

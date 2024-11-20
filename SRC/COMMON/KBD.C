@@ -15,24 +15,24 @@
 #include "kbd.h"
 
 void waitkbd( int p_xcurpos, int p_ycurpos ) {
-	register unsigned int i;
+    register unsigned int i;
 
-	setcurpos( p_xcurpos, p_ycurpos, thaimode );
-	while ( !keypressed( ) ) {
-		for ( i = 0; !keypressed( ) && i < 6000; i++ );
-		setcurpos( p_xcurpos, p_ycurpos, thaimode );
-		for ( i = 0; !keypressed( ) && i < 6000; i++ );
-		setcurpos( p_xcurpos, p_ycurpos, thaimode );
-	}
-	setcurpos( p_xcurpos, p_ycurpos, thaimode );
+    setcurpos( p_xcurpos, p_ycurpos, thaimode );
+    while ( !keypressed( ) ) {
+        for ( i = 0; !keypressed( ) && i < 6000; i++ );
+        setcurpos( p_xcurpos, p_ycurpos, thaimode );
+        for ( i = 0; !keypressed( ) && i < 6000; i++ );
+        setcurpos( p_xcurpos, p_ycurpos, thaimode );
+    }
+    setcurpos( p_xcurpos, p_ycurpos, thaimode );
 }
 
 int readkbd( void ) {
-	register int c;
+    register int c;
 
-	c = ebioskey( 0 );
-	if ( thaimode && ( ( c & 0xff00 ) < 0x4700 ) ) {       /* Ignore Keypad */
-		c = thaikey( c );
-	}
-	return( c );
+    c = ebioskey( 0 );
+    if ( thaimode && ( ( c & 0xff00 ) < 0x4700 ) ) {       /* Ignore Keypad */
+        c = thaikey( c );
+    }
+    return( c );
 }

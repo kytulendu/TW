@@ -9,18 +9,18 @@ void justify_right( void );
 void reform( void );
 
 /** Manualy wrap lines.
-*  \param[in]  p_xCursorPos		Column cursor position in editing window.
-*  \param[in]  y_CursorPos		Line cursor position in editing window. */
+*  \param[in]  p_xCursorPos     Column cursor position in editing window.
+*  \param[in]  y_CursorPos      Line cursor position in editing window. */
 void manualwrap( unsigned int *p_xCursorPos, unsigned int *p_yCursorPos );
 
 /** Automatically wrap lines.
-*  \param[in]  p_xCursorPos		Column cursor position in editing window.
-*  \param[in]  y_CursorPos		Line cursor position in editing window. */
+*  \param[in]  p_xCursorPos     Column cursor position in editing window.
+*  \param[in]  y_CursorPos      Line cursor position in editing window. */
 void autowrap( unsigned int *p_xCursorPos, unsigned int *p_yCursorPos );
 
 /** leave the leading blank alone, just compress the rest
 *   and trim the trailing blank.
-*  \param[in]  p_string			Pointer to string. */
+*  \param[in]  p_string         Pointer to string. */
 void compress_blank( unsigned char *p_string );
 
 #endif /* SCUW_WRAP_H_INCLUDED */

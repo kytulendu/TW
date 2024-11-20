@@ -20,40 +20,40 @@ void errorsound( void ) { }
 #else
 
 /** Delay for duration given.
-*  \param[in]  p_duration	time to delay in millisecond. */
+*  \param[in]  p_duration   time to delay in millisecond. */
 void biosdelay( long p_duration );
 
 void soundnoise( unsigned int p_freq, unsigned int p_duration ) {
-	sound( p_freq );
-	/* we can't use delay() because it call dos, so it is not reentrant */
-	biosdelay( ( long ) p_duration );
-	nosound( );
+    sound( p_freq );
+    /* we can't use delay() because it call dos, so it is not reentrant */
+    biosdelay( ( long ) p_duration );
+    nosound( );
 }
 
 void errorsound( void ) {
-	/* soundnoise( C * 2, 300 ); */
-	soundnoise( C, 40 );
-	soundnoise( D, 40 );
-	soundnoise( E, 40 );
-	soundnoise( F, 40 );
-	soundnoise( G, 40 );
-	soundnoise( A, 40 );
-	soundnoise( B, 40 );
-	soundnoise( C * 2, 40 );
+    /* soundnoise( C * 2, 300 ); */
+    soundnoise( C, 40 );
+    soundnoise( D, 40 );
+    soundnoise( E, 40 );
+    soundnoise( F, 40 );
+    soundnoise( G, 40 );
+    soundnoise( A, 40 );
+    soundnoise( B, 40 );
+    soundnoise( C * 2, 40 );
 }
 
 void biosdelay( long p_duration ) {
-	long i;
+    long i;
 
-	i = biostime( 0, 0 );
-	p_duration = i + 182L * p_duration / 10000L;
-	if ( p_duration == i ) {
-		p_duration++;
-	}
+    i = biostime( 0, 0 );
+    p_duration = i + 182L * p_duration / 10000L;
+    if ( p_duration == i ) {
+        p_duration++;
+    }
 
-	do {
-		i = biostime( 0, 0 );
-	} while ( i < p_duration );
+    do {
+        i = biostime( 0, 0 );
+    } while ( i < p_duration );
 }
 
 #endif

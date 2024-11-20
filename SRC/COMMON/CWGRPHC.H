@@ -24,13 +24,13 @@
 #endif
 
 #ifndef DEFINE_VAR
-extern int scrmode;				/* Graphic mode. */
-extern int shrink_factor;		/* Columns decreased. 90 column : 10, 80 column : 0 ) */
-extern int center_factor;		/* Shifting left factor. 90 column : 5, 80 column : 0) */
+extern int scrmode;             /* Graphic mode. */
+extern int shrink_factor;       /* Columns decreased. 90 column : 10, 80 column : 0 ) */
+extern int center_factor;       /* Shifting left factor. 90 column : 5, 80 column : 0) */
 #else
-int scrmode = DETECT;	/* Not initialize (text) mode */
-int shrink_factor = 0;	/* Columns decreased. 90 column : 10, 80 column : 0 ) */
-int center_factor = 0;	/* Shifting left factor. 90 column : 5, 80 column : 0) */
+int scrmode = DETECT;   /* Not initialize (text) mode */
+int shrink_factor = 0;  /* Columns decreased. 90 column : 10, 80 column : 0 ) */
+int center_factor = 0;  /* Shifting left factor. 90 column : 5, 80 column : 0) */
 #endif
 
 EXTERN unsigned char dfont[20 * 256];
@@ -107,7 +107,7 @@ EXTERN Clrline_ptr  clrline_ptr;
 /* --------------------------------------------------------------------- */
 
 typedef void ( PGwind_func )( int p_x1, int p_x2, int p_linecount, int p_bytecount,
-	unsigned char *p_buffer );
+    unsigned char *p_buffer );
 typedef PGwind_func *PGwind_ptr;
 
 EXTERN PGwind_func herc_putwind, ega_putwind, att_putwind, herc_getwind, ega_getwind, att_getwind;
@@ -118,8 +118,8 @@ EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 /* ===================================================================== */
 
 /** Put a character with attribute at given position.
-*  \param[in]  p_char			Character.
-*  \param[in]  p_attr			Attribute.
+*  \param[in]  p_char           Character.
+*  \param[in]  p_attr           Attribute.
 *                                   bit 0 -> single underline
 *                                   bit 1 -> reverse
 *                                   bit 2 -> bold
@@ -128,28 +128,28 @@ EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 *                                   bit 5 -> italic
 *                                   bit 6 -> enlarge
 *                                   bit 7 -> double underline
-*  \param[in]  p_x				Horizontal position.
-*  \param[in]  p_y				Vertical position. */
+*  \param[in]  p_x              Horizontal position.
+*  \param[in]  p_y              Vertical position. */
 void prchar( unsigned char p_char, int p_attr, int p_x, int p_y );
 
 /** Put a blank character at given position.
-*  \param[in]  p_x				Horizontal position.
-*  \param[in]  p_y				Vertical position. */
+*  \param[in]  p_x              Horizontal position.
+*  \param[in]  p_y              Vertical position. */
 void prblank( int p_x, int p_y );
 
 /** XOR cursor at specified cursor position.
-*  \param[in]  p_x				Horizontal position.
-*  \param[in]  p_y				Vertical position.
-*  \param[in]  p_thaimode		Thai/English mode. */
+*  \param[in]  p_x              Horizontal position.
+*  \param[in]  p_y              Vertical position.
+*  \param[in]  p_thaimode       Thai/English mode. */
 void setcurpos( int p_x, int p_y, int p_thaimode );
 
 /** Put a pixel at given position.
-*  \param[in]  p_x				Horizontal position.
-*  \param[in]  p_y				Vertical position. */
+*  \param[in]  p_x              Horizontal position.
+*  \param[in]  p_y              Vertical position. */
 void _putpixel( int p_x, int p_y );
 
 /** Get current video mode through int 10, function 0Fh.
-*  \return int					Current video mode. */
+*  \return int                  Current video mode. */
 int getcurrentmode( void );
 
 /** Set graphic mode. */
@@ -168,10 +168,10 @@ void retpic( void );
 void clsall( void );
 
 /** Clear graphic screen for window specified.
-*  \param[in]  p_xStart			Vertical position of start point.
-*  \param[in]  p_yStart			Horizontal position of start point.
-*  \param[in]  p_xEnd			Vertical position of end point.
-*  \param[in]  p_yEnd			Horizontal position of end point. */
+*  \param[in]  p_xStart         Vertical position of start point.
+*  \param[in]  p_yStart         Horizontal position of start point.
+*  \param[in]  p_xEnd           Vertical position of end point.
+*  \param[in]  p_yEnd           Horizontal position of end point. */
 void clsgraph( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd );
 
 /** Clear line p_y1 from p_x1 to p_x2. */

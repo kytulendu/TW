@@ -97,10 +97,10 @@
 
 /* ---- used as buffer before printing to print buffer ---- */
 struct cp_textbuf {
-	unsigned char *uppest;  /* buffer for wannayok    */
-	unsigned char *upper;   /* buffer for upper line  */
-	unsigned char *middle;  /* buffer for middle line */
-	unsigned char *lower;   /* buffer for lower line  */
+    unsigned char *uppest;  /* buffer for wannayok    */
+    unsigned char *upper;   /* buffer for upper line  */
+    unsigned char *middle;  /* buffer for middle line */
+    unsigned char *lower;   /* buffer for lower line  */
 };
 
 /* ---- graphics printing buffer ------ */
@@ -109,18 +109,18 @@ struct cp_textbuf {
 #define CP_LQSCRROW 2
 
 typedef struct FONT {
-	unsigned char font[CP_LQCOL][CP_LQROW];
+    unsigned char font[CP_LQCOL][CP_LQROW];
 } FONT;
 
 typedef struct FONTSCR {
-	unsigned char font[CP_LQCOL][CP_LQSCRROW];
+    unsigned char font[CP_LQCOL][CP_LQSCRROW];
 } FONTSCR;
 
 struct cp_grlqbuf {
-	FONT *upper;
-	FONT *middle;
-	FONT *lower;
-	FONT *extbar;
+    FONT *upper;
+    FONT *middle;
+    FONT *lower;
+    FONT *extbar;
 };
 
 /* ---- define buffer used in 24pins.c module ----- */
@@ -148,61 +148,61 @@ void cp_clearbuf( void );
 
 /** Split thai message into 4 levels.
 *   global variable "cp_buf" is result.
-*  \param[in]  p_linemsg		message to be printed. */
+*  \param[in]  p_linemsg        message to be printed. */
 void cp_split4level( unsigned char *p_linemsg );
 
 /* ----- NORMAL and ITALIC CODE ----- */
 
 /** Search character in font table.
-*  \param[in]  p_fntable		pointer to the font table.
-*  \param[in]  p_ch				character to be search.
-*  \return FONT			 		pointer to searching font. */
+*  \param[in]  p_fntable        pointer to the font table.
+*  \param[in]  p_ch             character to be search.
+*  \return FONT                 pointer to searching font. */
 FONT *cp_lq_font( FONT* p_fntable, unsigned char p_ch );
 
 /** Search combine sara and wannayok.
-*  \param[in]  p_fntable		pointer to the font table.
-*  \param[in]  p_combtable		pointer to combine table.
-*  \param[in]  p_sara			sara ASCII code.
-*  \param[in]  p_wannayok		wannayok ASCII code.
-*  \return FONT			 		pointer to new combine character. */
+*  \param[in]  p_fntable        pointer to the font table.
+*  \param[in]  p_combtable      pointer to combine table.
+*  \param[in]  p_sara           sara ASCII code.
+*  \param[in]  p_wannayok       wannayok ASCII code.
+*  \return FONT                 pointer to new combine character. */
 FONT *cp_lq_combinecode( FONT *p_fntable, FONT *p_combtable, unsigned char p_sara, unsigned char p_wannayok );
 
 /* --- SUBCRIPT and SUPERSCRIPT --- */
 
 /** Search character in font table.
-*  \param[in]  p_fntable		pointer to the font table.
-*  \param[in]  p_ch				character to be search.
-*  \return FONTSCR		 		pointer to searching font. */
+*  \param[in]  p_fntable        pointer to the font table.
+*  \param[in]  p_ch             character to be search.
+*  \return FONTSCR              pointer to searching font. */
 FONTSCR *cp_lqscr_font( FONTSCR *p_fntable, unsigned char p_ch );
 
 /** Search combine sara and wannayok.
-*  \param[in]  p_fntable		pointer to the font table.
-*  \param[in]  p_combtable		pointer to combine table.
-*  \param[in]  p_sara			sara ASCII code.
-*  \param[in]  p_wannayok		wannayok ASCII code.
-*  \return FONTSCR		 		pointer to new combine character. */
+*  \param[in]  p_fntable        pointer to the font table.
+*  \param[in]  p_combtable      pointer to combine table.
+*  \param[in]  p_sara           sara ASCII code.
+*  \param[in]  p_wannayok       wannayok ASCII code.
+*  \return FONTSCR              pointer to new combine character. */
 FONTSCR *cp_lqscr_combinecode( FONTSCR *p_fntable, FONTSCR *p_combtable, unsigned char p_sara, unsigned char p_wannayok );
 
 /* -- print data to buffer and manage all attribute -- */
 
 /** Printing data to buffer.
-*  \param[in]  p_lqbuf			pointer to printing buffer.
-*  \param[in]  p_grpchar		data to printing.
-*  \param[in]  p_gindex			index of last printing position.
-*  \return int			 		CP_ERROR when error occurs, gindex of last printing position. */
+*  \param[in]  p_lqbuf          pointer to printing buffer.
+*  \param[in]  p_grpchar        data to printing.
+*  \param[in]  p_gindex         index of last printing position.
+*  \return int                  CP_ERROR when error occurs, gindex of last printing position. */
 int cp_pr_lqbuf( struct cp_grlqbuf p_lqbuf, struct cp_grlqbuf p_grpchar, int p_gindex );
 
 /** Printing 4 level data to printing buffer.
 *   use GLOBAL variable "cp_lqbuf".
-*  \return int			 		CP_ERROR  when error occurs or buffer full, gindex number of printing character. */
+*  \return int                  CP_ERROR  when error occurs or buffer full, gindex number of printing character. */
 int cp_printlq( void );
 
 /* --- set control flag --- */
 
 /** Set or reset mask bits of attrib control.
-*  \param[in]  p_ch				input character.
-*  \param[in]  p_cntptr			pointer to control.
-*  \return int			 		none. */
+*  \param[in]  p_ch             input character.
+*  \param[in]  p_cntptr         pointer to control.
+*  \return int                  none. */
 int cp_set_reset( unsigned char p_ch, unsigned char *p_cntptr );
 
 #endif /* SCUP_24PINS_H_INCLUDED */

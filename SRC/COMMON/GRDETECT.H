@@ -15,12 +15,12 @@
 #define COMMON_GRDETECT_H_INCLUDED
 
 typedef enum Graphics_hardware {
-	DETECT, /* request auto detection */
-	CGA, MCGA, EGA, EGA64, EGAMONO, IBM8514,         /* 1 - 6 */
-	HERCMONO, ATT400, VGA, PC3270,                   /* 7 - 10 */
-	WY700,
-	MDA = 128,
-	UNKNOWN_HW = -1
+    DETECT, /* request auto detection */
+    CGA, MCGA, EGA, EGA64, EGAMONO, IBM8514,         /* 1 - 6 */
+    HERCMONO, ATT400, VGA, PC3270,                   /* 7 - 10 */
+    WY700,
+    MDA = 128,
+    UNKNOWN_HW = -1
 } graphics_hardware;
 
 /** check current video configuration. */

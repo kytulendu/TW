@@ -10,100 +10,100 @@
 */
 
 unsigned char *SaraORtn( register unsigned char *TempIndx ) {
-	register short i;
-	unsigned char *TempIndxm1 = TempIndx - 1;
-	short SoreSeoTbLen = 6;									/* 7 - 1 */
-	short OrAngTbLen = 8;									/* 9 - 1 */
-	short MoreMarTbLen = 6;									/* 7 - 1 */
-	short NoreNooTbLen = 1;									/* 2 - 1 */
-	short ShoreChangTbLen = 3;								/* 4 - 1 */
-	static char *SoreSeoTable[] = { "สโลว์", "สโนว์", "สโตร์", "สโมสร", "สโตน", "สโคป", "สโลแกน" };
-	static char *OrAngTable[] = { "อโณทัย", "อโรคยา", "อโหสิ", "อโนชา", "อโทสะ", "อโมหะ", "อโลภะ", "อโลหะ", "อโศก" };
-	static char *MoreMarTable[] = { "มโหระทึก", "มโหรสพ", "มโหฬาร", "มโหรี", "มโหสถ", "มโนภาพ", "มโนธรรม" };
-	static char *NoreNooTable[] = { "นโยบาย", "นโรดม" };
-	static char *ShoreChangTable[] = { "ชโลบล", "ชโลธร", "ชโลม", "ชโย" };
-	static char ToreTaharnWord[] = "ทโมน";
-	static char RoreReoWord[] = "รโหฐาน";
-	static char YoreYakWord[] = "ยโส";
-	static char KorKaiWord[] = "ขโมย";
+    register short i;
+    unsigned char *TempIndxm1 = TempIndx - 1;
+    short SoreSeoTbLen = 6;                                 /* 7 - 1 */
+    short OrAngTbLen = 8;                                   /* 9 - 1 */
+    short MoreMarTbLen = 6;                                 /* 7 - 1 */
+    short NoreNooTbLen = 1;                                 /* 2 - 1 */
+    short ShoreChangTbLen = 3;                              /* 4 - 1 */
+    static char *SoreSeoTable[] = { "สโลว์", "สโนว์", "สโตร์", "สโมสร", "สโตน", "สโคป", "สโลแกน" };
+    static char *OrAngTable[] = { "อโณทัย", "อโรคยา", "อโหสิ", "อโนชา", "อโทสะ", "อโมหะ", "อโลภะ", "อโลหะ", "อโศก" };
+    static char *MoreMarTable[] = { "มโหระทึก", "มโหรสพ", "มโหฬาร", "มโหรี", "มโหสถ", "มโนภาพ", "มโนธรรม" };
+    static char *NoreNooTable[] = { "นโยบาย", "นโรดม" };
+    static char *ShoreChangTable[] = { "ชโลบล", "ชโลธร", "ชโลม", "ชโย" };
+    static char ToreTaharnWord[] = "ทโมน";
+    static char RoreReoWord[] = "รโหฐาน";
+    static char YoreYakWord[] = "ยโส";
+    static char KorKaiWord[] = "ขโมย";
 
-	switch ( *( TempIndxm1 ) ) {
-	case SoreSeo:											/* สโลว์ สโนว์ สโตร์ สโมสร สโตน สโคป สโลแกน*/
-		for ( i = 0; i <= SoreSeoTbLen; ++i ) {
-			if ( !( nstrcmp( SoreSeoTable[i], TempIndxm1 ) ) ) {
-				return( TempIndx - 2 );						/* cut before consonant that before Sara O */
-			}
-		}
-		return( TempIndxm1 );								/* cut before sara O */
+    switch ( *( TempIndxm1 ) ) {
+    case SoreSeo:                                           /* สโลว์ สโนว์ สโตร์ สโมสร สโตน สโคป สโลแกน*/
+        for ( i = 0; i <= SoreSeoTbLen; ++i ) {
+            if ( !( nstrcmp( SoreSeoTable[i], TempIndxm1 ) ) ) {
+                return( TempIndx - 2 );                     /* cut before consonant that before Sara O */
+            }
+        }
+        return( TempIndxm1 );                               /* cut before sara O */
 
-	case OrAng:												/* อโณทัย อโรคยา อโหสิ อโนชา อโทสะ อโมหะ อโลภะ อโลหะ อโศก*/
-		for ( i = 0; i <= OrAngTbLen; ++i ) {
-			if ( !( nstrcmp( OrAngTable[i], TempIndxm1 ) ) ) {
-				return( TempIndx - 2 );						/* cut before consonant that before Sara O */
-			}
-		}
-		return( TempIndxm1 );								/* cut before sara O */
+    case OrAng:                                             /* อโณทัย อโรคยา อโหสิ อโนชา อโทสะ อโมหะ อโลภะ อโลหะ อโศก*/
+        for ( i = 0; i <= OrAngTbLen; ++i ) {
+            if ( !( nstrcmp( OrAngTable[i], TempIndxm1 ) ) ) {
+                return( TempIndx - 2 );                     /* cut before consonant that before Sara O */
+            }
+        }
+        return( TempIndxm1 );                               /* cut before sara O */
 
-	case MoreMar:											/* มโหระทึก, มโหรสพ,มโหฬาร,มโหร,มโหสถ */
-		for ( i = 0; i <= MoreMarTbLen; ++i ) {
-			if ( !( nstrcmp( MoreMarTable[i], TempIndxm1 ) ) ) {
-				return( TempIndx - 2 );						/* cut before consonant that before Sara O */
-			}
-		}
-		return( TempIndxm1 );								/* cut before sara O */
+    case MoreMar:                                           /* มโหระทึก, มโหรสพ,มโหฬาร,มโหร,มโหสถ */
+        for ( i = 0; i <= MoreMarTbLen; ++i ) {
+            if ( !( nstrcmp( MoreMarTable[i], TempIndxm1 ) ) ) {
+                return( TempIndx - 2 );                     /* cut before consonant that before Sara O */
+            }
+        }
+        return( TempIndxm1 );                               /* cut before sara O */
 
-	case NoreNoo:											/* นโยบาย นโรดม */
-		if ( !( nstrcmp( "นโม", TempIndxm1 ) ) && !( istlvwl( *( TempIndx - 2 ) ) ) ) {
-			if ( !( isttnl( *( TempIndx + 2 ) ) ) ) {
-				return( TempIndx - 2 );						/*cut before NoreNoo */
-			}
-		}
-		for ( i = 0; i <= NoreNooTbLen; ++i ) {
-			if ( !( nstrcmp( NoreNooTable[i], TempIndxm1 ) ) ) {
-				return( TempIndx - 2 );						/* cut before consonant that before Sara O */
-			}
-		}
-		return( TempIndxm1 );								/* cut before sara O */
+    case NoreNoo:                                           /* นโยบาย นโรดม */
+        if ( !( nstrcmp( "นโม", TempIndxm1 ) ) && !( istlvwl( *( TempIndx - 2 ) ) ) ) {
+            if ( !( isttnl( *( TempIndx + 2 ) ) ) ) {
+                return( TempIndx - 2 );                     /*cut before NoreNoo */
+            }
+        }
+        for ( i = 0; i <= NoreNooTbLen; ++i ) {
+            if ( !( nstrcmp( NoreNooTable[i], TempIndxm1 ) ) ) {
+                return( TempIndx - 2 );                     /* cut before consonant that before Sara O */
+            }
+        }
+        return( TempIndxm1 );                               /* cut before sara O */
 
-	case ShoreChang:										/* ชโลบล ชโลธร ชโลม ชโย */
-		for ( i = 0; i <= ShoreChangTbLen; ++i ) {
-			if ( !( nstrcmp( ShoreChangTable[i], TempIndxm1 ) ) ) {
-				return( TempIndx - 2 );						/* cut before consonant that before Sara O */
-			}
-		}
-		return( TempIndxm1 );								/* cut before sara O */
+    case ShoreChang:                                        /* ชโลบล ชโลธร ชโลม ชโย */
+        for ( i = 0; i <= ShoreChangTbLen; ++i ) {
+            if ( !( nstrcmp( ShoreChangTable[i], TempIndxm1 ) ) ) {
+                return( TempIndx - 2 );                     /* cut before consonant that before Sara O */
+            }
+        }
+        return( TempIndxm1 );                               /* cut before sara O */
 
-	case ToreTaharn:										/* ทโมน */
-		if ( nstrcmp( ToreTaharnWord, TempIndxm1 ) ) {
-			return( TempIndxm1 );							/* cut before sara O */
-		} else {
-			return( TempIndx - 2 );							/* cut before consonant that before Sara O */
-		}
+    case ToreTaharn:                                        /* ทโมน */
+        if ( nstrcmp( ToreTaharnWord, TempIndxm1 ) ) {
+            return( TempIndxm1 );                           /* cut before sara O */
+        } else {
+            return( TempIndx - 2 );                         /* cut before consonant that before Sara O */
+        }
 
-	case RoreReo:											/* รโหฐาน */
-		if ( nstrcmp( RoreReoWord, TempIndxm1 ) ) {
-			return( TempIndxm1 );							/* cut before sara O */
-		} else {
-			return( TempIndx - 2 );							/* cut before consonant that before Sara O */
-		}
+    case RoreReo:                                           /* รโหฐาน */
+        if ( nstrcmp( RoreReoWord, TempIndxm1 ) ) {
+            return( TempIndxm1 );                           /* cut before sara O */
+        } else {
+            return( TempIndx - 2 );                         /* cut before consonant that before Sara O */
+        }
 
-	case YoreYak:											/* ยโส */
-		if ( nstrcmp( YoreYakWord, TempIndxm1 ) ) {
-			return( TempIndxm1 );							/* cut before sara O */
-		} else {
-			return( TempIndx - 2 );							/* cut before consonant that before Sara O */
-		}
+    case YoreYak:                                           /* ยโส */
+        if ( nstrcmp( YoreYakWord, TempIndxm1 ) ) {
+            return( TempIndxm1 );                           /* cut before sara O */
+        } else {
+            return( TempIndx - 2 );                         /* cut before consonant that before Sara O */
+        }
 
-	case KorKai:											/* ขโมย */
-		if ( nstrcmp( KorKaiWord, TempIndxm1 ) ) {
-			return( TempIndxm1 );							/* cut before sara O */
-		} else {
-			return( TempIndx - 2 );							/* cut before consonant that before Sara O */
-		}
+    case KorKai:                                            /* ขโมย */
+        if ( nstrcmp( KorKaiWord, TempIndxm1 ) ) {
+            return( TempIndxm1 );                           /* cut before sara O */
+        } else {
+            return( TempIndx - 2 );                         /* cut before consonant that before Sara O */
+        }
 /*
-	default:
-		return( TempIndx - 1 );
+    default:
+        return( TempIndx - 1 );
 */
-	}
-	return( TempIndx - 1 );
+    }
+    return( TempIndx - 1 );
 }
