@@ -130,23 +130,27 @@ EXTERN PGwind_ptr  putwind_ptr, getwind_ptr;
 *                                   bit 7 -> double underline
 *  \param[in]  p_x              Horizontal position.
 *  \param[in]  p_y              Vertical position. */
-void prchar( unsigned char p_char, int p_attr, int p_x, int p_y );
+#define prchar(p_char, p_attr, p_x, p_y)    (*prchar_ptr)(p_char, p_attr, p_x, p_y)
+/*void prchar( unsigned char p_char, int p_attr, int p_x, int p_y );*/
 
 /** Put a blank character at given position.
 *  \param[in]  p_x              Horizontal position.
 *  \param[in]  p_y              Vertical position. */
-void prblank( int p_x, int p_y );
+#define prblank(p_x, p_y)           (*prblank_ptr)(p_x, p_y)
+/*void prblank( int p_x, int p_y );*/
 
 /** XOR cursor at specified cursor position.
 *  \param[in]  p_x              Horizontal position.
 *  \param[in]  p_y              Vertical position.
 *  \param[in]  p_thaimode       Thai/English mode. */
-void setcurpos( int p_x, int p_y, int p_thaimode );
+#define setcurpos(p_x, p_y, p_thaimode)     (*setcurpos_ptr)(p_x, p_y, p_thaimode)
+/*void setcurpos( int p_x, int p_y, int p_thaimode );*/
 
 /** Put a pixel at given position.
 *  \param[in]  p_x              Horizontal position.
 *  \param[in]  p_y              Vertical position. */
-void _putpixel( int p_x, int p_y );
+#define _putpixel(p_x, p_y)         (*putpixel_ptr)(p_x, p_y)
+/*void _putpixel( int p_x, int p_y );*/
 
 /** Get current video mode through int 10, function 0Fh.
 *  \return int                  Current video mode. */
@@ -159,25 +163,31 @@ void setgraph( void );
 void settext( void );
 
 /** Save picture from screen memory page 1 to page 0. */
-void savepic( void );
+#define savepic()                   (*savepic_ptr)()
+/*void savepic( void );*/
 
 /** Return picture from screen memory page 0 to page 1. */
-void retpic( void );
+#define retpic()                    (*retpic_ptr)()
+/*void retpic( void );*/
 
 /** Clear screen memory page 1 to blank. */
-void clsall( void );
+#define clsall()                    (*clsall_ptr)()
+/*void clsall( void );*/
 
 /** Clear graphic screen for window specified.
 *  \param[in]  p_xStart         Vertical position of start point.
 *  \param[in]  p_yStart         Horizontal position of start point.
 *  \param[in]  p_xEnd           Vertical position of end point.
 *  \param[in]  p_yEnd           Horizontal position of end point. */
-void clsgraph( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd );
+#define clsgraph(p_xStart, p_yStart, p_xEnd, p_yEnd)    (*clsgraph_ptr)(p_xStart, p_yStart, p_xEnd, p_yEnd);
+/*void clsgraph( int p_xStart, int p_yStart, int p_xEnd, int p_yEnd );*/
 
 /** Clear line p_y1 from p_x1 to p_x2. */
-void clrline( int p_x1, int p_y1, int p_x2 );
+#define clrline(p_x1, p_y1, p_x2)   (*clrline_ptr)(p_x1, p_y1, p_x2)
+/*void clrline( int p_x1, int p_y1, int p_x2 );*/
 
 /** Display Prakeaw ( Chula University logo ) at top-left of screen. */
-void prakeaw( void );
+#define prakeaw()                   (*prakeaw_ptr)()
+/*void prakeaw( void );*/
 
 #endif /* COMMON_CWGRPHC_H_INCLUDED */

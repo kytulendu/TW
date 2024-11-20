@@ -28,7 +28,7 @@
 #include "cwgrphc.h"
 
 #undef DEFINE_VAR
-
+/*
 void prchar( unsigned char p_char, int p_attr, int p_x, int p_y ) {
     ( *prchar_ptr )( p_char, p_attr, p_x, p_y );
 }
@@ -44,7 +44,7 @@ void setcurpos( int p_x, int p_y, int p_thaimode ) {
 void _putpixel( int p_x, int p_y ) {
     ( *putpixel_ptr )( p_x, p_y );
 }
-
+*/
 void settext( void ) {
     union REGS inregs, outregs;
 
@@ -55,7 +55,7 @@ void settext( void ) {
         int86( 0x10, &inregs, &outregs );
     }
 }
-
+/*
 void savepic( void ) {
     ( *savepic_ptr )( );
 }
@@ -79,7 +79,7 @@ void clrline( int x1, int y1, int x2 ) {
 void prakeaw( void ) {
     ( *prakeaw_ptr )( );
 }
-
+*/
 int getcurrentmode( ) {
     union REGS inregs, outregs;
 
