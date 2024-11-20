@@ -88,7 +88,7 @@ void setup_screen( void ) {
 
     /* Temporary fix when use with vga card */
     if ( scrmode == VGA ) {
-        scrmode == EGA;
+        scrmode = EGA;
         writech = ewritech;
     }
 
