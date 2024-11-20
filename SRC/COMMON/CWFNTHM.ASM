@@ -6,7 +6,7 @@
 ;               Updated :     12/01/88
 
 shift_down MACRO REG
-    LOCAL BR1
+    LOCAL br1
     ADD     &REG&,2000h
     JNS     br1
     ADD     &REG&,8000h+5Ah
@@ -15,7 +15,7 @@ br1:
     ENDM
 
 shift_up MACRO REG
-    LOCAL BR1
+    LOCAL br1
     SUB     &REG&,2000h
     JNS     br1
     ADD     &REG&,8000h-5Ah
