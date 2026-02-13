@@ -25,7 +25,7 @@ May change over time.
 ### Feature
 
 **Editing**
-- Typographic alignment : left `<Ctrl><O><H>`, right `<Ctrl><O><K>`, and justified `<Ctrl><O><J>`
+- Typographic alignment : center (paper) (WordStar) `<Ctrl><O><V>`, left `<Ctrl><O><H>`, right `<Ctrl><O><K>`, and justified `<Ctrl><O><J>`
 - Clipboard, copy to clipboard `<Ctrl><[>`, past from clipboard `<Ctrl><]>`
 - Multi layer undo like modern editor `<Ctrl><U>`
 - Editing more than 2 files
@@ -37,17 +37,20 @@ May change over time.
 - Can type `kho khuat (ฃ)`, `kho khon (ฅ)`, `lak khang yao (ๅ)`
 - Add secondary `<ALT><Fn>` key to insert print control menu (F2-F8)
 - Change Thai encoding Kaset-CW/TIS-620 by `<Ctrl><\>`
+- `<Ctrl><P><X>` Strikeout character
 
 **Block**
 - Use `<Shift><Arrow Key>` to select word (blocks)
 - Block select clear formatting
-- Column block selection, toggle using `<Ctrl><K><O>` or `<Ctrl><K><N>` (RW),
+- Column block selection, toggle using `<Ctrl><K><N>` (RW),
 change size by `<Ctrl><K><+>` (RW) `<Ctrl><K><->` (RW), move by `<Ctrl><K><>>` (RW) `<Ctrl><K><<>` (RW)
-- Table creation using column block selection `<Ctrl><K><D>` or `<Ctrl><Q><T>` (RW)
+- Table creation using column block selection `<Ctrl><Q><T>` (RW)
 and delete table in block `<Ctrl><Q><U>` (RW)
-- Calculate sum of numbers in column block selection `<Ctrl><K><T>` or `<Ctrl><K><M>` (RW)
+- Calculate sum of numbers in column block selection `<Ctrl><K><M>` (RW)
 result can have decimal point or sign depending on the numbers in selection
 - Sort text in block `<Ctrl><K><Z>` (RW)
+- `<Ctrl><K><'>` change English character in block to lower case
+- `<Ctrl><K><">` change English character in block to upper case
 
 **Interface**
 - Online help
@@ -55,18 +58,27 @@ result can have decimal point or sign depending on the numbers in selection
 - `<Ctrl><O><S>` to toggle display soft space
 - `<Ctrl><O><D>` (RW) to toggle display control code
 - `<Ctrl><O><M>` to toggle display menu
-- `<Ctrl><O><P>` (RW) to set line per page
+- `<Ctrl><O><P>` (Key is used) to toggle display page break
+- `<Ctrl><O><T>` to toggle display ruler
+- `<Ctrl><O><W>` (WordStar) to toggle word wrap
+- `<Ctrl><O><H>` (WordStar) toggle automatic hyphenation
 - Better about dialog (may use bitmap picture)
 - Add font editor to menu, when exit the font editor reload the font and redraw screen
 - Display Thai character encoding on menu
+- `<Ctrl><K><???>` to create new file
+- `<Ctrl><K><O>` to open file
+- `<Ctrl><K><L>` to change drive
+- `<Ctrl><K><D>` to change directory
 - `<Ctrl><K><Q>` (RW) to exit program
-- `<Ctrl><K><O>` to open file?
-- `<Ctrl><J><D>` to change directory?
 
 **Proofing**
 - New Thai word separator algorithm by dictionary and by rule (like old one if not enough memory), load dictionary to EMS
 - Spell checker/word suggestion, Thai/English, use Thai word separator dictionary
 - Thesaurus (English only)
+- `<Ctrl><Q><L>` (WordStar) Check document spelling
+- `<Ctrl><Q><N>` (WordStar) Check word spelling
+- `<Ctrl><Q><J>` (WordStar) Thesaurus
+- Spell checking as typing, beep when encounter incorrect word
 
 **Printing**
 - Support HP PCL5 printer
@@ -93,3 +105,4 @@ result can have decimal point or sign depending on the numbers in selection
 - Math equations support like CU-Writer 1.6?
 - Bitmap graphic support using CWW file format?
 - Option at end of file support like CU-Writer 1.6?
+- `<Ctrl><Q><M>` (WordStar) Calculator
