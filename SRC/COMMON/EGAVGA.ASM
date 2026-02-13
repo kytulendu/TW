@@ -587,7 +587,7 @@ _ega_blank PROC FAR
     MOV     BP,SP
 
 ; we will set ES:[DI] point at screen
-    MOV     AX,[BP+12]
+    MOV     AX,[BP+12]                  ; p_y
     MOV     CL,20                       ; 20 lines per row
     MUL     CL
     ADD     AX,4
@@ -599,7 +599,7 @@ _ega_blank PROC FAR
 
     MOV     SP,BP
     MOV     DI,AX
-    ADD     DI,[BP+10]                  ; add column
+    ADD     DI,[BP+10]                  ; add column p_x
     MOV     ES,EGA_Address
 
     XOR     AL,AL
