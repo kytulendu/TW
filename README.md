@@ -1,6 +1,19 @@
 Thai Write
 ==========
 
+**Discontinued**
+
+Why?
+----
+
+Because of the messy early commit history, due to my inexperience with software development and source control in younger year. This make it hard to see what changed in commit history with many random unrelated changes in single massive commit.
+
+So I decided to redo this project properly this time with changes import from the old repository.
+
+The new repository is at [https://github.com/kytulendu/ThaiWrite](https://github.com/kytulendu/ThaiWrite).
+
+---
+
 ![Thai Write](screen.png)
 
 Descriptions
